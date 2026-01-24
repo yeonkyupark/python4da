@@ -23,10 +23,10 @@ book:
         href: https://www.instagram.com/yeonkyu.park/
       - icon: globe
         href: https://yeonkyupark.github.io/
-    collapse-level: 2
+    collapse-level: 1
   chapters:
     - index.qmd
-    - part: "데이터 전처리 및 분포 변환"
+    - part: "데이터 전처리 및 변환"
       chapters: 
         - "part1/데이터 로드 및 구조 점검.qmd"
         - "part1/탐색적 데이터 분석(EDA).qmd"
@@ -38,7 +38,7 @@ book:
         - "part1/연속형 데이터 범주화.qmd"
         - "part1/불균형 데이터 처리.qmd"
         - "part1/피처 엔지니어링.qmd"
-    - part: "통계 기반 데이터 분석 및 가설검정"
+    - part: "통계분석 및 가설검정"
       chapters: 
         - "part2/확률분포와 표본.qmd"
         - "part2/정규성 검정.qmd"
@@ -82,8 +82,6 @@ format:
     include-in-header:
       text: |
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
-    # include-in-header: adsense.html
-    # include-after-body: adsense-body.html
 
 toc: true
 toc-depth: 4
