@@ -2,122 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yeonkyupark.github.io/python4da/index.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/데이터 로드 및 구조 점검.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/탐색적 데이터 분석(EDA).html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/결측치 처리.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/이상치 탐지.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/스케일링.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/데이터 분포 변환.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/범주형 데이터 인코딩.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/연속형 데이터 범주화.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/불균형 데이터 처리.html</loc>
-    <lastmod>2026-01-24T14:24:30.400Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.239Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part1/피처 엔지니어링.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/확률분포와 표본.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/정규성 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/등분산 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/적합성 및 독립성 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/평균 비교 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/분산 분석.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/비모수 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part2/상관 분석.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/데이터 분할 및 검정.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/특성 선택.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/차원 축소.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/회귀 모델.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/분류 모델.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/군집 분석.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/서포트 벡터 머신.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/모델 성능 평가.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/파이프라인 및 자동화.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/part3/모델 해석.html</loc>
-    <lastmod>2026-01-24T14:24:30.401Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.240Z</lastmod>
   </url>
   <url>
     <loc>https://yeonkyupark.github.io/python4da/references.html</loc>
-    <lastmod>2026-01-24T14:24:30.402Z</lastmod>
+    <lastmod>2026-01-24T14:35:04.241Z</lastmod>
   </url>
 </urlset>
