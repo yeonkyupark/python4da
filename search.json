@@ -4,29 +4,317 @@
     "href": "index.html",
     "title": "파이썬 데이터 분석",
     "section": "",
-    "text": "Preface\nGitHub Actions로 자동 빌드 및 배포됩니다.",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
     "crumbs": [
-      "Preface"
+      "파이썬 데이터 분석"
     ]
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
+    "objectID": "part1/데이터 로드 및 구조 점검.html",
+    "href": "part1/데이터 로드 및 구조 점검.html",
+    "title": "파이썬 데이터 분석",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
     ]
   },
   {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
+    "objectID": "part1/탐색적 데이터 분석(EDA).html",
+    "href": "part1/탐색적 데이터 분석(EDA).html",
+    "title": "파이썬 데이터 분석",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html",
+    "href": "part1/결측치 처리.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/이상치 탐지.html",
+    "href": "part1/이상치 탐지.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/스케일링.html",
+    "href": "part1/스케일링.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/데이터 분포 변환.html",
+    "href": "part1/데이터 분포 변환.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/범주형 데이터 인코딩.html",
+    "href": "part1/범주형 데이터 인코딩.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/연속형 데이터 범주화.html",
+    "href": "part1/연속형 데이터 범주화.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/불균형 데이터 처리.html",
+    "href": "part1/불균형 데이터 처리.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/피처 엔지니어링.html",
+    "href": "part1/피처 엔지니어링.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/확률분포와 표본.html",
+    "href": "part2/확률분포와 표본.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/정규성 검정.html",
+    "href": "part2/정규성 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/등분산 검정.html",
+    "href": "part2/등분산 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/적합성 및 독립성 검정.html",
+    "href": "part2/적합성 및 독립성 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/평균 비교 검정.html",
+    "href": "part2/평균 비교 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/분산 분석.html",
+    "href": "part2/분산 분석.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/비모수 검정.html",
+    "href": "part2/비모수 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/상관 분석.html",
+    "href": "part2/상관 분석.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "통계 기반 데이터 분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/데이터 분할 및 검정.html",
+    "href": "part3/데이터 분할 및 검정.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/특성 선택.html",
+    "href": "part3/특성 선택.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/차원 축소.html",
+    "href": "part3/차원 축소.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>21</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/회귀 모델.html",
+    "href": "part3/회귀 모델.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/분류 모델.html",
+    "href": "part3/분류 모델.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/군집 분석.html",
+    "href": "part3/군집 분석.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>24</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/서포트 벡터 머신.html",
+    "href": "part3/서포트 벡터 머신.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/모델 성능 평가.html",
+    "href": "part3/모델 성능 평가.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/파이프라인 및 자동화.html",
+    "href": "part3/파이프라인 및 자동화.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/모델 해석.html",
+    "href": "part3/모델 해석.html",
+    "title": "파이썬 데이터 분석",
+    "section": "",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
+    "crumbs": [
+      "머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
     ]
   },
   {
@@ -34,9 +322,9 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "Open in github.dev\n  Open in a new github.dev tab\n    Open in codespace\n\n\n\n\n    \n      \n    \n\n\n\n\n\n\n\n\n\n  \n  \n     FilesExpand file tree mainBreadcrumbspython_beginner/adsense.htmlCopy path tBlameMore file actions  BlameMore file actions        Latest commit HistoryHistory2 lines (2 loc) · 185 Bytes mainBreadcrumbspython_beginner/adsense.htmlTopFile metadata and controlsCodeBlame2 lines (2 loc) · 185 BytesRawCopy raw fileDownload raw fileEdit this fileMore edit optionsOpen symbols panelEdit and raw actions12&lt;script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\" crossorigin=\"anonymous\"&gt;&lt;/script&gt;\n&lt;meta name=\"google-adsense-account\" content=\"pub-8759553852956796\"&gt;",
     "crumbs": [
-      "References"
+      "파이썬 데이터 분석"
     ]
   }
 ]
