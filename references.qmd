@@ -1,4 +1,4 @@
-# References {.unnumbered}
+# 참고자료 {.unnumbered}
 
 ::: {#refs}
 :::
