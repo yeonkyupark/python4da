@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "파이썬 데이터 분석",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "text": "Preface\nGitHub Actions로 자동 빌드 및 배포됩니다.",
     "crumbs": [
       "Preface"
     ]
