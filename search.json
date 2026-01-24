@@ -38,5 +38,27 @@
     "crumbs": [
       "파이썬 데이터 분석"
     ]
+  },
+  {
+    "objectID": "part1/데이터 로드 및 구조 점검.html",
+    "href": "part1/데이터 로드 및 구조 점검.html",
+    "title": "데이터 로드 및 구조 점검",
+    "section": "",
+    "text": "데이터 로드 (CSV, Excel, SQL)",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part1/데이터 로드 및 구조 점검.html#데이터-구조-및-타입-확인",
+    "href": "part1/데이터 로드 및 구조 점검.html#데이터-구조-및-타입-확인",
+    "title": "데이터 로드 및 구조 점검",
+    "section": "데이터 구조 및 타입 확인",
+    "text": "데이터 구조 및 타입 확인",
+    "crumbs": [
+      "데이터 전처리 및 분포 변환",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+    ]
   }
 ]
