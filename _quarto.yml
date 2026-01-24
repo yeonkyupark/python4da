@@ -1,16 +1,73 @@
 project:
   type: book
 
+metadata:
+  title: "파이썬 데이터 분석"
+  google-site-verification: "8xHzi-r2KaeozfPyDbwq2rtYE8sEI8Xu6irhM0ccwBU"
+  keywords: ["python", "전처리", "통계", "기계학습", "회귀","분류", "군집"]
+  
 book:
   title: "파이썬 데이터 분석"
   author: "느리게"
   site-url: https://yeonkyupark.github.io/python4da/
-  date: "2026. 1. 24."
+  date: last-modified
+  repo-url: https://github.com/yeonkyupark/python4da 
+  repo-branch: main
+  repo-actions: [edit]
+  favicon: logo.png
+  page-footer: 
+    left: "Copyright(c) 2026 YK" 
+    right: "Python for Data Analytics"
+  sidebar: 
+    tools:
+      - icon: instagram
+        href: https://www.instagram.com/yeonkyu.park/
+      - icon: globe
+        href: https://yeonkyupark.github.io/
+    collapse-level: 2
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
+    - part: "데이터 전처리 및 분포 변환"
+      chapters: 
+        - "part1/데이터 로드 및 구조 점검.qmd"
+        - "part1/탐색적 데이터 분석(EDA).qmd"
+        - "part1/결측치 처리.qmd"
+        - "part1/이상치 탐지.qmd"
+        - "part1/스케일링.qmd"
+        - "part1/데이터 분포 변환.qmd"
+        - "part1/범주형 데이터 인코딩.qmd"
+        - "part1/연속형 데이터 범주화.qmd"
+        - "part1/불균형 데이터 처리.qmd"
+        - "part1/피처 엔지니어링.qmd"
+    - part: "통계 기반 데이터 분석 및 가설검정"
+      chapters: 
+        - "part2/확률분포와 표본.qmd"
+        - "part2/정규성 검정.qmd"
+        - "part2/등분산 검정.qmd"
+        - "part2/적합성 및 독립성 검정.qmd"
+        - "part2/평균 비교 검정.qmd"
+        - "part2/분산 분석.qmd"
+        - "part2/비모수 검정.qmd"
+        - "part2/상관 분석.qmd"
+    - part: "머신러닝 모델링 및 평가"
+      chapters: 
+        - "part3/데이터 분할 및 검정.qmd"
+        - "part3/특성 선택.qmd"
+        - "part3/차원 축소.qmd"
+        - "part3/회귀 모델.qmd"
+        - "part3/분류 모델.qmd"
+        - "part3/군집 분석.qmd"
+        - "part3/서포트 벡터 머신.qmd"
+        - "part3/모델 성능 평가.qmd"
+        - "part3/파이프라인 및 자동화.qmd"
+        - "part3/모델 해석.qmd"
     - references.qmd
+    
+language:
+  crossref-apx-prefix: 참고자료
+  section-title-appendices: 참고자료
+
+number-sections: false
 
 bibliography: references.bib
 
@@ -19,7 +76,20 @@ format:
     theme:
       - cosmo
       - brand
+    css: style.css
+    mermaid:
+      theme: neutral
+    sitemap: true
+    include-in-header: adsense.html
+    include-after-body: adsense-body.html
 
+toc: true
+toc-depth: 4
+toc-title: 목차
 
-
-
+crossref:
+  appendix-title: "참고자료"
+  appendix-delim: ":"
+  
+execute:
+  freeze: auto
