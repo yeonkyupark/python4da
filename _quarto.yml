@@ -79,6 +79,9 @@ format:
     mermaid:
       theme: neutral
     sitemap: true
+    include-in-header:
+      text: |
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
     # include-in-header: adsense.html
     # include-after-body: adsense-body.html
 
