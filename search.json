@@ -6,7 +6,7 @@
     "section": "",
     "text": "들어가기\n기계학습으로 데이터를 분석한다. 분석 도구는 파이썬으로 데이터 전처리, 통계 분석, 기계학습 모델링 및 평가까지 코드 중심으로 구성된다. 실무에 필요한 내용을 정리하여 이론적, 학문적으로 미흡한 부분이 있다. 부족한 부분은 향후 성능 개선과 향상된 알고리즘 등으로 수정키로 한다.\n파이썬 버전은 3.12 기반으로 numpy, pandas, sklearn, scipy, stats와 같은 기본적인 라이브러리를 사용한다.\n전체 목차는 다음과 같다.\n```markdown # 파이썬 머신러닝 데이터 분석 교안 (중·고급)",
     "crumbs": [
-      "파이썬 데이터 분석"
+      "들어가기"
     ]
   },
   {
@@ -16,7 +16,7 @@
     "section": "1부. 데이터 전처리 & 분포 이해",
     "text": "1부. 데이터 전처리 & 분포 이해\n\n1.1 데이터 로드 및 구조 점검\n\n데이터 로드 (CSV, Excel, SQL)\n데이터 구조 및 타입 확인\n\n\n\n1.2 탐색적 데이터 분석(EDA)\n\n기술통계량 요약\n분포 시각화 (히스토그램, KDE, 박스플롯)\n상관관계 탐색\n\n\n\n1.3 데이터 분포 이해\n\n연속형·이산형 데이터 분포\n왜도와 첨도\n분포 해석을 통한 전처리 전략\n\n\n\n1.4 결측치 처리\n\n결측치 탐지 및 요약\n단순 대치 기법\n고급 대치 기법 (KNN, Iterative)\n\n\n\n1.5 이상치 탐지\n\n정규분포 기반 이상치\nIQR 기반 이상치\n밀도 기반 이상치 (LOF, DBSCAN)\n트리 기반 이상치 (IsolationForest)\n\n\n\n1.6 스케일링\n\n정규화 (Min-Max)\n표준화 (Standard, Robust, MaxAbs)\n\n\n\n1.7 데이터 분포 변환\n\n로그 변환\nBox-Cox 변환\nYeo-Johnson 변환\n분위수 변환\n변환 전·후 분포 비교\n\n\n\n1.8 범주형 데이터 처리\n\n명목형 인코딩\n순서형 인코딩\n\n\n\n1.9 연속형 데이터 범주화\n\n구간 분할 (cut, qcut, KBins)\n\n\n\n1.10 불균형 데이터 처리\n\n오버샘플링\n언더샘플링\n\n\n\n1.11 피처 엔지니어링\n\n다항 특성 생성\n집계 및 롤링 특성",
     "crumbs": [
-      "파이썬 데이터 분석"
+      "들어가기"
     ]
   },
   {
@@ -26,7 +26,7 @@
     "section": "2부. 통계 기반 데이터 분석 & 가설검정",
     "text": "2부. 통계 기반 데이터 분석 & 가설검정\n\n2.1 확률분포와 표본\n\n연속형 확률분포\n이산형 확률분포\n표본 분포 개념\n\n\n\n2.2 정규성 검정\n\nShapiro-Wilk 검정\nKolmogorov-Smirnov 검정\nAnderson-Darling 검정\nQ-Q plot 해석\n\n\n\n2.3 등분산성 검정\n\nLevene 검정\nBartlett 검정\nFligner-Killeen 검정\n\n\n\n2.4 적합성 검정 & 독립성 검정\n\n카이제곱 적합성 검정\n분포 적합성 검정\n카이제곱 독립성 검정\nF 검정 (분산 비교)\n\n\n\n2.5 평균 비교 검정\n\n단일 표본 t-검정\n독립 표본 t-검정\n대응 표본 t-검정\n\n\n\n2.6 분산분석\n\n일원 분산 분석 (One-way ANOVA)\n이원 분산 분석 (Two-way ANOVA)\n사후 검정\n\n\n\n2.7 비모수 검정\n\nMann-Whitney U 검정\nWilcoxon 순위합 검정\nKruskal-Wallis 검정\nFriedman 검정\n\n\n\n2.8 상관 분석\n\nPearson 상관 분석\nSpearman 순위 상관",
     "crumbs": [
-      "파이썬 데이터 분석"
+      "들어가기"
     ]
   },
   {
@@ -36,7 +36,7 @@
     "section": "3부. 머신러닝 모델링 & 평가",
     "text": "3부. 머신러닝 모델링 & 평가\n\n3.1 데이터 분할 및 검증\n\n학습·검증·테스트 분할\n교차 검증 기법\n\n\n\n3.2 특성 선택\n\n필터 방법\n래퍼 방법\n임베디드 방법\n\n\n\n3.3 차원 축소\n\n선형 차원 축소 (PCA)\n비선형 차원 축소 (t-SNE, UMAP)\n\n\n\n3.4 회귀 모델\n\n선형 회귀\n정규화 회귀 (Ridge, Lasso, ElasticNet)\n\n\n\n3.5 분류 모델\n\n선형 분류 모델\n거리 기반 모델\n트리 및 앙상블 모델\n\n\n\n3.6 서포트 벡터 머신\n\nSVM 분류\n\n\n\n3.7 군집 분석\n\n분할 기반 군집\n밀도 기반 군집\n혼합 모델 군집\n\n\n\n3.8 모델 성능 평가\n\n분류 성능 평가\n회귀 성능 평가\n\n\n\n3.9 파이프라인 & 자동화\n\n파이프라인 구성\n하이퍼파라미터 최적화\n\n\n\n3.10 모델 해석\n\n특성 중요도\nSHAP 기반 모델 해석",
     "crumbs": [
-      "파이썬 데이터 분석"
+      "들어가기"
     ]
   },
   {
@@ -47,7 +47,7 @@
     "text": "데이터 로드 (CSV, Excel, SQL)",
     "crumbs": [
       "데이터 전처리 및 분포 변환",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>데이터 로드 및 구조 점검</span>"
     ]
   },
   {
@@ -58,7 +58,7 @@
     "text": "데이터 구조 및 타입 확인",
     "crumbs": [
       "데이터 전처리 및 분포 변환",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>파이썬 데이터 분석</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>데이터 로드 및 구조 점검</span>"
     ]
   }
 ]
