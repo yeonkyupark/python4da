@@ -80,8 +80,8 @@ format:
     mermaid:
       theme: neutral
     sitemap: true
-    include-in-header: adsense.html
-    include-after-body: adsense-body.html
+    # include-in-header: adsense.html
+    # include-after-body: adsense-body.html
 
 toc: true
 toc-depth: 4
