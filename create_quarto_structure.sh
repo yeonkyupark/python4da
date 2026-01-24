@@ -41,19 +41,25 @@ files=(
 
 for file in "${files[@]}"; do
   dir=$(dirname "$file")
+  filename=$(basename "$file")
+  title="${filename%.qmd}"
 
   # 디렉터리 생성
   if [[ "$dir" != "." ]]; then
     mkdir -p "$dir"
   fi
 
-  # 파일이 없을 때만 생성
+  # 파일이 없을 때만 생성 + 제목 추가
   if [[ ! -f "$file" ]]; then
-    touch "$file"
-    echo "Created: $file"
+    {
+      echo "# $title"
+      echo
+    } > "$file"
+
+    echo "Created with title: $file"
   else
     echo "Skipped (already exists): $file"
   fi
 done
 
-echo "✅ Quarto book용 qmd 파일 생성 완료"
+echo "✅ Quarto book용 qmd 파일 및 H1 제목 생성 완료"
