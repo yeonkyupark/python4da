@@ -2,8 +2,9 @@ project:
   type: book
 
 book:
-  title: "python4da"
-  author: "Norah Jones"
+  title: "파이썬 데이터 분석"
+  author: "느리게"
+  site-url: https://yeonkyupark.github.io/python4da/
   date: "2026. 1. 24."
   chapters:
     - index.qmd
@@ -18,8 +19,7 @@ format:
     theme:
       - cosmo
       - brand
-  pdf:
-    documentclass: scrreprt
+
 
 
 
