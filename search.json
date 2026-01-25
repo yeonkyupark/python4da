@@ -38,5 +38,27 @@
     "crumbs": [
       "들어가기"
     ]
+  },
+  {
+    "objectID": "part1/데이터 로드 및 구조 점검.html",
+    "href": "part1/데이터 로드 및 구조 점검.html",
+    "title": "데이터 로드 및 구조 점검",
+    "section": "",
+    "text": "데이터 로드\n데이터 분석에 있어 가장 먼저 하는 작업이 데이터를 수집하는 것이다. 데이터 수집 방법에는 여러 가지가 있을 수 있고 대부분 로컬 파일이나 데이터베이스 또는 다른 시스템의 산출물에서 확보한다. 또한 데이터 원천에서 수집되는 데이터 형태는 시스템이나 상황에 따라 다양할 수 있지만 일반적으로 CSV나 Excel 형태로 처리하게 된다. 물론 API나 데이터베이스에 직접 Query해서 취합할 수도 있다.\n가장 일반적인 자료 형태인 CSV 파일과 Excel 파일을 메모리에 적재하는 방법을 알아 본다.\nimport pandas as pd\nfrom palmerpenguins import load_penguins\n\ndf = load_penguins()\n\ndf.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nmale\n2007\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nfemale\n2007\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nfemale\n2007\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n2007\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nfemale\n2007",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>데이터 로드 및 구조 점검</span>"
+    ]
+  },
+  {
+    "objectID": "part1/데이터 로드 및 구조 점검.html#데이터-구조-및-타입-확인",
+    "href": "part1/데이터 로드 및 구조 점검.html#데이터-구조-및-타입-확인",
+    "title": "데이터 로드 및 구조 점검",
+    "section": "데이터 구조 및 타입 확인",
+    "text": "데이터 구조 및 타입 확인",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>데이터 로드 및 구조 점검</span>"
+    ]
   }
 ]
