@@ -92,4 +92,5 @@ crossref:
   appendix-delim: ":"
   
 execute:
+  python: .venv/bin/python
   freeze: auto
