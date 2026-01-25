@@ -4,7 +4,7 @@
 
 ```{python}
 #| echo: false
-
+#| output: false
 
 import sys
 sys.executable
