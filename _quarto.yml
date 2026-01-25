@@ -75,7 +75,7 @@ format:
     theme:
       - cosmo
       - brand
-    css: style.css
+    css: styles.css
     mermaid:
       theme: neutral
     sitemap: true
