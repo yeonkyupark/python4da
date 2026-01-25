@@ -17,15 +17,25 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Python 버전 고정 (uv가 이 Python을 사용)
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install Python dependencies
+      # uv 설치
+      - name: Install uv
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      # 가상환경 생성 및 패키지 설치
+      - name: Create venv & install dependencies
+        run: |
+          uv venv
+          source .venv/bin/activate
+          uv pip install --upgrade pip
+          uv pip install -r requirements.txt
 
       - name: Configure git identity
         run: |
@@ -47,8 +57,11 @@ jobs:
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      # Quarto 렌더링 (uv venv Python 사용)
       - name: Render book
-        run: quarto render
+        run: |
+          source .venv/bin/activate
+          quarto render
 
       - name: Publish to gh-pages
         uses: quarto-dev/quarto-actions/publish@v2
