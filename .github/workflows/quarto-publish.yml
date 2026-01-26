@@ -13,37 +13,29 @@ jobs:
       contents: write
 
     steps:
-      # 1. 저장소 체크아웃
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Python 설정
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 3. uv 설치
       - name: Install uv
         run: pip install uv
 
-      # 4. 의존성 설치 (uv.lock 기준)
-      - name: Install dependencies with uv
+      - name: Sync environment with uv
         run: |
-          uv venv
-          uv pip sync uv.lock
+          uv sync
 
-      # 5. Quarto 설치
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      # 6. Quarto 렌더링
       - name: Render Quarto Book
         run: |
           source .venv/bin/activate
           quarto render
 
-      # 7. GitHub Pages 배포
       - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
