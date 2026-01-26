@@ -1,69 +1,50 @@
-name: Render & Deploy Quarto Book
+name: Render and Publish Quarto Book
 
 on:
   push:
     branches: [ main ]
-
-permissions:
-  contents: write
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    permissions:
+      contents: write
 
-      # Python 버전 고정 (uv가 이 Python을 사용)
+    steps:
+      # 1. 저장소 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Python 설정
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
-      # uv 설치
+      # 3. uv 설치
       - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        run: pip install uv
 
-      # 가상환경 생성 및 패키지 설치
-      - name: Create venv & install dependencies
+      # 4. 의존성 설치 (uv.lock 기준)
+      - name: Install dependencies with uv
         run: |
           uv venv
-          source .venv/bin/activate
-          uv pip install --upgrade pip
-          uv pip install -r requirements.txt
+          uv pip sync uv.lock
 
-      - name: Configure git identity
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
-      - name: Ensure gh-pages branch exists
-        run: |
-          if ! git ls-remote --exit-code --heads origin gh-pages; then
-            git checkout --orphan gh-pages
-            git rm -rf .
-            echo "Initializing gh-pages branch" > index.html
-            git add index.html
-            git commit -m "Initialize gh-pages"
-            git push origin gh-pages
-            git checkout main
-          fi
-
-      - name: Install Quarto
+      # 5. Quarto 설치
+      - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
-      # Quarto 렌더링 (uv venv Python 사용)
-      - name: Render book
+      # 6. Quarto 렌더링
+      - name: Render Quarto Book
         run: |
           source .venv/bin/activate
           quarto render
 
-      - name: Publish to gh-pages
+      # 7. GitHub Pages 배포
+      - name: Publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages

@@ -1,0 +1,18 @@
+[project]
+name = "python4da"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=7.1.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.8",
+    "nbformat>=5.10.4",
+    "numpy>=2.4.1",
+    "openpyxl>=3.1.5",
+    "palmerpenguins>=0.1.5",
+    "pandas>=3.0.0",
+    "scikit-learn>=1.8.0",
+    "setuptools>=80.10.2",
+]
