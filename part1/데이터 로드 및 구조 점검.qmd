@@ -22,7 +22,69 @@ from palmerpenguins import load_penguins
 df = load_penguins()
 
 df.head()
+
+df.to_csv("penguins.csv", index=False) # CSV 파일로 저장
+df.to_excel("./penguins.xlsx", index=False) # Excel 파일로 저장
+
+# sqlite DB
+import sqlite3
+conn = sqlite3.connect("penguins.db")
+df.to_sql("penguins", conn, if_exists="replace", index=False)
+```
+
+### CSV 파일 로드
+
+```{python}
+import pandas as pd
+
+df_from_csv = pd.read_csv("penguins.csv")
+
+df_from_csv.head()
+```
+
+
+### Excel 파일 로드
+
+```{python}
+import pandas as pd
+
+df_from_excel = pd.read_excel("penguins.xlsx")
+
+df_from_excel.head()
+```
+
+### SQLite 데이터베이스 로드
+
+```{python}
+import sqlite3
+
+conn = sqlite3.connect("penguins.db")
+
+query = "SELECT * FROM penguins"
+df_from_sql = pd.read_sql(query, conn)
+
+df_from_sql.head()
 ```
 
 ## 데이터 구조 및 타입 확인
+
+수집된 데이터에서 가장 먼저 확인하는 것은 데이터의 크기와 컬럼에 대한 정보이다.
+
+### 데이터 크기와 기본 정보
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv("penguins.csv")
+
+df.shape
+```
+
+```{python}
+df.info()
+```
+
+
+
+
 
