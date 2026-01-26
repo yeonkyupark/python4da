@@ -7,3 +7,4 @@ matplotlib
 palmerpenguins
 scikit-learn
 setuptools
+openpyxl

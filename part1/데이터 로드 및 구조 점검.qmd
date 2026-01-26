@@ -29,7 +29,7 @@ df.to_excel("./penguins.xlsx", index=False) # Excel 파일로 저장
 # sqlite DB
 import sqlite3
 conn = sqlite3.connect("penguins.db")
-df.to_sql("penguins", conn, if_exists="replace", index=False)
+result = df.to_sql("penguins", conn, if_exists="replace", index=False)
 ```
 
 ### CSV 파일 로드
