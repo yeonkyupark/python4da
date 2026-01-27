@@ -71,5 +71,115 @@
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>데이터 로드 및 구조 점검</span>"
     ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html",
+    "href": "part1/탐색적 데이터 분석(EDA).html",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "",
+    "text": "2.1 라이브러리 로드 & 데이터 불러오기\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# seaborn 내장 penguins 데이터셋 로드\ndf = sns.load_dataset(\"penguins\")\n\ndf.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nMale\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nFemale\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nFemale\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nFemale",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#데이터-구조-확인",
+    "href": "part1/탐색적 데이터 분석(EDA).html#데이터-구조-확인",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.2 데이터 구조 확인",
+    "text": "2.2 데이터 구조 확인\n\ndf.shape\n\n(344, 7)\n\n\n\ndf.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 344 entries, 0 to 343\nData columns (total 7 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   species            344 non-null    str    \n 1   island             344 non-null    str    \n 2   bill_length_mm     342 non-null    float64\n 3   bill_depth_mm      342 non-null    float64\n 4   flipper_length_mm  342 non-null    float64\n 5   body_mass_g        342 non-null    float64\n 6   sex                333 non-null    str    \ndtypes: float64(4), str(3)\nmemory usage: 18.9 KB\n\n\n확인 포인트\n\n행(row), 열(column) 개수\n변수 타입 (수치형 / 범주형)\n결측치 여부",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#기초-통계량-확인",
+    "href": "part1/탐색적 데이터 분석(EDA).html#기초-통계량-확인",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.3 기초 통계량 확인",
+    "text": "2.3 기초 통계량 확인\n\n2.3.1 수치형 변수 요약\n\ndf.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n\n\n2.3.2 범주형 변수 요약\n\ndf.describe(include=\"object\")\n\n/tmp/ipykernel_2493/702825166.py:1: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.\n  df.describe(include=\"object\")\n\n\n\n\n\n\n\n\n\nspecies\nisland\nsex\n\n\n\n\ncount\n344\n344\n333\n\n\nunique\n3\n3\n2\n\n\ntop\nAdelie\nBiscoe\nMale\n\n\nfreq\n152\n168\n168",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#결측치-탐색",
+    "href": "part1/탐색적 데이터 분석(EDA).html#결측치-탐색",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.4 결측치 탐색",
+    "text": "2.4 결측치 탐색\n\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64\n\n\n(df.isna().mean() * 100).round(1)",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#범주형-변수-탐색",
+    "href": "part1/탐색적 데이터 분석(EDA).html#범주형-변수-탐색",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.5 범주형 변수 탐색",
+    "text": "2.5 범주형 변수 탐색\n\n2.5.1 종(species) 분포\ndf[\"species\"].value_counts()\n\nsns.countplot(data=df, x=\"species\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.5.2 성별(sex) 분포\n\nsns.countplot(data=df, x=\"sex\")\nplt.show()",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#수치형-변수-분포-확인",
+    "href": "part1/탐색적 데이터 분석(EDA).html#수치형-변수-분포-확인",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.6 수치형 변수 분포 확인",
+    "text": "2.6 수치형 변수 분포 확인\n\n2.6.1 히스토그램\n\ndf.hist(bins=20, figsize=(10, 8))\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.2 박스플롯 (이상치 탐색)\n\nplt.figure(figsize=(8, 4))\nsns.boxplot(data=df, x=\"species\", y=\"body_mass_g\")\nplt.show()",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#변수-간-관계-탐색",
+    "href": "part1/탐색적 데이터 분석(EDA).html#변수-간-관계-탐색",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.7 변수 간 관계 탐색",
+    "text": "2.7 변수 간 관계 탐색\n\n2.7.1 두 수치형 변수 관계\n\nsns.scatterplot(\n    data=df,\n    x=\"bill_length_mm\",\n    y=\"bill_depth_mm\",\n    hue=\"species\"\n)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.7.2 페어플롯\n\nsns.pairplot(\n    df,\n    hue=\"species\",\n    diag_kind=\"hist\"\n)\nplt.show()",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#그룹별-통계-확인",
+    "href": "part1/탐색적 데이터 분석(EDA).html#그룹별-통계-확인",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.8 그룹별 통계 확인",
+    "text": "2.8 그룹별 통계 확인\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].mean()",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#간단한-eda-결론-예시",
+    "href": "part1/탐색적 데이터 분석(EDA).html#간단한-eda-결론-예시",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.9 간단한 EDA 결론 예시",
+    "text": "2.9 간단한 EDA 결론 예시\n\n종(species)에 따라 부리 길이와 몸무게 분포가 뚜렷하게 구분된다.\nAdelie 종은 상대적으로 몸무게와 부리 길이가 작다.\n일부 변수에 결측치가 존재하므로 분석 전 처리 전략이 필요하다.",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
+  },
+  {
+    "objectID": "part1/탐색적 데이터 분석(EDA).html#eda-기본-흐름-요약",
+    "href": "part1/탐색적 데이터 분석(EDA).html#eda-기본-흐름-요약",
+    "title": "2  탐색적 데이터 분석(EDA)",
+    "section": "2.10 EDA 기본 흐름 요약",
+    "text": "2.10 EDA 기본 흐름 요약\n\n데이터 구조 확인 → info(), shape\n기초 통계 → describe()\n결측치 → isna()\n분포 → 히스토그램, 박스플롯\n관계 → 산점도, pairplot\n그룹 비교 → groupby()",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
+    ]
   }
 ]
