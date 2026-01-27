@@ -99,7 +99,7 @@
     "href": "part1/탐색적 데이터 분석(EDA).html#기초-통계량-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.3 기초 통계량 확인",
-    "text": "2.3 기초 통계량 확인\n\n2.3.1 수치형 변수 요약\n\ndf.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n\n\n2.3.2 범주형 변수 요약\n\ndf.describe(include=\"object\")\n\n/tmp/ipykernel_2493/702825166.py:1: Pandas4Warning: For backward compatibility, 'str' dtypes are included by select_dtypes when 'object' dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass 'str' to `include` to select them, or to `exclude` to remove them and silence this warning.\nSee https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.\n  df.describe(include=\"object\")\n\n\n\n\n\n\n\n\n\nspecies\nisland\nsex\n\n\n\n\ncount\n344\n344\n333\n\n\nunique\n3\n3\n2\n\n\ntop\nAdelie\nBiscoe\nMale\n\n\nfreq\n152\n168\n168",
+    "text": "2.3 기초 통계량 확인\n\n2.3.1 수치형 변수 요약\n\ndf.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n\n\n2.3.2 범주형 변수 요약\n\ndf.describe(include=\"object\")\n\n\n\n\n\n\n\n\nspecies\nisland\nsex\n\n\n\n\ncount\n344\n344\n333\n\n\nunique\n3\n3\n2\n\n\ntop\nAdelie\nBiscoe\nMale\n\n\nfreq\n152\n168\n168",
     "crumbs": [
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -110,7 +110,7 @@
     "href": "part1/탐색적 데이터 분석(EDA).html#결측치-탐색",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.4 결측치 탐색",
-    "text": "2.4 결측치 탐색\n\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64\n\n\n(df.isna().mean() * 100).round(1)",
+    "text": "2.4 결측치 탐색\n\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64\n\n\n\n(df.isna().mean() * 100).round(1)\n\nspecies              0.0\nisland               0.0\nbill_length_mm       0.6\nbill_depth_mm        0.6\nflipper_length_mm    0.6\nbody_mass_g          0.6\nsex                  3.2\ndtype: float64",
     "crumbs": [
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -121,7 +121,7 @@
     "href": "part1/탐색적 데이터 분석(EDA).html#범주형-변수-탐색",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.5 범주형 변수 탐색",
-    "text": "2.5 범주형 변수 탐색\n\n2.5.1 종(species) 분포\ndf[\"species\"].value_counts()\n\nsns.countplot(data=df, x=\"species\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.5.2 성별(sex) 분포\n\nsns.countplot(data=df, x=\"sex\")\nplt.show()",
+    "text": "2.5 범주형 변수 탐색\n\n2.5.1 종(species) 분포\n\ndf[\"species\"].value_counts()\n\nspecies\nAdelie       152\nGentoo       124\nChinstrap     68\nName: count, dtype: int64\n\n\n\nsns.countplot(data=df, x=\"species\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.5.2 성별(sex) 분포\n\nsns.countplot(data=df, x=\"sex\")\nplt.show()",
     "crumbs": [
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -154,7 +154,7 @@
     "href": "part1/탐색적 데이터 분석(EDA).html#그룹별-통계-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.8 그룹별 통계 확인",
-    "text": "2.8 그룹별 통계 확인\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].mean()",
+    "text": "2.8 그룹별 통계 확인\n\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].mean()\n\n\n\n\n\n\n\n\nbill_length_mm\nbody_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n38.791391\n3700.662252\n\n\nChinstrap\n48.833824\n3733.088235\n\n\nGentoo\n47.504878\n5076.016260",
     "crumbs": [
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
