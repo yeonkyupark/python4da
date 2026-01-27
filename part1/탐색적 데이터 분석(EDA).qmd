@@ -1,2 +1,143 @@
 # 탐색적 데이터 분석(EDA)
 
+## 라이브러리 로드 & 데이터 불러오기
+
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# seaborn 내장 penguins 데이터셋 로드
+df = sns.load_dataset("penguins")
+
+df.head()
+```
+
+## 데이터 구조 확인
+
+```{python}
+df.shape
+```
+
+```{python}
+df.info()
+```
+
+확인 포인트
+
+* 행(row), 열(column) 개수
+* 변수 타입 (수치형 / 범주형)
+* 결측치 여부
+
+
+## 기초 통계량 확인
+
+### 수치형 변수 요약
+
+```{python}
+df.describe()
+```
+
+### 범주형 변수 요약
+
+```{python}
+df.describe(include="object")
+```
+
+## 결측치 탐색
+
+```{python}
+df.isna().sum()
+```
+
+```python
+(df.isna().mean() * 100).round(1)
+```
+
+## 범주형 변수 탐색
+
+### 종(species) 분포
+
+```python
+df["species"].value_counts()
+```
+
+```{python}
+sns.countplot(data=df, x="species")
+plt.show()
+```
+
+
+### 성별(sex) 분포
+
+```{python}
+sns.countplot(data=df, x="sex")
+plt.show()
+```
+
+## 수치형 변수 분포 확인
+
+### 히스토그램
+
+```{python}
+df.hist(bins=20, figsize=(10, 8))
+plt.tight_layout()
+plt.show()
+```
+
+
+### 박스플롯 (이상치 탐색)
+
+```{python}
+plt.figure(figsize=(8, 4))
+sns.boxplot(data=df, x="species", y="body_mass_g")
+plt.show()
+```
+
+
+## 변수 간 관계 탐색
+
+### 두 수치형 변수 관계
+
+```{python}
+sns.scatterplot(
+    data=df,
+    x="bill_length_mm",
+    y="bill_depth_mm",
+    hue="species"
+)
+plt.show()
+```
+
+### 페어플롯
+
+```{python}
+sns.pairplot(
+    df,
+    hue="species",
+    diag_kind="hist"
+)
+plt.show()
+```
+
+
+## 그룹별 통계 확인
+
+```python
+df.groupby("species")[["bill_length_mm", "body_mass_g"]].mean()
+```
+
+## 간단한 EDA 결론 예시
+
+* 종(species)에 따라 부리 길이와 몸무게 분포가 뚜렷하게 구분된다.
+* Adelie 종은 상대적으로 몸무게와 부리 길이가 작다.
+* 일부 변수에 결측치가 존재하므로 분석 전 처리 전략이 필요하다.
+
+## EDA 기본 흐름 요약
+
+* 데이터 구조 확인 → `info()`, `shape`
+* 기초 통계 → `describe()`
+* 결측치 → `isna()`
+* 분포 → 히스토그램, 박스플롯
+* 관계 → 산점도, pairplot
+* 그룹 비교 → `groupby()`
