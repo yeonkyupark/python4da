@@ -41,6 +41,7 @@ df.describe()
 ### 범주형 변수 요약
 
 ```{python}
+#| warning: false
 df.describe(include="object")
 ```
 
@@ -50,7 +51,7 @@ df.describe(include="object")
 df.isna().sum()
 ```
 
-```python
+```{python}
 (df.isna().mean() * 100).round(1)
 ```
 
@@ -58,7 +59,7 @@ df.isna().sum()
 
 ### 종(species) 분포
 
-```python
+```{python}
 df["species"].value_counts()
 ```
 
@@ -123,7 +124,7 @@ plt.show()
 
 ## 그룹별 통계 확인
 
-```python
+```{python}
 df.groupby("species")[["bill_length_mm", "body_mass_g"]].mean()
 ```
 

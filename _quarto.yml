@@ -94,3 +94,5 @@ crossref:
 execute:
   python: .venv/bin/python
   freeze: auto
+  warning: false
+  message: false
