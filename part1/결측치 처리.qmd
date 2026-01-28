@@ -1,2 +1,163 @@
 # 결측치 처리
 
+## 데이터 로드 & 결측치 현황 재확인
+
+```{python}
+import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset("penguins")
+
+df.isna().sum()
+```
+
+
+## 결측치 비율 확인
+
+```{python}
+(df.isna().mean() * 100).round(1)
+```
+
+
+## 결측치 제거 (행 삭제)
+
+### 전체 결측치가 있는 행 제거
+
+```{python}
+df_drop_all = df.dropna()
+df_drop_all.shape
+```
+
+### 결측치가 3개 이상인 행 제거
+
+```{python}
+df["na_count"] = df.isna().sum(axis=1)
+df_row_filtered = df[df["na_count"] < 3].drop(columns="na_count")
+df_row_filtered.shape
+```
+
+```{python}
+# 결측치가 전체 컬럼에서 2개까지만 허용()
+df_thresh = df.dropna(thresh=len(df.columns)-2)
+```
+
+### 특정 컬럼 기준 제거
+
+```{python}
+df_drop_sex = df.dropna(subset=["sex"])
+```
+
+## 수치형 변수 결측치 대체
+
+### 평균(mean) 대체
+
+```{python}
+df_mean = df.copy()
+df_mean["bill_length_mm"] = df_mean["bill_length_mm"].fillna(
+    df_mean["bill_length_mm"].mean()
+)
+```
+
+```{python}
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
+# way 01
+df[num_cols] = df[num_cols].fillna(df[num_cols].mean())
+
+# way 02
+for col in num_cols:
+    mean_value = df[col].mean()
+    df[col] = df[col].fillna(mean_value)
+```
+
+```{python}
+# 범주별 평균값 대체
+df[num_cols] = df[num_cols].fillna(
+    df.groupby("species")[num_cols].transform("mean")
+)
+```
+
+### 중앙값(median) 대체
+
+```{python}
+df_median = df.copy()
+df_median["bill_depth_mm"] = df_median["bill_depth_mm"].fillna(
+    df_median["bill_depth_mm"].median()
+)
+```
+
+
+## 범주형 변수 결측치 대체
+
+### 최빈값(mode) 대체
+
+```{python}
+df_mode = df.copy()
+mode_sex = df_mode["sex"].mode()[0]
+df_mode["sex"] = df_mode["sex"].fillna(mode_sex)
+```
+
+
+### 명시적 범주 추가
+
+```{python}
+df_category = df.copy()
+df_category["sex"] = df_category["sex"].fillna("Unknown")
+```
+
+```{python}
+df_mode = df.copy()
+
+cat_cols = ["sex", "island"]
+
+for col in cat_cols:
+    mode_value = df_mode[col].mode()[0]
+    df_mode[col] = df_mode[col].fillna(mode_value)
+```
+
+```{python}
+df_mode = df.copy()
+
+df_mode["sex"] = df_mode["sex"].fillna(
+    df_mode.groupby("species")["sex"].transform(
+        lambda x: x.mode()[0]
+    )
+)
+```
+
+```{python}
+df_mode = df.copy()
+
+cat_cols = ["sex", "island"]
+
+for col in cat_cols:
+    df_mode[col] = df_mode[col].fillna(
+        df_mode.groupby("species")[col].transform(
+            lambda x: x.mode()[0]
+        )
+    )
+```
+
+## 결측치 처리 후 검증
+
+```{python}
+df_group.isna().sum()
+```
+
+```{python}
+df_group.info()
+```
+
+## 결측치 처리 권장 순서
+
+1. 결측치 현황 파악
+2. 제거 가능한 행/열 판단
+3. 수치형 → 그룹 기반 대체
+4. 범주형 → mode 또는 Unknown
+5. 최종 검증
+
