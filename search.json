@@ -181,5 +181,82 @@
       "데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
     ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html",
+    "href": "part1/결측치 처리.html",
+    "title": "3  결측치 처리",
+    "section": "",
+    "text": "3.1 데이터 로드 & 결측치 현황 재확인\nimport pandas as pd\nimport seaborn as sns\n\ndf = sns.load_dataset(\"penguins\")\n\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#결측치-비율-확인",
+    "href": "part1/결측치 처리.html#결측치-비율-확인",
+    "title": "3  결측치 처리",
+    "section": "3.2 결측치 비율 확인",
+    "text": "3.2 결측치 비율 확인\n\n(df.isna().mean() * 100).round(1)\n\nspecies              0.0\nisland               0.0\nbill_length_mm       0.6\nbill_depth_mm        0.6\nflipper_length_mm    0.6\nbody_mass_g          0.6\nsex                  3.2\ndtype: float64",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#결측치-제거-행-삭제",
+    "href": "part1/결측치 처리.html#결측치-제거-행-삭제",
+    "title": "3  결측치 처리",
+    "section": "3.3 결측치 제거 (행 삭제)",
+    "text": "3.3 결측치 제거 (행 삭제)\n\n3.3.1 전체 결측치가 있는 행 제거\n\ndf_drop_all = df.dropna()\ndf_drop_all.shape\n\n(333, 7)\n\n\n\n\n3.3.2 결측치가 3개 이상인 행 제거\n\ndf[\"na_count\"] = df.isna().sum(axis=1)\ndf_row_filtered = df[df[\"na_count\"] &lt; 3].drop(columns=\"na_count\")\ndf_row_filtered.shape\n\n(342, 7)\n\n\n\n# 결측치가 전체 컬럼에서 2개까지만 허용()\ndf_thresh = df.dropna(thresh=len(df.columns)-2)\n\n\n\n3.3.3 특정 컬럼 기준 제거\n\ndf_drop_sex = df.dropna(subset=[\"sex\"])",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#수치형-변수-결측치-대체",
+    "href": "part1/결측치 처리.html#수치형-변수-결측치-대체",
+    "title": "3  결측치 처리",
+    "section": "3.4 수치형 변수 결측치 대체",
+    "text": "3.4 수치형 변수 결측치 대체\n\n3.4.1 평균(mean) 대체\n특정 컬럼에 대한 평균 대체\n\ndf_mean = df.copy()\ndf_mean[\"bill_length_mm\"] = df_mean[\"bill_length_mm\"].fillna(\n    df_mean[\"bill_length_mm\"].mean()\n)\n\n다중 컬럼에 대한 처리 - 1\n\ndf_cols = df.copy()\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\n\ndf_cols[num_cols] = df_cols[num_cols].fillna(df[num_cols].mean())\n\n다중 컬럼에 대한 처리 - 2\n\nfor col in num_cols:\n    mean_value = df[col].mean()\n    df[col] = df[col].fillna(mean_value)\n\n범주별 다중 컬럼 처리\n\ndf_group = df.copy()\n\ndf_group[num_cols] = df_group[num_cols].fillna(\n    df_group.groupby(\"species\")[num_cols].transform(\"mean\")\n)\n\n\n\n3.4.2 중앙값(median) 대체\n\ndf_median = df.copy()\ndf_median[\"bill_depth_mm\"] = df_median[\"bill_depth_mm\"].fillna(\n    df_median[\"bill_depth_mm\"].median()\n)",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#범주형-변수-결측치-대체",
+    "href": "part1/결측치 처리.html#범주형-변수-결측치-대체",
+    "title": "3  결측치 처리",
+    "section": "3.5 범주형 변수 결측치 대체",
+    "text": "3.5 범주형 변수 결측치 대체\n\n3.5.1 최빈값(mode) 대체\n\ndf_mode = df.copy()\nmode_sex = df_mode[\"sex\"].mode()[0]\ndf_mode[\"sex\"] = df_mode[\"sex\"].fillna(mode_sex)\n\n\n\n3.5.2 명시적 범주 추가\n\ndf_category = df.copy()\ndf_category[\"sex\"] = df_category[\"sex\"].fillna(\"Unknown\")\n\n\ndf_mode = df.copy()\n\ncat_cols = [\"sex\", \"island\"]\n\nfor col in cat_cols:\n    mode_value = df_mode[col].mode()[0]\n    df_mode[col] = df_mode[col].fillna(mode_value)\n\n\ndf_mode = df.copy()\n\ndf_mode[\"sex\"] = df_mode[\"sex\"].fillna(\n    df_mode.groupby(\"species\")[\"sex\"].transform(\n        lambda x: x.mode()[0]\n    )\n)\n\n\ndf_mode = df.copy()\n\ncat_cols = [\"sex\", \"island\"]\n\nfor col in cat_cols:\n    df_mode[col] = df_mode[col].fillna(\n        df_mode.groupby(\"species\")[col].transform(\n            lambda x: x.mode()[0]\n        )\n    )",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#결측치-처리-후-검증",
+    "href": "part1/결측치 처리.html#결측치-처리-후-검증",
+    "title": "3  결측치 처리",
+    "section": "3.6 결측치 처리 후 검증",
+    "text": "3.6 결측치 처리 후 검증\n\ndf_group.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        0\nbill_depth_mm         0\nflipper_length_mm     0\nbody_mass_g           0\nsex                  11\nna_count              0\ndtype: int64\n\n\n\ndf_group.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 344 entries, 0 to 343\nData columns (total 8 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   species            344 non-null    str    \n 1   island             344 non-null    str    \n 2   bill_length_mm     344 non-null    float64\n 3   bill_depth_mm      344 non-null    float64\n 4   flipper_length_mm  344 non-null    float64\n 5   body_mass_g        344 non-null    float64\n 6   sex                333 non-null    str    \n 7   na_count           344 non-null    int64  \ndtypes: float64(4), int64(1), str(3)\nmemory usage: 21.6 KB",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/결측치 처리.html#결측치-처리-권장-순서",
+    "href": "part1/결측치 처리.html#결측치-처리-권장-순서",
+    "title": "3  결측치 처리",
+    "section": "3.7 결측치 처리 권장 순서",
+    "text": "3.7 결측치 처리 권장 순서\n\n결측치 현황 파악\n제거 가능한 행/열 판단\n수치형 → 그룹 기반 대체\n범주형 → mode 또는 Unknown\n최종 검증",
+    "crumbs": [
+      "데이터 전처리 및 변환",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
+    ]
   }
 ]

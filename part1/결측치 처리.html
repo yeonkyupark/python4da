@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,33 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#데이터-로드-결측치-현황-재확인" id="toc-데이터-로드-결측치-현황-재확인" class="nav-link active" data-scroll-target="#데이터-로드-결측치-현황-재확인"><span class="header-section-number">3.1</span> 데이터 로드 &amp; 결측치 현황 재확인</a></li>
+  <li><a href="#결측치-비율-확인" id="toc-결측치-비율-확인" class="nav-link" data-scroll-target="#결측치-비율-확인"><span class="header-section-number">3.2</span> 결측치 비율 확인</a></li>
+  <li><a href="#결측치-제거-행-삭제" id="toc-결측치-제거-행-삭제" class="nav-link" data-scroll-target="#결측치-제거-행-삭제"><span class="header-section-number">3.3</span> 결측치 제거 (행 삭제)</a>
+  <ul>
+  <li><a href="#전체-결측치가-있는-행-제거" id="toc-전체-결측치가-있는-행-제거" class="nav-link" data-scroll-target="#전체-결측치가-있는-행-제거"><span class="header-section-number">3.3.1</span> 전체 결측치가 있는 행 제거</a></li>
+  <li><a href="#결측치가-3개-이상인-행-제거" id="toc-결측치가-3개-이상인-행-제거" class="nav-link" data-scroll-target="#결측치가-3개-이상인-행-제거"><span class="header-section-number">3.3.2</span> 결측치가 3개 이상인 행 제거</a></li>
+  <li><a href="#특정-컬럼-기준-제거" id="toc-특정-컬럼-기준-제거" class="nav-link" data-scroll-target="#특정-컬럼-기준-제거"><span class="header-section-number">3.3.3</span> 특정 컬럼 기준 제거</a></li>
+  </ul></li>
+  <li><a href="#수치형-변수-결측치-대체" id="toc-수치형-변수-결측치-대체" class="nav-link" data-scroll-target="#수치형-변수-결측치-대체"><span class="header-section-number">3.4</span> 수치형 변수 결측치 대체</a>
+  <ul>
+  <li><a href="#평균mean-대체" id="toc-평균mean-대체" class="nav-link" data-scroll-target="#평균mean-대체"><span class="header-section-number">3.4.1</span> 평균(mean) 대체</a></li>
+  <li><a href="#중앙값median-대체" id="toc-중앙값median-대체" class="nav-link" data-scroll-target="#중앙값median-대체"><span class="header-section-number">3.4.2</span> 중앙값(median) 대체</a></li>
+  </ul></li>
+  <li><a href="#범주형-변수-결측치-대체" id="toc-범주형-변수-결측치-대체" class="nav-link" data-scroll-target="#범주형-변수-결측치-대체"><span class="header-section-number">3.5</span> 범주형 변수 결측치 대체</a>
+  <ul>
+  <li><a href="#최빈값mode-대체" id="toc-최빈값mode-대체" class="nav-link" data-scroll-target="#최빈값mode-대체"><span class="header-section-number">3.5.1</span> 최빈값(mode) 대체</a></li>
+  <li><a href="#명시적-범주-추가" id="toc-명시적-범주-추가" class="nav-link" data-scroll-target="#명시적-범주-추가"><span class="header-section-number">3.5.2</span> 명시적 범주 추가</a></li>
+  </ul></li>
+  <li><a href="#결측치-처리-후-검증" id="toc-결측치-처리-후-검증" class="nav-link" data-scroll-target="#결측치-처리-후-검증"><span class="header-section-number">3.6</span> 결측치 처리 후 검증</a></li>
+  <li><a href="#결측치-처리-권장-순서" id="toc-결측치-처리-권장-순서" class="nav-link" data-scroll-target="#결측치-처리-권장-순서"><span class="header-section-number">3.7</span> 결측치 처리 권장 순서</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/결측치 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +426,223 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="데이터-로드-결측치-현황-재확인" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="데이터-로드-결측치-현황-재확인"><span class="header-section-number">3.1</span> 데이터 로드 &amp; 결측치 현황 재확인</h2>
+<div id="3950fa23" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>species               0
+island                0
+bill_length_mm        2
+bill_depth_mm         2
+flipper_length_mm     2
+body_mass_g           2
+sex                  11
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="결측치-비율-확인" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="결측치-비율-확인"><span class="header-section-number">3.2</span> 결측치 비율 확인</h2>
+<div id="c1b7195a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(df.isna().mean() <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>species              0.0
+island               0.0
+bill_length_mm       0.6
+bill_depth_mm        0.6
+flipper_length_mm    0.6
+body_mass_g          0.6
+sex                  3.2
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="결측치-제거-행-삭제" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="결측치-제거-행-삭제"><span class="header-section-number">3.3</span> 결측치 제거 (행 삭제)</h2>
+<section id="전체-결측치가-있는-행-제거" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="전체-결측치가-있는-행-제거"><span class="header-section-number">3.3.1</span> 전체 결측치가 있는 행 제거</h3>
+<div id="b3780641" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_drop_all <span class="op">=</span> df.dropna()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_drop_all.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(333, 7)</code></pre>
+</div>
+</div>
+</section>
+<section id="결측치가-3개-이상인-행-제거" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="결측치가-3개-이상인-행-제거"><span class="header-section-number">3.3.2</span> 결측치가 3개 이상인 행 제거</h3>
+<div id="89705a8d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"na_count"</span>] <span class="op">=</span> df.isna().<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_row_filtered <span class="op">=</span> df[df[<span class="st">"na_count"</span>] <span class="op">&lt;</span> <span class="dv">3</span>].drop(columns<span class="op">=</span><span class="st">"na_count"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df_row_filtered.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(342, 7)</code></pre>
+</div>
+</div>
+<div id="a1d889eb" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치가 전체 컬럼에서 2개까지만 허용()</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_thresh <span class="op">=</span> df.dropna(thresh<span class="op">=</span><span class="bu">len</span>(df.columns)<span class="op">-</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="특정-컬럼-기준-제거" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="특정-컬럼-기준-제거"><span class="header-section-number">3.3.3</span> 특정 컬럼 기준 제거</h3>
+<div id="5969cc1a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_drop_sex <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">"sex"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="수치형-변수-결측치-대체" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="수치형-변수-결측치-대체"><span class="header-section-number">3.4</span> 수치형 변수 결측치 대체</h2>
+<section id="평균mean-대체" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="평균mean-대체"><span class="header-section-number">3.4.1</span> 평균(mean) 대체</h3>
+<p>특정 컬럼에 대한 평균 대체</p>
+<div id="15e45136" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_mean <span class="op">=</span> df.copy()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_mean[<span class="st">"bill_length_mm"</span>] <span class="op">=</span> df_mean[<span class="st">"bill_length_mm"</span>].fillna(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    df_mean[<span class="st">"bill_length_mm"</span>].mean()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>다중 컬럼에 대한 처리 - 1</p>
+<div id="40e45864" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_cols <span class="op">=</span> df.copy()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df_cols[num_cols] <span class="op">=</span> df_cols[num_cols].fillna(df[num_cols].mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>다중 컬럼에 대한 처리 - 2</p>
+<div id="bca03f51" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    mean_value <span class="op">=</span> df[col].mean()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].fillna(mean_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>범주별 다중 컬럼 처리</p>
+<div id="ff721d48" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_group <span class="op">=</span> df.copy()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_group[num_cols] <span class="op">=</span> df_group[num_cols].fillna(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    df_group.groupby(<span class="st">"species"</span>)[num_cols].transform(<span class="st">"mean"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="중앙값median-대체" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="중앙값median-대체"><span class="header-section-number">3.4.2</span> 중앙값(median) 대체</h3>
+<div id="6e2e13fb" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_median <span class="op">=</span> df.copy()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_median[<span class="st">"bill_depth_mm"</span>] <span class="op">=</span> df_median[<span class="st">"bill_depth_mm"</span>].fillna(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    df_median[<span class="st">"bill_depth_mm"</span>].median()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="범주형-변수-결측치-대체" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="범주형-변수-결측치-대체"><span class="header-section-number">3.5</span> 범주형 변수 결측치 대체</h2>
+<section id="최빈값mode-대체" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="최빈값mode-대체"><span class="header-section-number">3.5.1</span> 최빈값(mode) 대체</h3>
+<div id="13a6e894" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_mode <span class="op">=</span> df.copy()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mode_sex <span class="op">=</span> df_mode[<span class="st">"sex"</span>].mode()[<span class="dv">0</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df_mode[<span class="st">"sex"</span>] <span class="op">=</span> df_mode[<span class="st">"sex"</span>].fillna(mode_sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="명시적-범주-추가" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="명시적-범주-추가"><span class="header-section-number">3.5.2</span> 명시적 범주 추가</h3>
+<div id="50ef7b4d" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_category <span class="op">=</span> df.copy()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_category[<span class="st">"sex"</span>] <span class="op">=</span> df_category[<span class="st">"sex"</span>].fillna(<span class="st">"Unknown"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f9a593cf" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_mode <span class="op">=</span> df.copy()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"sex"</span>, <span class="st">"island"</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    mode_value <span class="op">=</span> df_mode[col].mode()[<span class="dv">0</span>]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    df_mode[col] <span class="op">=</span> df_mode[col].fillna(mode_value)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e48709e1" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_mode <span class="op">=</span> df.copy()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df_mode[<span class="st">"sex"</span>] <span class="op">=</span> df_mode[<span class="st">"sex"</span>].fillna(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    df_mode.groupby(<span class="st">"species"</span>)[<span class="st">"sex"</span>].transform(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> x: x.mode()[<span class="dv">0</span>]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="639969e2" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_mode <span class="op">=</span> df.copy()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"sex"</span>, <span class="st">"island"</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    df_mode[col] <span class="op">=</span> df_mode[col].fillna(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        df_mode.groupby(<span class="st">"species"</span>)[col].transform(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> x: x.mode()[<span class="dv">0</span>]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="결측치-처리-후-검증" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="결측치-처리-후-검증"><span class="header-section-number">3.6</span> 결측치 처리 후 검증</h2>
+<div id="36127ceb" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_group.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>species               0
+island                0
+bill_length_mm        0
+bill_depth_mm         0
+flipper_length_mm     0
+body_mass_g           0
+sex                  11
+na_count              0
+dtype: int64</code></pre>
+</div>
+</div>
+<div id="66a032ca" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_group.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 344 entries, 0 to 343
+Data columns (total 8 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   species            344 non-null    str    
+ 1   island             344 non-null    str    
+ 2   bill_length_mm     344 non-null    float64
+ 3   bill_depth_mm      344 non-null    float64
+ 4   flipper_length_mm  344 non-null    float64
+ 5   body_mass_g        344 non-null    float64
+ 6   sex                333 non-null    str    
+ 7   na_count           344 non-null    int64  
+dtypes: float64(4), int64(1), str(3)
+memory usage: 21.6 KB</code></pre>
+</div>
+</div>
+</section>
+<section id="결측치-처리-권장-순서" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="결측치-처리-권장-순서"><span class="header-section-number">3.7</span> 결측치 처리 권장 순서</h2>
+<ol type="1">
+<li>결측치 현황 파악</li>
+<li>제거 가능한 행/열 판단</li>
+<li>수치형 → 그룹 기반 대체</li>
+<li>범주형 → mode 또는 Unknown</li>
+<li>최종 검증</li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1065,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/결측치 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/결측치 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
