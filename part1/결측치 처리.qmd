@@ -51,6 +51,8 @@ df_drop_sex = df.dropna(subset=["sex"])
 
 ### 평균(mean) 대체
 
+특정 컬럼에 대한 평균 대체
+
 ```{python}
 df_mean = df.copy()
 df_mean["bill_length_mm"] = df_mean["bill_length_mm"].fillna(
@@ -58,7 +60,10 @@ df_mean["bill_length_mm"] = df_mean["bill_length_mm"].fillna(
 )
 ```
 
+다중 컬럼에 대한 처리 - 1
+
 ```{python}
+df_cols = df.copy()
 num_cols = [
     "bill_length_mm",
     "bill_depth_mm",
@@ -66,19 +71,25 @@ num_cols = [
     "body_mass_g"
 ]
 
-# way 01
-df[num_cols] = df[num_cols].fillna(df[num_cols].mean())
 
-# way 02
+df_cols[num_cols] = df_cols[num_cols].fillna(df[num_cols].mean())
+```
+
+다중 컬럼에 대한 처리 - 2
+
+```{python}
 for col in num_cols:
     mean_value = df[col].mean()
     df[col] = df[col].fillna(mean_value)
 ```
 
+범주별 다중 컬럼 처리
+
 ```{python}
-# 범주별 평균값 대체
-df[num_cols] = df[num_cols].fillna(
-    df.groupby("species")[num_cols].transform("mean")
+df_group = df.copy()
+
+df_group[num_cols] = df_group[num_cols].fillna(
+    df_group.groupby("species")[num_cols].transform("mean")
 )
 ```
 
