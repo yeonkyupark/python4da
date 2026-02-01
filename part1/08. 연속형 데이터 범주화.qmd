@@ -31,8 +31,6 @@ df["bill_length_bin"] = pd.cut(df["bill_length_mm"], bins=4)
 print(df["bill_length_bin"])
 ```
 
----
-
 ### 범주 이름 지정
 
 ```{python}
@@ -123,16 +121,12 @@ df.loc[x.index, "bill_length_kbin"] = x["cluster"]
 print(df["bill_length_kbin"])
 ```
 
----
-
 ### 특징
 
 * 데이터 기반
 * 해석은 상대적으로 어려움
 
----
-
-## 5️⃣ Decision Tree 기반 구간화
+## Decision Tree 기반 구간화
 
 ### 개념
 
