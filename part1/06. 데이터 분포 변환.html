@@ -21,10 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,8 +107,40 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -335,8 +402,40 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#분포-변환-이유" id="toc-분포-변환-이유" class="nav-link active" data-scroll-target="#분포-변환-이유"><span class="header-section-number">6.1</span> 분포 변환 이유</a></li>
+  <li><a href="#로그-변환-log-transform" id="toc-로그-변환-log-transform" class="nav-link" data-scroll-target="#로그-변환-log-transform"><span class="header-section-number">6.2</span> 로그 변환 (Log Transform)</a>
+  <ul>
+  <li><a href="#수식" id="toc-수식" class="nav-link" data-scroll-target="#수식"><span class="header-section-number">6.2.1</span> 수식</a></li>
+  <li><a href="#코드" id="toc-코드" class="nav-link" data-scroll-target="#코드"><span class="header-section-number">6.2.2</span> 코드</a></li>
+  <li><a href="#포함-변수-안전-처리" id="toc-포함-변수-안전-처리" class="nav-link" data-scroll-target="#포함-변수-안전-처리"><span class="header-section-number">6.2.3</span> 0 포함 변수 안전 처리</a></li>
+  <li><a href="#왜도-변화-확인" id="toc-왜도-변화-확인" class="nav-link" data-scroll-target="#왜도-변화-확인"><span class="header-section-number">6.2.4</span> 왜도 변화 확인</a></li>
+  </ul></li>
+  <li><a href="#제곱근-변환-square-root-transform" id="toc-제곱근-변환-square-root-transform" class="nav-link" data-scroll-target="#제곱근-변환-square-root-transform"><span class="header-section-number">6.3</span> 제곱근 변환 (Square Root Transform)</a>
+  <ul>
+  <li><a href="#수식-1" id="toc-수식-1" class="nav-link" data-scroll-target="#수식-1"><span class="header-section-number">6.3.1</span> 수식</a></li>
+  <li><a href="#코드-1" id="toc-코드-1" class="nav-link" data-scroll-target="#코드-1"><span class="header-section-number">6.3.2</span> 코드</a></li>
+  <li><a href="#제곱근-변환과-비교" id="toc-제곱근-변환과-비교" class="nav-link" data-scroll-target="#제곱근-변환과-비교"><span class="header-section-number">6.3.3</span> 제곱근 변환과 비교</a></li>
+  </ul></li>
+  <li><a href="#boxcox-변환" id="toc-boxcox-변환" class="nav-link" data-scroll-target="#boxcox-변환"><span class="header-section-number">6.4</span> Box–Cox 변환</a>
+  <ul>
+  <li><a href="#수식-2" id="toc-수식-2" class="nav-link" data-scroll-target="#수식-2"><span class="header-section-number">6.4.1</span> 수식</a></li>
+  <li><a href="#코드-2" id="toc-코드-2" class="nav-link" data-scroll-target="#코드-2"><span class="header-section-number">6.4.2</span> 코드</a></li>
+  </ul></li>
+  <li><a href="#yeojohnson-변환" id="toc-yeojohnson-변환" class="nav-link" data-scroll-target="#yeojohnson-변환"><span class="header-section-number">6.5</span> Yeo–Johnson 변환</a>
+  <ul>
+  <li><a href="#sklearn-사용" id="toc-sklearn-사용" class="nav-link" data-scroll-target="#sklearn-사용"><span class="header-section-number">6.5.1</span> sklearn 사용</a></li>
+  </ul></li>
+  <li><a href="#분위수-변환-quantile-transform" id="toc-분위수-변환-quantile-transform" class="nav-link" data-scroll-target="#분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</a></li>
+  <li><a href="#변환-전후-왜도-비교" id="toc-변환-전후-왜도-비교" class="nav-link" data-scroll-target="#변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전·후 왜도 비교</a></li>
+  <li><a href="#선택-가이드-교안-요약" id="toc-선택-가이드-교안-요약" class="nav-link" data-scroll-target="#선택-가이드-교안-요약"><span class="header-section-number">6.8</span> 선택 가이드 (교안 요약)</a></li>
+  <li><a href="#스케일링과의-관계" id="toc-스케일링과의-관계" class="nav-link" data-scroll-target="#스케일링과의-관계"><span class="header-section-number">6.9</span> 스케일링과의 관계</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/06. 데이터 분포 변환.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +465,362 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>예제 데이터셋 적재</p>
+<div id="d0680783" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df_num <span class="op">=</span> df[num_cols]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="분포-변환-이유" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="분포-변환-이유"><span class="header-section-number">6.1</span> 분포 변환 이유</h2>
+<div id="9723fa97" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_num.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>bill_length_mm       0.053118
+bill_depth_mm       -0.143465
+flipper_length_mm    0.345682
+body_mass_g          0.470329
+dtype: float64</code></pre>
+</div>
+</div>
+<p>대부분 데이터는 <strong>양의 왜도(skewness)</strong> 형태를 보이며 평균·분산 기반 모델(선형 회귀, PCA 등)에 불리</p>
+<p>분포를 <strong>대칭에 가깝게</strong> 변환함으로써 극단값 영향 완화, 모델 가정 충족이 목표</p>
+</section>
+<section id="로그-변환-log-transform" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="로그-변환-log-transform"><span class="header-section-number">6.2</span> 로그 변환 (Log Transform)</h2>
+<p>오른쪽 꼬리가 긴 분포(양의 왜도, Positive)에 효과적</p>
+<section id="수식" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="수식"><span class="header-section-number">6.2.1</span> 수식</h3>
+<p><span class="math display">\[
+x' = \log(x)
+\]</span></p>
+<p>0 이하 값 변환 불가로 보정 필요</p>
+</section>
+<section id="코드" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="코드"><span class="header-section-number">6.2.2</span> 코드</h3>
+<div id="c2dd9fde" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_log <span class="op">=</span> df_num.copy()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    df_log[col] <span class="op">=</span> np.log(df_log[col])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0          3.666122       2.928524           5.198497     8.229511
+1          3.676301       2.856470           5.225747     8.242756
+2          3.696351       2.890372           5.273000     8.086410
+3               NaN            NaN                NaN          NaN
+4          3.602777       2.960105           5.262690     8.146130
+..              ...            ...                ...          ...
+339             NaN            NaN                NaN          NaN
+340        3.845883       2.660260           5.370638     8.486734
+341        3.919991       2.753661           5.402677     8.656955
+342        3.811097       2.694627           5.356586     8.556414
+343        3.910021       2.778819           5.361292     8.594154
+
+[344 rows x 4 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="포함-변수-안전-처리" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="포함-변수-안전-처리"><span class="header-section-number">6.2.3</span> 0 포함 변수 안전 처리</h3>
+<div id="9719a42e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_log_safe <span class="op">=</span> np.log1p(df_num)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log_safe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0          3.691376       2.980619           5.204007     8.229778
+1          3.701302       2.912351           5.231109     8.243019
+2          3.720862       2.944439           5.278115     8.086718
+3               NaN            NaN                NaN          NaN
+4          3.629660       3.010621           5.267858     8.146419
+..              ...            ...                ...          ...
+339             NaN            NaN                NaN          NaN
+340        3.867026       2.727853           5.375278     8.486940
+341        3.939638       2.815409           5.407172     8.657129
+342        3.832980       2.760010           5.361292     8.556606
+343        3.929863       2.839078           5.365976     8.594339
+
+[344 rows x 4 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="왜도-변화-확인" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="왜도-변화-확인"><span class="header-section-number">6.2.4</span> 왜도 변화 확인</h3>
+<div id="737dfe4b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_log_safe.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>bill_length_mm      -0.143463
+bill_depth_mm       -0.315791
+flipper_length_mm    0.251965
+body_mass_g          0.170721
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="제곱근-변환-square-root-transform" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="제곱근-변환-square-root-transform"><span class="header-section-number">6.3</span> 제곱근 변환 (Square Root Transform)</h2>
+<p>로그보다 완만한 변환</p>
+<section id="수식-1" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="수식-1"><span class="header-section-number">6.3.1</span> 수식</h3>
+<p><span class="math display">\[
+x' = \sqrt{x}
+\]</span></p>
+</section>
+<section id="코드-1" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="코드-1"><span class="header-section-number">6.3.2</span> 코드</h3>
+<div id="b8ce7805" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_sqrt <span class="op">=</span> np.sqrt(df_num)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_sqrt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0          6.252999       4.324350          13.453624    61.237244
+1          6.284903       4.171331          13.638182    61.644140
+2          6.348228       4.242641          13.964240    57.008771
+3               NaN            NaN                NaN          NaN
+4          6.058052       4.393177          13.892444    58.736701
+..              ...            ...                ...          ...
+339             NaN            NaN                NaN          NaN
+340        6.841053       3.781534          14.662878    69.641941
+341        7.099296       3.962323          14.899664    75.828754
+342        6.723095       3.847077          14.560220    72.111026
+343        7.063993       4.012481          14.594520    73.484692
+
+[344 rows x 4 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="제곱근-변환과-비교" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="제곱근-변환과-비교"><span class="header-section-number">6.3.3</span> 제곱근 변환과 비교</h3>
+<p>제곱근이 적합한 경우</p>
+<ul>
+<li>왜도가 심하지 않음</li>
+<li>데이터 범위가 크지 않음</li>
+<li>분포를 살짝만 정리하고 싶을 때</li>
+<li>카운트 데이터 (포아송 계열)</li>
+</ul>
+<p>로그가 적합한 경우</p>
+<ul>
+<li>왜도가 매우 큼</li>
+<li>극단값(outlier)이 많음</li>
+<li>선형 회귀, PCA, 거리 기반 모델</li>
+<li>“비율 변화”가 중요한 문제</li>
+</ul>
+</section>
+</section>
+<section id="boxcox-변환" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="boxcox-변환"><span class="header-section-number">6.4</span> Box–Cox 변환</h2>
+<p>로그의 일반화 버전으로 λ(람다)를 자동 추정 (단, 양수 전용)</p>
+<section id="수식-2" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="수식-2"><span class="header-section-number">6.4.1</span> 수식</h3>
+<p><span class="math display">\[
+x' =
+\begin{cases}
+\frac{x^\lambda - 1}{\lambda}, &amp; \lambda \neq 0 \
+\log(x), &amp; \lambda = 0
+\end{cases}
+\]</span></p>
+</section>
+<section id="코드-2" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="코드-2"><span class="header-section-number">6.4.2</span> 코드</h3>
+<div id="1fb8a1f0" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> boxcox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="6af30632" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_boxcox <span class="op">=</span> df_num.copy()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> {}</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_boxcox[col].dropna()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    transformed, lam <span class="op">=</span> boxcox(data)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    df_boxcox.loc[data.index, col] <span class="op">=</span> transformed</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    lambdas[col] <span class="op">=</span> lam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="9202780e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lambdas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>{'bill_length_mm': np.float64(0.6201739671602454),
+ 'bill_depth_mm': np.float64(1.4747606585324315),
+ 'flipper_length_mm': np.float64(-2.0632096556190813),
+ 'body_mass_g': np.float64(-0.4656520321320674)}</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="yeojohnson-변환" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="yeojohnson-변환"><span class="header-section-number">6.5</span> Yeo–Johnson 변환</h2>
+<p>Box–Cox의 확장 방식으로 0, 음수에 대해서도 변환 가능</p>
+<section id="sklearn-사용" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="sklearn-사용"><span class="header-section-number">6.5.1</span> sklearn 사용</h3>
+<div id="2d8a7e94" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e9c5f061" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_yeojohnson <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    pt.fit_transform(df_num),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>0, 음수 허용를 허용하며 결측치 제외 후 자동 처리</p>
+</section>
+</section>
+<section id="분위수-변환-quantile-transform" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</h2>
+<p>분포 모양 자체를 바꿈</p>
+<div id="a1975480" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="c9219992" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>qt <span class="op">=</span> QuantileTransformer(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output_distribution<span class="op">=</span><span class="st">"normal"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>df_quantile <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    qt.fit_transform(df_num),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_quantile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0         -0.704794       0.690633          -1.663512    -0.366106
+1         -0.649469       0.033085          -1.127632    -0.269985
+2         -0.506872       0.288983          -0.176300    -1.347428
+3               NaN            NaN                NaN          NaN
+4         -1.237926       1.107167          -0.335021    -0.890537
+..              ...            ...                ...          ...
+339             NaN            NaN                NaN          NaN
+340        0.449514      -1.286551           0.796647     0.737791
+341        1.120759      -0.627072           1.413753     1.848596
+342        0.091477      -0.963539           0.596232     1.042077
+343        0.965467      -0.465743           0.653988     1.245827
+
+[344 rows x 4 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="변환-전후-왜도-비교" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전·후 왜도 비교</h2>
+<div id="e6f84761" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>skew_compare <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"original"</span>: df_num.skew(),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"log"</span>: df_log_safe.skew(),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"yeo-johnson"</span>: df_yeojohnson.skew()</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>skew_compare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">original</th>
+<th data-quarto-table-cell-role="th">log</th>
+<th data-quarto-table-cell-role="th">yeo-johnson</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<td>0.053118</td>
+<td>-0.143463</td>
+<td>-0.023577</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<td>-0.143465</td>
+<td>-0.315791</td>
+<td>-0.052609</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<td>0.345682</td>
+<td>0.251965</td>
+<td>0.050271</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+<td>0.470329</td>
+<td>0.170721</td>
+<td>0.026153</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="선택-가이드-교안-요약" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="선택-가이드-교안-요약"><span class="header-section-number">6.8</span> 선택 가이드 (교안 요약)</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>특징</th>
+<th>추천</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Log</td>
+<td>단순</td>
+<td>기초</td>
+</tr>
+<tr class="even">
+<td>Sqrt</td>
+<td>완만</td>
+<td>보조</td>
+</tr>
+<tr class="odd">
+<td>Box–Cox</td>
+<td>최적 λ</td>
+<td>양수 데이터</td>
+</tr>
+<tr class="even">
+<td>Yeo–Johnson</td>
+<td>범용</td>
+<td><strong>실무 기본</strong></td>
+</tr>
+<tr class="odd">
+<td>Quantile</td>
+<td>분포 강제</td>
+<td>비정상 분포</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="스케일링과의-관계" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="스케일링과의-관계"><span class="header-section-number">6.9</span> 스케일링과의 관계</h2>
+<ul>
+<li>분포 변환 → <strong>모양 변경</strong></li>
+<li>스케일링 → <strong>크기 조정</strong></li>
+<li>일반 순서 <strong>분포 변환 → 스케일링</strong></li>
+</ul>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1243,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/06. 데이터 분포 변환.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/06. 데이터 분포 변환.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
