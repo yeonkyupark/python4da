@@ -841,5 +841,170 @@
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
     ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html",
+    "href": "part1/10. 피처 엔지니어링.html",
+    "title": "10  피처 엔지니어링",
+    "section": "",
+    "text": "10.1 피처 엔지니어링",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링",
+    "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링",
+    "title": "10  피처 엔지니어링",
+    "section": "",
+    "text": "10.1.1 정의\n기존 데이터를 변형·조합하여 모델이 더 잘 학습할 수 있는 입력 변수(feature)를 만드는 과정\n\n모델 성능의 상당 부분은 알고리즘이 아니라 피처에서 결정됨",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#왜-중요한가",
+    "href": "part1/10. 피처 엔지니어링.html#왜-중요한가",
+    "title": "10  피처 엔지니어링",
+    "section": "10.2 왜 중요한가?",
+    "text": "10.2 왜 중요한가?\n\n같은 모델, 다른 성능의 가장 큰 이유\n복잡한 모델보다 좋은 피처 + 단순 모델이 더 강력한 경우 많음\n도메인 지식이 가장 잘 반영되는 단계",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
+    "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
+    "title": "10  피처 엔지니어링",
+    "section": "10.3 4️⃣ 피처 엔지니어링의 주요 유형",
+    "text": "10.3 4️⃣ 피처 엔지니어링의 주요 유형\n예제 데이터셋 적재\n\nimport seaborn as sns\nimport pandas as pd\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n사용 컬럼 예시\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nspecies\nsex",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#파생-변수-생성-derived-features",
+    "href": "part1/10. 피처 엔지니어링.html#파생-변수-생성-derived-features",
+    "title": "10  피처 엔지니어링",
+    "section": "10.4 파생 변수 생성 (Derived Features)",
+    "text": "10.4 파생 변수 생성 (Derived Features)\n\n10.4.1 (1) 비율(Ratio) 피처\n\ndf[\"bill_ratio\"] = df[\"bill_length_mm\"] / df[\"bill_depth_mm\"]\n\nprint(df[\"bill_ratio\"])\n\n0      2.090909\n1      2.270115\n2      2.238889\n4      1.901554\n5      1.907767\n         ...   \n338    3.445255\n340    3.272727\n341    3.210191\n342    3.054054\n343    3.099379\nName: bill_ratio, Length: 333, dtype: float64\n\n\n\n\n10.4.2 (2) 조합 피처 (곱, 합)\n\ndf[\"body_flipper_interaction\"] = (df[\"body_mass_g\"] * df[\"flipper_length_mm\"])\n\nprint(df[\"body_flipper_interaction\"])\n\n0       678750.0\n1       706800.0\n2       633750.0\n4       665850.0\n5       693500.0\n         ...    \n338    1053950.0\n340    1042750.0\n341    1276500.0\n342    1102400.0\n343    1150200.0\nName: body_flipper_interaction, Length: 333, dtype: float64",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#로그제곱근-변환-후-파생",
+    "href": "part1/10. 피처 엔지니어링.html#로그제곱근-변환-후-파생",
+    "title": "10  피처 엔지니어링",
+    "section": "10.5 로그·제곱근 변환 후 파생",
+    "text": "10.5 로그·제곱근 변환 후 파생\n\nimport numpy as np\n\ndf[\"log_body_mass\"] = np.log(df[\"body_mass_g\"])\n\nprint(df[\"log_body_mass\"])\n\n0      8.229511\n1      8.242756\n2      8.086410\n4      8.146130\n5      8.202482\n         ...   \n338    8.502080\n340    8.486734\n341    8.656955\n342    8.556414\n343    8.594154\nName: log_body_mass, Length: 333, dtype: float64\n\n\n\n스케일 안정화\n거리 기반 모델(KNN, SVM)에 특히 중요",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning-결과-활용",
+    "href": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning-결과-활용",
+    "title": "10  피처 엔지니어링",
+    "section": "10.6 구간 기반 피처 (Binning 결과 활용)",
+    "text": "10.6 구간 기반 피처 (Binning 결과 활용)\n\ndf[\"body_mass_group\"] = pd.cut(\n    df[\"body_mass_g\"],\n    bins=[0, 3500, 4500, 7000],\n    labels=[\"small\", \"medium\", \"large\"]\n)\n\nprint(df[\"body_mass_group\"])\n\n0      medium\n1      medium\n2       small\n4       small\n5      medium\n        ...  \n338     large\n340     large\n341     large\n342     large\n343     large\nName: body_mass_group, Length: 333, dtype: category\nCategories (3, str): ['small' &lt; 'medium' &lt; 'large']\n\n\n\n연속값 → 해석 가능한 범주\n트리 모델에서 성능 개선 가능",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#집계-기반-피처-group-based-features",
+    "href": "part1/10. 피처 엔지니어링.html#집계-기반-피처-group-based-features",
+    "title": "10  피처 엔지니어링",
+    "section": "10.7 집계 기반 피처 (Group-based Features)",
+    "text": "10.7 집계 기반 피처 (Group-based Features)\n\n10.7.1 species 기준 평균 대비 차이\n\nspecies_mean = df.groupby(\"species\")[\"body_mass_g\"].transform(\"mean\")\n\ndf[\"body_mass_diff_species\"] = (df[\"body_mass_g\"] - species_mean)\n\nprint(df[\"body_mass_diff_species\"])\n\n0       43.835616\n1       93.835616\n2     -456.164384\n4     -256.164384\n5      -56.164384\n          ...    \n338   -167.436975\n340   -242.436975\n341    657.563025\n342    107.563025\n343    307.563025\nName: body_mass_diff_species, Length: 333, dtype: float64",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#통계-요약-피처",
+    "href": "part1/10. 피처 엔지니어링.html#통계-요약-피처",
+    "title": "10  피처 엔지니어링",
+    "section": "10.8 통계 요약 피처",
+    "text": "10.8 통계 요약 피처\n\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\ndf[\"num_mean\"] = df[num_cols].mean(axis=1)\ndf[\"num_std\"] = df[num_cols].std(axis=1)\n\nprint(df[\"num_mean\"])\nprint(df[\"num_std\"])\n\n0       997.200\n1      1010.725\n2       875.825\n4       924.750\n5       974.975\n         ...   \n338    1299.975\n340    1281.525\n341    1509.525\n342    1368.000\n343    1419.750\nName: num_mean, Length: 333, dtype: float64\n0      1836.619008\n1      1861.021127\n2      1584.739239\n4      1685.310864\n5      1784.961610\n          ...     \n338    2418.270493\n340    2380.608776\n341    2828.421689\n342    2556.137065\n343    2654.892212\nName: num_std, Length: 333, dtype: float64\n\n\n\n개체의 전체적인 신체 특성 요약",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
+    "href": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
+    "title": "10  피처 엔지니어링",
+    "section": "10.9 4-6️⃣ 범주형 조합 피처",
+    "text": "10.9 4-6️⃣ 범주형 조합 피처\n\ndf[\"species_sex\"] = (\n    df[\"species\"] + \"_\" + df[\"sex\"]\n)\n\n\n단일 범주로는 부족할 때 유용\n빈도가 너무 낮은 조합은 주의",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#시간순서형-데이터",
+    "href": "part1/10. 피처 엔지니어링.html#시간순서형-데이터",
+    "title": "10  피처 엔지니어링",
+    "section": "10.10 시간·순서형 데이터",
+    "text": "10.10 시간·순서형 데이터\n\n날짜 → 연/월/요일\n시간 → 주기(sin, cos)\n누적합, 이동평균",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#피처-선택과의-연결",
+    "href": "part1/10. 피처 엔지니어링.html#피처-선택과의-연결",
+    "title": "10  피처 엔지니어링",
+    "section": "10.11 피처 선택과의 연결",
+    "text": "10.11 피처 선택과의 연결\n모든 피처를 쓰는 게 정답은 아님\n\n10.11.1 간단한 상관 확인\n\ndf[num_cols + [\"bill_ratio\"]].corr()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nbill_ratio\n\n\n\n\nbill_length_mm\n1.000000\n-0.228626\n0.653096\n0.589451\n0.779230\n\n\nbill_depth_mm\n-0.228626\n1.000000\n-0.577792\n-0.472016\n-0.781246\n\n\nflipper_length_mm\n0.653096\n-0.577792\n1.000000\n0.872979\n0.801980\n\n\nbody_mass_g\n0.589451\n-0.472016\n0.872979\n1.000000\n0.702179\n\n\nbill_ratio\n0.779230\n-0.781246\n0.801980\n0.702179\n1.000000\n\n\n\n\n\n\n\n\n중복 정보 제거\n다중공선성 완화",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#모델별-피처-엔지니어링-전략",
+    "href": "part1/10. 피처 엔지니어링.html#모델별-피처-엔지니어링-전략",
+    "title": "10  피처 엔지니어링",
+    "section": "10.12 모델별 피처 엔지니어링 전략",
+    "text": "10.12 모델별 피처 엔지니어링 전략\n\n\n\n모델\n전략\n\n\n\n\n선형 모델\n스케일링, 상호작용\n\n\nKNN / SVM\n스케일·분포 중요\n\n\n트리 계열\n비선형 파생, binning\n\n\n딥러닝\n단순 + 양 많게",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서-위치",
+    "href": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서-위치",
+    "title": "10  피처 엔지니어링",
+    "section": "10.13 전처리 전체 흐름에서 위치",
+    "text": "10.13 전처리 전체 흐름에서 위치\n데이터 로드\n → 결측치 처리\n → 이상치 탐지\n → 스케일링\n → 분포 변환\n → 인코딩\n → 불균형 처리\n → 피처 엔지니어링\n → 모델링",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#핵심-요약-강의용",
+    "href": "part1/10. 피처 엔지니어링.html#핵심-요약-강의용",
+    "title": "10  피처 엔지니어링",
+    "section": "10.14 핵심 요약 (강의용)",
+    "text": "10.14 핵심 요약 (강의용)\n\n피처 엔지니어링은 모델 전에 끝나는 마지막 설계\n성능 + 해석력 모두에 영향\n“새로운 정보”를 만드는 단계로 단순 변환 단계가 아님",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
   }
 ]

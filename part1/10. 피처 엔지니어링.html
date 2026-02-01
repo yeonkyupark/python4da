@@ -21,10 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,6 +107,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
 
@@ -335,8 +373,40 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#피처-엔지니어링" id="toc-피처-엔지니어링" class="nav-link active" data-scroll-target="#피처-엔지니어링"><span class="header-section-number">10.1</span> 피처 엔지니어링</a>
+  <ul>
+  <li><a href="#정의" id="toc-정의" class="nav-link" data-scroll-target="#정의"><span class="header-section-number">10.1.1</span> 정의</a></li>
+  </ul></li>
+  <li><a href="#왜-중요한가" id="toc-왜-중요한가" class="nav-link" data-scroll-target="#왜-중요한가"><span class="header-section-number">10.2</span> 왜 중요한가?</a></li>
+  <li><a href="#피처-엔지니어링의-주요-유형" id="toc-피처-엔지니어링의-주요-유형" class="nav-link" data-scroll-target="#피처-엔지니어링의-주요-유형"><span class="header-section-number">10.3</span> 4️⃣ 피처 엔지니어링의 주요 유형</a></li>
+  <li><a href="#파생-변수-생성-derived-features" id="toc-파생-변수-생성-derived-features" class="nav-link" data-scroll-target="#파생-변수-생성-derived-features"><span class="header-section-number">10.4</span> 파생 변수 생성 (Derived Features)</a>
+  <ul>
+  <li><a href="#비율ratio-피처" id="toc-비율ratio-피처" class="nav-link" data-scroll-target="#비율ratio-피처"><span class="header-section-number">10.4.1</span> (1) 비율(Ratio) 피처</a></li>
+  <li><a href="#조합-피처-곱-합" id="toc-조합-피처-곱-합" class="nav-link" data-scroll-target="#조합-피처-곱-합"><span class="header-section-number">10.4.2</span> (2) 조합 피처 (곱, 합)</a></li>
+  </ul></li>
+  <li><a href="#로그제곱근-변환-후-파생" id="toc-로그제곱근-변환-후-파생" class="nav-link" data-scroll-target="#로그제곱근-변환-후-파생"><span class="header-section-number">10.5</span> 로그·제곱근 변환 후 파생</a></li>
+  <li><a href="#구간-기반-피처-binning-결과-활용" id="toc-구간-기반-피처-binning-결과-활용" class="nav-link" data-scroll-target="#구간-기반-피처-binning-결과-활용"><span class="header-section-number">10.6</span> 구간 기반 피처 (Binning 결과 활용)</a></li>
+  <li><a href="#집계-기반-피처-group-based-features" id="toc-집계-기반-피처-group-based-features" class="nav-link" data-scroll-target="#집계-기반-피처-group-based-features"><span class="header-section-number">10.7</span> 집계 기반 피처 (Group-based Features)</a>
+  <ul>
+  <li><a href="#species-기준-평균-대비-차이" id="toc-species-기준-평균-대비-차이" class="nav-link" data-scroll-target="#species-기준-평균-대비-차이"><span class="header-section-number">10.7.1</span> species 기준 평균 대비 차이</a></li>
+  </ul></li>
+  <li><a href="#통계-요약-피처" id="toc-통계-요약-피처" class="nav-link" data-scroll-target="#통계-요약-피처"><span class="header-section-number">10.8</span> 통계 요약 피처</a></li>
+  <li><a href="#범주형-조합-피처" id="toc-범주형-조합-피처" class="nav-link" data-scroll-target="#범주형-조합-피처"><span class="header-section-number">10.9</span> 4-6️⃣ 범주형 조합 피처</a></li>
+  <li><a href="#시간순서형-데이터" id="toc-시간순서형-데이터" class="nav-link" data-scroll-target="#시간순서형-데이터"><span class="header-section-number">10.10</span> 시간·순서형 데이터</a></li>
+  <li><a href="#피처-선택과의-연결" id="toc-피처-선택과의-연결" class="nav-link" data-scroll-target="#피처-선택과의-연결"><span class="header-section-number">10.11</span> 피처 선택과의 연결</a>
+  <ul>
+  <li><a href="#간단한-상관-확인" id="toc-간단한-상관-확인" class="nav-link" data-scroll-target="#간단한-상관-확인"><span class="header-section-number">10.11.1</span> 간단한 상관 확인</a></li>
+  </ul></li>
+  <li><a href="#모델별-피처-엔지니어링-전략" id="toc-모델별-피처-엔지니어링-전략" class="nav-link" data-scroll-target="#모델별-피처-엔지니어링-전략"><span class="header-section-number">10.12</span> 모델별 피처 엔지니어링 전략</a></li>
+  <li><a href="#전처리-전체-흐름에서-위치" id="toc-전처리-전체-흐름에서-위치" class="nav-link" data-scroll-target="#전처리-전체-흐름에서-위치"><span class="header-section-number">10.13</span> 전처리 전체 흐름에서 위치</a></li>
+  <li><a href="#핵심-요약-강의용" id="toc-핵심-요약-강의용" class="nav-link" data-scroll-target="#핵심-요약-강의용"><span class="header-section-number">10.14</span> 핵심 요약 (강의용)</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/10. 피처 엔지니어링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +436,369 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="피처-엔지니어링" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="피처-엔지니어링"><span class="header-section-number">10.1</span> 피처 엔지니어링</h2>
+<section id="정의" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="정의"><span class="header-section-number">10.1.1</span> 정의</h3>
+<p><strong>기존 데이터를 변형·조합하여</strong> <strong>모델이 더 잘 학습할 수 있는 입력 변수(feature)를 만드는 과정</strong></p>
+<blockquote class="blockquote">
+<p>모델 성능의 상당 부분은 <strong>알고리즘이 아니라 피처에서 결정됨</strong></p>
+</blockquote>
+</section>
+</section>
+<section id="왜-중요한가" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="왜-중요한가"><span class="header-section-number">10.2</span> 왜 중요한가?</h2>
+<ul>
+<li>같은 모델, 다른 성능의 가장 큰 이유</li>
+<li>복잡한 모델보다 <strong>좋은 피처 + 단순 모델</strong>이 더 강력한 경우 많음</li>
+<li>도메인 지식이 가장 잘 반영되는 단계</li>
+</ul>
+</section>
+<section id="피처-엔지니어링의-주요-유형" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="피처-엔지니어링의-주요-유형"><span class="header-section-number">10.3</span> 4️⃣ 피처 엔지니어링의 주요 유형</h2>
+<p>예제 데이터셋 적재</p>
+<div id="5667f2c2" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>사용 컬럼 예시</p>
+<ul>
+<li>bill_length_mm</li>
+<li>bill_depth_mm</li>
+<li>flipper_length_mm</li>
+<li>body_mass_g</li>
+<li>species</li>
+<li>sex</li>
+</ul>
+</section>
+<section id="파생-변수-생성-derived-features" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="파생-변수-생성-derived-features"><span class="header-section-number">10.4</span> 파생 변수 생성 (Derived Features)</h2>
+<section id="비율ratio-피처" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="비율ratio-피처"><span class="header-section-number">10.4.1</span> (1) 비율(Ratio) 피처</h3>
+<div id="42cd8b1a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_ratio"</span>] <span class="op">=</span> df[<span class="st">"bill_length_mm"</span>] <span class="op">/</span> df[<span class="st">"bill_depth_mm"</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"bill_ratio"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0      2.090909
+1      2.270115
+2      2.238889
+4      1.901554
+5      1.907767
+         ...   
+338    3.445255
+340    3.272727
+341    3.210191
+342    3.054054
+343    3.099379
+Name: bill_ratio, Length: 333, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="조합-피처-곱-합" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="조합-피처-곱-합"><span class="header-section-number">10.4.2</span> (2) 조합 피처 (곱, 합)</h3>
+<div id="7dc3ae9c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_flipper_interaction"</span>] <span class="op">=</span> (df[<span class="st">"body_mass_g"</span>] <span class="op">*</span> df[<span class="st">"flipper_length_mm"</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_flipper_interaction"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0       678750.0
+1       706800.0
+2       633750.0
+4       665850.0
+5       693500.0
+         ...    
+338    1053950.0
+340    1042750.0
+341    1276500.0
+342    1102400.0
+343    1150200.0
+Name: body_flipper_interaction, Length: 333, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="로그제곱근-변환-후-파생" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="로그제곱근-변환-후-파생"><span class="header-section-number">10.5</span> 로그·제곱근 변환 후 파생</h2>
+<div id="6928eefc" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"log_body_mass"</span>] <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"log_body_mass"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0      8.229511
+1      8.242756
+2      8.086410
+4      8.146130
+5      8.202482
+         ...   
+338    8.502080
+340    8.486734
+341    8.656955
+342    8.556414
+343    8.594154
+Name: log_body_mass, Length: 333, dtype: float64</code></pre>
+</div>
+</div>
+<ul>
+<li>스케일 안정화</li>
+<li>거리 기반 모델(KNN, SVM)에 특히 중요</li>
+</ul>
+</section>
+<section id="구간-기반-피처-binning-결과-활용" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="구간-기반-피처-binning-결과-활용"><span class="header-section-number">10.6</span> 구간 기반 피처 (Binning 결과 활용)</h2>
+<div id="63e1a0a9" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_group"</span>] <span class="op">=</span> pd.cut(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">3500</span>, <span class="dv">4500</span>, <span class="dv">7000</span>],</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>[<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_mass_group"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0      medium
+1      medium
+2       small
+4       small
+5      medium
+        ...  
+338     large
+340     large
+341     large
+342     large
+343     large
+Name: body_mass_group, Length: 333, dtype: category
+Categories (3, str): ['small' &lt; 'medium' &lt; 'large']</code></pre>
+</div>
+</div>
+<ul>
+<li>연속값 → 해석 가능한 범주</li>
+<li>트리 모델에서 성능 개선 가능</li>
+</ul>
+</section>
+<section id="집계-기반-피처-group-based-features" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="집계-기반-피처-group-based-features"><span class="header-section-number">10.7</span> 집계 기반 피처 (Group-based Features)</h2>
+<section id="species-기준-평균-대비-차이" class="level3" data-number="10.7.1">
+<h3 data-number="10.7.1" class="anchored" data-anchor-id="species-기준-평균-대비-차이"><span class="header-section-number">10.7.1</span> species 기준 평균 대비 차이</h3>
+<div id="50935f42" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>species_mean <span class="op">=</span> df.groupby(<span class="st">"species"</span>)[<span class="st">"body_mass_g"</span>].transform(<span class="st">"mean"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_diff_species"</span>] <span class="op">=</span> (df[<span class="st">"body_mass_g"</span>] <span class="op">-</span> species_mean)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_mass_diff_species"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0       43.835616
+1       93.835616
+2     -456.164384
+4     -256.164384
+5      -56.164384
+          ...    
+338   -167.436975
+340   -242.436975
+341    657.563025
+342    107.563025
+343    307.563025
+Name: body_mass_diff_species, Length: 333, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="통계-요약-피처" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="통계-요약-피처"><span class="header-section-number">10.8</span> 통계 요약 피처</h2>
+<div id="27ff9dbc" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"num_mean"</span>] <span class="op">=</span> df[num_cols].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"num_std"</span>] <span class="op">=</span> df[num_cols].std(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"num_mean"</span>])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"num_std"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0       997.200
+1      1010.725
+2       875.825
+4       924.750
+5       974.975
+         ...   
+338    1299.975
+340    1281.525
+341    1509.525
+342    1368.000
+343    1419.750
+Name: num_mean, Length: 333, dtype: float64
+0      1836.619008
+1      1861.021127
+2      1584.739239
+4      1685.310864
+5      1784.961610
+          ...     
+338    2418.270493
+340    2380.608776
+341    2828.421689
+342    2556.137065
+343    2654.892212
+Name: num_std, Length: 333, dtype: float64</code></pre>
+</div>
+</div>
+<ul>
+<li>개체의 전체적인 <strong>신체 특성 요약</strong></li>
+</ul>
+<hr>
+</section>
+<section id="범주형-조합-피처" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="범주형-조합-피처"><span class="header-section-number">10.9</span> 4-6️⃣ 범주형 조합 피처</h2>
+<div id="6333066b" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species_sex"</span>] <span class="op">=</span> (</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>] <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> df[<span class="st">"sex"</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>단일 범주로는 부족할 때 유용</li>
+<li>빈도가 너무 낮은 조합은 주의</li>
+</ul>
+</section>
+<section id="시간순서형-데이터" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="시간순서형-데이터"><span class="header-section-number">10.10</span> 시간·순서형 데이터</h2>
+<ul>
+<li>날짜 → 연/월/요일</li>
+<li>시간 → 주기(sin, cos)</li>
+<li>누적합, 이동평균</li>
+</ul>
+</section>
+<section id="피처-선택과의-연결" class="level2" data-number="10.11">
+<h2 data-number="10.11" class="anchored" data-anchor-id="피처-선택과의-연결"><span class="header-section-number">10.11</span> 피처 선택과의 연결</h2>
+<p><strong>모든 피처를 쓰는 게 정답은 아님</strong></p>
+<section id="간단한-상관-확인" class="level3" data-number="10.11.1">
+<h3 data-number="10.11.1" class="anchored" data-anchor-id="간단한-상관-확인"><span class="header-section-number">10.11.1</span> 간단한 상관 확인</h3>
+<div id="72472dc8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[num_cols <span class="op">+</span> [<span class="st">"bill_ratio"</span>]].corr()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+<th data-quarto-table-cell-role="th">bill_ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<td>1.000000</td>
+<td>-0.228626</td>
+<td>0.653096</td>
+<td>0.589451</td>
+<td>0.779230</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<td>-0.228626</td>
+<td>1.000000</td>
+<td>-0.577792</td>
+<td>-0.472016</td>
+<td>-0.781246</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<td>0.653096</td>
+<td>-0.577792</td>
+<td>1.000000</td>
+<td>0.872979</td>
+<td>0.801980</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+<td>0.589451</td>
+<td>-0.472016</td>
+<td>0.872979</td>
+<td>1.000000</td>
+<td>0.702179</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">bill_ratio</th>
+<td>0.779230</td>
+<td>-0.781246</td>
+<td>0.801980</td>
+<td>0.702179</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>중복 정보 제거</li>
+<li>다중공선성 완화</li>
+</ul>
+</section>
+</section>
+<section id="모델별-피처-엔지니어링-전략" class="level2" data-number="10.12">
+<h2 data-number="10.12" class="anchored" data-anchor-id="모델별-피처-엔지니어링-전략"><span class="header-section-number">10.12</span> 모델별 피처 엔지니어링 전략</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>모델</th>
+<th>전략</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>선형 모델</td>
+<td>스케일링, 상호작용</td>
+</tr>
+<tr class="even">
+<td>KNN / SVM</td>
+<td>스케일·분포 중요</td>
+</tr>
+<tr class="odd">
+<td>트리 계열</td>
+<td>비선형 파생, binning</td>
+</tr>
+<tr class="even">
+<td>딥러닝</td>
+<td>단순 + 양 많게</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="전처리-전체-흐름에서-위치" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="전처리-전체-흐름에서-위치"><span class="header-section-number">10.13</span> 전처리 전체 흐름에서 위치</h2>
+<pre><code>데이터 로드
+ → 결측치 처리
+ → 이상치 탐지
+ → 스케일링
+ → 분포 변환
+ → 인코딩
+ → 불균형 처리
+ → 피처 엔지니어링
+ → 모델링</code></pre>
+</section>
+<section id="핵심-요약-강의용" class="level2" data-number="10.14">
+<h2 data-number="10.14" class="anchored" data-anchor-id="핵심-요약-강의용"><span class="header-section-number">10.14</span> 핵심 요약 (강의용)</h2>
+<ul>
+<li>피처 엔지니어링은 <strong>모델 전에 끝나는 마지막 설계</strong></li>
+<li>성능 + 해석력 모두에 영향</li>
+<li>“새로운 정보”를 만드는 단계로 단순 변환 단계가 아님</li>
+</ul>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1221,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/10. 피처 엔지니어링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/10. 피처 엔지니어링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
