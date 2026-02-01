@@ -995,5 +995,93 @@
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html",
+    "href": "part2/01. 확률분포와 표본.html",
+    "title": "11  확률분포와 표본",
+    "section": "",
+    "text": "11.1 확률분포란?\n통계적 추론의 출발점은 “데이터가 어떤 분포에서 나왔는가?”를 이해하는 것이다.\n확률변수(Random Variable) 가 취할 수 있는 값과 그 값이 나타날 확률의 구조\n분류",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#확률분포란",
+    "href": "part2/01. 확률분포와 표본.html#확률분포란",
+    "title": "11  확률분포와 표본",
+    "section": "",
+    "text": "이산형 확률분포\n연속형 확률분포",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#연속형-확률분포-continuous-distributions",
+    "href": "part2/01. 확률분포와 표본.html#연속형-확률분포-continuous-distributions",
+    "title": "11  확률분포와 표본",
+    "section": "11.2 연속형 확률분포 (Continuous Distributions)",
+    "text": "11.2 연속형 확률분포 (Continuous Distributions)\n\n11.2.1 대표적인 연속형 분포\n\n\n\n분포\n특징\n사용 예\n\n\n\n\n정규분포\n종 모양, 평균 중심 대칭\n신체 측정값\n\n\n지수분포\n오른쪽 꼬리\n대기 시간\n\n\n감마분포\n비대칭 양수\n생존 시간\n\n\n로그정규\n로그 후 정규\n소득, 크기\n\n\n\n\n\n11.2.2 예제 – 연속형 변수\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n\nsns.histplot(\n    df[\"body_mass_g\"],\n    kde=True\n)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n11.2.3 정규분포 수식\n\\[\nf(x) = \\frac{1}{\\sqrt{2\\pi\\sigma^2}}\n\\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)\n\\]",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#이산형-확률분포-discrete-distributions",
+    "href": "part2/01. 확률분포와 표본.html#이산형-확률분포-discrete-distributions",
+    "title": "11  확률분포와 표본",
+    "section": "11.3 이산형 확률분포 (Discrete Distributions)",
+    "text": "11.3 이산형 확률분포 (Discrete Distributions)\n\n11.3.1 대표적인 이산형 분포\n\n\n\n분포\n특징\n사용 예\n\n\n\n\n베르누이\n성공/실패\n합격 여부\n\n\n이항분포\nn번 시행\n불량 개수\n\n\n포아송\n단위 시간 발생 횟수\n고객 유입\n\n\n\n\n\n11.3.2 예제 – 이산형 변수\n\ndf[\"species\"].value_counts()\n\nspecies\nAdelie       146\nGentoo       119\nChinstrap     68\nName: count, dtype: int64\n\n\n\nsns.countplot(\n    x=\"species\",\n    data=df\n)\nplt.show()",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#표본과-모집단",
+    "href": "part2/01. 확률분포와 표본.html#표본과-모집단",
+    "title": "11  확률분포와 표본",
+    "section": "11.4 표본과 모집단",
+    "text": "11.4 표본과 모집단\n\n모집단(Population) 전체 관심 대상\n표본(Sample) 모집단에서 일부 추출한 데이터\n\n\n실제 분석은 거의 항상 표본 기반",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#표본-분포-sampling-distribution",
+    "href": "part2/01. 확률분포와 표본.html#표본-분포-sampling-distribution",
+    "title": "11  확률분포와 표본",
+    "section": "11.5 표본 분포 (Sampling Distribution)",
+    "text": "11.5 표본 분포 (Sampling Distribution)\n\n11.5.1 개념\n\n“표본 통계량(평균, 분산 등)”의 분포\n데이터의 분포 ≠ 표본 평균의 분포\n\n\n\n11.5.2 예제 – 표본 평균 분포\n\nimport numpy as np\n\nbody_mass = df[\"body_mass_g\"].values\n\n\nsample_means = []\n\nfor _ in range(1000):\n    sample = np.random.choice(body_mass, size=30, replace=True)\n    sample_means.append(sample.mean())\n\n\nsns.histplot(sample_means, kde=True)\nplt.show()\n\n\n\n\n\n\n\n\n\n원 데이터는 비대칭\n표본 평균 분포는 정규에 가까워짐 &gt; 중심극한정리(CLT)",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#중심극한정리-central-limit-theorem",
+    "href": "part2/01. 확률분포와 표본.html#중심극한정리-central-limit-theorem",
+    "title": "11  확률분포와 표본",
+    "section": "11.6 중심극한정리 (Central Limit Theorem)",
+    "text": "11.6 중심극한정리 (Central Limit Theorem)\n\n표본 크기가 충분히 크면 표본 평균의 분포는 원래 분포와 관계없이 정규분포에 수렴\n\n조건\n\n표본 크기 ↑\n독립성 가정",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
+  },
+  {
+    "objectID": "part2/01. 확률분포와 표본.html#중심극한-정리가-중요한-이유",
+    "href": "part2/01. 확률분포와 표본.html#중심극한-정리가-중요한-이유",
+    "title": "11  확률분포와 표본",
+    "section": "11.7 중심극한 정리가 중요한 이유",
+    "text": "11.7 중심극한 정리가 중요한 이유\n\nt 검정\nANOVA\n신뢰구간\n회귀 분석\n\n모두 “표본 평균 분포” 가정 위에서 동작",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
+    ]
   }
 ]
