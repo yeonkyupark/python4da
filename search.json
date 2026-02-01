@@ -887,11 +887,11 @@
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#파생-변수-생성-derived-features",
-    "href": "part1/10. 피처 엔지니어링.html#파생-변수-생성-derived-features",
+    "objectID": "part1/10. 피처 엔지니어링.html#파생-변수-생성",
+    "href": "part1/10. 피처 엔지니어링.html#파생-변수-생성",
     "title": "10  피처 엔지니어링",
-    "section": "10.4 파생 변수 생성 (Derived Features)",
-    "text": "10.4 파생 변수 생성 (Derived Features)\n\n10.4.1 (1) 비율(Ratio) 피처\n\ndf[\"bill_ratio\"] = df[\"bill_length_mm\"] / df[\"bill_depth_mm\"]\n\nprint(df[\"bill_ratio\"])\n\n0      2.090909\n1      2.270115\n2      2.238889\n4      1.901554\n5      1.907767\n         ...   \n338    3.445255\n340    3.272727\n341    3.210191\n342    3.054054\n343    3.099379\nName: bill_ratio, Length: 333, dtype: float64\n\n\n\n\n10.4.2 (2) 조합 피처 (곱, 합)\n\ndf[\"body_flipper_interaction\"] = (df[\"body_mass_g\"] * df[\"flipper_length_mm\"])\n\nprint(df[\"body_flipper_interaction\"])\n\n0       678750.0\n1       706800.0\n2       633750.0\n4       665850.0\n5       693500.0\n         ...    \n338    1053950.0\n340    1042750.0\n341    1276500.0\n342    1102400.0\n343    1150200.0\nName: body_flipper_interaction, Length: 333, dtype: float64",
+    "section": "10.4 파생 변수 생성",
+    "text": "10.4 파생 변수 생성\n\n10.4.1 (1) 비율(Ratio) 피처\n\ndf[\"bill_ratio\"] = df[\"bill_length_mm\"] / df[\"bill_depth_mm\"]\n\nprint(df[\"bill_ratio\"])\n\n0      2.090909\n1      2.270115\n2      2.238889\n4      1.901554\n5      1.907767\n         ...   \n338    3.445255\n340    3.272727\n341    3.210191\n342    3.054054\n343    3.099379\nName: bill_ratio, Length: 333, dtype: float64\n\n\n\n\n10.4.2 (2) 조합 피처 (곱, 합)\n\ndf[\"body_flipper_interaction\"] = (df[\"body_mass_g\"] * df[\"flipper_length_mm\"])\n\nprint(df[\"body_flipper_interaction\"])\n\n0       678750.0\n1       706800.0\n2       633750.0\n4       665850.0\n5       693500.0\n         ...    \n338    1053950.0\n340    1042750.0\n341    1276500.0\n342    1102400.0\n343    1150200.0\nName: body_flipper_interaction, Length: 333, dtype: float64",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -991,17 +991,6 @@
     "title": "10  피처 엔지니어링",
     "section": "10.13 전처리 전체 흐름에서 위치",
     "text": "10.13 전처리 전체 흐름에서 위치\n데이터 로드\n → 결측치 처리\n → 이상치 탐지\n → 스케일링\n → 분포 변환\n → 인코딩\n → 불균형 처리\n → 피처 엔지니어링\n → 모델링",
-    "crumbs": [
-      "Ⅰ. 데이터 전처리 및 변환",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
-    ]
-  },
-  {
-    "objectID": "part1/10. 피처 엔지니어링.html#핵심-요약-강의용",
-    "href": "part1/10. 피처 엔지니어링.html#핵심-요약-강의용",
-    "title": "10  피처 엔지니어링",
-    "section": "10.14 핵심 요약 (강의용)",
-    "text": "10.14 핵심 요약 (강의용)\n\n피처 엔지니어링은 모델 전에 끝나는 마지막 설계\n성능 + 해석력 모두에 영향\n“새로운 정보”를 만드는 단계로 단순 변환 단계가 아님",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"

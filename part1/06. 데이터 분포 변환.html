@@ -466,7 +466,7 @@ window.Quarto = {
 
 
 <p>예제 데이터셋 적재</p>
-<div id="681e8506" class="cell" data-execution_count="1">
+<div id="20103440" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -484,7 +484,7 @@ window.Quarto = {
 </div>
 <section id="분포-변환-이유" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="분포-변환-이유"><span class="header-section-number">6.1</span> 분포 변환 이유</h2>
-<div id="38172b19" class="cell" data-execution_count="2">
+<div id="5201d923" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_num.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>bill_length_mm       0.053118
@@ -509,7 +509,7 @@ x' = \log(x)
 </section>
 <section id="코드" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="코드"><span class="header-section-number">6.2.2</span> 코드</h3>
-<div id="c554e12d" class="cell" data-execution_count="3">
+<div id="826f69b4" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_log <span class="op">=</span> df_num.copy()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
@@ -536,7 +536,7 @@ x' = \log(x)
 </section>
 <section id="포함-변수-안전-처리" class="level3" data-number="6.2.3">
 <h3 data-number="6.2.3" class="anchored" data-anchor-id="포함-변수-안전-처리"><span class="header-section-number">6.2.3</span> 0 포함 변수 안전 처리</h3>
-<div id="b8da3147" class="cell" data-execution_count="4">
+<div id="02fecddd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_log_safe <span class="op">=</span> np.log1p(df_num)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log_safe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -560,7 +560,7 @@ x' = \log(x)
 </section>
 <section id="왜도-변화-확인" class="level3" data-number="6.2.4">
 <h3 data-number="6.2.4" class="anchored" data-anchor-id="왜도-변화-확인"><span class="header-section-number">6.2.4</span> 왜도 변화 확인</h3>
-<div id="9aaec860" class="cell" data-execution_count="5">
+<div id="b658d634" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_log_safe.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>bill_length_mm      -0.143463
@@ -583,7 +583,7 @@ x' = \sqrt{x}
 </section>
 <section id="코드-1" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="코드-1"><span class="header-section-number">6.3.2</span> 코드</h3>
-<div id="856e6d93" class="cell" data-execution_count="6">
+<div id="c2f2727d" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_sqrt <span class="op">=</span> np.sqrt(df_num)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_sqrt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -638,10 +638,10 @@ x' =
 </section>
 <section id="코드-2" class="level3" data-number="6.4.2">
 <h3 data-number="6.4.2" class="anchored" data-anchor-id="코드-2"><span class="header-section-number">6.4.2</span> 코드</h3>
-<div id="cd36bfc8" class="cell" data-execution_count="7">
+<div id="7140fe27" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> boxcox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="64582ab1" class="cell" data-execution_count="8">
+<div id="5a495c4d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_boxcox <span class="op">=</span> df_num.copy()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> {}</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -651,7 +651,7 @@ x' =
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    df_boxcox.loc[data.index, col] <span class="op">=</span> transformed</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    lambdas[col] <span class="op">=</span> lam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="e537cbc0" class="cell" data-execution_count="9">
+<div id="52e7cb0f" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lambdas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>{'bill_length_mm': np.float64(0.6201739671602454),
@@ -667,10 +667,10 @@ x' =
 <p>Box–Cox의 확장 방식으로 0, 음수에 대해서도 변환 가능</p>
 <section id="sklearn-사용" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="sklearn-사용"><span class="header-section-number">6.5.1</span> sklearn 사용</h3>
-<div id="d0a9f49a" class="cell" data-execution_count="10">
+<div id="a51fa7fd" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="c355bf7f" class="cell" data-execution_count="11">
+<div id="76199ddd" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_yeojohnson <span class="op">=</span> pd.DataFrame(</span>
@@ -684,10 +684,10 @@ x' =
 <section id="분위수-변환-quantile-transform" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</h2>
 <p>분포 모양 자체를 바꿈</p>
-<div id="8962b60c" class="cell" data-execution_count="12">
+<div id="3a8aa8b5" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="4d96228c" class="cell" data-execution_count="13">
+<div id="b9cbd53f" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>qt <span class="op">=</span> QuantileTransformer(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output_distribution<span class="op">=</span><span class="st">"normal"</span>,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
@@ -719,7 +719,7 @@ x' =
 </section>
 <section id="변환-전후-왜도-비교" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전·후 왜도 비교</h2>
-<div id="50d729e8" class="cell" data-execution_count="14">
+<div id="d9f07787" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>skew_compare <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"original"</span>: df_num.skew(),</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"log"</span>: df_log_safe.skew(),</span>

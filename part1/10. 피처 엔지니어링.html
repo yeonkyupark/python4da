@@ -384,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#왜-중요한가" id="toc-왜-중요한가" class="nav-link" data-scroll-target="#왜-중요한가"><span class="header-section-number">10.2</span> 왜 중요한가?</a></li>
   <li><a href="#피처-엔지니어링의-주요-유형" id="toc-피처-엔지니어링의-주요-유형" class="nav-link" data-scroll-target="#피처-엔지니어링의-주요-유형"><span class="header-section-number">10.3</span> 피처 엔지니어링의 주요 유형</a></li>
-  <li><a href="#파생-변수-생성-derived-features" id="toc-파생-변수-생성-derived-features" class="nav-link" data-scroll-target="#파생-변수-생성-derived-features"><span class="header-section-number">10.4</span> 파생 변수 생성 (Derived Features)</a>
+  <li><a href="#파생-변수-생성" id="toc-파생-변수-생성" class="nav-link" data-scroll-target="#파생-변수-생성"><span class="header-section-number">10.4</span> 파생 변수 생성</a>
   <ul>
   <li><a href="#비율ratio-피처" id="toc-비율ratio-피처" class="nav-link" data-scroll-target="#비율ratio-피처"><span class="header-section-number">10.4.1</span> (1) 비율(Ratio) 피처</a></li>
   <li><a href="#조합-피처-곱-합" id="toc-조합-피처-곱-합" class="nav-link" data-scroll-target="#조합-피처-곱-합"><span class="header-section-number">10.4.2</span> (2) 조합 피처 (곱, 합)</a></li>
@@ -404,7 +404,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#모델별-피처-엔지니어링-전략" id="toc-모델별-피처-엔지니어링-전략" class="nav-link" data-scroll-target="#모델별-피처-엔지니어링-전략"><span class="header-section-number">10.12</span> 모델별 피처 엔지니어링 전략</a></li>
   <li><a href="#전처리-전체-흐름에서-위치" id="toc-전처리-전체-흐름에서-위치" class="nav-link" data-scroll-target="#전처리-전체-흐름에서-위치"><span class="header-section-number">10.13</span> 전처리 전체 흐름에서 위치</a></li>
-  <li><a href="#핵심-요약-강의용" id="toc-핵심-요약-강의용" class="nav-link" data-scroll-target="#핵심-요약-강의용"><span class="header-section-number">10.14</span> 핵심 요약 (강의용)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/10. 피처 엔지니어링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -457,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="피처-엔지니어링의-주요-유형" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="피처-엔지니어링의-주요-유형"><span class="header-section-number">10.3</span> 피처 엔지니어링의 주요 유형</h2>
 <p>예제 데이터셋 적재</p>
-<div id="459ecb70" class="cell" data-execution_count="1">
+<div id="904ae0a6" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -473,11 +472,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>sex</li>
 </ul>
 </section>
-<section id="파생-변수-생성-derived-features" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="파생-변수-생성-derived-features"><span class="header-section-number">10.4</span> 파생 변수 생성 (Derived Features)</h2>
+<section id="파생-변수-생성" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="파생-변수-생성"><span class="header-section-number">10.4</span> 파생 변수 생성</h2>
 <section id="비율ratio-피처" class="level3" data-number="10.4.1">
 <h3 data-number="10.4.1" class="anchored" data-anchor-id="비율ratio-피처"><span class="header-section-number">10.4.1</span> (1) 비율(Ratio) 피처</h3>
-<div id="ca28e5ac" class="cell" data-execution_count="2">
+<div id="aed6a0d4" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_ratio"</span>] <span class="op">=</span> df[<span class="st">"bill_length_mm"</span>] <span class="op">/</span> df[<span class="st">"bill_depth_mm"</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"bill_ratio"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -499,7 +498,7 @@ Name: bill_ratio, Length: 333, dtype: float64</code></pre>
 </section>
 <section id="조합-피처-곱-합" class="level3" data-number="10.4.2">
 <h3 data-number="10.4.2" class="anchored" data-anchor-id="조합-피처-곱-합"><span class="header-section-number">10.4.2</span> (2) 조합 피처 (곱, 합)</h3>
-<div id="f08e73a0" class="cell" data-execution_count="3">
+<div id="e3250907" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_flipper_interaction"</span>] <span class="op">=</span> (df[<span class="st">"body_mass_g"</span>] <span class="op">*</span> df[<span class="st">"flipper_length_mm"</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_flipper_interaction"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -522,7 +521,7 @@ Name: body_flipper_interaction, Length: 333, dtype: float64</code></pre>
 </section>
 <section id="로그제곱근-변환-후-파생" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="로그제곱근-변환-후-파생"><span class="header-section-number">10.5</span> 로그·제곱근 변환 후 파생</h2>
-<div id="7aa718f8" class="cell" data-execution_count="4">
+<div id="e7917636" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"log_body_mass"</span>] <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
@@ -550,7 +549,7 @@ Name: log_body_mass, Length: 333, dtype: float64</code></pre>
 </section>
 <section id="구간-기반-피처" class="level2" data-number="10.6">
 <h2 data-number="10.6" class="anchored" data-anchor-id="구간-기반-피처"><span class="header-section-number">10.6</span> 구간 기반 피처</h2>
-<div id="c25fa573" class="cell" data-execution_count="5">
+<div id="8f495dac" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_group"</span>] <span class="op">=</span> pd.cut(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">3500</span>, <span class="dv">4500</span>, <span class="dv">7000</span>],</span>
@@ -583,7 +582,7 @@ Categories (3, str): ['small' &lt; 'medium' &lt; 'large']</code></pre>
 <h2 data-number="10.7" class="anchored" data-anchor-id="집계-기반-피처"><span class="header-section-number">10.7</span> 집계 기반 피처</h2>
 <section id="species-기준-평균-대비-차이" class="level3" data-number="10.7.1">
 <h3 data-number="10.7.1" class="anchored" data-anchor-id="species-기준-평균-대비-차이"><span class="header-section-number">10.7.1</span> species 기준 평균 대비 차이</h3>
-<div id="89e6de26" class="cell" data-execution_count="6">
+<div id="22d487da" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>species_mean <span class="op">=</span> df.groupby(<span class="st">"species"</span>)[<span class="st">"body_mass_g"</span>].transform(<span class="st">"mean"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_diff_species"</span>] <span class="op">=</span> (df[<span class="st">"body_mass_g"</span>] <span class="op">-</span> species_mean)</span>
@@ -608,7 +607,7 @@ Name: body_mass_diff_species, Length: 333, dtype: float64</code></pre>
 </section>
 <section id="통계-요약-피처" class="level2" data-number="10.8">
 <h2 data-number="10.8" class="anchored" data-anchor-id="통계-요약-피처"><span class="header-section-number">10.8</span> 통계 요약 피처</h2>
-<div id="2fb7379a" class="cell" data-execution_count="7">
+<div id="3c4b61cb" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
@@ -654,7 +653,7 @@ Name: num_std, Length: 333, dtype: float64</code></pre>
 </section>
 <section id="범주형-조합-피처" class="level2" data-number="10.9">
 <h2 data-number="10.9" class="anchored" data-anchor-id="범주형-조합-피처"><span class="header-section-number">10.9</span> 범주형 조합 피처</h2>
-<div id="e8102075" class="cell" data-execution_count="8">
+<div id="c98f1f8d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species_sex"</span>] <span class="op">=</span> (</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>] <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> df[<span class="st">"sex"</span>]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -677,7 +676,7 @@ Name: num_std, Length: 333, dtype: float64</code></pre>
 <p><strong>모든 피처를 쓰는 게 정답은 아님</strong></p>
 <section id="간단한-상관-확인" class="level3" data-number="10.11.1">
 <h3 data-number="10.11.1" class="anchored" data-anchor-id="간단한-상관-확인"><span class="header-section-number">10.11.1</span> 간단한 상관 확인</h3>
-<div id="700061c8" class="cell" data-execution_count="9">
+<div id="9f496a71" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df[num_cols <span class="op">+</span> [<span class="st">"bill_ratio"</span>]].corr()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -787,14 +786,6 @@ Name: num_std, Length: 333, dtype: float64</code></pre>
  → 불균형 처리
  → 피처 엔지니어링
  → 모델링</code></pre>
-</section>
-<section id="핵심-요약-강의용" class="level2" data-number="10.14">
-<h2 data-number="10.14" class="anchored" data-anchor-id="핵심-요약-강의용"><span class="header-section-number">10.14</span> 핵심 요약 (강의용)</h2>
-<ul>
-<li>피처 엔지니어링은 <strong>모델 전에 끝나는 마지막 설계</strong></li>
-<li>성능 + 해석력 모두에 영향</li>
-<li>“새로운 정보”를 만드는 단계로 단순 변환 단계가 아님</li>
-</ul>
 
 
 </section>
