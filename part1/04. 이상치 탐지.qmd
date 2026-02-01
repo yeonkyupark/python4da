@@ -1,2 +1,159 @@
 # 이상치 탐지
 
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
+df = sns.load_dataset("penguins")
+```
+
+분석 대상은 **수치형 변수**만 사용
+
+```{python}
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
+df_num = df[num_cols]
+```
+
+## 분포 기반 이상치 탐지
+
+### 박스플롯으로 이상치 확인
+
+```{python}
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+scale = StandardScaler()
+
+df_num_scaled = pd.DataFrame(scale.fit_transform(df_num[num_cols]),
+                              columns=df_num.columns)
+
+df_num_scaled.boxplot(figsize=(10, 5))
+plt.show()
+```
+
+## IQR 기반 이상치 탐지
+
+### IQR 계산
+
+```{python}
+Q1 = df_num.quantile(0.25)
+Q3 = df_num.quantile(0.75)
+IQR = Q3 - Q1
+```
+
+### 이상치 조건 정의
+
+```{python}
+outlier_condition = (df_num < (Q1 - 1.5 * IQR)) | (df_num > (Q3 + 1.5 * IQR))
+```
+
+### 이상치가 있는 행 확인
+
+```{python}
+outlier_rows = outlier_condition.any(axis=1)
+df[outlier_rows]
+```
+
+컬럼 중 **하나라도 이상치면 해당 행 전체를 이상치로 판단**
+
+### 이상치 제거
+
+```{python}
+df_iqr_clean = df[~outlier_rows]
+```
+
+## Z-score 기반 이상치 탐지
+
+```{python}
+from scipy.stats import zscore
+```
+
+```{python}
+z_scores = df_num.apply(zscore)
+```
+
+### 임계값 기준 이상치 탐지 (|z| > 3)
+
+```{python}
+outlier_z = (np.abs(z_scores) > 3).any(axis=1)
+df_z_clean = df[~outlier_z]
+```
+
+계산이 간단한 장점이 있으나 **분포 왜곡에 취약**한 단점 존재
+
+## 범주별 이상치 탐지
+
+### species별 IQR 이상치 탐지
+
+```{python}
+def iqr_outlier_by_group(group):
+    Q1 = group[num_cols].quantile(0.25)
+    Q3 = group[num_cols].quantile(0.75)
+    IQR = Q3 - Q1
+
+    condition = (group[num_cols] < (Q1 - 1.5 * IQR)) | \
+                (group[num_cols] > (Q3 + 1.5 * IQR))
+    return group[~condition.any(axis=1)]
+```
+
+```{python}
+df_group_iqr_clean = (
+    df.groupby("species", group_keys=False)
+      .apply(iqr_outlier_by_group)
+)
+```
+
+
+## 밀도 기반 이상치 탐지 (LOF)
+
+```{python}
+from sklearn.neighbors import LocalOutlierFactor
+```
+
+```{python}
+df_lof = df_num.dropna()
+
+lof = LocalOutlierFactor(n_neighbors=20)
+outlier_lof = lof.fit_predict(df_lof)
+```
+
+```{python}
+df_lof_clean = df.loc[df_lof.index][outlier_lof == 1]
+```
+
+주변 데이터와 **너무 다른 밀도**를 가지면 이상치로 판단하는 방식으로 비선형 데이터에 강함
+
+## 트리 기반 이상치 탐지 (Isolation Forest)
+
+```{python}
+from sklearn.ensemble import IsolationForest
+```
+
+```{python}
+iso = IsolationForest(contamination=0.05, random_state=42)
+outlier_if = iso.fit_predict(df_lof)
+```
+
+```{python}
+df_if_clean = df.loc[df_lof.index][outlier_if == 1]
+```
+
+이상치는 트리 분류 기준으로 쉽게 분리가 된다는 가정하에 이상치를 탐지하는 방식으로 고차원 데이터에 강함하고 실무에서 자주 사용
+
+## 단계별 선택 가이드
+
+| 단계 | 방법              | 언제 쓰나      |
+| -- | --------------- | ---------- |
+| 1  | 시각화             | 이해, 설명     |
+| 2  | IQR             | 기본, 안전     |
+| 3  | Z-score         | 정규분포 가정    |
+| 4  | 그룹별 IQR         | **가장 실무적** |
+| 5  | LOF             | 비선형, 밀도    |
+| 6  | IsolationForest | 대규모, 고급    |
+
