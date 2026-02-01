@@ -1,2 +1,185 @@
 # 불균형 데이터 처리
 
+**타깃 클래스 간 샘플 수 차이가 큰 경우**, 다수 클래스에 치우친 모델이 생성됨 → 정확도는 높아 보이지만 실제 성능은 나쁨
+
+## 불균형 데이터의 문제점
+
+### 예시
+
+* 전체 정확도 95%
+* 소수 클래스 재현율 10%
+
+"잘 맞춘 것처럼 보이지만 중요한 건 다 틀림"
+
+## 불균형 여부 진단
+
+### 클래스 분포 확인
+
+```{python}
+import seaborn as sns
+
+df = sns.load_dataset("penguins").dropna(subset=["species"])
+
+df["species"].value_counts()
+```
+
+### 비율로 확인
+
+```{python}
+df["species"].value_counts(normalize=True)
+```
+
+### 시각화
+
+```{python}
+import matplotlib.pyplot as plt
+
+df["species"].value_counts().plot(kind="bar")
+plt.show()
+```
+
+## 평가 지표 변경
+
+불균형 데이터에서는 **Accuracy 사용 금물**
+
+### 대안 지표
+
+* Precision
+* Recall
+* F1-score
+* ROC-AUC
+* PR-AUC
+
+```python
+from sklearn.metrics import classification_report
+
+print(classification_report(y_true, y_pred))
+```
+
+## 데이터 수준 처리 방법
+
+### 언더샘플링 (Under-sampling)
+
+#### 개념
+
+다수 클래스 일부 제거
+
+```{python}
+from imblearn.under_sampling import RandomUnderSampler
+
+X = df.drop("species", axis=1)
+y = df["species"]
+
+rus = RandomUnderSampler(random_state=42)
+X_under, y_under = rus.fit_resample(X, y)
+print("Before\n", y.value_counts())
+print("After\n", y_under.value_counts())
+```
+
+빠르다는 장점이 있으나 정보가 손신된다는 단점 존재
+
+### 오버샘플링 (Over-sampling)
+
+#### 단순 복제
+
+```{python}
+from imblearn.over_sampling import RandomOverSampler
+
+ros = RandomOverSampler(random_state=42)
+X_over, y_over = ros.fit_resample(X, y)
+
+print(y_over.value_counts())
+```
+
+#### 문제점
+
+* 과적합 위험
+
+---
+
+### 4-3️⃣ SMOTE (Synthetic Minority Over-sampling)
+
+#### 개념
+
+* 소수 클래스 사이에 **가상 샘플 생성**
+
+```{python}
+from imblearn.over_sampling import SMOTE
+
+smote = SMOTE(random_state=42)
+X_smote, y_smote = smote.fit_resample(X, y)
+```
+
+### SMOTE 변형
+
+| 기법               | 특징           |
+| ---------------- | ------------ |
+| Borderline-SMOTE | 경계 근처만 증강    |
+| SMOTE-NC         | 수치 + 범주 혼합   |
+| ADASYN           | 학습 어려운 영역 집중 |
+
+## 모델 수준 처리 방법
+
+### 클래스 가중치 조정
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(
+    class_weight="balanced"
+)
+```
+
+### 수동 가중치 설정
+
+```{python}
+weights = {
+    "Adelie": 1,
+    "Gentoo": 2,
+    "Chinstrap": 3
+}
+
+model = LogisticRegression(class_weight=weights)
+```
+
+## 앙상블 + 불균형 대응
+
+### 대표 기법
+
+* Balanced Random Forest
+* EasyEnsemble
+
+```{python}
+from imblearn.ensemble import BalancedRandomForestClassifier
+
+model = BalancedRandomForestClassifier(
+    n_estimators=100,
+    random_state=42
+)
+```
+
+## Pipeline으로 안전하게 적용
+
+**샘플링은 반드시 학습 데이터에만!**
+
+```{python}
+from imblearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from imblearn.over_sampling import SMOTE
+
+pipeline = Pipeline([
+    ("smote", SMOTE(random_state=42)),
+    ("model", LogisticRegression())
+])
+```
+
+## 권장 상황
+
+| 상황     | 권장                 |
+| ------ | ------------------ |
+| 데이터 작음 | SMOTE              |
+| 데이터 큼  | 클래스 가중치            |
+| 노이즈 많음 | 언더샘플링              |
+| 범주형 포함 | SMOTE-NC           |
+| 트리 모델  | 가중치 or Balanced RF |
+
