@@ -632,5 +632,115 @@
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>범주형 데이터 인코딩</span>"
     ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html",
+    "href": "part1/08. 연속형 데이터 범주화.html",
+    "title": "8  연속형 데이터 범주화",
+    "section": "",
+    "text": "8.1 연속형 데이터 범주화 (Discretization / Binning)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#연속형-데이터-범주화-discretization-binning",
+    "href": "part1/08. 연속형 데이터 범주화.html#연속형-데이터-범주화-discretization-binning",
+    "title": "8  연속형 데이터 범주화",
+    "section": "",
+    "text": "8.1.1 개념\n\n연속형 변수를 구간(범주)으로 나누어 범주형 변수로 변환\n정보는 줄지만 해석력 증가, 노이즈 감소, 비선형 관계 단순화 효과",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#등간격-구간화-equal-width-binning",
+    "href": "part1/08. 연속형 데이터 범주화.html#등간격-구간화-equal-width-binning",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.2 등간격 구간화 (Equal-width binning)",
+    "text": "8.2 등간격 구간화 (Equal-width binning)\n\n8.2.1 개념\n전체 값 범위를 동일한 간격으로 분할\n\\[\n\\text{bin width} = \\frac{\\max(x) - \\min(x)}{k}\n\\]\n\n\n8.2.2 예제\n\nimport pandas as pd\nimport seaborn as sns\n\ndf = sns.load_dataset(\"penguins\")\n\ndf[\"bill_length_bin\"] = pd.cut(df[\"bill_length_mm\"], bins=4)\n\nprint(df[\"bill_length_bin\"])\n\n0       (38.975, 45.85]\n1       (38.975, 45.85]\n2       (38.975, 45.85]\n3                   NaN\n4      (32.072, 38.975]\n             ...       \n339                 NaN\n340     (45.85, 52.725]\n341     (45.85, 52.725]\n342     (38.975, 45.85]\n343     (45.85, 52.725]\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, interval[float64, right]): [(32.072, 38.975] &lt; (38.975, 45.85] &lt; (45.85, 52.725] &lt; (52.725, 59.6]]\n\n\n\n\n\n8.2.3 범주 이름 지정\n\ndf[\"bill_length_bin\"] = pd.cut(\n    df[\"bill_length_mm\"],\n    bins=4,\n    labels=[\"짧음\", \"보통\", \"김\", \"매우 김\"]\n)\n\nprint(df[\"bill_length_bin\"])\n\n0       보통\n1       보통\n2       보통\n3      NaN\n4       짧음\n      ... \n339    NaN\n340      김\n341      김\n342     보통\n343      김\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, str): ['짧음' &lt; '보통' &lt; '김' &lt; '매우 김']\n\n\n구현 간단하지만 이상치에 민감, 데이터 밀도 불균형 가능",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#등빈도-구간화-equal-frequency-quantile-binning",
+    "href": "part1/08. 연속형 데이터 범주화.html#등빈도-구간화-equal-frequency-quantile-binning",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.3 등빈도 구간화 (Equal-frequency, Quantile binning)",
+    "text": "8.3 등빈도 구간화 (Equal-frequency, Quantile binning)\n\n8.3.1 개념\n각 구간에 데이터 개수가 동일하도록 분할\n\n\n8.3.2 예제\n\ndf[\"bill_length_qbin\"] = pd.qcut(\n    df[\"bill_length_mm\"],\n    q=4\n)\n\nprint(df[\"bill_length_qbin\"])\n\n0      (32.099000000000004, 39.225]\n1                   (39.225, 44.45]\n2                   (39.225, 44.45]\n3                               NaN\n4      (32.099000000000004, 39.225]\n                   ...             \n339                             NaN\n340                   (44.45, 48.5]\n341                    (48.5, 59.6]\n342                   (44.45, 48.5]\n343                    (48.5, 59.6]\nName: bill_length_qbin, Length: 344, dtype: category\nCategories (4, interval[float64, right]): [(32.099000000000004, 39.225] &lt; (39.225, 44.45] &lt; (44.45, 48.5] &lt; (48.5, 59.6]]\n\n\n\n\n8.3.3 라벨 지정\n\ndf[\"bill_length_qbin\"] = pd.qcut(\n    df[\"bill_length_mm\"],\n    q=4,\n    labels=[\"Q1\", \"Q2\", \"Q3\", \"Q4\"]\n)\n\ndf[\"bill_length_qbin\"]\n\n0       Q1\n1       Q2\n2       Q2\n3      NaN\n4       Q1\n      ... \n339    NaN\n340     Q3\n341     Q4\n342     Q3\n343     Q4\nName: bill_length_qbin, Length: 344, dtype: category\nCategories (4, str): ['Q1' &lt; 'Q2' &lt; 'Q3' &lt; 'Q4']\n\n\n데이터 불균형 완화, 분포 반영, 동일값 많으면 에러 가능",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#사용자-정의-구간화",
+    "href": "part1/08. 연속형 데이터 범주화.html#사용자-정의-구간화",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.4 사용자 정의 구간화",
+    "text": "8.4 사용자 정의 구간화\n\n8.4.1 개념\n도메인 지식 기반으로 직접 구간 설정\n\n\n8.4.2 예제\n\nbins = [30, 40, 45, 50, 60]\nlabels = [\"매우 짧음\", \"짧음\", \"보통\", \"김\"]\n\ndf[\"bill_length_custom\"] = pd.cut(\n    df[\"bill_length_mm\"],\n    bins=bins,\n    labels=labels\n)\n\nprint(df[\"bill_length_custom\"])\n\n0      매우 짧음\n1      매우 짧음\n2         짧음\n3        NaN\n4      매우 짧음\n       ...  \n339      NaN\n340       보통\n341        김\n342       보통\n343       보통\nName: bill_length_custom, Length: 344, dtype: category\nCategories (4, str): ['매우 짧음' &lt; '짧음' &lt; '보통' &lt; '김']\n\n\n해석력 최고, 주관 개입, 기준 설명 필요",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#k-means-기반-구간화",
+    "href": "part1/08. 연속형 데이터 범주화.html#k-means-기반-구간화",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.5 k-means 기반 구간화",
+    "text": "8.5 k-means 기반 구간화\n\n8.5.1 개념\n값의 분포를 고려해 군집 중심 기준으로 구간화, 비선형 구조 반영 가능\n\n\n8.5.2 예제\n\nfrom sklearn.cluster import KMeans\nimport numpy as np\n\nx = df[[\"bill_length_mm\"]].dropna()\n\nkmeans = KMeans(n_clusters=3, random_state=42)\nx[\"cluster\"] = kmeans.fit_predict(x)\n\ndf.loc[x.index, \"bill_length_kbin\"] = x[\"cluster\"]\n\nprint(df[\"bill_length_kbin\"])\n\n0      2.0\n1      2.0\n2      2.0\n3      NaN\n4      2.0\n      ... \n339    NaN\n340    0.0\n341    1.0\n342    0.0\n343    1.0\nName: bill_length_kbin, Length: 344, dtype: float64\n\n\n\n\n\n8.5.3 특징\n\n데이터 기반\n해석은 상대적으로 어려움",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#decision-tree-기반-구간화",
+    "href": "part1/08. 연속형 데이터 범주화.html#decision-tree-기반-구간화",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.6 5️⃣ Decision Tree 기반 구간화",
+    "text": "8.6 5️⃣ Decision Tree 기반 구간화\n\n8.6.1 개념\n타깃 변수를 기준으로 정보이득 최대화, 지도학습 기반 binning\n\n\n8.6.2 예제 (체중 기준)\n\nfrom sklearn.tree import DecisionTreeRegressor\n\nx = df[[\"bill_length_mm\"]].dropna()\ny = df.loc[x.index, \"body_mass_g\"]\n\ntree = DecisionTreeRegressor(\n    max_leaf_nodes=4\n)\ntree.fit(x, y)\n\ndf.loc[x.index, \"bill_length_treebin\"] = tree.apply(x)\n\n타깃 정보 반영, 데이터 누수 주의",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#범주화-후-인코딩까지-연결",
+    "href": "part1/08. 연속형 데이터 범주화.html#범주화-후-인코딩까지-연결",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.7 범주화 후 인코딩까지 연결",
+    "text": "8.7 범주화 후 인코딩까지 연결\n\ndf_bin = pd.get_dummies(\n    df,\n    columns=[\"bill_length_bin\"],\n    drop_first=True\n)\n\nprint(df_bin)\n\n    species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \\\n0    Adelie  Torgersen            39.1           18.7              181.0   \n1    Adelie  Torgersen            39.5           17.4              186.0   \n2    Adelie  Torgersen            40.3           18.0              195.0   \n3    Adelie  Torgersen             NaN            NaN                NaN   \n4    Adelie  Torgersen            36.7           19.3              193.0   \n..      ...        ...             ...            ...                ...   \n339  Gentoo     Biscoe             NaN            NaN                NaN   \n340  Gentoo     Biscoe            46.8           14.3              215.0   \n341  Gentoo     Biscoe            50.4           15.7              222.0   \n342  Gentoo     Biscoe            45.2           14.8              212.0   \n343  Gentoo     Biscoe            49.9           16.1              213.0   \n\n     body_mass_g     sex bill_length_qbin bill_length_custom  \\\n0         3750.0    Male               Q1              매우 짧음   \n1         3800.0  Female               Q2              매우 짧음   \n2         3250.0  Female               Q2                 짧음   \n3            NaN     NaN              NaN                NaN   \n4         3450.0  Female               Q1              매우 짧음   \n..           ...     ...              ...                ...   \n339          NaN     NaN              NaN                NaN   \n340       4850.0  Female               Q3                 보통   \n341       5750.0    Male               Q4                  김   \n342       5200.0  Female               Q3                 보통   \n343       5400.0    Male               Q4                 보통   \n\n     bill_length_kbin  bill_length_treebin  bill_length_bin_보통  \\\n0                 2.0                  4.0                True   \n1                 2.0                  4.0                True   \n2                 2.0                  4.0                True   \n3                 NaN                  NaN               False   \n4                 2.0                  3.0               False   \n..                ...                  ...                 ...   \n339               NaN                  NaN               False   \n340               0.0                  5.0               False   \n341               1.0                  6.0               False   \n342               0.0                  5.0                True   \n343               1.0                  6.0               False   \n\n     bill_length_bin_김  bill_length_bin_매우 김  \n0                False                 False  \n1                False                 False  \n2                False                 False  \n3                False                 False  \n4                False                 False  \n..                 ...                   ...  \n339              False                 False  \n340               True                 False  \n341               True                 False  \n342              False                 False  \n343               True                 False  \n\n[344 rows x 14 columns]",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#범주화-상황",
+    "href": "part1/08. 연속형 데이터 범주화.html#범주화-상황",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.8 범주화 상황",
+    "text": "8.8 범주화 상황\n\n\n\n상황\n효과\n\n\n\n\n모델 해석이 중요할 때\nO\n\n\n비선형 관계 단순화\nO\n\n\n데이터 노이즈 큼\nO\n\n\n데이터 충분히 많음\nX\n\n\n딥러닝\n거의 사용 안 함",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/08. 연속형 데이터 범주화.html#스케일링-vs-범주화",
+    "href": "part1/08. 연속형 데이터 범주화.html#스케일링-vs-범주화",
+    "title": "8  연속형 데이터 범주화",
+    "section": "8.9 스케일링 vs 범주화",
+    "text": "8.9 스케일링 vs 범주화\n\n\n\n항목\n스케일링\n범주화\n\n\n\n\n정보 손실\n없음\n있음\n\n\n해석력\n낮음\n높음\n\n\n모델 안정성\n보통\n높음\n\n\n주 용도\n거리 계산\n규칙 기반\n\n\n\n범주화는 정보 손실을 감수하고 해석력을 얻는 선택, EDA 결과 보고 결정하는 단계",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
   }
 ]
