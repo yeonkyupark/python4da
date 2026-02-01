@@ -21,10 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,8 +107,40 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -335,8 +402,39 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#적합성-및-독립성-검정-시점" id="toc-적합성-및-독립성-검정-시점" class="nav-link active" data-scroll-target="#적합성-및-독립성-검정-시점"><span class="header-section-number">14.1</span> 적합성 및 독립성 검정 시점</a></li>
+  <li><a href="#카이제곱χ²-검정-공통-아이디어" id="toc-카이제곱χ²-검정-공통-아이디어" class="nav-link" data-scroll-target="#카이제곱χ²-검정-공통-아이디어"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정 공통 아이디어</a></li>
+  <li><a href="#적합성-검정-goodness-of-fit-test" id="toc-적합성-검정-goodness-of-fit-test" class="nav-link" data-scroll-target="#적합성-검정-goodness-of-fit-test"><span class="header-section-number">14.3</span> 적합성 검정 (Goodness-of-Fit Test)</a>
+  <ul>
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">14.3.1</span> 개념</a></li>
+  <li><a href="#가설-설정" id="toc-가설-설정" class="nav-link" data-scroll-target="#가설-설정"><span class="header-section-number">14.3.2</span> 가설 설정</a></li>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">14.3.3</span> 예제</a></li>
+  <li><a href="#적합성-검정-예시" id="toc-적합성-검정-예시" class="nav-link" data-scroll-target="#적합성-검정-예시"><span class="header-section-number">14.3.4</span> 적합성 검정 예시</a></li>
+  </ul></li>
+  <li><a href="#독립성-검정-test-of-independence" id="toc-독립성-검정-test-of-independence" class="nav-link" data-scroll-target="#독립성-검정-test-of-independence"><span class="header-section-number">14.4</span> 독립성 검정 (Test of Independence)</a>
+  <ul>
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">14.4.1</span> 개념</a></li>
+  <li><a href="#가설-설정-1" id="toc-가설-설정-1" class="nav-link" data-scroll-target="#가설-설정-1"><span class="header-section-number">14.4.2</span> 가설 설정</a></li>
+  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">14.4.3</span> 예제</a></li>
+  <li><a href="#교차표-생성" id="toc-교차표-생성" class="nav-link" data-scroll-target="#교차표-생성"><span class="header-section-number">14.4.4</span> 교차표 생성</a></li>
+  <li><a href="#카이제곱-독립성-검정" id="toc-카이제곱-독립성-검정" class="nav-link" data-scroll-target="#카이제곱-독립성-검정"><span class="header-section-number">14.4.5</span> 카이제곱 독립성 검정</a></li>
+  <li><a href="#기대-빈도-확인" id="toc-기대-빈도-확인" class="nav-link" data-scroll-target="#기대-빈도-확인"><span class="header-section-number">14.4.6</span> 기대 빈도 확인</a></li>
+  </ul></li>
+  <li><a href="#f-검정" id="toc-f-검정" class="nav-link" data-scroll-target="#f-검정"><span class="header-section-number">14.5</span> F 검정</a>
+  <ul>
+  <li><a href="#f-검정의-의미" id="toc-f-검정의-의미" class="nav-link" data-scroll-target="#f-검정의-의미"><span class="header-section-number">14.5.1</span> F 검정의 의미</a></li>
+  <li><a href="#예제-2" id="toc-예제-2" class="nav-link" data-scroll-target="#예제-2"><span class="header-section-number">14.5.2</span> 예제</a></li>
+  </ul></li>
+  <li><a href="#검정별-예시" id="toc-검정별-예시" class="nav-link" data-scroll-target="#검정별-예시"><span class="header-section-number">14.6</span> 검정별 예시</a></li>
+  <li><a href="#자주-하는-오해" id="toc-자주-하는-오해" class="nav-link" data-scroll-target="#자주-하는-오해"><span class="header-section-number">14.7</span> 자주 하는 오해</a></li>
+  <li><a href="#정리" id="toc-정리" class="nav-link" data-scroll-target="#정리"><span class="header-section-number">14.8</span> 정리</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/04. 적합성 및 독립성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +464,288 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="적합성-및-독립성-검정-시점" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="적합성-및-독립성-검정-시점"><span class="header-section-number">14.1</span> 적합성 및 독립성 검정 시점</h2>
+<ul>
+<li><strong>이 데이터는 내가 기대한 분포를 따르는가?</strong></li>
+<li><strong>두 범주형 변수는 서로 관련이 있는가?</strong></li>
+</ul>
+<p>평균이 아니라 <strong>빈도와 구조</strong>를 파악하기 위해 수행한다.</p>
+</section>
+<section id="카이제곱χ²-검정-공통-아이디어" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="카이제곱χ²-검정-공통-아이디어"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정 공통 아이디어</h2>
+<p>카이제곱 검정 논리:</p>
+<p><span class="math display">\[
+\chi^2 = \sum \frac{(관측값 - 기대값)^2}{기대값}
+\]</span></p>
+<p>핵심 비교</p>
+<ul>
+<li>관측 빈도 (Observed)</li>
+<li>기대 빈도 (Expected)</li>
+</ul>
+</section>
+<section id="적합성-검정-goodness-of-fit-test" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="적합성-검정-goodness-of-fit-test"><span class="header-section-number">14.3</span> 적합성 검정 (Goodness-of-Fit Test)</h2>
+<section id="개념" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">14.3.1</span> 개념</h3>
+<p><strong>관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는가?</strong></p>
+</section>
+<section id="가설-설정" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="가설-설정"><span class="header-section-number">14.3.2</span> 가설 설정</h3>
+<ul>
+<li>귀무가설 (H_0): 관측 분포 = 기대 분포</li>
+<li>대립가설 (H_1): 관측 분포 ≠ 기대 분포</li>
+</ul>
+</section>
+<section id="예제" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">14.3.3</span> 예제</h3>
+<p>species 분포가 <strong>균등 분포</strong>라고 볼 수 있을까?</p>
+<div id="a885cd1b" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="eabacf74" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>observed <span class="op">=</span> df[<span class="st">"species"</span>].value_counts().sort_index()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>observed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>species
+Adelie       146
+Chinstrap     68
+Gentoo       119
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>기대 빈도 (균등 가정)</p>
+<div id="73008393" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> [observed.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(observed)] <span class="op">*</span> <span class="bu">len</span>(observed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="365a49ae" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(np.float64(28.270270270270274), np.float64(7.264217011785265e-07))</code></pre>
+</div>
+</div>
+<p>판단</p>
+<ul>
+<li>p ≥ 0.05 → 기대 분포와 크게 다르지 않음</li>
+<li>p &lt; 0.05 → 분포가 다름</li>
+</ul>
+</section>
+<section id="적합성-검정-예시" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="적합성-검정-예시"><span class="header-section-number">14.3.4</span> 적합성 검정 예시</h3>
+<ul>
+<li>주사위 공정성</li>
+<li>범주 비율 검증</li>
+<li>샘플링 결과 검증</li>
+</ul>
+</section>
+</section>
+<section id="독립성-검정-test-of-independence" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="독립성-검정-test-of-independence"><span class="header-section-number">14.4</span> 독립성 검정 (Test of Independence)</h2>
+<section id="개념-1" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">14.4.1</span> 개념</h3>
+<p><strong>두 범주형 변수가 서로 독립적인가?</strong></p>
+<p>즉,</p>
+<ul>
+<li>하나를 알면</li>
+<li>다른 하나의 분포가 바뀌는가?</li>
+</ul>
+</section>
+<section id="가설-설정-1" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="가설-설정-1"><span class="header-section-number">14.4.2</span> 가설 설정</h3>
+<ul>
+<li>(H_0): 두 변수는 독립</li>
+<li>(H_1): 두 변수는 독립이 아님</li>
+</ul>
+</section>
+<section id="예제-1" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">14.4.3</span> 예제</h3>
+<p>species와 sex는 독립일까?</p>
+</section>
+<section id="교차표-생성" class="level3" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="교차표-생성"><span class="header-section-number">14.4.4</span> 교차표 생성</h3>
+<div id="ec3336f7" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"sex"</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>contingency_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">Female</th>
+<th data-quarto-table-cell-role="th">Male</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">species</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Adelie</th>
+<td>73</td>
+<td>73</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Chinstrap</th>
+<td>34</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Gentoo</th>
+<td>58</td>
+<td>61</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="카이제곱-독립성-검정" class="level3" data-number="14.4.5">
+<h3 data-number="14.4.5" class="anchored" data-anchor-id="카이제곱-독립성-검정"><span class="header-section-number">14.4.5</span> 카이제곱 독립성 검정</h3>
+<div id="d6856b62" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>chi2, p_value, dof, expected <span class="op">=</span> chi2_contingency(contingency_table)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>chi2, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(np.float64(0.04860717014078318), np.float64(0.9759893689765846))</code></pre>
+</div>
+</div>
+<p>판단</p>
+<ul>
+<li>p ≥ 0.05 → 독립</li>
+<li>p &lt; 0.05 → 관련 있음</li>
+</ul>
+</section>
+<section id="기대-빈도-확인" class="level3" data-number="14.4.6">
+<h3 data-number="14.4.6" class="anchored" data-anchor-id="기대-빈도-확인"><span class="header-section-number">14.4.6</span> 기대 빈도 확인</h3>
+<div id="00cea4ca" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expected</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([[72.34234234, 73.65765766],
+       [33.69369369, 34.30630631],
+       [58.96396396, 60.03603604]])</code></pre>
+</div>
+</div>
+<p>주의</p>
+<ul>
+<li>기대 빈도 &lt; 5 인 셀이 많으면 → 카이제곱 신뢰도 ↓</li>
+</ul>
+</section>
+</section>
+<section id="f-검정" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="f-검정"><span class="header-section-number">14.5</span> F 검정</h2>
+<section id="f-검정의-의미" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="f-검정의-의미"><span class="header-section-number">14.5.1</span> F 검정의 의미</h3>
+<p><strong>두 집단의 분산이 같은가?</strong></p>
+<p><span class="math display">\[
+F = \frac{s_1^2}{s_2^2}
+\]</span></p>
+<ul>
+<li>등분산성의 가장 기본적 형태</li>
+<li>하지만 정규성에 매우 민감</li>
+</ul>
+</section>
+<section id="예제-2" class="level3" data-number="14.5.2">
+<h3 data-number="14.5.2" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">14.5.2</span> 예제</h3>
+<div id="7a0974cd" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>f_stat <span class="op">=</span> group1.var() <span class="op">/</span> group2.var()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>f_stat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>np.float64(1.4239219323005283)</code></pre>
+</div>
+</div>
+<p>p-value 계산</p>
+<div id="ec1c0f6c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="bu">len</span>(group1) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> <span class="bu">len</span>(group2) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> f.cdf(f_stat, df1, df2)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>np.float64(0.052342183408140563)</code></pre>
+</div>
+</div>
+<p>주의</p>
+<ul>
+<li>Levene 검정이 훨씬 안전</li>
+<li>F 검정은 <strong>이론 설명용</strong></li>
+</ul>
+</section>
+</section>
+<section id="검정별-예시" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="검정별-예시"><span class="header-section-number">14.6</span> 검정별 예시</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>목적</th>
+<th>데이터 유형</th>
+<th>검정</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>분포 적합성</td>
+<td>범주 1개</td>
+<td>χ² 적합성</td>
+</tr>
+<tr class="even">
+<td>변수 관계</td>
+<td>범주 × 범주</td>
+<td>χ² 독립성</td>
+</tr>
+<tr class="odd">
+<td>분산 비교</td>
+<td>연속</td>
+<td>F 검정</td>
+</tr>
+<tr class="even">
+<td>실무 등분산</td>
+<td>연속</td>
+<td>Levene</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="자주-하는-오해" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="자주-하는-오해"><span class="header-section-number">14.7</span> 자주 하는 오해</h2>
+<ul>
+<li><p>“p &lt; 0.05 → 강한 관계” &gt; 관계 <strong>존재 여부만 판단</strong></p></li>
+<li><p>“카이제곱은 평균 비교” &gt; 빈도 기반 검정</p></li>
+<li><p>“카이제곱은 다 쓸 수 있다” &gt; 표본 크기·기대빈도 조건 중요</p></li>
+</ul>
+</section>
+<section id="정리" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="정리"><span class="header-section-number">14.8</span> 정리</h2>
+<ul>
+<li>적합성 검정 → <strong>분포 자체를 비교</strong></li>
+<li>독립성 검정 → <strong>범주 간 관계</strong></li>
+<li>카이제곱은 빈도의 언어 → <strong>분산 비교</strong></li>
+<li>평균 비교 전에 구조부터 확인하자</li>
+</ul>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1168,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/04. 적합성 및 독립성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/04. 적합성 및 독립성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

@@ -1292,5 +1292,104 @@
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
     ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html",
+    "href": "part2/04. 적합성 및 독립성 검정.html",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "",
+    "text": "14.1 적합성 및 독립성 검정 시점\n평균이 아니라 빈도와 구조를 파악하기 위해 수행한다.",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#적합성-및-독립성-검정-시점",
+    "href": "part2/04. 적합성 및 독립성 검정.html#적합성-및-독립성-검정-시점",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "",
+    "text": "이 데이터는 내가 기대한 분포를 따르는가?\n두 범주형 변수는 서로 관련이 있는가?",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#카이제곱χ²-검정-공통-아이디어",
+    "href": "part2/04. 적합성 및 독립성 검정.html#카이제곱χ²-검정-공통-아이디어",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.2 카이제곱(χ²) 검정 공통 아이디어",
+    "text": "14.2 카이제곱(χ²) 검정 공통 아이디어\n카이제곱 검정 논리:\n\\[\n\\chi^2 = \\sum \\frac{(관측값 - 기대값)^2}{기대값}\n\\]\n핵심 비교\n\n관측 빈도 (Observed)\n기대 빈도 (Expected)",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#적합성-검정-goodness-of-fit-test",
+    "href": "part2/04. 적합성 및 독립성 검정.html#적합성-검정-goodness-of-fit-test",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.3 적합성 검정 (Goodness-of-Fit Test)",
+    "text": "14.3 적합성 검정 (Goodness-of-Fit Test)\n\n14.3.1 개념\n관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는가?\n\n\n14.3.2 가설 설정\n\n귀무가설 (H_0): 관측 분포 = 기대 분포\n대립가설 (H_1): 관측 분포 ≠ 기대 분포\n\n\n\n14.3.3 예제\nspecies 분포가 균등 분포라고 볼 수 있을까?\n\nimport seaborn as sns\nimport numpy as np\nfrom scipy.stats import chisquare\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n\nobserved = df[\"species\"].value_counts().sort_index()\nobserved\n\nspecies\nAdelie       146\nChinstrap     68\nGentoo       119\nName: count, dtype: int64\n\n\n기대 빈도 (균등 가정)\n\nexpected = [observed.sum() / len(observed)] * len(observed)\n\n\nstat, p_value = chisquare(f_obs=observed, f_exp=expected)\nstat, p_value\n\n(np.float64(28.270270270270274), np.float64(7.264217011785265e-07))\n\n\n판단\n\np ≥ 0.05 → 기대 분포와 크게 다르지 않음\np &lt; 0.05 → 분포가 다름\n\n\n\n14.3.4 적합성 검정 예시\n\n주사위 공정성\n범주 비율 검증\n샘플링 결과 검증",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#독립성-검정-test-of-independence",
+    "href": "part2/04. 적합성 및 독립성 검정.html#독립성-검정-test-of-independence",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.4 독립성 검정 (Test of Independence)",
+    "text": "14.4 독립성 검정 (Test of Independence)\n\n14.4.1 개념\n두 범주형 변수가 서로 독립적인가?\n즉,\n\n하나를 알면\n다른 하나의 분포가 바뀌는가?\n\n\n\n14.4.2 가설 설정\n\n(H_0): 두 변수는 독립\n(H_1): 두 변수는 독립이 아님\n\n\n\n14.4.3 예제\nspecies와 sex는 독립일까?\n\n\n14.4.4 교차표 생성\n\nimport pandas as pd\ncontingency_table = pd.crosstab(\n    df[\"species\"],\n    df[\"sex\"]\n)\ncontingency_table\n\n\n\n\n\n\n\nsex\nFemale\nMale\n\n\nspecies\n\n\n\n\n\n\nAdelie\n73\n73\n\n\nChinstrap\n34\n34\n\n\nGentoo\n58\n61\n\n\n\n\n\n\n\n\n\n14.4.5 카이제곱 독립성 검정\n\nfrom scipy.stats import chi2_contingency\n\nchi2, p_value, dof, expected = chi2_contingency(contingency_table)\nchi2, p_value\n\n(np.float64(0.04860717014078318), np.float64(0.9759893689765846))\n\n\n판단\n\np ≥ 0.05 → 독립\np &lt; 0.05 → 관련 있음\n\n\n\n14.4.6 기대 빈도 확인\n\nexpected\n\narray([[72.34234234, 73.65765766],\n       [33.69369369, 34.30630631],\n       [58.96396396, 60.03603604]])\n\n\n주의\n\n기대 빈도 &lt; 5 인 셀이 많으면 → 카이제곱 신뢰도 ↓",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#f-검정",
+    "href": "part2/04. 적합성 및 독립성 검정.html#f-검정",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.5 F 검정",
+    "text": "14.5 F 검정\n\n14.5.1 F 검정의 의미\n두 집단의 분산이 같은가?\n\\[\nF = \\frac{s_1^2}{s_2^2}\n\\]\n\n등분산성의 가장 기본적 형태\n하지만 정규성에 매우 민감\n\n\n\n14.5.2 예제\n\nfrom scipy.stats import f\n\ngroup1 = df[df[\"species\"] == \"Adelie\"][\"body_mass_g\"]\ngroup2 = df[df[\"species\"] == \"Chinstrap\"][\"body_mass_g\"]\n\nf_stat = group1.var() / group2.var()\nf_stat\n\nnp.float64(1.4239219323005283)\n\n\np-value 계산\n\ndf1 = len(group1) - 1\ndf2 = len(group2) - 1\n\np_value = 1 - f.cdf(f_stat, df1, df2)\np_value\n\nnp.float64(0.052342183408140563)\n\n\n주의\n\nLevene 검정이 훨씬 안전\nF 검정은 이론 설명용",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#검정별-예시",
+    "href": "part2/04. 적합성 및 독립성 검정.html#검정별-예시",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.6 검정별 예시",
+    "text": "14.6 검정별 예시\n\n\n\n목적\n데이터 유형\n검정\n\n\n\n\n분포 적합성\n범주 1개\nχ² 적합성\n\n\n변수 관계\n범주 × 범주\nχ² 독립성\n\n\n분산 비교\n연속\nF 검정\n\n\n실무 등분산\n연속\nLevene",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#자주-하는-오해",
+    "href": "part2/04. 적합성 및 독립성 검정.html#자주-하는-오해",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.7 자주 하는 오해",
+    "text": "14.7 자주 하는 오해\n\n“p &lt; 0.05 → 강한 관계” &gt; 관계 존재 여부만 판단\n“카이제곱은 평균 비교” &gt; 빈도 기반 검정\n“카이제곱은 다 쓸 수 있다” &gt; 표본 크기·기대빈도 조건 중요",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/04. 적합성 및 독립성 검정.html#정리",
+    "href": "part2/04. 적합성 및 독립성 검정.html#정리",
+    "title": "14  적합성 및 독립성 검정",
+    "section": "14.8 정리",
+    "text": "14.8 정리\n\n적합성 검정 → 분포 자체를 비교\n독립성 검정 → 범주 간 관계\n카이제곱은 빈도의 언어 → 분산 비교\n평균 비교 전에 구조부터 확인하자",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>적합성 및 독립성 검정</span>"
+    ]
   }
 ]
