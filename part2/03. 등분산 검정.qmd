@@ -1,2 +1,168 @@
 # 등분산 검정
 
+## 등분산성
+
+여러 집단의 **분산이 동일하다**는 가정(*Homoscedasticity*)
+
+$$
+\sigma_1^2 = \sigma_2^2 = \cdots = \sigma_k^2
+$$
+
+반대 개념
+
+* 이분산성 (*Heteroscedasticity*)
+
+## 등분산성 검사 필요성
+
+다음 기법들의 **전제 조건**으로 등분산성 검사((Test for Homogeneity of Variance) 진행
+
+| 분석             | 등분산 필요 여부 |
+| -------------- | --------- |
+| Student t-test | 필요        |
+| ANOVA          | 필요        |
+| 선형회귀(잔차)       | 중요        |
+| Welch t-test   | 불필요       |
+| 비모수 검정         | 불필요       |
+
+**정규성보다 등분산성 위반이 더 위험한 경우도 많음**
+
+
+## 등분산성 검사 시점
+
+* **집단 간 평균 비교 전**
+* **ANOVA 적용 전**
+* 회귀 분석에서 잔차 진단 시
+
+## 시각적 등분산성 점검
+
+### (1) 박스플롯
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset("penguins").dropna()
+```
+
+```{python}
+sns.boxplot(
+    x="species",
+    y="body_mass_g",
+    data=df
+)
+plt.show()
+```
+
+관찰 포인트
+
+* 박스 높이
+* whisker 길이
+* 집단 간 퍼짐 차이
+
+---
+
+### (2) 분산 비교 히스토그램
+
+```{python}
+sns.histplot(
+    data=df,
+    x="body_mass_g",
+    hue="species",
+    kde=True
+)
+plt.show()
+```
+
+## 통계적 등분산 검정 방법
+
+### 주요 등분산 검정 비교
+
+| 검정              | 특징     | 전제         |
+| --------------- | ------ | ---------- |
+| Bartlett        | 민감     | **정규성 필요** |
+| Levene          | 안정적    | 정규성 불필요    |
+| Brown–Forsythe  | 중앙값 기반 | 이상치 강건     |
+| Fligner–Killeen | 비모수    | 매우 강건      |
+
+## Levene 검정
+
+### 원리
+
+* 각 관측값과 **집단 평균(또는 중앙값)** 의 절대편차 비교 (가장 권장)
+
+### 예제
+
+```{python}
+from scipy.stats import levene
+
+groups = [
+    df[df["species"] == sp]["body_mass_g"]
+    for sp in df["species"].unique()
+]
+
+stat, p_value = levene(*groups)
+stat, p_value
+```
+
+판단
+
+* p ≥ 0.05 → 등분산 가정 가능
+* p < 0.05 → 이분산
+
+## Bartlett 검정
+
+```{python}
+from scipy.stats import bartlett
+
+stat, p_value = bartlett(*groups)
+stat, p_value
+```
+
+주의
+
+* 정규성 위반 시 **잘못된 경고**
+* 실제 실무에서는 거의 비권장
+
+## Fligner–Killeen 검정
+
+```{python}
+from scipy.stats import fligner
+
+stat, p_value = fligner(*groups)
+stat, p_value
+```
+
+특징
+
+* 비모수
+* 꼬리 두꺼운 분포에도 안정적
+
+## 등분산성이 깨졌을 때의 선택지
+
+### 대안 검정 사용
+
+| 상황      | 대안           |
+| ------- | ------------ |
+| 두 집단 평균 | Welch t-test |
+| 다집단 평균  | Welch ANOVA  |
+| 전반      | 비모수 검정       |
+
+### 분포 변환
+
+* 로그
+* Box-Cox
+* Yeo-Johnson
+
+### 그룹별 분산 고려 모델
+
+* 가중 회귀
+* 일반화 선형 모델
+
+## 정규성 ↔ 등분산성 관계
+
+* 정규성 통과 ≠ 등분산성 통과
+* Bartlett는 정규성에 **의존**
+* Levene/Fligner는 **독립**
+
+실무 기본 조합
+**Q–Q plot + Levene**
