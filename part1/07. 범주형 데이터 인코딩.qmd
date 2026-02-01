@@ -9,16 +9,9 @@ import pandas as pd
 df = sns.load_dataset("penguins")
 ```
 
----
+## Label Encoding
 
-## 1️⃣ Label Encoding
-
-### 개념
-
-* 범주를 **정수 값**으로 매핑
-* 순서가 **없는데 숫자로 바뀌므로 주의 필요**
-
----
+범주를 **정수 값**으로 매핑하는 방식으로 순서가 **없는데 숫자로 바뀌므로 주의 필요**
 
 ### 예제 코드
 
@@ -29,35 +22,17 @@ le = LabelEncoder()
 
 df_label = df.copy()
 df_label["species_enc"] = le.fit_transform(df_label["species"])
+
+print(df_label)
 ```
-
----
-
-### 결과 예시
-
-| species   | species_enc |
-| --------- | ----------- |
-| Adelie    | 0           |
-| Chinstrap | 1           |
-| Gentoo    | 2           |
-
----
 
 ### 사용 시점
 
-* 트리 기반 모델 (Decision Tree, RandomForest, XGBoost)
-* 순서 의미가 없어도 되는 경우
+트리 기반 모델 (Decision Tree, RandomForest, XGBoost) 사용 시 순서 의미가 없어도 되는 경우
 
----
+## One-Hot Encoding 
 
-## 2️⃣ One-Hot Encoding (더미 변수)
-
-### 개념
-
-* 각 범주를 **이진 컬럼**으로 분리
-* 거리 기반, 선형 모델에서 가장 안전
-
----
+각 범주를 **이진 컬럼**으로 분리, 거리 기반, 선형 모델에서 가장 안전
 
 ### pandas 방식
 
@@ -67,11 +42,11 @@ df_ohe = pd.get_dummies(
     columns=["species", "island"],
     drop_first=False
 )
+
+print(df_ohe)
 ```
 
----
-
-### drop_first 옵션
+drop_first 옵션으로 첫번째 더미 변수 제거, 다중공선성 방지 (회귀 모델에서 중요)
 
 ```{python}
 df_ohe = pd.get_dummies(
@@ -79,36 +54,15 @@ df_ohe = pd.get_dummies(
     columns=["species"],
     drop_first=True
 )
+
+print(df_ohe)
 ```
 
-* 다중공선성 방지 (회귀 모델에서 중요)
+선형 회귀, 로지스틱 회귀, KNN, SVM, PCA 등의 모델 사용 시 적용
 
----
+## Ordinal Encoding
 
-### 사용 시점
-
-* 선형 회귀
-* 로지스틱 회귀
-* KNN, SVM, PCA
-
----
-
-## 3️⃣ Ordinal Encoding
-
-### 개념
-
-* **순서가 있는 범주형 변수**에 사용
-* 사용자가 순서를 직접 정의
-
----
-
-### 예제 상황
-
-```text
-size = ["small", "medium", "large"]
-```
-
----
+**순서가 있는 범주형 변수**에 사용, 사용자가 순서를 직접 정의
 
 ### 예제 코드
 
@@ -125,25 +79,15 @@ df_ord = pd.DataFrame(
     ),
     columns=["size_enc"]
 )
+
+print(df_ord)
 ```
 
----
+명확한 순서 존재하는 등급, 크기, 단계 표현 등에 적용
 
-### 사용 시점
+## Target(Mean) Encoding
 
-* 명확한 순서 존재
-* 등급, 크기, 단계 표현
-
----
-
-## 4️⃣ Target Encoding (Mean Encoding)
-
-### 개념
-
-* 범주를 **타깃 변수의 평균값**으로 치환
-* 정보량은 크지만 **데이터 누수 위험**
-
----
+범주를 **타깃 변수의 평균값**으로 치환, 정보량은 크지만 **데이터 누수 위험** 존재
 
 ### 예제 코드
 
@@ -155,25 +99,15 @@ col = "species"
 
 mean_map = df_te.groupby(col)[target].mean()
 df_te["species_enc"] = df_te[col].map(mean_map)
+
+print(df_te)
 ```
 
----
+반드시 **train 데이터 기준으로만 계산**, CV 기반 smoothing 권장
 
-### 주의점
+## 빈도(Frequency) 인코딩
 
-* 반드시 **train 데이터 기준으로만 계산**
-* CV 기반 smoothing 권장
-
----
-
-## 5️⃣ 빈도(Frequency) 인코딩
-
-### 개념
-
-* 범주의 **출현 빈도**로 인코딩
-* 희귀 범주 처리에 유용
-
----
+범주의 **출현 빈도**로 인코딩, 희귀 범주 처리에 유용
 
 ### 예제 코드
 
@@ -181,11 +115,11 @@ df_te["species_enc"] = df_te[col].map(mean_map)
 freq_map = df["island"].value_counts(normalize=True)
 df_freq = df.copy()
 df_freq["island_enc"] = df_freq["island"].map(freq_map)
+
+print(df_freq)
 ```
 
----
-
-## 6️⃣ 여러 컬럼을 한 번에 인코딩
+## 여러 컬럼을 한 번에 인코딩
 
 ### One-Hot (pandas)
 
@@ -194,8 +128,6 @@ cat_cols = ["species", "island", "sex"]
 
 df_ohe = pd.get_dummies(df, columns=cat_cols)
 ```
-
----
 
 ### Label Encoding (반복 처리)
 
@@ -209,9 +141,7 @@ for col in cat_cols:
     df_label[col] = le.fit_transform(df_label[col].astype(str))
 ```
 
----
-
-## 7️⃣ 인코딩 방식 요약
+## 인코딩 방식 요약
 
 | 인코딩       | 순서 필요 | 컬럼 수 증가 | 추천 모델      |
 | --------- | ----- | ------- | ---------- |
@@ -221,17 +151,3 @@ for col in cat_cols:
 | Target    | X     | X       | 고급 모델      |
 | Frequency | X     | X       | 희귀 범주 많을 때 |
 
----
-
-## 8️⃣ 실무 기준 한 줄 정리
-
-* **모르면 One-Hot**
-* **트리면 Label**
-* **순서 있으면 Ordinal**
-* **고급 모델 + 주의 가능하면 Target**
-
-이 다음으로 이어가면 자연스러운 주제는
-
-* *고차원 One-Hot 문제와 해결법*
-* *범주형 변수와 스케일링의 관계*
-* *파이프라인에서 인코딩 처리 방법*
