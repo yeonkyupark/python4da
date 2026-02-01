@@ -1166,10 +1166,131 @@
     "href": "part2/02. 정규성 검정.html#정규성-검정-유의사항",
     "title": "12  정규성 검정",
     "section": "12.7 정규성 검정 유의사항",
-    "text": "12.7 정규성 검정 유의사항\n\n정규성 ≠ 절대 조건\np-value 하나로 결정 ❌\n시각 + 표본 크기 + 분석 목적 종합 판단",
+    "text": "12.7 정규성 검정 유의사항\n\n정규성 ≠ 절대 조건\np-value 하나로 결정\n시각 + 표본 크기 + 분석 목적 종합 판단",
     "crumbs": [
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html",
+    "href": "part2/03. 등분산 검정.html",
+    "title": "13  등분산 검정",
+    "section": "",
+    "text": "13.1 등분산성\n여러 집단의 분산이 동일하다는 가정(Homoscedasticity)\n\\[\n\\sigma_1^2 = \\sigma_2^2 = \\cdots = \\sigma_k^2\n\\]\n반대 개념",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#등분산성",
+    "href": "part2/03. 등분산 검정.html#등분산성",
+    "title": "13  등분산 검정",
+    "section": "",
+    "text": "이분산성 (Heteroscedasticity)",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#등분산성-검사-필요성",
+    "href": "part2/03. 등분산 검정.html#등분산성-검사-필요성",
+    "title": "13  등분산 검정",
+    "section": "13.2 등분산성 검사 필요성",
+    "text": "13.2 등분산성 검사 필요성\n다음 기법들의 전제 조건으로 등분산성 검사((Test for Homogeneity of Variance) 진행\n\n\n\n분석\n등분산 필요 여부\n\n\n\n\nStudent t-test\n필요\n\n\nANOVA\n필요\n\n\n선형회귀(잔차)\n중요\n\n\nWelch t-test\n불필요\n\n\n비모수 검정\n불필요\n\n\n\n정규성보다 등분산성 위반이 더 위험한 경우도 많음",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#등분산성-검사-시점",
+    "href": "part2/03. 등분산 검정.html#등분산성-검사-시점",
+    "title": "13  등분산 검정",
+    "section": "13.3 등분산성 검사 시점",
+    "text": "13.3 등분산성 검사 시점\n\n집단 간 평균 비교 전\nANOVA 적용 전\n회귀 분석에서 잔차 진단 시",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#시각적-등분산성-점검",
+    "href": "part2/03. 등분산 검정.html#시각적-등분산성-점검",
+    "title": "13  등분산 검정",
+    "section": "13.4 시각적 등분산성 점검",
+    "text": "13.4 시각적 등분산성 점검\n\n13.4.1 (1) 박스플롯\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n\nsns.boxplot(\n    x=\"species\",\n    y=\"body_mass_g\",\n    data=df\n)\nplt.show()\n\n\n\n\n\n\n\n\n관찰 포인트\n\n박스 높이\nwhisker 길이\n집단 간 퍼짐 차이\n\n\n\n\n13.4.2 (2) 분산 비교 히스토그램\n\nsns.histplot(\n    data=df,\n    x=\"body_mass_g\",\n    hue=\"species\",\n    kde=True\n)\nplt.show()",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#통계적-등분산-검정-방법",
+    "href": "part2/03. 등분산 검정.html#통계적-등분산-검정-방법",
+    "title": "13  등분산 검정",
+    "section": "13.5 통계적 등분산 검정 방법",
+    "text": "13.5 통계적 등분산 검정 방법\n\n13.5.1 주요 등분산 검정 비교\n\n\n\n검정\n특징\n전제\n\n\n\n\nBartlett\n민감\n정규성 필요\n\n\nLevene\n안정적\n정규성 불필요\n\n\nBrown–Forsythe\n중앙값 기반\n이상치 강건\n\n\nFligner–Killeen\n비모수\n매우 강건",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#levene-검정",
+    "href": "part2/03. 등분산 검정.html#levene-검정",
+    "title": "13  등분산 검정",
+    "section": "13.6 Levene 검정",
+    "text": "13.6 Levene 검정\n\n13.6.1 원리\n\n각 관측값과 집단 평균(또는 중앙값) 의 절대편차 비교 (가장 권장)\n\n\n\n13.6.2 예제\n\nfrom scipy.stats import levene\n\ngroups = [\n    df[df[\"species\"] == sp][\"body_mass_g\"]\n    for sp in df[\"species\"].unique()\n]\n\nstat, p_value = levene(*groups)\nstat, p_value\n\n(np.float64(5.134899089832661), np.float64(0.0063670535459093534))\n\n\n판단\n\np ≥ 0.05 → 등분산 가정 가능\np &lt; 0.05 → 이분산",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#bartlett-검정",
+    "href": "part2/03. 등분산 검정.html#bartlett-검정",
+    "title": "13  등분산 검정",
+    "section": "13.7 Bartlett 검정",
+    "text": "13.7 Bartlett 검정\n\nfrom scipy.stats import bartlett\n\nstat, p_value = bartlett(*groups)\nstat, p_value\n\n(np.float64(5.692031757944016), np.float64(0.0580752393481068))\n\n\n주의\n\n정규성 위반 시 잘못된 경고\n실제 실무에서는 거의 비권장",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#flignerkilleen-검정",
+    "href": "part2/03. 등분산 검정.html#flignerkilleen-검정",
+    "title": "13  등분산 검정",
+    "section": "13.8 Fligner–Killeen 검정",
+    "text": "13.8 Fligner–Killeen 검정\n\nfrom scipy.stats import fligner\n\nstat, p_value = fligner(*groups)\nstat, p_value\n\n(np.float64(9.250672076098088), np.float64(0.009800361188170159))\n\n\n특징\n\n비모수\n꼬리 두꺼운 분포에도 안정적",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#등분산성이-깨졌을-때의-선택지",
+    "href": "part2/03. 등분산 검정.html#등분산성이-깨졌을-때의-선택지",
+    "title": "13  등분산 검정",
+    "section": "13.9 등분산성이 깨졌을 때의 선택지",
+    "text": "13.9 등분산성이 깨졌을 때의 선택지\n\n13.9.1 대안 검정 사용\n\n\n\n상황\n대안\n\n\n\n\n두 집단 평균\nWelch t-test\n\n\n다집단 평균\nWelch ANOVA\n\n\n전반\n비모수 검정\n\n\n\n\n\n13.9.2 분포 변환\n\n로그\nBox-Cox\nYeo-Johnson\n\n\n\n13.9.3 그룹별 분산 고려 모델\n\n가중 회귀\n일반화 선형 모델",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/03. 등분산 검정.html#정규성-등분산성-관계",
+    "href": "part2/03. 등분산 검정.html#정규성-등분산성-관계",
+    "title": "13  등분산 검정",
+    "section": "13.10 정규성 ↔︎ 등분산성 관계",
+    "text": "13.10 정규성 ↔︎ 등분산성 관계\n\n정규성 통과 ≠ 등분산성 통과\nBartlett는 정규성에 의존\nLevene/Fligner는 독립\n\n실무 기본 조합 Q–Q plot + Levene",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>등분산 검정</span>"
     ]
   }
 ]
