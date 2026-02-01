@@ -431,7 +431,7 @@ window.Quarto = {
   <li><a href="#예제-3" id="toc-예제-3" class="nav-link" data-scroll-target="#예제-3"><span class="header-section-number">8.5.2</span> 예제</a></li>
   <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">8.5.3</span> 특징</a></li>
   </ul></li>
-  <li><a href="#decision-tree-기반-구간화" id="toc-decision-tree-기반-구간화" class="nav-link" data-scroll-target="#decision-tree-기반-구간화"><span class="header-section-number">8.6</span> 5️⃣ Decision Tree 기반 구간화</a>
+  <li><a href="#decision-tree-기반-구간화" id="toc-decision-tree-기반-구간화" class="nav-link" data-scroll-target="#decision-tree-기반-구간화"><span class="header-section-number">8.6</span> Decision Tree 기반 구간화</a>
   <ul>
   <li><a href="#개념-5" id="toc-개념-5" class="nav-link" data-scroll-target="#개념-5"><span class="header-section-number">8.6.1</span> 개념</a></li>
   <li><a href="#예제-체중-기준" id="toc-예제-체중-기준" class="nav-link" data-scroll-target="#예제-체중-기준"><span class="header-section-number">8.6.2</span> 예제 (체중 기준)</a></li>
@@ -491,7 +491,7 @@ window.Quarto = {
 </section>
 <section id="예제" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">8.2.2</span> 예제</h3>
-<div id="79618e11" class="cell" data-execution_count="1">
+<div id="671ebc81" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -516,11 +516,10 @@ Name: bill_length_bin, Length: 344, dtype: category
 Categories (4, interval[float64, right]): [(32.072, 38.975] &lt; (38.975, 45.85] &lt; (45.85, 52.725] &lt; (52.725, 59.6]]</code></pre>
 </div>
 </div>
-<hr>
 </section>
 <section id="범주-이름-지정" class="level3" data-number="8.2.3">
 <h3 data-number="8.2.3" class="anchored" data-anchor-id="범주-이름-지정"><span class="header-section-number">8.2.3</span> 범주 이름 지정</h3>
-<div id="e235aeb7" class="cell" data-execution_count="2">
+<div id="59cc4ec0" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_bin"</span>] <span class="op">=</span> pd.cut(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span><span class="dv">4</span>,</span>
@@ -555,7 +554,7 @@ Categories (4, str): ['짧음' &lt; '보통' &lt; '김' &lt; '매우 김']</code
 </section>
 <section id="예제-1" class="level3" data-number="8.3.2">
 <h3 data-number="8.3.2" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">8.3.2</span> 예제</h3>
-<div id="e0fc3ac8" class="cell" data-execution_count="3">
+<div id="3a6674db" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_qbin"</span>] <span class="op">=</span> pd.qcut(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    q<span class="op">=</span><span class="dv">4</span></span>
@@ -581,7 +580,7 @@ Categories (4, interval[float64, right]): [(32.099000000000004, 39.225] &lt; (39
 </section>
 <section id="라벨-지정" class="level3" data-number="8.3.3">
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="라벨-지정"><span class="header-section-number">8.3.3</span> 라벨 지정</h3>
-<div id="cf09a54b" class="cell" data-execution_count="4">
+<div id="9e336973" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_qbin"</span>] <span class="op">=</span> pd.qcut(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    q<span class="op">=</span><span class="dv">4</span>,</span>
@@ -616,7 +615,7 @@ Categories (4, str): ['Q1' &lt; 'Q2' &lt; 'Q3' &lt; 'Q4']</code></pre>
 </section>
 <section id="예제-2" class="level3" data-number="8.4.2">
 <h3 data-number="8.4.2" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">8.4.2</span> 예제</h3>
-<div id="7ae64d2e" class="cell" data-execution_count="5">
+<div id="b309569c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">60</span>]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"매우 짧음"</span>, <span class="st">"짧음"</span>, <span class="st">"보통"</span>, <span class="st">"김"</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -654,7 +653,7 @@ Categories (4, str): ['매우 짧음' &lt; '짧음' &lt; '보통' &lt; '김']</c
 </section>
 <section id="예제-3" class="level3" data-number="8.5.2">
 <h3 data-number="8.5.2" class="anchored" data-anchor-id="예제-3"><span class="header-section-number">8.5.2</span> 예제</h3>
-<div id="b48e7dab" class="cell" data-execution_count="6">
+<div id="e1ebf545" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -681,7 +680,6 @@ Categories (4, str): ['매우 짧음' &lt; '짧음' &lt; '보통' &lt; '김']</c
 Name: bill_length_kbin, Length: 344, dtype: float64</code></pre>
 </div>
 </div>
-<hr>
 </section>
 <section id="특징" class="level3" data-number="8.5.3">
 <h3 data-number="8.5.3" class="anchored" data-anchor-id="특징"><span class="header-section-number">8.5.3</span> 특징</h3>
@@ -689,18 +687,17 @@ Name: bill_length_kbin, Length: 344, dtype: float64</code></pre>
 <li>데이터 기반</li>
 <li>해석은 상대적으로 어려움</li>
 </ul>
-<hr>
 </section>
 </section>
 <section id="decision-tree-기반-구간화" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="decision-tree-기반-구간화"><span class="header-section-number">8.6</span> 5️⃣ Decision Tree 기반 구간화</h2>
+<h2 data-number="8.6" class="anchored" data-anchor-id="decision-tree-기반-구간화"><span class="header-section-number">8.6</span> Decision Tree 기반 구간화</h2>
 <section id="개념-5" class="level3" data-number="8.6.1">
 <h3 data-number="8.6.1" class="anchored" data-anchor-id="개념-5"><span class="header-section-number">8.6.1</span> 개념</h3>
 <p>타깃 변수를 기준으로 <strong>정보이득 최대화</strong>, 지도학습 기반 binning</p>
 </section>
 <section id="예제-체중-기준" class="level3" data-number="8.6.2">
 <h3 data-number="8.6.2" class="anchored" data-anchor-id="예제-체중-기준"><span class="header-section-number">8.6.2</span> 예제 (체중 기준)</h3>
-<div id="0af5d346" class="cell" data-execution_count="7">
+<div id="5df94ae8" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>]].dropna()</span>
@@ -718,7 +715,7 @@ Name: bill_length_kbin, Length: 344, dtype: float64</code></pre>
 </section>
 <section id="범주화-후-인코딩까지-연결" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="범주화-후-인코딩까지-연결"><span class="header-section-number">8.7</span> 범주화 후 인코딩까지 연결</h2>
-<div id="18942613" class="cell" data-execution_count="8">
+<div id="03a931b6" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_bin <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"bill_length_bin"</span>],</span>

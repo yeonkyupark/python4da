@@ -660,7 +660,7 @@
     "href": "part1/08. 연속형 데이터 범주화.html#등간격-구간화-equal-width-binning",
     "title": "8  연속형 데이터 범주화",
     "section": "8.2 등간격 구간화 (Equal-width binning)",
-    "text": "8.2 등간격 구간화 (Equal-width binning)\n\n8.2.1 개념\n전체 값 범위를 동일한 간격으로 분할\n\\[\n\\text{bin width} = \\frac{\\max(x) - \\min(x)}{k}\n\\]\n\n\n8.2.2 예제\n\nimport pandas as pd\nimport seaborn as sns\n\ndf = sns.load_dataset(\"penguins\")\n\ndf[\"bill_length_bin\"] = pd.cut(df[\"bill_length_mm\"], bins=4)\n\nprint(df[\"bill_length_bin\"])\n\n0       (38.975, 45.85]\n1       (38.975, 45.85]\n2       (38.975, 45.85]\n3                   NaN\n4      (32.072, 38.975]\n             ...       \n339                 NaN\n340     (45.85, 52.725]\n341     (45.85, 52.725]\n342     (38.975, 45.85]\n343     (45.85, 52.725]\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, interval[float64, right]): [(32.072, 38.975] &lt; (38.975, 45.85] &lt; (45.85, 52.725] &lt; (52.725, 59.6]]\n\n\n\n\n\n8.2.3 범주 이름 지정\n\ndf[\"bill_length_bin\"] = pd.cut(\n    df[\"bill_length_mm\"],\n    bins=4,\n    labels=[\"짧음\", \"보통\", \"김\", \"매우 김\"]\n)\n\nprint(df[\"bill_length_bin\"])\n\n0       보통\n1       보통\n2       보통\n3      NaN\n4       짧음\n      ... \n339    NaN\n340      김\n341      김\n342     보통\n343      김\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, str): ['짧음' &lt; '보통' &lt; '김' &lt; '매우 김']\n\n\n구현 간단하지만 이상치에 민감, 데이터 밀도 불균형 가능",
+    "text": "8.2 등간격 구간화 (Equal-width binning)\n\n8.2.1 개념\n전체 값 범위를 동일한 간격으로 분할\n\\[\n\\text{bin width} = \\frac{\\max(x) - \\min(x)}{k}\n\\]\n\n\n8.2.2 예제\n\nimport pandas as pd\nimport seaborn as sns\n\ndf = sns.load_dataset(\"penguins\")\n\ndf[\"bill_length_bin\"] = pd.cut(df[\"bill_length_mm\"], bins=4)\n\nprint(df[\"bill_length_bin\"])\n\n0       (38.975, 45.85]\n1       (38.975, 45.85]\n2       (38.975, 45.85]\n3                   NaN\n4      (32.072, 38.975]\n             ...       \n339                 NaN\n340     (45.85, 52.725]\n341     (45.85, 52.725]\n342     (38.975, 45.85]\n343     (45.85, 52.725]\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, interval[float64, right]): [(32.072, 38.975] &lt; (38.975, 45.85] &lt; (45.85, 52.725] &lt; (52.725, 59.6]]\n\n\n\n\n8.2.3 범주 이름 지정\n\ndf[\"bill_length_bin\"] = pd.cut(\n    df[\"bill_length_mm\"],\n    bins=4,\n    labels=[\"짧음\", \"보통\", \"김\", \"매우 김\"]\n)\n\nprint(df[\"bill_length_bin\"])\n\n0       보통\n1       보통\n2       보통\n3      NaN\n4       짧음\n      ... \n339    NaN\n340      김\n341      김\n342     보통\n343      김\nName: bill_length_bin, Length: 344, dtype: category\nCategories (4, str): ['짧음' &lt; '보통' &lt; '김' &lt; '매우 김']\n\n\n구현 간단하지만 이상치에 민감, 데이터 밀도 불균형 가능",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
@@ -693,7 +693,7 @@
     "href": "part1/08. 연속형 데이터 범주화.html#k-means-기반-구간화",
     "title": "8  연속형 데이터 범주화",
     "section": "8.5 k-means 기반 구간화",
-    "text": "8.5 k-means 기반 구간화\n\n8.5.1 개념\n값의 분포를 고려해 군집 중심 기준으로 구간화, 비선형 구조 반영 가능\n\n\n8.5.2 예제\n\nfrom sklearn.cluster import KMeans\nimport numpy as np\n\nx = df[[\"bill_length_mm\"]].dropna()\n\nkmeans = KMeans(n_clusters=3, random_state=42)\nx[\"cluster\"] = kmeans.fit_predict(x)\n\ndf.loc[x.index, \"bill_length_kbin\"] = x[\"cluster\"]\n\nprint(df[\"bill_length_kbin\"])\n\n0      2.0\n1      2.0\n2      2.0\n3      NaN\n4      2.0\n      ... \n339    NaN\n340    0.0\n341    1.0\n342    0.0\n343    1.0\nName: bill_length_kbin, Length: 344, dtype: float64\n\n\n\n\n\n8.5.3 특징\n\n데이터 기반\n해석은 상대적으로 어려움",
+    "text": "8.5 k-means 기반 구간화\n\n8.5.1 개념\n값의 분포를 고려해 군집 중심 기준으로 구간화, 비선형 구조 반영 가능\n\n\n8.5.2 예제\n\nfrom sklearn.cluster import KMeans\nimport numpy as np\n\nx = df[[\"bill_length_mm\"]].dropna()\n\nkmeans = KMeans(n_clusters=3, random_state=42)\nx[\"cluster\"] = kmeans.fit_predict(x)\n\ndf.loc[x.index, \"bill_length_kbin\"] = x[\"cluster\"]\n\nprint(df[\"bill_length_kbin\"])\n\n0      2.0\n1      2.0\n2      2.0\n3      NaN\n4      2.0\n      ... \n339    NaN\n340    0.0\n341    1.0\n342    0.0\n343    1.0\nName: bill_length_kbin, Length: 344, dtype: float64\n\n\n\n\n8.5.3 특징\n\n데이터 기반\n해석은 상대적으로 어려움",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
@@ -703,8 +703,8 @@
     "objectID": "part1/08. 연속형 데이터 범주화.html#decision-tree-기반-구간화",
     "href": "part1/08. 연속형 데이터 범주화.html#decision-tree-기반-구간화",
     "title": "8  연속형 데이터 범주화",
-    "section": "8.6 5️⃣ Decision Tree 기반 구간화",
-    "text": "8.6 5️⃣ Decision Tree 기반 구간화\n\n8.6.1 개념\n타깃 변수를 기준으로 정보이득 최대화, 지도학습 기반 binning\n\n\n8.6.2 예제 (체중 기준)\n\nfrom sklearn.tree import DecisionTreeRegressor\n\nx = df[[\"bill_length_mm\"]].dropna()\ny = df.loc[x.index, \"body_mass_g\"]\n\ntree = DecisionTreeRegressor(\n    max_leaf_nodes=4\n)\ntree.fit(x, y)\n\ndf.loc[x.index, \"bill_length_treebin\"] = tree.apply(x)\n\n타깃 정보 반영, 데이터 누수 주의",
+    "section": "8.6 Decision Tree 기반 구간화",
+    "text": "8.6 Decision Tree 기반 구간화\n\n8.6.1 개념\n타깃 변수를 기준으로 정보이득 최대화, 지도학습 기반 binning\n\n\n8.6.2 예제 (체중 기준)\n\nfrom sklearn.tree import DecisionTreeRegressor\n\nx = df[[\"bill_length_mm\"]].dropna()\ny = df.loc[x.index, \"body_mass_g\"]\n\ntree = DecisionTreeRegressor(\n    max_leaf_nodes=4\n)\ntree.fit(x, y)\n\ndf.loc[x.index, \"bill_length_treebin\"] = tree.apply(x)\n\n타깃 정보 반영, 데이터 누수 주의",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
@@ -741,6 +741,105 @@
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>연속형 데이터 범주화</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html",
+    "href": "part1/09. 불균형 데이터 처리.html",
+    "title": "9  불균형 데이터 처리",
+    "section": "",
+    "text": "9.1 불균형 데이터의 문제점\n타깃 클래스 간 샘플 수 차이가 큰 경우, 다수 클래스에 치우친 모델이 생성됨 → 정확도는 높아 보이지만 실제 성능은 나쁨",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#불균형-데이터의-문제점",
+    "href": "part1/09. 불균형 데이터 처리.html#불균형-데이터의-문제점",
+    "title": "9  불균형 데이터 처리",
+    "section": "",
+    "text": "9.1.1 예시\n\n전체 정확도 95%\n소수 클래스 재현율 10%\n\n“잘 맞춘 것처럼 보이지만 중요한 건 다 틀림”",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#불균형-여부-진단",
+    "href": "part1/09. 불균형 데이터 처리.html#불균형-여부-진단",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.2 불균형 여부 진단",
+    "text": "9.2 불균형 여부 진단\n\n9.2.1 클래스 분포 확인\n\nimport seaborn as sns\n\ndf = sns.load_dataset(\"penguins\").dropna(subset=[\"species\"])\n\ndf[\"species\"].value_counts()\n\nspecies\nAdelie       152\nGentoo       124\nChinstrap     68\nName: count, dtype: int64\n\n\n\n\n9.2.2 비율로 확인\n\ndf[\"species\"].value_counts(normalize=True)\n\nspecies\nAdelie       0.441860\nGentoo       0.360465\nChinstrap    0.197674\nName: proportion, dtype: float64\n\n\n\n\n9.2.3 시각화\n\nimport matplotlib.pyplot as plt\n\ndf[\"species\"].value_counts().plot(kind=\"bar\")\nplt.show()",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#평가-지표-변경",
+    "href": "part1/09. 불균형 데이터 처리.html#평가-지표-변경",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.3 평가 지표 변경",
+    "text": "9.3 평가 지표 변경\n불균형 데이터에서는 Accuracy 사용 금물\n\n9.3.1 대안 지표\n\nPrecision\nRecall\nF1-score\nROC-AUC\nPR-AUC\n\nfrom sklearn.metrics import classification_report\n\nprint(classification_report(y_true, y_pred))",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#데이터-수준-처리-방법",
+    "href": "part1/09. 불균형 데이터 처리.html#데이터-수준-처리-방법",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.4 데이터 수준 처리 방법",
+    "text": "9.4 데이터 수준 처리 방법\n\n9.4.1 언더샘플링 (Under-sampling)\n\n9.4.1.1 개념\n다수 클래스 일부 제거\n\nfrom imblearn.under_sampling import RandomUnderSampler\n\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\ndf_dropna = df[['species']+num_cols].dropna()\nX = df_dropna.drop(\"species\", axis=1)\ny = df_dropna[\"species\"]\n\nrus = RandomUnderSampler(random_state=42)\nX_under, y_under = rus.fit_resample(X, y)\nprint(\"Before\\n\", y.value_counts())\nprint(\"After\\n\", y_under.value_counts())\n\nBefore\n species\nAdelie       151\nGentoo       123\nChinstrap     68\nName: count, dtype: int64\nAfter\n species\nAdelie       68\nChinstrap    68\nGentoo       68\nName: count, dtype: int64\n\n\n빠르다는 장점이 있으나 정보가 손신된다는 단점 존재\n\n\n\n9.4.2 오버샘플링 (Over-sampling)\n\n9.4.2.1 단순 복제\n\nfrom imblearn.over_sampling import RandomOverSampler\n\nros = RandomOverSampler(random_state=42)\nX_over, y_over = ros.fit_resample(X, y)\n\nprint(y_over.value_counts())\n\nspecies\nAdelie       151\nChinstrap    151\nGentoo       151\nName: count, dtype: int64\n\n\n\n\n9.4.2.2 문제점\n과적합 위험\n\n\n\n9.4.3 SMOTE (Synthetic Minority Over-sampling)\n\n9.4.3.1 개념\n소수 클래스 사이에 가상 샘플 생성\n\nfrom imblearn.over_sampling import SMOTE\n\nsmote = SMOTE(random_state=42)\nX_smote, y_smote = smote.fit_resample(X, y)\n\nprint(y_smote.value_counts())\n\nspecies\nAdelie       151\nChinstrap    151\nGentoo       151\nName: count, dtype: int64\n\n\n\n\n\n9.4.4 SMOTE 변형\n\n\n\n기법\n특징\n\n\n\n\nBorderline-SMOTE\n경계 근처만 증강\n\n\nSMOTE-NC\n수치 + 범주 혼합\n\n\nADASYN\n학습 어려운 영역 집중",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#모델-수준-처리-방법",
+    "href": "part1/09. 불균형 데이터 처리.html#모델-수준-처리-방법",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.5 모델 수준 처리 방법",
+    "text": "9.5 모델 수준 처리 방법\n\n9.5.1 클래스 가중치 조정\n\nfrom sklearn.linear_model import LogisticRegression\n\nmodel = LogisticRegression(\n    class_weight=\"balanced\"\n)\n\n\n\n9.5.2 수동 가중치 설정\n\nweights = {\n    \"Adelie\": 1,\n    \"Gentoo\": 2,\n    \"Chinstrap\": 3\n}\n\nmodel = LogisticRegression(class_weight=weights)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#앙상블-불균형-대응",
+    "href": "part1/09. 불균형 데이터 처리.html#앙상블-불균형-대응",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.6 앙상블 + 불균형 대응",
+    "text": "9.6 앙상블 + 불균형 대응\n\n9.6.1 대표 기법\n\nBalanced Random Forest\nEasyEnsemble\n\n\nfrom imblearn.ensemble import BalancedRandomForestClassifier\n\nmodel = BalancedRandomForestClassifier(\n    n_estimators=100,\n    random_state=42\n)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#pipeline으로-안전하게-적용",
+    "href": "part1/09. 불균형 데이터 처리.html#pipeline으로-안전하게-적용",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.7 Pipeline으로 안전하게 적용",
+    "text": "9.7 Pipeline으로 안전하게 적용\n샘플링은 반드시 학습 데이터에만!\n\nfrom imblearn.pipeline import Pipeline\nfrom sklearn.linear_model import LogisticRegression\nfrom imblearn.over_sampling import SMOTE\n\npipeline = Pipeline([\n    (\"smote\", SMOTE(random_state=42)),\n    (\"model\", LogisticRegression())\n])",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
+    ]
+  },
+  {
+    "objectID": "part1/09. 불균형 데이터 처리.html#권장-상황",
+    "href": "part1/09. 불균형 데이터 처리.html#권장-상황",
+    "title": "9  불균형 데이터 처리",
+    "section": "9.8 권장 상황",
+    "text": "9.8 권장 상황\n\n\n\n상황\n권장\n\n\n\n\n데이터 작음\nSMOTE\n\n\n데이터 큼\n클래스 가중치\n\n\n노이즈 많음\n언더샘플링\n\n\n범주형 포함\nSMOTE-NC\n\n\n트리 모델\n가중치 or Balanced RF",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>불균형 데이터 처리</span>"
     ]
   }
 ]

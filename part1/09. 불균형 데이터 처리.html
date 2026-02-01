@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,55 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#불균형-데이터의-문제점" id="toc-불균형-데이터의-문제점" class="nav-link active" data-scroll-target="#불균형-데이터의-문제점"><span class="header-section-number">9.1</span> 불균형 데이터의 문제점</a>
+  <ul>
+  <li><a href="#예시" id="toc-예시" class="nav-link" data-scroll-target="#예시"><span class="header-section-number">9.1.1</span> 예시</a></li>
+  </ul></li>
+  <li><a href="#불균형-여부-진단" id="toc-불균형-여부-진단" class="nav-link" data-scroll-target="#불균형-여부-진단"><span class="header-section-number">9.2</span> 불균형 여부 진단</a>
+  <ul>
+  <li><a href="#클래스-분포-확인" id="toc-클래스-분포-확인" class="nav-link" data-scroll-target="#클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</a></li>
+  <li><a href="#비율로-확인" id="toc-비율로-확인" class="nav-link" data-scroll-target="#비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</a></li>
+  <li><a href="#시각화" id="toc-시각화" class="nav-link" data-scroll-target="#시각화"><span class="header-section-number">9.2.3</span> 시각화</a></li>
+  </ul></li>
+  <li><a href="#평가-지표-변경" id="toc-평가-지표-변경" class="nav-link" data-scroll-target="#평가-지표-변경"><span class="header-section-number">9.3</span> 평가 지표 변경</a>
+  <ul>
+  <li><a href="#대안-지표" id="toc-대안-지표" class="nav-link" data-scroll-target="#대안-지표"><span class="header-section-number">9.3.1</span> 대안 지표</a></li>
+  </ul></li>
+  <li><a href="#데이터-수준-처리-방법" id="toc-데이터-수준-처리-방법" class="nav-link" data-scroll-target="#데이터-수준-처리-방법"><span class="header-section-number">9.4</span> 데이터 수준 처리 방법</a>
+  <ul>
+  <li><a href="#언더샘플링-under-sampling" id="toc-언더샘플링-under-sampling" class="nav-link" data-scroll-target="#언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</a>
+  <ul class="collapse">
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">9.4.1.1</span> 개념</a></li>
+  </ul></li>
+  <li><a href="#오버샘플링-over-sampling" id="toc-오버샘플링-over-sampling" class="nav-link" data-scroll-target="#오버샘플링-over-sampling"><span class="header-section-number">9.4.2</span> 오버샘플링 (Over-sampling)</a>
+  <ul class="collapse">
+  <li><a href="#단순-복제" id="toc-단순-복제" class="nav-link" data-scroll-target="#단순-복제"><span class="header-section-number">9.4.2.1</span> 단순 복제</a></li>
+  <li><a href="#문제점" id="toc-문제점" class="nav-link" data-scroll-target="#문제점"><span class="header-section-number">9.4.2.2</span> 문제점</a></li>
+  </ul></li>
+  <li><a href="#smote-synthetic-minority-over-sampling" id="toc-smote-synthetic-minority-over-sampling" class="nav-link" data-scroll-target="#smote-synthetic-minority-over-sampling"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling)</a>
+  <ul class="collapse">
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">9.4.3.1</span> 개념</a></li>
+  </ul></li>
+  <li><a href="#smote-변형" id="toc-smote-변형" class="nav-link" data-scroll-target="#smote-변형"><span class="header-section-number">9.4.4</span> SMOTE 변형</a></li>
+  </ul></li>
+  <li><a href="#모델-수준-처리-방법" id="toc-모델-수준-처리-방법" class="nav-link" data-scroll-target="#모델-수준-처리-방법"><span class="header-section-number">9.5</span> 모델 수준 처리 방법</a>
+  <ul>
+  <li><a href="#클래스-가중치-조정" id="toc-클래스-가중치-조정" class="nav-link" data-scroll-target="#클래스-가중치-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 조정</a></li>
+  <li><a href="#수동-가중치-설정" id="toc-수동-가중치-설정" class="nav-link" data-scroll-target="#수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</a></li>
+  </ul></li>
+  <li><a href="#앙상블-불균형-대응" id="toc-앙상블-불균형-대응" class="nav-link" data-scroll-target="#앙상블-불균형-대응"><span class="header-section-number">9.6</span> 앙상블 + 불균형 대응</a>
+  <ul>
+  <li><a href="#대표-기법" id="toc-대표-기법" class="nav-link" data-scroll-target="#대표-기법"><span class="header-section-number">9.6.1</span> 대표 기법</a></li>
+  </ul></li>
+  <li><a href="#pipeline으로-안전하게-적용" id="toc-pipeline으로-안전하게-적용" class="nav-link" data-scroll-target="#pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</a></li>
+  <li><a href="#권장-상황" id="toc-권장-상황" class="nav-link" data-scroll-target="#권장-상황"><span class="header-section-number">9.8</span> 권장 상황</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/09. 불균형 데이터 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +448,292 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p><strong>타깃 클래스 간 샘플 수 차이가 큰 경우</strong>, 다수 클래스에 치우친 모델이 생성됨 → 정확도는 높아 보이지만 실제 성능은 나쁨</p>
+<section id="불균형-데이터의-문제점" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="불균형-데이터의-문제점"><span class="header-section-number">9.1</span> 불균형 데이터의 문제점</h2>
+<section id="예시" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="예시"><span class="header-section-number">9.1.1</span> 예시</h3>
+<ul>
+<li>전체 정확도 95%</li>
+<li>소수 클래스 재현율 10%</li>
+</ul>
+<p>“잘 맞춘 것처럼 보이지만 중요한 건 다 틀림”</p>
+</section>
+</section>
+<section id="불균형-여부-진단" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="불균형-여부-진단"><span class="header-section-number">9.2</span> 불균형 여부 진단</h2>
+<section id="클래스-분포-확인" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</h3>
+<div id="62861ceb" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna(subset<span class="op">=</span>[<span class="st">"species"</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>species
+Adelie       152
+Gentoo       124
+Chinstrap     68
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="비율로-확인" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</h3>
+<div id="53a32497" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>species
+Adelie       0.441860
+Gentoo       0.360465
+Chinstrap    0.197674
+Name: proportion, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="시각화" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="시각화"><span class="header-section-number">9.2.3</span> 시각화</h3>
+<div id="b0a238b2" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">"bar"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="09. 불균형 데이터 처리_files/figure-html/cell-4-output-1.png" width="575" height="480" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="평가-지표-변경" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="평가-지표-변경"><span class="header-section-number">9.3</span> 평가 지표 변경</h2>
+<p>불균형 데이터에서는 <strong>Accuracy 사용 금물</strong></p>
+<section id="대안-지표" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="대안-지표"><span class="header-section-number">9.3.1</span> 대안 지표</h3>
+<ul>
+<li>Precision</li>
+<li>Recall</li>
+<li>F1-score</li>
+<li>ROC-AUC</li>
+<li>PR-AUC</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="데이터-수준-처리-방법" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="데이터-수준-처리-방법"><span class="header-section-number">9.4</span> 데이터 수준 처리 방법</h2>
+<section id="언더샘플링-under-sampling" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</h3>
+<section id="개념" class="level4" data-number="9.4.1.1">
+<h4 data-number="9.4.1.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">9.4.1.1</span> 개념</h4>
+<p>다수 클래스 일부 제거</p>
+<div id="a76291a5" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>df_dropna <span class="op">=</span> df[[<span class="st">'species'</span>]<span class="op">+</span>num_cols].dropna()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_dropna.drop(<span class="st">"species"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_dropna[<span class="st">"species"</span>]</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>rus <span class="op">=</span> RandomUnderSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>X_under, y_under <span class="op">=</span> rus.fit_resample(X, y)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Before</span><span class="ch">\n</span><span class="st">"</span>, y.value_counts())</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"After</span><span class="ch">\n</span><span class="st">"</span>, y_under.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Before
+ species
+Adelie       151
+Gentoo       123
+Chinstrap     68
+Name: count, dtype: int64
+After
+ species
+Adelie       68
+Chinstrap    68
+Gentoo       68
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p>빠르다는 장점이 있으나 정보가 손신된다는 단점 존재</p>
+</section>
+</section>
+<section id="오버샘플링-over-sampling" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="오버샘플링-over-sampling"><span class="header-section-number">9.4.2</span> 오버샘플링 (Over-sampling)</h3>
+<section id="단순-복제" class="level4" data-number="9.4.2.1">
+<h4 data-number="9.4.2.1" class="anchored" data-anchor-id="단순-복제"><span class="header-section-number">9.4.2.1</span> 단순 복제</h4>
+<div id="9faa23e3" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>X_over, y_over <span class="op">=</span> ros.fit_resample(X, y)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_over.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>species
+Adelie       151
+Chinstrap    151
+Gentoo       151
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="문제점" class="level4" data-number="9.4.2.2">
+<h4 data-number="9.4.2.2" class="anchored" data-anchor-id="문제점"><span class="header-section-number">9.4.2.2</span> 문제점</h4>
+<p>과적합 위험</p>
+</section>
+</section>
+<section id="smote-synthetic-minority-over-sampling" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="smote-synthetic-minority-over-sampling"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling)</h3>
+<section id="개념-1" class="level4" data-number="9.4.3.1">
+<h4 data-number="9.4.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">9.4.3.1</span> 개념</h4>
+<p>소수 클래스 사이에 <strong>가상 샘플 생성</strong></p>
+<div id="30f50d18" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X_smote, y_smote <span class="op">=</span> smote.fit_resample(X, y)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_smote.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>species
+Adelie       151
+Chinstrap    151
+Gentoo       151
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="smote-변형" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="smote-변형"><span class="header-section-number">9.4.4</span> SMOTE 변형</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>기법</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Borderline-SMOTE</td>
+<td>경계 근처만 증강</td>
+</tr>
+<tr class="even">
+<td>SMOTE-NC</td>
+<td>수치 + 범주 혼합</td>
+</tr>
+<tr class="odd">
+<td>ADASYN</td>
+<td>학습 어려운 영역 집중</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="모델-수준-처리-방법" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="모델-수준-처리-방법"><span class="header-section-number">9.5</span> 모델 수준 처리 방법</h2>
+<section id="클래스-가중치-조정" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="클래스-가중치-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 조정</h3>
+<div id="bd9b7e58" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    class_weight<span class="op">=</span><span class="st">"balanced"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="수동-가중치-설정" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</h3>
+<div id="6dfd45b5" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adelie"</span>: <span class="dv">1</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gentoo"</span>: <span class="dv">2</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chinstrap"</span>: <span class="dv">3</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(class_weight<span class="op">=</span>weights)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="앙상블-불균형-대응" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="앙상블-불균형-대응"><span class="header-section-number">9.6</span> 앙상블 + 불균형 대응</h2>
+<section id="대표-기법" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="대표-기법"><span class="header-section-number">9.6.1</span> 대표 기법</h3>
+<ul>
+<li>Balanced Random Forest</li>
+<li>EasyEnsemble</li>
+</ul>
+<div id="8c53c9f0" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> BalancedRandomForestClassifier</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BalancedRandomForestClassifier(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="pipeline으로-안전하게-적용" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</h2>
+<p><strong>샘플링은 반드시 학습 데이터에만!</strong></p>
+<div id="88eac244" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"smote"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression())</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="권장-상황" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="권장-상황"><span class="header-section-number">9.8</span> 권장 상황</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>권장</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>데이터 작음</td>
+<td>SMOTE</td>
+</tr>
+<tr class="even">
+<td>데이터 큼</td>
+<td>클래스 가중치</td>
+</tr>
+<tr class="odd">
+<td>노이즈 많음</td>
+<td>언더샘플링</td>
+</tr>
+<tr class="even">
+<td>범주형 포함</td>
+<td>SMOTE-NC</td>
+</tr>
+<tr class="odd">
+<td>트리 모델</td>
+<td>가중치 or Balanced RF</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1156,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/09. 불균형 데이터 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/09. 불균형 데이터 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
