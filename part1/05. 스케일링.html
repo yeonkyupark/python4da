@@ -21,10 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,8 +107,40 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -335,8 +402,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#스케일링-이유" id="toc-스케일링-이유" class="nav-link active" data-scroll-target="#스케일링-이유"><span class="header-section-number">5.1</span> 스케일링 이유</a>
+  <ul>
+  <li><a href="#스케일-차이-확인" id="toc-스케일-차이-확인" class="nav-link" data-scroll-target="#스케일-차이-확인"><span class="header-section-number">5.1.1</span> 스케일 차이 확인</a></li>
+  </ul></li>
+  <li><a href="#min-max-스케일링-정규화" id="toc-min-max-스케일링-정규화" class="nav-link" data-scroll-target="#min-max-스케일링-정규화"><span class="header-section-number">5.2</span> Min-Max 스케일링 (정규화)</a></li>
+  <li><a href="#표준화-standard-scaling" id="toc-표준화-standard-scaling" class="nav-link" data-scroll-target="#표준화-standard-scaling"><span class="header-section-number">5.3</span> 표준화 (Standard Scaling)</a></li>
+  <li><a href="#robust-scaling-이상치-대응" id="toc-robust-scaling-이상치-대응" class="nav-link" data-scroll-target="#robust-scaling-이상치-대응"><span class="header-section-number">5.4</span> Robust Scaling (이상치 대응)</a></li>
+  <li><a href="#maxabs-scaling" id="toc-maxabs-scaling" class="nav-link" data-scroll-target="#maxabs-scaling"><span class="header-section-number">5.5</span> MaxAbs Scaling</a></li>
+  <li><a href="#범주별-스케일링" id="toc-범주별-스케일링" class="nav-link" data-scroll-target="#범주별-스케일링"><span class="header-section-number">5.6</span> 범주별 스케일링</a></li>
+  <li><a href="#파이프라인-적용" id="toc-파이프라인-적용" class="nav-link" data-scroll-target="#파이프라인-적용"><span class="header-section-number">5.7</span> 파이프라인 적용</a></li>
+  <li><a href="#스케일링-방법-선택-가이드" id="toc-스케일링-방법-선택-가이드" class="nav-link" data-scroll-target="#스케일링-방법-선택-가이드"><span class="header-section-number">5.8</span> 스케일링 방법 선택 가이드</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/05. 스케일링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +449,330 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>예제 데이터셋 적재</p>
+<div id="e3a664dd" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df_num <span class="op">=</span> df[num_cols]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="스케일링-이유" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="스케일링-이유"><span class="header-section-number">5.1</span> 스케일링 이유</h2>
+<section id="스케일-차이-확인" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="스케일-차이-확인"><span class="header-section-number">5.1.1</span> 스케일 차이 확인</h3>
+<div id="733459ba" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_num.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>342.000000</td>
+<td>342.000000</td>
+<td>342.000000</td>
+<td>342.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>43.921930</td>
+<td>17.151170</td>
+<td>200.915205</td>
+<td>4201.754386</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>5.459584</td>
+<td>1.974793</td>
+<td>14.061714</td>
+<td>801.954536</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>32.100000</td>
+<td>13.100000</td>
+<td>172.000000</td>
+<td>2700.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>39.225000</td>
+<td>15.600000</td>
+<td>190.000000</td>
+<td>3550.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>44.450000</td>
+<td>17.300000</td>
+<td>197.000000</td>
+<td>4050.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>48.500000</td>
+<td>18.700000</td>
+<td>213.000000</td>
+<td>4750.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>59.600000</td>
+<td>21.500000</td>
+<td>231.000000</td>
+<td>6300.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>변수별 측정 단위가 다름(상호 비교가 어려움)<br>
+- 거리 기반 모델(KNN, SVM, K-means)에서는 <strong>큰 값이 모델을 지배</strong></p>
+</section>
+</section>
+<section id="min-max-스케일링-정규화" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="min-max-스케일링-정규화"><span class="header-section-number">5.2</span> Min-Max 스케일링 (정규화)</h2>
+<p>모든 값을 0~1 범위로 변환</p>
+<div id="082c15b4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="96eb1492" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scaler_minmax <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_minmax <span class="op">=</span> scaler_minmax.fit_transform(df_num)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="1bbdc169" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_minmax <span class="op">=</span> pd.DataFrame(df_minmax, columns<span class="op">=</span>num_cols)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_minmax.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+count      342.000000     342.000000         342.000000   342.000000
+mean         0.429888       0.482282           0.490088     0.417154
+std          0.198530       0.235094           0.238334     0.222765
+min          0.000000       0.000000           0.000000     0.000000
+25%          0.259091       0.297619           0.305085     0.236111
+50%          0.449091       0.500000           0.423729     0.375000
+75%          0.596364       0.666667           0.694915     0.569444
+max          1.000000       1.000000           1.000000     1.000000</code></pre>
+</div>
+</div>
+<p>변수 범위가 고정(0~1) 되며 <strong>이상치에 매우 민감</strong>한 특징</p>
+<p>참고. 아래와 같이 수식을 통해 직접 구현</p>
+<p><span class="math display">\[
+x' = \frac{x-x_{min}}{x_{max} - x_{min}}
+\]</span></p>
+<div id="a34eb9e4" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_minmax_manual <span class="op">=</span> df_num.copy()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    col_min <span class="op">=</span> df_minmax_manual[col].<span class="bu">min</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    col_max <span class="op">=</span> df_minmax_manual[col].<span class="bu">max</span>()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    df_minmax_manual[col] <span class="op">=</span> (df_minmax_manual[col] <span class="op">-</span> col_min) <span class="op">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                            <span class="op">/</span> (col_max <span class="op">-</span> col_min)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>(a, b)</code> 구간으로 일반화한 수식</p>
+<p><span class="math display">\[
+x' = a + \frac{x-x_{min}}{x_{max} - x_{min}}\times(b-a)
+\]</span></p>
+<div id="602810a8" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minmax_scale_ab(series, a, b):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    x_min <span class="op">=</span> series.<span class="bu">min</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    x_max <span class="op">=</span> series.<span class="bu">max</span>()</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> (series <span class="op">-</span> x_min) <span class="op">*</span> (b <span class="op">-</span> a) <span class="op">/</span> (x_max <span class="op">-</span> x_min)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7967f2b5" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>scaler_genernal <span class="op">=</span> MinMaxScaler(feature_range<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="표준화-standard-scaling" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="표준화-standard-scaling"><span class="header-section-number">5.3</span> 표준화 (Standard Scaling)</h2>
+<p>변수 변위를 평균 0, 표준편차 1로 변환</p>
+<div id="f849e5cf" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f8680080" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>scaler_std <span class="op">=</span> StandardScaler()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_std <span class="op">=</span> scaler_std.fit_transform(df_num)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df_std <span class="op">=</span> pd.DataFrame(df_std, columns<span class="op">=</span>num_cols)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_std.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       bill_length_mm  bill_depth_mm  flipper_length_mm   body_mass_g
+count    3.420000e+02   3.420000e+02       3.420000e+02  3.420000e+02
+mean     8.310441e-17  -1.412775e-15      -8.310441e-16  4.155221e-17
+std      1.001465e+00   1.001465e+00       1.001465e+00  1.001465e+00
+min     -2.168526e+00  -2.054446e+00      -2.059320e+00 -1.875362e+00
+25%     -8.615697e-01  -7.866355e-01      -7.773731e-01 -8.138982e-01
+50%      9.686524e-02   7.547549e-02      -2.788381e-01 -1.895079e-01
+75%      8.397670e-01   7.854492e-01       8.606705e-01  6.846384e-01
+max      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00</code></pre>
+</div>
+</div>
+<p>가장 널리 사용되며 변수가 정규분포 가정(완전하지 않아도 OK)하에 수행</p>
+<p>참고. 아래와 같이 수식을 통해 직접 구현</p>
+<p><span class="math display">\[
+x' = \frac{x - \mu}{\sigma}
+\]</span></p>
+<div id="4ec5ef1e" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_std_manual <span class="op">=</span> df_num.copy()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> df_std_manual[col].mean()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    std <span class="op">=</span> df_std_manual[col].std()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    df_std_manual[col] <span class="op">=</span> (df_std_manual[col] <span class="op">-</span> mean) <span class="op">\</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                         <span class="op">/</span> std</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="robust-scaling-이상치-대응" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="robust-scaling-이상치-대응"><span class="header-section-number">5.4</span> Robust Scaling (이상치 대응)</h2>
+<p>중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응</p>
+<div id="170227bf" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> RobustScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="e9c73b7a" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>scaler_robust <span class="op">=</span> RobustScaler()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_robust <span class="op">=</span> scaler_robust.fit_transform(df_num)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_robust <span class="op">=</span> pd.DataFrame(df_robust, columns<span class="op">=</span>num_cols)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_robust.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+count    3.420000e+02     342.000000         342.000000   342.000000
+mean    -5.693479e-02      -0.048010           0.170226     0.126462
+std      5.886344e-01       0.637030           0.611379     0.668295
+min     -1.331536e+00      -1.354839          -1.086957    -1.125000
+25%     -5.633423e-01      -0.548387          -0.304348    -0.416667
+50%     -3.833739e-16       0.000000           0.000000     0.000000
+75%      4.366577e-01       0.451613           0.695652     0.583333
+max      1.633423e+00       1.354839           1.478261     1.875000</code></pre>
+</div>
+</div>
+<p>이상치 영향 최소화</p>
+</section>
+<section id="maxabs-scaling" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="maxabs-scaling"><span class="header-section-number">5.5</span> MaxAbs Scaling</h2>
+<p>최대 절댓값으로 나눔</p>
+<div id="1ed4965d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MaxAbsScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="97315704" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>scaler_maxabs <span class="op">=</span> MaxAbsScaler()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_maxabs <span class="op">=</span> scaler_maxabs.fit_transform(df_num)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df_maxabs <span class="op">=</span> pd.DataFrame(df_maxabs, columns<span class="op">=</span>num_cols)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_maxabs.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+count      342.000000     342.000000         342.000000   342.000000
+mean         0.736945       0.797729           0.869763     0.666945
+std          0.091604       0.091851           0.060873     0.127294
+min          0.538591       0.609302           0.744589     0.428571
+25%          0.658138       0.725581           0.822511     0.563492
+50%          0.745805       0.804651           0.852814     0.642857
+75%          0.813758       0.869767           0.922078     0.753968
+max          1.000000       1.000000           1.000000     1.000000</code></pre>
+</div>
+</div>
+<p>희소 행렬에 유리하며 값 <strong>부호 유지</strong>하는 특징</p>
+</section>
+<section id="범주별-스케일링" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="범주별-스케일링"><span class="header-section-number">5.6</span> 범주별 스케일링</h2>
+<div id="ffd6313f" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="0d0c2a77" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scale_by_species(group):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    scaled <span class="op">=</span> scaler.fit_transform(group[num_cols])</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(scaled, columns<span class="op">=</span>num_cols, index<span class="op">=</span>group.index)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="acbdcdbc" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_scaled_group <span class="op">=</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"species"</span>, group_keys<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>      .<span class="bu">apply</span>(scale_by_species)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="파이프라인-적용" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="파이프라인-적용"><span class="header-section-number">5.7</span> 파이프라인 적용</h2>
+<div id="10a2e831" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="59b80d34" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression())</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="스케일링-방법-선택-가이드" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="스케일링-방법-선택-가이드"><span class="header-section-number">5.8</span> 스케일링 방법 선택 가이드</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>특징</th>
+<th>추천 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Min-Max</td>
+<td>0~1</td>
+<td>신경망, 시각화</td>
+</tr>
+<tr class="even">
+<td>Standard</td>
+<td>평균 0</td>
+<td>대부분의 모델</td>
+</tr>
+<tr class="odd">
+<td>Robust</td>
+<td>이상치 강함</td>
+<td>실무 기본</td>
+</tr>
+<tr class="even">
+<td>MaxAbs</td>
+<td>부호 유지</td>
+<td>희소 데이터</td>
+</tr>
+<tr class="odd">
+<td>그룹별</td>
+<td>분포 반영</td>
+<td>도메인 지식 있을 때</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1195,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/05. 스케일링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/05. 스케일링.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

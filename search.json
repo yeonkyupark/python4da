@@ -346,5 +346,104 @@
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
     ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html",
+    "href": "part1/05. 스케일링.html",
+    "title": "5  스케일링",
+    "section": "",
+    "text": "5.1 스케일링 이유\n예제 데이터셋 적재",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#스케일링-이유",
+    "href": "part1/05. 스케일링.html#스케일링-이유",
+    "title": "5  스케일링",
+    "section": "",
+    "text": "5.1.1 스케일 차이 확인\n\ndf_num.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n변수별 측정 단위가 다름(상호 비교가 어려움)\n- 거리 기반 모델(KNN, SVM, K-means)에서는 큰 값이 모델을 지배",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#min-max-스케일링-정규화",
+    "href": "part1/05. 스케일링.html#min-max-스케일링-정규화",
+    "title": "5  스케일링",
+    "section": "5.2 Min-Max 스케일링 (정규화)",
+    "text": "5.2 Min-Max 스케일링 (정규화)\n모든 값을 0~1 범위로 변환\n\nfrom sklearn.preprocessing import MinMaxScaler\n\n\nscaler_minmax = MinMaxScaler()\ndf_minmax = scaler_minmax.fit_transform(df_num)\n\n\ndf_minmax = pd.DataFrame(df_minmax, columns=num_cols)\nprint(df_minmax.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.429888       0.482282           0.490088     0.417154\nstd          0.198530       0.235094           0.238334     0.222765\nmin          0.000000       0.000000           0.000000     0.000000\n25%          0.259091       0.297619           0.305085     0.236111\n50%          0.449091       0.500000           0.423729     0.375000\n75%          0.596364       0.666667           0.694915     0.569444\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n변수 범위가 고정(0~1) 되며 이상치에 매우 민감한 특징\n참고. 아래와 같이 수식을 통해 직접 구현\n\\[\nx' = \\frac{x-x_{min}}{x_{max} - x_{min}}\n\\]\n\ndf_minmax_manual = df_num.copy()\n\nfor col in num_cols:\n    col_min = df_minmax_manual[col].min()\n    col_max = df_minmax_manual[col].max()\n\n    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) \\\n                            / (col_max - col_min)\n\n(a, b) 구간으로 일반화한 수식\n\\[\nx' = a + \\frac{x-x_{min}}{x_{max} - x_{min}}\\times(b-a)\n\\]\n\ndef minmax_scale_ab(series, a, b):\n    x_min = series.min()\n    x_max = series.max()\n\n    return a + (series - x_min) * (b - a) / (x_max - x_min)\n\n\nscaler_genernal = MinMaxScaler(feature_range=(-1, 1))",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#표준화-standard-scaling",
+    "href": "part1/05. 스케일링.html#표준화-standard-scaling",
+    "title": "5  스케일링",
+    "section": "5.3 표준화 (Standard Scaling)",
+    "text": "5.3 표준화 (Standard Scaling)\n변수 변위를 평균 0, 표준편차 1로 변환\n\nfrom sklearn.preprocessing import StandardScaler\n\n\nscaler_std = StandardScaler()\ndf_std = scaler_std.fit_transform(df_num)\ndf_std = pd.DataFrame(df_std, columns=num_cols)\n\nprint(df_std.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm   body_mass_g\ncount    3.420000e+02   3.420000e+02       3.420000e+02  3.420000e+02\nmean     8.310441e-17  -1.412775e-15      -8.310441e-16  4.155221e-17\nstd      1.001465e+00   1.001465e+00       1.001465e+00  1.001465e+00\nmin     -2.168526e+00  -2.054446e+00      -2.059320e+00 -1.875362e+00\n25%     -8.615697e-01  -7.866355e-01      -7.773731e-01 -8.138982e-01\n50%      9.686524e-02   7.547549e-02      -2.788381e-01 -1.895079e-01\n75%      8.397670e-01   7.854492e-01       8.606705e-01  6.846384e-01\nmax      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00\n\n\n가장 널리 사용되며 변수가 정규분포 가정(완전하지 않아도 OK)하에 수행\n참고. 아래와 같이 수식을 통해 직접 구현\n\\[\nx' = \\frac{x - \\mu}{\\sigma}\n\\]\n\ndf_std_manual = df_num.copy()\n\nfor col in num_cols:\n    mean = df_std_manual[col].mean()\n    std = df_std_manual[col].std()\n\n    df_std_manual[col] = (df_std_manual[col] - mean) \\\n                         / std",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#robust-scaling-이상치-대응",
+    "href": "part1/05. 스케일링.html#robust-scaling-이상치-대응",
+    "title": "5  스케일링",
+    "section": "5.4 Robust Scaling (이상치 대응)",
+    "text": "5.4 Robust Scaling (이상치 대응)\n중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응\n\nfrom sklearn.preprocessing import RobustScaler\n\n\nscaler_robust = RobustScaler()\ndf_robust = scaler_robust.fit_transform(df_num)\ndf_robust = pd.DataFrame(df_robust, columns=num_cols)\n\nprint(df_robust.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount    3.420000e+02     342.000000         342.000000   342.000000\nmean    -5.693479e-02      -0.048010           0.170226     0.126462\nstd      5.886344e-01       0.637030           0.611379     0.668295\nmin     -1.331536e+00      -1.354839          -1.086957    -1.125000\n25%     -5.633423e-01      -0.548387          -0.304348    -0.416667\n50%     -3.833739e-16       0.000000           0.000000     0.000000\n75%      4.366577e-01       0.451613           0.695652     0.583333\nmax      1.633423e+00       1.354839           1.478261     1.875000\n\n\n이상치 영향 최소화",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#maxabs-scaling",
+    "href": "part1/05. 스케일링.html#maxabs-scaling",
+    "title": "5  스케일링",
+    "section": "5.5 MaxAbs Scaling",
+    "text": "5.5 MaxAbs Scaling\n최대 절댓값으로 나눔\n\nfrom sklearn.preprocessing import MaxAbsScaler\n\n\nscaler_maxabs = MaxAbsScaler()\ndf_maxabs = scaler_maxabs.fit_transform(df_num)\ndf_maxabs = pd.DataFrame(df_maxabs, columns=num_cols)\n\nprint(df_maxabs.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.736945       0.797729           0.869763     0.666945\nstd          0.091604       0.091851           0.060873     0.127294\nmin          0.538591       0.609302           0.744589     0.428571\n25%          0.658138       0.725581           0.822511     0.563492\n50%          0.745805       0.804651           0.852814     0.642857\n75%          0.813758       0.869767           0.922078     0.753968\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n희소 행렬에 유리하며 값 부호 유지하는 특징",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#범주별-스케일링",
+    "href": "part1/05. 스케일링.html#범주별-스케일링",
+    "title": "5  스케일링",
+    "section": "5.6 범주별 스케일링",
+    "text": "5.6 범주별 스케일링\n\nfrom sklearn.preprocessing import StandardScaler\n\n\ndef scale_by_species(group):\n    scaler = StandardScaler()\n    scaled = scaler.fit_transform(group[num_cols])\n    return pd.DataFrame(scaled, columns=num_cols, index=group.index)\n\n\ndf_scaled_group = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(scale_by_species)\n)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#파이프라인-적용",
+    "href": "part1/05. 스케일링.html#파이프라인-적용",
+    "title": "5  스케일링",
+    "section": "5.7 파이프라인 적용",
+    "text": "5.7 파이프라인 적용\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\n\npipeline = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", LogisticRegression())\n])",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/05. 스케일링.html#스케일링-방법-선택-가이드",
+    "href": "part1/05. 스케일링.html#스케일링-방법-선택-가이드",
+    "title": "5  스케일링",
+    "section": "5.8 스케일링 방법 선택 가이드",
+    "text": "5.8 스케일링 방법 선택 가이드\n\n\n\n방법\n특징\n추천 상황\n\n\n\n\nMin-Max\n0~1\n신경망, 시각화\n\n\nStandard\n평균 0\n대부분의 모델\n\n\nRobust\n이상치 강함\n실무 기본\n\n\nMaxAbs\n부호 유지\n희소 데이터\n\n\n그룹별\n분포 반영\n도메인 지식 있을 때",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
+    ]
   }
 ]
