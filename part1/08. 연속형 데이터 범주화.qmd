@@ -1,2 +1,192 @@
 # 연속형 데이터 범주화
 
+## 연속형 데이터 범주화 (Discretization / Binning)
+
+### 개념
+
+- **연속형 변수**를 **구간(범주)**으로 나누어 범주형 변수로 변환
+- 정보는 줄지만 해석력 증가, 노이즈 감소, 비선형 관계 단순화 효과
+
+
+## 등간격 구간화 (Equal-width binning)
+
+### 개념
+
+전체 값 범위를 **동일한 간격**으로 분할
+
+$$
+\text{bin width} = \frac{\max(x) - \min(x)}{k}
+$$
+
+### 예제
+
+```{python}
+import pandas as pd
+import seaborn as sns
+
+df = sns.load_dataset("penguins")
+
+df["bill_length_bin"] = pd.cut(df["bill_length_mm"], bins=4)
+
+print(df["bill_length_bin"])
+```
+
+---
+
+### 범주 이름 지정
+
+```{python}
+df["bill_length_bin"] = pd.cut(
+    df["bill_length_mm"],
+    bins=4,
+    labels=["짧음", "보통", "김", "매우 김"]
+)
+
+print(df["bill_length_bin"])
+```
+
+구현 간단하지만 이상치에 민감, 데이터 밀도 불균형 가능
+
+## 등빈도 구간화 (Equal-frequency, Quantile binning)
+
+### 개념
+
+각 구간에 **데이터 개수가 동일**하도록 분할
+
+### 예제
+
+```{python}
+df["bill_length_qbin"] = pd.qcut(
+    df["bill_length_mm"],
+    q=4
+)
+
+print(df["bill_length_qbin"])
+```
+
+### 라벨 지정
+
+```{python}
+df["bill_length_qbin"] = pd.qcut(
+    df["bill_length_mm"],
+    q=4,
+    labels=["Q1", "Q2", "Q3", "Q4"]
+)
+
+df["bill_length_qbin"]
+```
+
+데이터 불균형 완화, 분포 반영, 동일값 많으면 에러 가능
+
+## 사용자 정의 구간화
+
+### 개념
+
+**도메인 지식** 기반으로 직접 구간 설정
+
+### 예제
+
+```{python}
+bins = [30, 40, 45, 50, 60]
+labels = ["매우 짧음", "짧음", "보통", "김"]
+
+df["bill_length_custom"] = pd.cut(
+    df["bill_length_mm"],
+    bins=bins,
+    labels=labels
+)
+
+print(df["bill_length_custom"])
+```
+
+해석력 최고, 주관 개입, 기준 설명 필요
+
+## k-means 기반 구간화
+
+### 개념
+
+값의 분포를 고려해 **군집 중심 기준**으로 구간화, 비선형 구조 반영 가능
+
+### 예제
+
+```{python}
+from sklearn.cluster import KMeans
+import numpy as np
+
+x = df[["bill_length_mm"]].dropna()
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+x["cluster"] = kmeans.fit_predict(x)
+
+df.loc[x.index, "bill_length_kbin"] = x["cluster"]
+
+print(df["bill_length_kbin"])
+```
+
+---
+
+### 특징
+
+* 데이터 기반
+* 해석은 상대적으로 어려움
+
+---
+
+## 5️⃣ Decision Tree 기반 구간화
+
+### 개념
+
+타깃 변수를 기준으로 **정보이득 최대화**, 지도학습 기반 binning
+
+
+### 예제 (체중 기준)
+
+```{python}
+from sklearn.tree import DecisionTreeRegressor
+
+x = df[["bill_length_mm"]].dropna()
+y = df.loc[x.index, "body_mass_g"]
+
+tree = DecisionTreeRegressor(
+    max_leaf_nodes=4
+)
+tree.fit(x, y)
+
+df.loc[x.index, "bill_length_treebin"] = tree.apply(x)
+```
+
+타깃 정보 반영, 데이터 누수 주의
+
+## 범주화 후 인코딩까지 연결
+
+```{python}
+df_bin = pd.get_dummies(
+    df,
+    columns=["bill_length_bin"],
+    drop_first=True
+)
+
+print(df_bin)
+```
+
+## 범주화 상황
+
+| 상황           | 효과        |
+| ------------ | --------- |
+| 모델 해석이 중요할 때 | O         |
+| 비선형 관계 단순화   | O         |
+| 데이터 노이즈 큼    | O         |
+| 데이터 충분히 많음   | X         |
+| 딥러닝          | 거의 사용 안 함 |
+
+## 스케일링 vs 범주화
+
+| 항목     | 스케일링  | 범주화   |
+| ------ | ----- | ----- |
+| 정보 손실  | 없음    | 있음    |
+| 해석력    | 낮음    | 높음    |
+| 모델 안정성 | 보통    | 높음    |
+| 주 용도   | 거리 계산 | 규칙 기반 |
+
+**범주화는 정보 손실을 감수하고 해석력을 얻는 선택**, **EDA 결과 보고 결정하는 단계**
+
