@@ -258,5 +258,93 @@
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>결측치 처리</span>"
     ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html",
+    "href": "part1/04. 이상치 탐지.html",
+    "title": "4  이상치 탐지",
+    "section": "",
+    "text": "4.1 분포 기반 이상치 탐지\n분석 대상은 수치형 변수만 사용",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#분포-기반-이상치-탐지",
+    "href": "part1/04. 이상치 탐지.html#분포-기반-이상치-탐지",
+    "title": "4  이상치 탐지",
+    "section": "",
+    "text": "4.1.1 박스플롯으로 이상치 확인\n\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import StandardScaler\nscale = StandardScaler()\n\ndf_num_scaled = pd.DataFrame(scale.fit_transform(df_num[num_cols]),\n                              columns=df_num.columns)\n\ndf_num_scaled.boxplot(figsize=(10, 5))\nplt.show()",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#iqr-기반-이상치-탐지",
+    "href": "part1/04. 이상치 탐지.html#iqr-기반-이상치-탐지",
+    "title": "4  이상치 탐지",
+    "section": "4.2 IQR 기반 이상치 탐지",
+    "text": "4.2 IQR 기반 이상치 탐지\n\n4.2.1 IQR 계산\n\nQ1 = df_num.quantile(0.25)\nQ3 = df_num.quantile(0.75)\nIQR = Q3 - Q1\n\n\n\n4.2.2 이상치 조건 정의\n\noutlier_condition = (df_num &lt; (Q1 - 1.5 * IQR)) | (df_num &gt; (Q3 + 1.5 * IQR))\n\n\n\n4.2.3 이상치가 있는 행 확인\n\noutlier_rows = outlier_condition.any(axis=1)\ndf[outlier_rows]\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n\n\n\n\n\n컬럼 중 하나라도 이상치면 해당 행 전체를 이상치로 판단\n\n\n4.2.4 이상치 제거\n\ndf_iqr_clean = df[~outlier_rows]",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#z-score-기반-이상치-탐지",
+    "href": "part1/04. 이상치 탐지.html#z-score-기반-이상치-탐지",
+    "title": "4  이상치 탐지",
+    "section": "4.3 Z-score 기반 이상치 탐지",
+    "text": "4.3 Z-score 기반 이상치 탐지\n\nfrom scipy.stats import zscore\n\n\nz_scores = df_num.apply(zscore)\n\n\n4.3.1 임계값 기준 이상치 탐지 (|z| &gt; 3)\n\noutlier_z = (np.abs(z_scores) &gt; 3).any(axis=1)\ndf_z_clean = df[~outlier_z]\n\n계산이 간단한 장점이 있으나 분포 왜곡에 취약한 단점 존재",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#범주별-이상치-탐지",
+    "href": "part1/04. 이상치 탐지.html#범주별-이상치-탐지",
+    "title": "4  이상치 탐지",
+    "section": "4.4 범주별 이상치 탐지",
+    "text": "4.4 범주별 이상치 탐지\n\n4.4.1 species별 IQR 이상치 탐지\n\ndef iqr_outlier_by_group(group):\n    Q1 = group[num_cols].quantile(0.25)\n    Q3 = group[num_cols].quantile(0.75)\n    IQR = Q3 - Q1\n\n    condition = (group[num_cols] &lt; (Q1 - 1.5 * IQR)) | \\\n                (group[num_cols] &gt; (Q3 + 1.5 * IQR))\n    return group[~condition.any(axis=1)]\n\n\ndf_group_iqr_clean = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(iqr_outlier_by_group)\n)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#밀도-기반-이상치-탐지-lof",
+    "href": "part1/04. 이상치 탐지.html#밀도-기반-이상치-탐지-lof",
+    "title": "4  이상치 탐지",
+    "section": "4.5 밀도 기반 이상치 탐지 (LOF)",
+    "text": "4.5 밀도 기반 이상치 탐지 (LOF)\n\nfrom sklearn.neighbors import LocalOutlierFactor\n\n\ndf_lof = df_num.dropna()\n\nlof = LocalOutlierFactor(n_neighbors=20)\noutlier_lof = lof.fit_predict(df_lof)\n\n\ndf_lof_clean = df.loc[df_lof.index][outlier_lof == 1]\n\n주변 데이터와 너무 다른 밀도를 가지면 이상치로 판단하는 방식으로 비선형 데이터에 강함",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#트리-기반-이상치-탐지-isolation-forest",
+    "href": "part1/04. 이상치 탐지.html#트리-기반-이상치-탐지-isolation-forest",
+    "title": "4  이상치 탐지",
+    "section": "4.6 트리 기반 이상치 탐지 (Isolation Forest)",
+    "text": "4.6 트리 기반 이상치 탐지 (Isolation Forest)\n\nfrom sklearn.ensemble import IsolationForest\n\n\niso = IsolationForest(contamination=0.05, random_state=42)\noutlier_if = iso.fit_predict(df_lof)\n\n\ndf_if_clean = df.loc[df_lof.index][outlier_if == 1]\n\n이상치는 트리 분류 기준으로 쉽게 분리가 된다는 가정하에 이상치를 탐지하는 방식으로 고차원 데이터에 강함하고 실무에서 자주 사용",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
+  },
+  {
+    "objectID": "part1/04. 이상치 탐지.html#단계별-선택-가이드",
+    "href": "part1/04. 이상치 탐지.html#단계별-선택-가이드",
+    "title": "4  이상치 탐지",
+    "section": "4.7 단계별 선택 가이드",
+    "text": "4.7 단계별 선택 가이드\n\n\n\n단계\n방법\n언제 쓰나\n\n\n\n\n1\n시각화\n이해, 설명\n\n\n2\nIQR\n기본, 안전\n\n\n3\nZ-score\n정규분포 가정\n\n\n4\n그룹별 IQR\n가장 실무적\n\n\n5\nLOF\n비선형, 밀도\n\n\n6\nIsolationForest\n대규모, 고급",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
+    ]
   }
 ]

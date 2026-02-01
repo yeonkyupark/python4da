@@ -21,10 +21,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -72,6 +107,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
 
@@ -335,8 +373,35 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#분포-기반-이상치-탐지" id="toc-분포-기반-이상치-탐지" class="nav-link active" data-scroll-target="#분포-기반-이상치-탐지"><span class="header-section-number">4.1</span> 분포 기반 이상치 탐지</a>
+  <ul>
+  <li><a href="#박스플롯으로-이상치-확인" id="toc-박스플롯으로-이상치-확인" class="nav-link" data-scroll-target="#박스플롯으로-이상치-확인"><span class="header-section-number">4.1.1</span> 박스플롯으로 이상치 확인</a></li>
+  </ul></li>
+  <li><a href="#iqr-기반-이상치-탐지" id="toc-iqr-기반-이상치-탐지" class="nav-link" data-scroll-target="#iqr-기반-이상치-탐지"><span class="header-section-number">4.2</span> IQR 기반 이상치 탐지</a>
+  <ul>
+  <li><a href="#iqr-계산" id="toc-iqr-계산" class="nav-link" data-scroll-target="#iqr-계산"><span class="header-section-number">4.2.1</span> IQR 계산</a></li>
+  <li><a href="#이상치-조건-정의" id="toc-이상치-조건-정의" class="nav-link" data-scroll-target="#이상치-조건-정의"><span class="header-section-number">4.2.2</span> 이상치 조건 정의</a></li>
+  <li><a href="#이상치가-있는-행-확인" id="toc-이상치가-있는-행-확인" class="nav-link" data-scroll-target="#이상치가-있는-행-확인"><span class="header-section-number">4.2.3</span> 이상치가 있는 행 확인</a></li>
+  <li><a href="#이상치-제거" id="toc-이상치-제거" class="nav-link" data-scroll-target="#이상치-제거"><span class="header-section-number">4.2.4</span> 이상치 제거</a></li>
+  </ul></li>
+  <li><a href="#z-score-기반-이상치-탐지" id="toc-z-score-기반-이상치-탐지" class="nav-link" data-scroll-target="#z-score-기반-이상치-탐지"><span class="header-section-number">4.3</span> Z-score 기반 이상치 탐지</a>
+  <ul>
+  <li><a href="#임계값-기준-이상치-탐지-z-3" id="toc-임계값-기준-이상치-탐지-z-3" class="nav-link" data-scroll-target="#임계값-기준-이상치-탐지-z-3"><span class="header-section-number">4.3.1</span> 임계값 기준 이상치 탐지 (|z| &gt; 3)</a></li>
+  </ul></li>
+  <li><a href="#범주별-이상치-탐지" id="toc-범주별-이상치-탐지" class="nav-link" data-scroll-target="#범주별-이상치-탐지"><span class="header-section-number">4.4</span> 범주별 이상치 탐지</a>
+  <ul>
+  <li><a href="#species별-iqr-이상치-탐지" id="toc-species별-iqr-이상치-탐지" class="nav-link" data-scroll-target="#species별-iqr-이상치-탐지"><span class="header-section-number">4.4.1</span> species별 IQR 이상치 탐지</a></li>
+  </ul></li>
+  <li><a href="#밀도-기반-이상치-탐지-lof" id="toc-밀도-기반-이상치-탐지-lof" class="nav-link" data-scroll-target="#밀도-기반-이상치-탐지-lof"><span class="header-section-number">4.5</span> 밀도 기반 이상치 탐지 (LOF)</a></li>
+  <li><a href="#트리-기반-이상치-탐지-isolation-forest" id="toc-트리-기반-이상치-탐지-isolation-forest" class="nav-link" data-scroll-target="#트리-기반-이상치-탐지-isolation-forest"><span class="header-section-number">4.6</span> 트리 기반 이상치 탐지 (Isolation Forest)</a></li>
+  <li><a href="#단계별-선택-가이드" id="toc-단계별-선택-가이드" class="nav-link" data-scroll-target="#단계별-선택-가이드"><span class="header-section-number">4.7</span> 단계별 선택 가이드</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/04. 이상치 탐지.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +431,217 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div id="3e970ef5" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>분석 대상은 <strong>수치형 변수</strong>만 사용</p>
+<div id="92bf1846" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df_num <span class="op">=</span> df[num_cols]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="분포-기반-이상치-탐지" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="분포-기반-이상치-탐지"><span class="header-section-number">4.1</span> 분포 기반 이상치 탐지</h2>
+<section id="박스플롯으로-이상치-확인" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="박스플롯으로-이상치-확인"><span class="header-section-number">4.1.1</span> 박스플롯으로 이상치 확인</h3>
+<div id="44e8cc19" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>scale <span class="op">=</span> StandardScaler()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df_num_scaled <span class="op">=</span> pd.DataFrame(scale.fit_transform(df_num[num_cols]),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                              columns<span class="op">=</span>df_num.columns)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_num_scaled.boxplot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 이상치 탐지_files/figure-html/cell-4-output-1.png" width="792" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="iqr-기반-이상치-탐지" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="iqr-기반-이상치-탐지"><span class="header-section-number">4.2</span> IQR 기반 이상치 탐지</h2>
+<section id="iqr-계산" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="iqr-계산"><span class="header-section-number">4.2.1</span> IQR 계산</h3>
+<div id="fd046b5a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> df_num.quantile(<span class="fl">0.25</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Q3 <span class="op">=</span> df_num.quantile(<span class="fl">0.75</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>IQR <span class="op">=</span> Q3 <span class="op">-</span> Q1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="이상치-조건-정의" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="이상치-조건-정의"><span class="header-section-number">4.2.2</span> 이상치 조건 정의</h3>
+<div id="91a5c1c0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>outlier_condition <span class="op">=</span> (df_num <span class="op">&lt;</span> (Q1 <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> IQR)) <span class="op">|</span> (df_num <span class="op">&gt;</span> (Q3 <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> IQR))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="이상치가-있는-행-확인" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="이상치가-있는-행-확인"><span class="header-section-number">4.2.3</span> 이상치가 있는 행 확인</h3>
+<div id="e7a05f9e" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>outlier_rows <span class="op">=</span> outlier_condition.<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[outlier_rows]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">species</th>
+<th data-quarto-table-cell-role="th">island</th>
+<th data-quarto-table-cell-role="th">bill_length_mm</th>
+<th data-quarto-table-cell-role="th">bill_depth_mm</th>
+<th data-quarto-table-cell-role="th">flipper_length_mm</th>
+<th data-quarto-table-cell-role="th">body_mass_g</th>
+<th data-quarto-table-cell-role="th">sex</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>컬럼 중 <strong>하나라도 이상치면 해당 행 전체를 이상치로 판단</strong></p>
+</section>
+<section id="이상치-제거" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="이상치-제거"><span class="header-section-number">4.2.4</span> 이상치 제거</h3>
+<div id="b2c2ddf2" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_iqr_clean <span class="op">=</span> df[<span class="op">~</span>outlier_rows]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="z-score-기반-이상치-탐지" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="z-score-기반-이상치-탐지"><span class="header-section-number">4.3</span> Z-score 기반 이상치 탐지</h2>
+<div id="21a612e3" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> zscore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2a0f5b6e" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>z_scores <span class="op">=</span> df_num.<span class="bu">apply</span>(zscore)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="임계값-기준-이상치-탐지-z-3" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="임계값-기준-이상치-탐지-z-3"><span class="header-section-number">4.3.1</span> 임계값 기준 이상치 탐지 (|z| &gt; 3)</h3>
+<div id="7305188a" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>outlier_z <span class="op">=</span> (np.<span class="bu">abs</span>(z_scores) <span class="op">&gt;</span> <span class="dv">3</span>).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_z_clean <span class="op">=</span> df[<span class="op">~</span>outlier_z]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>계산이 간단한 장점이 있으나 <strong>분포 왜곡에 취약</strong>한 단점 존재</p>
+</section>
+</section>
+<section id="범주별-이상치-탐지" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="범주별-이상치-탐지"><span class="header-section-number">4.4</span> 범주별 이상치 탐지</h2>
+<section id="species별-iqr-이상치-탐지" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="species별-iqr-이상치-탐지"><span class="header-section-number">4.4.1</span> species별 IQR 이상치 탐지</h3>
+<div id="ae52ae21" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iqr_outlier_by_group(group):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    Q1 <span class="op">=</span> group[num_cols].quantile(<span class="fl">0.25</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    Q3 <span class="op">=</span> group[num_cols].quantile(<span class="fl">0.75</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    IQR <span class="op">=</span> Q3 <span class="op">-</span> Q1</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    condition <span class="op">=</span> (group[num_cols] <span class="op">&lt;</span> (Q1 <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> IQR)) <span class="op">|</span> <span class="op">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                (group[num_cols] <span class="op">&gt;</span> (Q3 <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> IQR))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group[<span class="op">~</span>condition.<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a1501a2d" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_group_iqr_clean <span class="op">=</span> (</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"species"</span>, group_keys<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      .<span class="bu">apply</span>(iqr_outlier_by_group)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="밀도-기반-이상치-탐지-lof" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="밀도-기반-이상치-탐지-lof"><span class="header-section-number">4.5</span> 밀도 기반 이상치 탐지 (LOF)</h2>
+<div id="73922a16" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> LocalOutlierFactor</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="205d6059" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_lof <span class="op">=</span> df_num.dropna()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>lof <span class="op">=</span> LocalOutlierFactor(n_neighbors<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>outlier_lof <span class="op">=</span> lof.fit_predict(df_lof)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="877f17b7" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_lof_clean <span class="op">=</span> df.loc[df_lof.index][outlier_lof <span class="op">==</span> <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>주변 데이터와 <strong>너무 다른 밀도</strong>를 가지면 이상치로 판단하는 방식으로 비선형 데이터에 강함</p>
+</section>
+<section id="트리-기반-이상치-탐지-isolation-forest" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="트리-기반-이상치-탐지-isolation-forest"><span class="header-section-number">4.6</span> 트리 기반 이상치 탐지 (Isolation Forest)</h2>
+<div id="3698a222" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2ffb407f" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iso <span class="op">=</span> IsolationForest(contamination<span class="op">=</span><span class="fl">0.05</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>outlier_if <span class="op">=</span> iso.fit_predict(df_lof)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="c1a6cbb9" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_if_clean <span class="op">=</span> df.loc[df_lof.index][outlier_if <span class="op">==</span> <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>이상치는 트리 분류 기준으로 쉽게 분리가 된다는 가정하에 이상치를 탐지하는 방식으로 고차원 데이터에 강함하고 실무에서 자주 사용</p>
+</section>
+<section id="단계별-선택-가이드" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="단계별-선택-가이드"><span class="header-section-number">4.7</span> 단계별 선택 가이드</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>방법</th>
+<th>언제 쓰나</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>시각화</td>
+<td>이해, 설명</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>IQR</td>
+<td>기본, 안전</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Z-score</td>
+<td>정규분포 가정</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>그룹별 IQR</td>
+<td><strong>가장 실무적</strong></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>LOF</td>
+<td>비선형, 밀도</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>IsolationForest</td>
+<td>대규모, 고급</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1064,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/04. 이상치 탐지.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/04. 이상치 탐지.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
