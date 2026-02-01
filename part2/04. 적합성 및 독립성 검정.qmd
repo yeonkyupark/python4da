@@ -1,2 +1,197 @@
 # 적합성 및 독립성 검정
 
+## 적합성 및 독립성 검정 시점
+
+* **이 데이터는 내가 기대한 분포를 따르는가?**
+* **두 범주형 변수는 서로 관련이 있는가?**
+
+평균이 아니라 **빈도와 구조**를 파악하기 위해 수행한다.
+
+## 카이제곱(χ²) 검정 공통 아이디어
+
+카이제곱 검정 논리:
+
+$$
+\chi^2 = \sum \frac{(관측값 - 기대값)^2}{기대값}
+$$
+
+핵심 비교
+
+* 관측 빈도 (Observed)
+* 기대 빈도 (Expected)
+
+
+## 적합성 검정 (Goodness-of-Fit Test)
+
+### 개념
+
+**관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는가?**
+
+### 가설 설정
+
+* 귀무가설 (H_0): 관측 분포 = 기대 분포
+* 대립가설 (H_1): 관측 분포 ≠ 기대 분포
+
+
+### 예제
+
+species 분포가 **균등 분포**라고 볼 수 있을까?
+
+```{python}
+import seaborn as sns
+import numpy as np
+from scipy.stats import chisquare
+
+df = sns.load_dataset("penguins").dropna()
+```
+
+```{python}
+observed = df["species"].value_counts().sort_index()
+observed
+```
+
+기대 빈도 (균등 가정)
+
+```{python}
+expected = [observed.sum() / len(observed)] * len(observed)
+```
+
+```{python}
+stat, p_value = chisquare(f_obs=observed, f_exp=expected)
+stat, p_value
+```
+
+판단
+
+* p ≥ 0.05 → 기대 분포와 크게 다르지 않음
+* p < 0.05 → 분포가 다름
+
+### 적합성 검정 예시
+
+* 주사위 공정성
+* 범주 비율 검증
+* 샘플링 결과 검증
+
+## 독립성 검정 (Test of Independence)
+
+### 개념
+
+**두 범주형 변수가 서로 독립적인가?**
+
+즉,
+
+* 하나를 알면
+* 다른 하나의 분포가 바뀌는가?
+
+### 가설 설정
+
+* (H_0): 두 변수는 독립
+* (H_1): 두 변수는 독립이 아님
+
+### 예제
+
+species와 sex는 독립일까?
+
+### 교차표 생성
+
+```{python}
+import pandas as pd
+contingency_table = pd.crosstab(
+    df["species"],
+    df["sex"]
+)
+contingency_table
+```
+
+### 카이제곱 독립성 검정
+
+```{python}
+from scipy.stats import chi2_contingency
+
+chi2, p_value, dof, expected = chi2_contingency(contingency_table)
+chi2, p_value
+```
+
+판단
+
+* p ≥ 0.05 → 독립
+* p < 0.05 → 관련 있음
+
+### 기대 빈도 확인
+
+```{python}
+expected
+```
+
+주의
+
+* 기대 빈도 < 5 인 셀이 많으면
+  → 카이제곱 신뢰도 ↓
+
+## F 검정
+
+### F 검정의 의미
+
+**두 집단의 분산이 같은가?**
+
+$$
+F = \frac{s_1^2}{s_2^2}
+$$
+
+* 등분산성의 가장 기본적 형태
+* 하지만 정규성에 매우 민감
+
+### 예제
+
+```{python}
+from scipy.stats import f
+
+group1 = df[df["species"] == "Adelie"]["body_mass_g"]
+group2 = df[df["species"] == "Chinstrap"]["body_mass_g"]
+
+f_stat = group1.var() / group2.var()
+f_stat
+```
+
+p-value 계산
+
+```{python}
+df1 = len(group1) - 1
+df2 = len(group2) - 1
+
+p_value = 1 - f.cdf(f_stat, df1, df2)
+p_value
+```
+
+주의
+
+* Levene 검정이 훨씬 안전
+* F 검정은 **이론 설명용**
+
+## 검정별 예시
+
+| 목적     | 데이터 유형  | 검정     |
+| ------ | ------- | ------ |
+| 분포 적합성 | 범주 1개   | χ² 적합성 |
+| 변수 관계  | 범주 × 범주 | χ² 독립성 |
+| 분산 비교  | 연속      | F 검정   |
+| 실무 등분산 | 연속      | Levene |
+
+
+## 자주 하는 오해
+
+- “p < 0.05 → 강한 관계”
+> 관계 **존재 여부만 판단**
+
+- “카이제곱은 평균 비교”
+> 빈도 기반 검정
+
+- “카이제곱은 다 쓸 수 있다”
+> 표본 크기·기대빈도 조건 중요
+
+## 정리
+
+* 적합성 검정 → **분포 자체를 비교**
+* 독립성 검정 → **범주 간 관계**
+* 카이제곱은 빈도의 언어 → **분산 비교**
+* 평균 비교 전에 구조부터 확인하자
