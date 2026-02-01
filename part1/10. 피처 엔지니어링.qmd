@@ -34,7 +34,7 @@ df = sns.load_dataset("penguins").dropna()
 * species
 * sex
 
-## 파생 변수 생성 (Derived Features)
+## 파생 변수 생성
 
 ### (1) 비율(Ratio) 피처
 
@@ -163,10 +163,4 @@ df[num_cols + ["bill_ratio"]].corr()
  → 피처 엔지니어링
  → 모델링
 ```
-
-## 핵심 요약 (강의용)
-
-* 피처 엔지니어링은 **모델 전에 끝나는 마지막 설계**
-* 성능 + 해석력 모두에 영향
-* "새로운 정보"를 만드는 단계로 단순 변환 단계가 아님
 
