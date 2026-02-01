@@ -1,2 +1,174 @@
 # 피처 엔지니어링
 
+## 피처 엔지니어링
+
+### 정의
+
+**기존 데이터를 변형·조합하여** **모델이 더 잘 학습할 수 있는 입력 변수(feature)를 만드는 과정**
+
+> 모델 성능의 상당 부분은 **알고리즘이 아니라 피처에서 결정됨**
+
+## 왜 중요한가?
+
+* 같은 모델, 다른 성능의 가장 큰 이유
+* 복잡한 모델보다 **좋은 피처 + 단순 모델**이 더 강력한 경우 많음
+* 도메인 지식이 가장 잘 반영되는 단계
+
+## 4️⃣ 피처 엔지니어링의 주요 유형
+
+예제 데이터셋 적재
+
+```{python}
+import seaborn as sns
+import pandas as pd
+
+df = sns.load_dataset("penguins").dropna()
+```
+
+사용 컬럼 예시
+
+* bill_length_mm
+* bill_depth_mm
+* flipper_length_mm
+* body_mass_g
+* species
+* sex
+
+## 파생 변수 생성 (Derived Features)
+
+### (1) 비율(Ratio) 피처
+
+```{python}
+df["bill_ratio"] = df["bill_length_mm"] / df["bill_depth_mm"]
+
+print(df["bill_ratio"])
+```
+
+### (2) 조합 피처 (곱, 합)
+
+```{python}
+df["body_flipper_interaction"] = (df["body_mass_g"] * df["flipper_length_mm"])
+
+print(df["body_flipper_interaction"])
+```
+
+## 로그·제곱근 변환 후 파생
+
+```{python}
+import numpy as np
+
+df["log_body_mass"] = np.log(df["body_mass_g"])
+
+print(df["log_body_mass"])
+```
+
+* 스케일 안정화
+* 거리 기반 모델(KNN, SVM)에 특히 중요
+
+## 구간 기반 피처 (Binning 결과 활용)
+
+```{python}
+df["body_mass_group"] = pd.cut(
+    df["body_mass_g"],
+    bins=[0, 3500, 4500, 7000],
+    labels=["small", "medium", "large"]
+)
+
+print(df["body_mass_group"])
+```
+
+* 연속값 → 해석 가능한 범주
+* 트리 모델에서 성능 개선 가능
+
+## 집계 기반 피처 (Group-based Features)
+
+### species 기준 평균 대비 차이
+
+```{python}
+species_mean = df.groupby("species")["body_mass_g"].transform("mean")
+
+df["body_mass_diff_species"] = (df["body_mass_g"] - species_mean)
+
+print(df["body_mass_diff_species"])
+```
+
+## 통계 요약 피처
+
+```{python}
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
+df["num_mean"] = df[num_cols].mean(axis=1)
+df["num_std"] = df[num_cols].std(axis=1)
+
+print(df["num_mean"])
+print(df["num_std"])
+```
+
+* 개체의 전체적인 **신체 특성 요약**
+
+---
+
+## 4-6️⃣ 범주형 조합 피처
+
+```{python}
+df["species_sex"] = (
+    df["species"] + "_" + df["sex"]
+)
+```
+
+* 단일 범주로는 부족할 때 유용
+* 빈도가 너무 낮은 조합은 주의
+
+## 시간·순서형 데이터
+
+* 날짜 → 연/월/요일
+* 시간 → 주기(sin, cos)
+* 누적합, 이동평균
+
+## 피처 선택과의 연결
+
+**모든 피처를 쓰는 게 정답은 아님**
+
+### 간단한 상관 확인
+
+```{python}
+df[num_cols + ["bill_ratio"]].corr()
+```
+
+* 중복 정보 제거
+* 다중공선성 완화
+
+## 모델별 피처 엔지니어링 전략
+
+| 모델        | 전략              |
+| --------- | --------------- |
+| 선형 모델     | 스케일링, 상호작용      |
+| KNN / SVM | 스케일·분포 중요       |
+| 트리 계열     | 비선형 파생, binning |
+| 딥러닝       | 단순 + 양 많게       |
+
+## 전처리 전체 흐름에서 위치
+
+```
+데이터 로드
+ → 결측치 처리
+ → 이상치 탐지
+ → 스케일링
+ → 분포 변환
+ → 인코딩
+ → 불균형 처리
+ → 피처 엔지니어링
+ → 모델링
+```
+
+## 핵심 요약 (강의용)
+
+* 피처 엔지니어링은 **모델 전에 끝나는 마지막 설계**
+* 성능 + 해석력 모두에 영향
+* "새로운 정보"를 만드는 단계로 단순 변환 단계가 아님
+
