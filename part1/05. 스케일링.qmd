@@ -1,2 +1,206 @@
 # 스케일링
 
+예제 데이터셋 적재
+
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
+df = sns.load_dataset("penguins")
+
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
+df_num = df[num_cols]
+```
+
+## 스케일링 이유
+
+### 스케일 차이 확인
+
+```{python}
+df_num.describe()
+```
+
+변수별 측정 단위가 다름(상호 비교가 어려움)  
+- 거리 기반 모델(KNN, SVM, K-means)에서는 **큰 값이 모델을 지배**
+
+## Min-Max 스케일링 (정규화)
+
+모든 값을 0~1 범위로 변환
+
+```{python}
+from sklearn.preprocessing import MinMaxScaler
+```
+
+```{python}
+scaler_minmax = MinMaxScaler()
+df_minmax = scaler_minmax.fit_transform(df_num)
+```
+
+```{python}
+df_minmax = pd.DataFrame(df_minmax, columns=num_cols)
+print(df_minmax.describe())
+```
+
+변수 범위가 고정(0~1) 되며 **이상치에 매우 민감**한 특징
+
+참고. 아래와 같이 수식을 통해 직접 구현
+
+$$
+x' = \frac{x-x_{min}}{x_{max} - x_{min}}
+$$
+
+
+```{python}
+df_minmax_manual = df_num.copy()
+
+for col in num_cols:
+    col_min = df_minmax_manual[col].min()
+    col_max = df_minmax_manual[col].max()
+
+    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) \
+                            / (col_max - col_min)
+
+```
+
+`(a, b)` 구간으로 일반화한 수식
+
+$$
+x' = a + \frac{x-x_{min}}{x_{max} - x_{min}}\times(b-a)
+$$
+
+```{python}
+def minmax_scale_ab(series, a, b):
+    x_min = series.min()
+    x_max = series.max()
+
+    return a + (series - x_min) * (b - a) / (x_max - x_min)
+```
+
+```{python}
+scaler_genernal = MinMaxScaler(feature_range=(-1, 1))
+```
+
+## 표준화 (Standard Scaling)
+
+변수 변위를 평균 0, 표준편차 1로 변환
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+```
+
+```{python}
+scaler_std = StandardScaler()
+df_std = scaler_std.fit_transform(df_num)
+df_std = pd.DataFrame(df_std, columns=num_cols)
+
+print(df_std.describe())
+```
+
+가장 널리 사용되며 변수가 정규분포 가정(완전하지 않아도 OK)하에 수행
+
+참고. 아래와 같이 수식을 통해 직접 구현
+
+$$
+x' = \frac{x - \mu}{\sigma}
+$$
+
+```{python}
+df_std_manual = df_num.copy()
+
+for col in num_cols:
+    mean = df_std_manual[col].mean()
+    std = df_std_manual[col].std()
+
+    df_std_manual[col] = (df_std_manual[col] - mean) \
+                         / std
+```
+
+## Robust Scaling (이상치 대응)
+
+중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응
+
+```{python}
+from sklearn.preprocessing import RobustScaler
+```
+
+```{python}
+scaler_robust = RobustScaler()
+df_robust = scaler_robust.fit_transform(df_num)
+df_robust = pd.DataFrame(df_robust, columns=num_cols)
+
+print(df_robust.describe())
+```
+
+이상치 영향 최소화
+
+## MaxAbs Scaling
+
+최대 절댓값으로 나눔
+
+```{python}
+from sklearn.preprocessing import MaxAbsScaler
+```
+
+```{python}
+scaler_maxabs = MaxAbsScaler()
+df_maxabs = scaler_maxabs.fit_transform(df_num)
+df_maxabs = pd.DataFrame(df_maxabs, columns=num_cols)
+
+print(df_maxabs.describe())
+```
+
+희소 행렬에 유리하며 값 **부호 유지**하는 특징
+
+## 범주별 스케일링
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+```
+
+```{python}
+def scale_by_species(group):
+    scaler = StandardScaler()
+    scaled = scaler.fit_transform(group[num_cols])
+    return pd.DataFrame(scaled, columns=num_cols, index=group.index)
+```
+
+```{python}
+df_scaled_group = (
+    df.groupby("species", group_keys=False)
+      .apply(scale_by_species)
+)
+```
+
+
+## 파이프라인 적용 
+
+```{python}
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+```
+
+```{python}
+pipeline = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression())
+])
+```
+
+## 스케일링 방법 선택 가이드
+
+| 방법       | 특징     | 추천 상황       |
+| -------- | ------ | ----------- |
+| Min-Max  | 0~1    | 신경망, 시각화    |
+| Standard | 평균 0   | 대부분의 모델     |
+| Robust   | 이상치 강함 | 실무 기본       |
+| MaxAbs   | 부호 유지  | 희소 데이터      |
+| 그룹별      | 분포 반영  | 도메인 지식 있을 때 |
+
