@@ -1,2 +1,237 @@
 # 범주형 데이터 인코딩
 
+예제 데이터셋 적재
+
+```{python}
+import seaborn as sns
+import pandas as pd
+
+df = sns.load_dataset("penguins")
+```
+
+---
+
+## 1️⃣ Label Encoding
+
+### 개념
+
+* 범주를 **정수 값**으로 매핑
+* 순서가 **없는데 숫자로 바뀌므로 주의 필요**
+
+---
+
+### 예제 코드
+
+```{python}
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+
+df_label = df.copy()
+df_label["species_enc"] = le.fit_transform(df_label["species"])
+```
+
+---
+
+### 결과 예시
+
+| species   | species_enc |
+| --------- | ----------- |
+| Adelie    | 0           |
+| Chinstrap | 1           |
+| Gentoo    | 2           |
+
+---
+
+### 사용 시점
+
+* 트리 기반 모델 (Decision Tree, RandomForest, XGBoost)
+* 순서 의미가 없어도 되는 경우
+
+---
+
+## 2️⃣ One-Hot Encoding (더미 변수)
+
+### 개념
+
+* 각 범주를 **이진 컬럼**으로 분리
+* 거리 기반, 선형 모델에서 가장 안전
+
+---
+
+### pandas 방식
+
+```{python}
+df_ohe = pd.get_dummies(
+    df,
+    columns=["species", "island"],
+    drop_first=False
+)
+```
+
+---
+
+### drop_first 옵션
+
+```{python}
+df_ohe = pd.get_dummies(
+    df,
+    columns=["species"],
+    drop_first=True
+)
+```
+
+* 다중공선성 방지 (회귀 모델에서 중요)
+
+---
+
+### 사용 시점
+
+* 선형 회귀
+* 로지스틱 회귀
+* KNN, SVM, PCA
+
+---
+
+## 3️⃣ Ordinal Encoding
+
+### 개념
+
+* **순서가 있는 범주형 변수**에 사용
+* 사용자가 순서를 직접 정의
+
+---
+
+### 예제 상황
+
+```text
+size = ["small", "medium", "large"]
+```
+
+---
+
+### 예제 코드
+
+```{python}
+from sklearn.preprocessing import OrdinalEncoder
+
+oe = OrdinalEncoder(
+    categories=[["small", "medium", "large"]]
+)
+
+df_ord = pd.DataFrame(
+    oe.fit_transform(
+        pd.DataFrame({"size": ["small", "large", "medium"]})
+    ),
+    columns=["size_enc"]
+)
+```
+
+---
+
+### 사용 시점
+
+* 명확한 순서 존재
+* 등급, 크기, 단계 표현
+
+---
+
+## 4️⃣ Target Encoding (Mean Encoding)
+
+### 개념
+
+* 범주를 **타깃 변수의 평균값**으로 치환
+* 정보량은 크지만 **데이터 누수 위험**
+
+---
+
+### 예제 코드
+
+```{python}
+df_te = df.copy()
+
+target = "body_mass_g"
+col = "species"
+
+mean_map = df_te.groupby(col)[target].mean()
+df_te["species_enc"] = df_te[col].map(mean_map)
+```
+
+---
+
+### 주의점
+
+* 반드시 **train 데이터 기준으로만 계산**
+* CV 기반 smoothing 권장
+
+---
+
+## 5️⃣ 빈도(Frequency) 인코딩
+
+### 개념
+
+* 범주의 **출현 빈도**로 인코딩
+* 희귀 범주 처리에 유용
+
+---
+
+### 예제 코드
+
+```{python}
+freq_map = df["island"].value_counts(normalize=True)
+df_freq = df.copy()
+df_freq["island_enc"] = df_freq["island"].map(freq_map)
+```
+
+---
+
+## 6️⃣ 여러 컬럼을 한 번에 인코딩
+
+### One-Hot (pandas)
+
+```{python}
+cat_cols = ["species", "island", "sex"]
+
+df_ohe = pd.get_dummies(df, columns=cat_cols)
+```
+
+---
+
+### Label Encoding (반복 처리)
+
+```{python}
+from sklearn.preprocessing import LabelEncoder
+
+df_label = df.copy()
+
+for col in cat_cols:
+    le = LabelEncoder()
+    df_label[col] = le.fit_transform(df_label[col].astype(str))
+```
+
+---
+
+## 7️⃣ 인코딩 방식 요약
+
+| 인코딩       | 순서 필요 | 컬럼 수 증가 | 추천 모델      |
+| --------- | ----- | ------- | ---------- |
+| Label     | X     | X       | 트리 모델      |
+| One-Hot   | X     | O       | 선형, 거리 기반  |
+| Ordinal   | O     | X       | 순서형 데이터    |
+| Target    | X     | X       | 고급 모델      |
+| Frequency | X     | X       | 희귀 범주 많을 때 |
+
+---
+
+## 8️⃣ 실무 기준 한 줄 정리
+
+* **모르면 One-Hot**
+* **트리면 Label**
+* **순서 있으면 Ordinal**
+* **고급 모델 + 주의 가능하면 Target**
+
+이 다음으로 이어가면 자연스러운 주제는
+
+* *고차원 One-Hot 문제와 해결법*
+* *범주형 변수와 스케일링의 관계*
+* *파이프라인에서 인코딩 처리 방법*
