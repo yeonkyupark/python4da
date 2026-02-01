@@ -1083,5 +1083,93 @@
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
     ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html",
+    "href": "part2/02. 정규성 검정.html",
+    "title": "12  정규성 검정",
+    "section": "",
+    "text": "12.1 정규성 검정\n많은 통계 기법은 다음을 가정한다.\n적용 대상\n정규성 검정(Normality Test)은 “데이터가 정규인가?” 가 아니라 “정규 가정을 써도 되는가?” 를 판단하는 과정",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#정규성-검정",
+    "href": "part2/02. 정규성 검정.html#정규성-검정",
+    "title": "12  정규성 검정",
+    "section": "",
+    "text": "표본이 정규분포를 따른다\n또는 표본 평균이 정규분포를 따른다\n\n\n\nt 검정\nANOVA\n선형회귀 (잔차)",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#정규성을-검사-필요-여부",
+    "href": "part2/02. 정규성 검정.html#정규성을-검사-필요-여부",
+    "title": "12  정규성 검정",
+    "section": "12.2 정규성을 검사 필요 여부",
+    "text": "12.2 정규성을 검사 필요 여부\n\n\n\n상황\n정규성 필요 여부\n\n\n\n\n원 데이터\n경우에 따라\n\n\n표본 평균\nCLT로 완화\n\n\n소표본 (n &lt; 30)\n매우 중요\n\n\n잔차(residual)\n중요",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#시각적-정규성-검정",
+    "href": "part2/02. 정규성 검정.html#시각적-정규성-검정",
+    "title": "12  정규성 검정",
+    "section": "12.3 시각적 정규성 검정",
+    "text": "12.3 시각적 정규성 검정\n\n12.3.1 (1) 히스토그램 + KDE\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n\nsns.histplot(\n    df[\"body_mass_g\"],\n    kde=True\n)\nplt.show()\n\n\n\n\n\n\n\n\n정규성 판단을 위한 점검 사항\n\n종 모양 여부\n대칭성\n꼬리 방향\n\n\n\n12.3.2 (2) Q–Q Plot\n\nimport scipy.stats as stats\n\nstats.probplot(df[\"body_mass_g\"], plot=plt)\nplt.show()\n\n\n\n\n\n\n\n\n해석\n\n점들이 직선에 가까울수록 정규성 만족\n양끝 이탈 → 꼬리 문제",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#통계적-정규성-검정",
+    "href": "part2/02. 정규성 검정.html#통계적-정규성-검정",
+    "title": "12  정규성 검정",
+    "section": "12.4 통계적 정규성 검정",
+    "text": "12.4 통계적 정규성 검정\n\n12.4.1 대표적인 정규성 검정 방법\n\n\n\n검정\n특징\n권장 상황\n\n\n\n\nShapiro–Wilk\n가장 보편적\nn ≤ 5000\n\n\nKolmogorov–Smirnov\n기준 분포 필요\n이론 검증\n\n\nAnderson–Darling\n꼬리 민감\n분포 비교\n\n\nD’Agostino\n왜도·첨도\n중대형 표본\n\n\n\n\n\n12.4.2 (1) Shapiro–Wilk 검정\n\nfrom scipy.stats import shapiro\n\nstat, p_value = shapiro(df[\"body_mass_g\"])\n\nstat, p_value\n\n(np.float64(0.9580123688127105), np.float64(3.567711408268874e-08))\n\n\n판단\n\np ≥ 0.05 → 정규성 가정 가능\np &lt; 0.05 → 정규성 위반\n\n\n\n12.4.3 (2) Anderson–Darling 검정\n\nfrom scipy.stats import anderson\n\nresult = anderson(df[\"body_mass_g\"], dist=\"norm\")\nresult\n\nAndersonResult(statistic=np.float64(4.614584474585229), critical_values=array([0.56 , 0.63 , 0.75 , 0.871, 1.033]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]), fit_result=  params: FitParams(loc=np.float64(4207.057057057057), scale=np.float64(805.2158019428965))\n success: True\n message: '`anderson` successfully fit the distribution to the data.')\n\n\n해석\n\nstatistic &lt; critical value → 정규성 만족\n유의수준별 임계값 제공",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#표본-크기와-p-value의-함정",
+    "href": "part2/02. 정규성 검정.html#표본-크기와-p-value의-함정",
+    "title": "12  정규성 검정",
+    "section": "12.5 표본 크기와 p-value의 함정",
+    "text": "12.5 표본 크기와 p-value의 함정\n\n표본 수가 크면 거의 항상 p &lt; 0.05\n\n\nlarge_sample = df[\"body_mass_g\"].sample(300, random_state=42)\nshapiro(large_sample)\n\nShapiroResult(statistic=np.float64(0.95918974304124), pvalue=np.float64(1.9213489184341196e-07))\n\n\n의미\n\n통계적으로는 비정규\n실무적으로는 문제 없음\n\n시각적 판단 + 목적 기반 판단이 중요",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#정규성이-깨졌을-때의-대응-전략",
+    "href": "part2/02. 정규성 검정.html#정규성이-깨졌을-때의-대응-전략",
+    "title": "12  정규성 검정",
+    "section": "12.6 정규성이 깨졌을 때의 대응 전략",
+    "text": "12.6 정규성이 깨졌을 때의 대응 전략\n\n12.6.1 분포 변환\n\n로그 변환\n제곱근 변환\nBox–Cox\nYeo–Johnson\n\n\nimport numpy as np\n\nlog_mass = np.log(df[\"body_mass_g\"])\nshapiro(log_mass)\n\nShapiroResult(statistic=np.float64(0.9755498857335912), pvalue=np.float64(1.9605691846856507e-05))\n\n\n\n\n12.6.2 비모수 검정 사용\n\n\n\n상황\n대안\n\n\n\n\n평균 비교\nMann–Whitney\n\n\n다집단\nKruskal–Wallis\n\n\n상관\nSpearman\n\n\n\n\n\n12.6.3 표본 평균 활용 (CLT)\n\n충분한 표본 크기\n독립성 만족",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/02. 정규성 검정.html#정규성-검정-유의사항",
+    "href": "part2/02. 정규성 검정.html#정규성-검정-유의사항",
+    "title": "12  정규성 검정",
+    "section": "12.7 정규성 검정 유의사항",
+    "text": "12.7 정규성 검정 유의사항\n\n정규성 ≠ 절대 조건\np-value 하나로 결정 ❌\n시각 + 표본 크기 + 분석 목적 종합 판단",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>정규성 검정</span>"
+    ]
   }
 ]

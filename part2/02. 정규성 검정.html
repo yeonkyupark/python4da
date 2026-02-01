@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,34 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#정규성-검정" id="toc-정규성-검정" class="nav-link active" data-scroll-target="#정규성-검정"><span class="header-section-number">12.1</span> 정규성 검정</a></li>
+  <li><a href="#정규성을-검사-필요-여부" id="toc-정규성을-검사-필요-여부" class="nav-link" data-scroll-target="#정규성을-검사-필요-여부"><span class="header-section-number">12.2</span> 정규성을 검사 필요 여부</a></li>
+  <li><a href="#시각적-정규성-검정" id="toc-시각적-정규성-검정" class="nav-link" data-scroll-target="#시각적-정규성-검정"><span class="header-section-number">12.3</span> 시각적 정규성 검정</a>
+  <ul>
+  <li><a href="#히스토그램-kde" id="toc-히스토그램-kde" class="nav-link" data-scroll-target="#히스토그램-kde"><span class="header-section-number">12.3.1</span> (1) 히스토그램 + KDE</a></li>
+  <li><a href="#qq-plot" id="toc-qq-plot" class="nav-link" data-scroll-target="#qq-plot"><span class="header-section-number">12.3.2</span> (2) Q–Q Plot</a></li>
+  </ul></li>
+  <li><a href="#통계적-정규성-검정" id="toc-통계적-정규성-검정" class="nav-link" data-scroll-target="#통계적-정규성-검정"><span class="header-section-number">12.4</span> 통계적 정규성 검정</a>
+  <ul>
+  <li><a href="#대표적인-정규성-검정-방법" id="toc-대표적인-정규성-검정-방법" class="nav-link" data-scroll-target="#대표적인-정규성-검정-방법"><span class="header-section-number">12.4.1</span> 대표적인 정규성 검정 방법</a></li>
+  <li><a href="#shapirowilk-검정" id="toc-shapirowilk-검정" class="nav-link" data-scroll-target="#shapirowilk-검정"><span class="header-section-number">12.4.2</span> (1) Shapiro–Wilk 검정</a></li>
+  <li><a href="#andersondarling-검정" id="toc-andersondarling-검정" class="nav-link" data-scroll-target="#andersondarling-검정"><span class="header-section-number">12.4.3</span> (2) Anderson–Darling 검정</a></li>
+  </ul></li>
+  <li><a href="#표본-크기와-p-value의-함정" id="toc-표본-크기와-p-value의-함정" class="nav-link" data-scroll-target="#표본-크기와-p-value의-함정"><span class="header-section-number">12.5</span> 표본 크기와 p-value의 함정</a></li>
+  <li><a href="#정규성이-깨졌을-때의-대응-전략" id="toc-정규성이-깨졌을-때의-대응-전략" class="nav-link" data-scroll-target="#정규성이-깨졌을-때의-대응-전략"><span class="header-section-number">12.6</span> 정규성이 깨졌을 때의 대응 전략</a>
+  <ul>
+  <li><a href="#분포-변환" id="toc-분포-변환" class="nav-link" data-scroll-target="#분포-변환"><span class="header-section-number">12.6.1</span> 분포 변환</a></li>
+  <li><a href="#비모수-검정-사용" id="toc-비모수-검정-사용" class="nav-link" data-scroll-target="#비모수-검정-사용"><span class="header-section-number">12.6.2</span> 비모수 검정 사용</a></li>
+  <li><a href="#표본-평균-활용-clt" id="toc-표본-평균-활용-clt" class="nav-link" data-scroll-target="#표본-평균-활용-clt"><span class="header-section-number">12.6.3</span> 표본 평균 활용 (CLT)</a></li>
+  </ul></li>
+  <li><a href="#정규성-검정-유의사항" id="toc-정규성-검정-유의사항" class="nav-link" data-scroll-target="#정규성-검정-유의사항"><span class="header-section-number">12.7</span> 정규성 검정 유의사항</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/02. 정규성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +427,259 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="정규성-검정" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="정규성-검정"><span class="header-section-number">12.1</span> 정규성 검정</h2>
+<p>많은 통계 기법은 다음을 가정한다.</p>
+<ul>
+<li>표본이 정규분포를 따른다</li>
+<li>또는 표본 평균이 정규분포를 따른다</li>
+</ul>
+<p>적용 대상</p>
+<ul>
+<li>t 검정</li>
+<li>ANOVA</li>
+<li>선형회귀 (잔차)</li>
+</ul>
+<p>정규성 검정(Normality Test)은 <strong>“데이터가 정규인가?”</strong> 가 아니라 <strong>“정규 가정을 써도 되는가?”</strong> 를 판단하는 과정</p>
+</section>
+<section id="정규성을-검사-필요-여부" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="정규성을-검사-필요-여부"><span class="header-section-number">12.2</span> 정규성을 검사 필요 여부</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>정규성 필요 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>원 데이터</td>
+<td>경우에 따라</td>
+</tr>
+<tr class="even">
+<td>표본 평균</td>
+<td>CLT로 완화</td>
+</tr>
+<tr class="odd">
+<td>소표본 (n &lt; 30)</td>
+<td>매우 중요</td>
+</tr>
+<tr class="even">
+<td>잔차(residual)</td>
+<td>중요</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="시각적-정규성-검정" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="시각적-정규성-검정"><span class="header-section-number">12.3</span> 시각적 정규성 검정</h2>
+<section id="히스토그램-kde" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="히스토그램-kde"><span class="header-section-number">12.3.1</span> (1) 히스토그램 + KDE</h3>
+<div id="67bba2b9" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7f00609b" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    kde<span class="op">=</span><span class="va">True</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-3-output-1.png" width="585" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>정규성 판단을 위한 점검 사항</p>
+<ul>
+<li>종 모양 여부</li>
+<li>대칭성</li>
+<li>꼬리 방향</li>
+</ul>
+</section>
+<section id="qq-plot" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="qq-plot"><span class="header-section-number">12.3.2</span> (2) Q–Q Plot</h3>
+<div id="239c01f7" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"body_mass_g"</span>], plot<span class="op">=</span>plt)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-4-output-1.png" width="601" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>해석</p>
+<ul>
+<li>점들이 직선에 가까울수록 정규성 만족</li>
+<li>양끝 이탈 → 꼬리 문제</li>
+</ul>
+</section>
+</section>
+<section id="통계적-정규성-검정" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="통계적-정규성-검정"><span class="header-section-number">12.4</span> 통계적 정규성 검정</h2>
+<section id="대표적인-정규성-검정-방법" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="대표적인-정규성-검정-방법"><span class="header-section-number">12.4.1</span> 대표적인 정규성 검정 방법</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>검정</th>
+<th>특징</th>
+<th>권장 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Shapiro–Wilk</td>
+<td>가장 보편적</td>
+<td>n ≤ 5000</td>
+</tr>
+<tr class="even">
+<td>Kolmogorov–Smirnov</td>
+<td>기준 분포 필요</td>
+<td>이론 검증</td>
+</tr>
+<tr class="odd">
+<td>Anderson–Darling</td>
+<td>꼬리 민감</td>
+<td>분포 비교</td>
+</tr>
+<tr class="even">
+<td>D’Agostino</td>
+<td>왜도·첨도</td>
+<td>중대형 표본</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shapirowilk-검정" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="shapirowilk-검정"><span class="header-section-number">12.4.2</span> (1) Shapiro–Wilk 검정</h3>
+<div id="e28e7f0e" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> shapiro(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(np.float64(0.9580123688127105), np.float64(3.567711408268874e-08))</code></pre>
+</div>
+</div>
+<p>판단</p>
+<ul>
+<li>p ≥ 0.05 → 정규성 가정 가능</li>
+<li>p &lt; 0.05 → 정규성 위반</li>
+</ul>
+</section>
+<section id="andersondarling-검정" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="andersondarling-검정"><span class="header-section-number">12.4.3</span> (2) Anderson–Darling 검정</h3>
+<div id="d64b7be4" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> anderson</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> anderson(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>AndersonResult(statistic=np.float64(4.614584474585229), critical_values=array([0.56 , 0.63 , 0.75 , 0.871, 1.033]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]), fit_result=  params: FitParams(loc=np.float64(4207.057057057057), scale=np.float64(805.2158019428965))
+ success: True
+ message: '`anderson` successfully fit the distribution to the data.')</code></pre>
+</div>
+</div>
+<p>해석</p>
+<ul>
+<li>statistic &lt; critical value → 정규성 만족</li>
+<li>유의수준별 임계값 제공</li>
+</ul>
+</section>
+</section>
+<section id="표본-크기와-p-value의-함정" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="표본-크기와-p-value의-함정"><span class="header-section-number">12.5</span> 표본 크기와 p-value의 함정</h2>
+<blockquote class="blockquote">
+<p><strong>표본 수가 크면 거의 항상 p &lt; 0.05</strong></p>
+</blockquote>
+<div id="b8516c35" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>large_sample <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].sample(<span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shapiro(large_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>ShapiroResult(statistic=np.float64(0.95918974304124), pvalue=np.float64(1.9213489184341196e-07))</code></pre>
+</div>
+</div>
+<p>의미</p>
+<ul>
+<li>통계적으로는 비정규</li>
+<li>실무적으로는 문제 없음</li>
+</ul>
+<p><strong>시각적 판단 + 목적 기반 판단이 중요</strong></p>
+</section>
+<section id="정규성이-깨졌을-때의-대응-전략" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="정규성이-깨졌을-때의-대응-전략"><span class="header-section-number">12.6</span> 정규성이 깨졌을 때의 대응 전략</h2>
+<section id="분포-변환" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="분포-변환"><span class="header-section-number">12.6.1</span> 분포 변환</h3>
+<ul>
+<li>로그 변환</li>
+<li>제곱근 변환</li>
+<li>Box–Cox</li>
+<li>Yeo–Johnson</li>
+</ul>
+<div id="a246a56e" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>log_mass <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>shapiro(log_mass)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>ShapiroResult(statistic=np.float64(0.9755498857335912), pvalue=np.float64(1.9605691846856507e-05))</code></pre>
+</div>
+</div>
+</section>
+<section id="비모수-검정-사용" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="비모수-검정-사용"><span class="header-section-number">12.6.2</span> 비모수 검정 사용</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>대안</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>평균 비교</td>
+<td>Mann–Whitney</td>
+</tr>
+<tr class="even">
+<td>다집단</td>
+<td>Kruskal–Wallis</td>
+</tr>
+<tr class="odd">
+<td>상관</td>
+<td>Spearman</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="표본-평균-활용-clt" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="표본-평균-활용-clt"><span class="header-section-number">12.6.3</span> 표본 평균 활용 (CLT)</h3>
+<ul>
+<li>충분한 표본 크기</li>
+<li>독립성 만족</li>
+</ul>
+</section>
+</section>
+<section id="정규성-검정-유의사항" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="정규성-검정-유의사항"><span class="header-section-number">12.7</span> 정규성 검정 유의사항</h2>
+<ul>
+<li>정규성 ≠ 절대 조건</li>
+<li>p-value 하나로 결정 ❌</li>
+<li>시각 + 표본 크기 + 분석 목적 종합 판단</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1102,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/02. 정규성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/02. 정규성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
