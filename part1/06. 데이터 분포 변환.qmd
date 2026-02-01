@@ -1,2 +1,211 @@
 # 데이터 분포 변환
 
+예제 데이터셋 적재 
+
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
+df = sns.load_dataset("penguins")
+
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
+df_num = df[num_cols]
+```
+
+## 분포 변환 이유
+
+```{python}
+df_num.skew()
+```
+
+대부분 데이터는 **양의 왜도(skewness)** 형태를 보이며 평균·분산 기반 모델(선형 회귀, PCA 등)에 불리
+
+분포를 **대칭에 가깝게** 변환함으로써 극단값 영향 완화, 모델 가정 충족이 목표
+
+## 로그 변환 (Log Transform)
+
+오른쪽 꼬리가 긴 분포(양의 왜도, Positive)에 효과적
+
+### 수식
+
+$$
+x' = \log(x)
+$$
+
+0 이하 값 변환 불가로 보정 필요
+
+### 코드
+
+```{python}
+df_log = df_num.copy()
+
+for col in num_cols:
+    df_log[col] = np.log(df_log[col])
+
+print(df_log)
+```
+
+### 0 포함 변수 안전 처리
+
+```{python}
+df_log_safe = np.log1p(df_num)
+
+print(df_log_safe)
+```
+
+
+### 왜도 변화 확인
+
+```{python}
+df_log_safe.skew()
+```
+
+## 제곱근 변환 (Square Root Transform)
+
+로그보다 완만한 변환
+
+### 수식
+
+$$
+x' = \sqrt{x}
+$$
+
+
+### 코드
+
+```{python}
+df_sqrt = np.sqrt(df_num)
+
+print(df_sqrt)
+```
+
+### 제곱근 변환과 비교
+
+제곱근이 적합한 경우
+
+- 왜도가 심하지 않음
+- 데이터 범위가 크지 않음
+- 분포를 살짝만 정리하고 싶을 때
+- 카운트 데이터 (포아송 계열)
+
+로그가 적합한 경우
+
+- 왜도가 매우 큼
+- 극단값(outlier)이 많음
+- 선형 회귀, PCA, 거리 기반 모델
+- “비율 변화”가 중요한 문제
+
+## Box–Cox 변환
+
+로그의 일반화 버전으로 λ(람다)를 자동 추정 (단, 양수 전용)
+
+### 수식
+
+$$
+x' =
+\begin{cases}
+\frac{x^\lambda - 1}{\lambda}, & \lambda \neq 0 \
+\log(x), & \lambda = 0
+\end{cases}
+$$
+
+### 코드
+
+```{python}
+from scipy.stats import boxcox
+```
+
+```{python}
+df_boxcox = df_num.copy()
+lambdas = {}
+
+for col in num_cols:
+    data = df_boxcox[col].dropna()
+    transformed, lam = boxcox(data)
+    df_boxcox.loc[data.index, col] = transformed
+    lambdas[col] = lam
+```
+
+```{python}
+lambdas
+```
+
+## Yeo–Johnson 변환
+
+Box–Cox의 확장 방식으로 0, 음수에 대해서도 변환 가능
+
+### sklearn 사용
+
+```{python}
+from sklearn.preprocessing import PowerTransformer
+```
+
+```{python}
+pt = PowerTransformer(method="yeo-johnson")
+
+df_yeojohnson = pd.DataFrame(
+    pt.fit_transform(df_num),
+    columns=num_cols
+)
+```
+
+0, 음수 허용를 허용하며 결측치 제외 후 자동 처리
+
+## 분위수 변환 (Quantile Transform)
+
+분포 모양 자체를 바꿈
+
+```{python}
+from sklearn.preprocessing import QuantileTransformer
+```
+
+```{python}
+qt = QuantileTransformer(
+    output_distribution="normal",
+    random_state=42
+)
+
+df_quantile = pd.DataFrame(
+    qt.fit_transform(df_num),
+    columns=num_cols
+)
+
+print(df_quantile)
+```
+
+## 변환 전·후 왜도 비교
+
+```{python}
+skew_compare = pd.DataFrame({
+    "original": df_num.skew(),
+    "log": df_log_safe.skew(),
+    "yeo-johnson": df_yeojohnson.skew()
+})
+
+skew_compare
+```
+
+## 선택 가이드 (교안 요약)
+
+| 방법          | 특징    | 추천        |
+| ----------- | ----- | --------- |
+| Log         | 단순    | 기초        |
+| Sqrt        | 완만    | 보조        |
+| Box–Cox     | 최적 λ  | 양수 데이터    |
+| Yeo–Johnson | 범용    | **실무 기본** |
+| Quantile    | 분포 강제 | 비정상 분포    |
+
+
+## 스케일링과의 관계
+
+* 분포 변환 → **모양 변경**
+* 스케일링 → **크기 조정**
+* 일반 순서
+  **분포 변환 → 스케일링**
