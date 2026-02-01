@@ -879,8 +879,8 @@
     "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
     "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
     "title": "10  피처 엔지니어링",
-    "section": "10.3 4️⃣ 피처 엔지니어링의 주요 유형",
-    "text": "10.3 4️⃣ 피처 엔지니어링의 주요 유형\n예제 데이터셋 적재\n\nimport seaborn as sns\nimport pandas as pd\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n사용 컬럼 예시\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nspecies\nsex",
+    "section": "10.3 피처 엔지니어링의 주요 유형",
+    "text": "10.3 피처 엔지니어링의 주요 유형\n예제 데이터셋 적재\n\nimport seaborn as sns\nimport pandas as pd\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n사용 컬럼 예시\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nspecies\nsex",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -909,22 +909,22 @@
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning-결과-활용",
-    "href": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning-결과-활용",
+    "objectID": "part1/10. 피처 엔지니어링.html#구간-기반-피처",
+    "href": "part1/10. 피처 엔지니어링.html#구간-기반-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.6 구간 기반 피처 (Binning 결과 활용)",
-    "text": "10.6 구간 기반 피처 (Binning 결과 활용)\n\ndf[\"body_mass_group\"] = pd.cut(\n    df[\"body_mass_g\"],\n    bins=[0, 3500, 4500, 7000],\n    labels=[\"small\", \"medium\", \"large\"]\n)\n\nprint(df[\"body_mass_group\"])\n\n0      medium\n1      medium\n2       small\n4       small\n5      medium\n        ...  \n338     large\n340     large\n341     large\n342     large\n343     large\nName: body_mass_group, Length: 333, dtype: category\nCategories (3, str): ['small' &lt; 'medium' &lt; 'large']\n\n\n\n연속값 → 해석 가능한 범주\n트리 모델에서 성능 개선 가능",
+    "section": "10.6 구간 기반 피처",
+    "text": "10.6 구간 기반 피처\n\ndf[\"body_mass_group\"] = pd.cut(\n    df[\"body_mass_g\"],\n    bins=[0, 3500, 4500, 7000],\n    labels=[\"small\", \"medium\", \"large\"]\n)\n\nprint(df[\"body_mass_group\"])\n\n0      medium\n1      medium\n2       small\n4       small\n5      medium\n        ...  \n338     large\n340     large\n341     large\n342     large\n343     large\nName: body_mass_group, Length: 333, dtype: category\nCategories (3, str): ['small' &lt; 'medium' &lt; 'large']\n\n\n\n연속값 → 해석 가능한 범주\n트리 모델에서 성능 개선 가능",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#집계-기반-피처-group-based-features",
-    "href": "part1/10. 피처 엔지니어링.html#집계-기반-피처-group-based-features",
+    "objectID": "part1/10. 피처 엔지니어링.html#집계-기반-피처",
+    "href": "part1/10. 피처 엔지니어링.html#집계-기반-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.7 집계 기반 피처 (Group-based Features)",
-    "text": "10.7 집계 기반 피처 (Group-based Features)\n\n10.7.1 species 기준 평균 대비 차이\n\nspecies_mean = df.groupby(\"species\")[\"body_mass_g\"].transform(\"mean\")\n\ndf[\"body_mass_diff_species\"] = (df[\"body_mass_g\"] - species_mean)\n\nprint(df[\"body_mass_diff_species\"])\n\n0       43.835616\n1       93.835616\n2     -456.164384\n4     -256.164384\n5      -56.164384\n          ...    \n338   -167.436975\n340   -242.436975\n341    657.563025\n342    107.563025\n343    307.563025\nName: body_mass_diff_species, Length: 333, dtype: float64",
+    "section": "10.7 집계 기반 피처",
+    "text": "10.7 집계 기반 피처\n\n10.7.1 species 기준 평균 대비 차이\n\nspecies_mean = df.groupby(\"species\")[\"body_mass_g\"].transform(\"mean\")\n\ndf[\"body_mass_diff_species\"] = (df[\"body_mass_g\"] - species_mean)\n\nprint(df[\"body_mass_diff_species\"])\n\n0       43.835616\n1       93.835616\n2     -456.164384\n4     -256.164384\n5      -56.164384\n          ...    \n338   -167.436975\n340   -242.436975\n341    657.563025\n342    107.563025\n343    307.563025\nName: body_mass_diff_species, Length: 333, dtype: float64",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -945,8 +945,8 @@
     "objectID": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
     "href": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.9 4-6️⃣ 범주형 조합 피처",
-    "text": "10.9 4-6️⃣ 범주형 조합 피처\n\ndf[\"species_sex\"] = (\n    df[\"species\"] + \"_\" + df[\"sex\"]\n)\n\n\n단일 범주로는 부족할 때 유용\n빈도가 너무 낮은 조합은 주의",
+    "section": "10.9 범주형 조합 피처",
+    "text": "10.9 범주형 조합 피처\n\ndf[\"species_sex\"] = (\n    df[\"species\"] + \"_\" + df[\"sex\"]\n)\n\n\n단일 범주로는 부족할 때 유용\n빈도가 너무 낮은 조합은 주의",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"

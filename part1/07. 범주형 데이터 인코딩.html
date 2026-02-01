@@ -434,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>예제 데이터셋 적재</p>
-<div id="800f6dd7" class="cell" data-execution_count="1">
+<div id="c3be79f4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>범주를 <strong>정수 값</strong>으로 매핑하는 방식으로 순서가 <strong>없는데 숫자로 바뀌므로 주의 필요</strong></p>
 <section id="예제-코드" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="예제-코드"><span class="header-section-number">7.1.1</span> 예제 코드</h3>
-<div id="a2fffcfb" class="cell" data-execution_count="2">
+<div id="2e440125" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
@@ -495,7 +495,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>각 범주를 <strong>이진 컬럼</strong>으로 분리, 거리 기반, 선형 모델에서 가장 안전</p>
 <section id="pandas-방식" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="pandas-방식"><span class="header-section-number">7.2.1</span> pandas 방식</h3>
-<div id="54bf2cc1" class="cell" data-execution_count="3">
+<div id="3ccf9576" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>, <span class="st">"island"</span>],</span>
@@ -547,7 +547,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>drop_first 옵션으로 첫번째 더미 변수 제거, 다중공선성 방지 (회귀 모델에서 중요)</p>
-<div id="44d9d337" class="cell" data-execution_count="4">
+<div id="7879b763" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>],</span>
@@ -593,7 +593,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>순서가 있는 범주형 변수</strong>에 사용, 사용자가 순서를 직접 정의</p>
 <section id="예제-코드-1" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="예제-코드-1"><span class="header-section-number">7.3.1</span> 예제 코드</h3>
-<div id="2b43c642" class="cell" data-execution_count="5">
+<div id="6a239d80" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>oe <span class="op">=</span> OrdinalEncoder(</span>
@@ -623,7 +623,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>범주를 <strong>타깃 변수의 평균값</strong>으로 치환, 정보량은 크지만 <strong>데이터 누수 위험</strong> 존재</p>
 <section id="예제-코드-2" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="예제-코드-2"><span class="header-section-number">7.4.1</span> 예제 코드</h3>
-<div id="9401e4e2" class="cell" data-execution_count="6">
+<div id="789cb822" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_te <span class="op">=</span> df.copy()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> <span class="st">"body_mass_g"</span></span>
@@ -671,7 +671,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>범주의 <strong>출현 빈도</strong>로 인코딩, 희귀 범주 처리에 유용</p>
 <section id="예제-코드-3" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="예제-코드-3"><span class="header-section-number">7.5.1</span> 예제 코드</h3>
-<div id="8faa88c0" class="cell" data-execution_count="7">
+<div id="36db72ef" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> df[<span class="st">"island"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_freq <span class="op">=</span> df.copy()</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_freq[<span class="st">"island_enc"</span>] <span class="op">=</span> df_freq[<span class="st">"island"</span>].<span class="bu">map</span>(freq_map)</span>
@@ -713,7 +713,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="7.6" class="anchored" data-anchor-id="여러-컬럼을-한-번에-인코딩"><span class="header-section-number">7.6</span> 여러 컬럼을 한 번에 인코딩</h2>
 <section id="one-hot-pandas" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="one-hot-pandas"><span class="header-section-number">7.6.1</span> One-Hot (pandas)</h3>
-<div id="164dd04d" class="cell" data-execution_count="8">
+<div id="9d4bb23a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>cat_cols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -721,7 +721,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="label-encoding-반복-처리" class="level3" data-number="7.6.2">
 <h3 data-number="7.6.2" class="anchored" data-anchor-id="label-encoding-반복-처리"><span class="header-section-number">7.6.2</span> Label Encoding (반복 처리)</h3>
-<div id="9351a42c" class="cell" data-execution_count="9">
+<div id="e83a1810" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_label <span class="op">=</span> df.copy()</span>
