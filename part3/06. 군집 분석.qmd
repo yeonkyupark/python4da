@@ -1,2 +1,191 @@
 # 군집 분석
 
+## 군집 분석 개요
+
+**군집 분석**(Clustering)은 라벨이 없는 데이터에서 **유사한 데이터끼리 묶는 비지도 학습 기법**이다.
+
+주요 목적은 다음과 같다.
+
+* 데이터 구조 탐색
+* 패턴 및 그룹 발견
+* 이후 모델링을 위한 전처리 또는 특성 생성
+
+penguins 데이터처럼
+
+> “종(species)을 모른다고 가정하고도 묶일까?”
+> 를 실험하기에 매우 적합하다.
+
+## 군집 분석의 주요 가정
+
+군집 알고리즘마다 전제가 다르다.
+
+* 거리 기반인가?
+* 밀도를 가정하는가?
+* 분포를 가정하는가?
+
+**알고리즘 선택 = 데이터 가정 선택**
+
+## 분할 기반 군집 
+
+분할 기반 군집(Partition-based Clustering)의 대표적인 알고리즘으로 K-Means가 있다.
+
+### K-Means
+
+#### 핵심 아이디어
+
+* K개의 군집 중심(centroid)을 미리 정함
+* 각 데이터 → 가장 가까운 중심에 할당
+* 중심 재계산 → 반복
+
+#### 특징
+
+* 빠르고 구현이 단순
+* 군집 수 K를 사전에 지정해야 함
+* 구형(spherical) 군집에 적합
+* 이상치에 민감
+
+#### 예제 
+
+```{python}
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from seaborn import load_dataset
+
+df = load_dataset('penguins')
+X_cluster = df[
+    ["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]
+].dropna()
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_cluster)
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+labels_kmeans = kmeans.fit_predict(X_scaled)
+labels_kmeans
+```
+
+결과 해석
+
+* n_clusters=3
+
+  * penguins의 실제 종 개수와 일치
+* 하지만 군집 ≠ 실제 라벨
+* **구조적 유사성**만 반영
+
+### K 선택 방법
+
+* Elbow Method
+* Silhouette Score
+
+```python
+from sklearn.metrics import silhouette_score
+
+silhouette_score(X_scaled, labels_kmeans)
+```
+
+
+## 밀도 기반 군집 
+대표적인 밀도 기반 군집(Density-based Clustering) 알고리즘으로 DBSCAN이 있다. 
+
+### DBSCAN
+
+#### 핵심 아이디어
+
+* 데이터가 **빽빽한 영역**을 군집으로 간주
+* 밀도가 낮은 영역은 **노이즈(-1)** 처리
+
+#### 주요 파라미터
+
+* eps: 이웃으로 간주할 거리
+* min_samples: 최소 이웃 수
+
+#### 특징
+
+* 군집 개수 자동 결정
+* 이상치 탐지 가능
+* 비구형 군집 탐지 가능
+* 밀도 차이가 크면 성능 저하
+
+#### 예제
+
+```python
+from sklearn.cluster import DBSCAN
+
+dbscan = DBSCAN(eps=0.8, min_samples=5)
+labels_dbscan = dbscan.fit_predict(X_scaled)
+```
+
+**결과 해석**
+
+* label = -1
+
+  * 군집에 속하지 않는 이상치
+* 군집 수는 eps에 따라 크게 변함
+
+DBSCAN은 **시각화 + 반복 실험 필수**
+
+## 혼합 모델 군집
+밀도, 거리 등을 혼합한 혼합 모델 군집(Model-based Clustering)도 있다.
+
+### Gaussian Mixture Model (GMM)
+
+#### 핵심 아이디어
+
+* 데이터가 여러 개의 **가우시안 분포 혼합**으로 생성되었다고 가정
+* 각 데이터는 군집에 **확률적으로 속함**
+
+#### 특징
+
+* 타원형 군집 가능
+* 소프트 군집 (확률)
+* 분포 가정이 맞지 않으면 성능 저하
+
+#### 예제
+
+```python
+from sklearn.mixture import GaussianMixture
+
+gmm = GaussianMixture(n_components=3, random_state=42)
+labels_gmm = gmm.fit_predict(X_scaled)
+```
+
+#### 확률 기반 해석
+
+```python
+probs = gmm.predict_proba(X_scaled)
+probs[:5]
+```
+
+“이 데이터는 군집 1에 70% 속한다”
+
+## 알고리즘 비교 정리
+
+| 구분     | K-Means | DBSCAN | GMM   |
+| ------ | ------- | ------ | ----- |
+| 군집 수   | 사전 지정   | 자동     | 사전 지정 |
+| 군집 형태  | 구형      | 자유     | 타원    |
+| 이상치 처리 | 약함      | 강함     | 약함    |
+| 소프트 할당 | X       | X      | O     |
+| 계산 비용  | 낮음      | 중간     | 중간    |
+
+## 선택 가이드
+
+* 빠른 탐색, 기준선 모델
+  → K-Means
+* 이상치 탐지, 비구형 구조
+  → DBSCAN
+* 분포 기반 해석, 확률 필요
+  → GMM
+
+한 가지로 끝내지 말고 **여러 군집 결과 비교**
+
+## 군집 결과 평가
+
+**군집에는 “정답”이 없다**. 따라서 평가 기준도 다르다.
+
+* Silhouette Score
+* Davies–Bouldin Index
+* 시각적 해석 (PCA, t-SNE)
+
+군집은 **수치 + 해석을 함께 봐야 한다**
+
