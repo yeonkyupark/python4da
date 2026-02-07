@@ -1,2 +1,201 @@
 # 분산 분석
 
+## 분산분석 
+
+분산분석(ANOVA: Analysis of Variance)은 **세 개 이상 집단의 평균을 동시에 비교**하기 위한 통계적 방법이다. 이름은 분산분석이지만, **관심의 대상은 평균 차이**다.
+
+## 일원 분산 분석 (One-way ANOVA)
+
+### 개념
+
+* 하나의 범주형 독립변수(요인)
+* 하나의 연속형 종속변수
+* 집단 간 평균 차이가 존재하는지 검정
+
+예시
+
+* 종(species)에 따라 부리 길이(bill_length_mm)의 평균이 다른가?
+
+### 가설 설정
+
+* 귀무가설(H₀)
+
+  * 모든 집단의 평균은 같다
+* 대립가설(H₁)
+
+  * 적어도 하나의 집단 평균은 다르다
+
+### 분산분석의 핵심 아이디어
+
+* 전체 변동 = 집단 간 변동 + 집단 내 변동
+* 집단 간 변동이 충분히 크다면
+
+  * 평균 차이가 있다고 판단
+
+```{python}
+import seaborn as sns
+import pandas as pd
+
+df = sns.load_dataset("penguins")
+df_anova = df[["species", "bill_length_mm"]].dropna()
+```
+
+```{python}
+df_anova.groupby("species")["bill_length_mm"].describe()
+```
+
+#### 일원 ANOVA 수행
+
+```{python}
+from scipy.stats import f_oneway
+
+groups = [
+    df_anova[df_anova["species"] == sp]["bill_length_mm"]
+    for sp in df_anova["species"].unique()
+]
+
+f_stat, p_value = f_oneway(*groups)
+f_stat, p_value
+```
+
+### 결과 해석
+
+* p-value < 유의수준(0.05)
+
+  * 종에 따라 평균 부리 길이에 차이가 있다
+* p-value ≥ 유의수준
+
+  * 평균 차이가 있다고 보기 어렵다
+
+중요: **어느 종 간 차이인지는 아직 모른다**
+
+## 이원 분산 분석 (Two-way ANOVA)
+
+### 개념
+
+* 두 개의 범주형 독립변수
+* 하나의 연속형 종속변수
+* 세 가지 효과를 동시에 검정
+
+  * 요인 A의 주효과
+  * 요인 B의 주효과
+  * A × B 상호작용 효과
+
+### 예시
+
+* species(종)
+* sex(성별)
+* → 부리 길이에 어떤 영향을 주는가?
+
+### 가설 구조
+
+* species 효과
+
+  * 종에 따른 평균 차이가 있는가?
+* sex 효과
+
+  * 성별에 따른 평균 차이가 있는가?
+* 상호작용 효과
+
+  * 종에 따른 성별 효과가 달라지는가?
+
+
+```{python}
+df_two = df[["species", "sex", "bill_length_mm"]].dropna()
+```
+
+```{python}
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+model = ols(
+    "bill_length_mm ~ C(species) + C(sex) + C(species):C(sex)",
+    data=df_two
+).fit()
+
+anova_table = sm.stats.anova_lm(model, typ=2)
+anova_table
+```
+
+### 결과 해석 포인트
+
+* C(species)
+
+  * 종의 주효과
+* C(sex)
+
+  * 성별의 주효과
+* C(species):C(sex)
+
+  * 상호작용 효과
+
+상호작용이 유의하면
+→ “성별 차이가 종마다 다르게 나타난다”
+
+## 사후 검정 (Post-hoc Test)
+
+### 사후 검정 필요 이유
+
+* ANOVA 결과
+
+  * 평균 차이가 존재함은 알 수 있음
+* 하지만
+
+  * **어느 집단 간 차이인지 알 수 없음**
+
+### 대표적인 사후검정 방법
+
+* Tukey HSD (가장 일반적)
+* Bonferroni
+* Scheffé
+* Games-Howell (등분산 가정이 약할 때)
+
+
+### Tukey HSD
+
+```{python}
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+tukey = pairwise_tukeyhsd(
+    endog=df_anova["bill_length_mm"],
+    groups=df_anova["species"],
+    alpha=0.05
+)
+
+print(tukey)
+```
+
+#### 결과 해석
+
+* reject = True
+
+  * 두 집단 간 평균 차이가 유의함
+* reject = False
+
+  * 평균 차이가 통계적으로 유의하지 않음
+
+#### 시각화와 함께 보기
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.boxplot(
+    data=df_anova,
+    x="species",
+    y="bill_length_mm"
+)
+
+plt.title("Bill Length by Species")
+plt.show()
+```
+
+## 분산분석 사용 시 주의사항
+
+* 독립성 가정
+* 정규성 가정
+* 등분산성 가정
+* 가정이 깨질 경우
+
+  * 비모수 방법(Kruskal–Wallis)
+  * 또는 변환(log, Box-Cox 등) 고려
