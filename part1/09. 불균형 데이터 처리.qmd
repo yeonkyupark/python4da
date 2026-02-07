@@ -1,193 +1,522 @@
 # 불균형 데이터 처리
 
-**타깃 클래스 간 샘플 수 차이가 큰 경우**, 다수 클래스에 치우친 모델이 생성됨 → 정확도는 높아 보이지만 실제 성능은 나쁨
+불균형 데이터(Imbalanced Data)는 타겟 클래스 간 샘플 수의 차이가 큰 데이터셋을 의미한다. 예를 들어, 사기 거래 탐지 문제에서 정상 거래가 99%, 사기 거래가 1%인 경우가 대표적이다. 불균형 데이터로 학습된 모델은 다수 클래스에 편향되어 소수 클래스를 제대로 예측하지 못하는 문제가 발생한다. 이 장에서는 불균형 데이터의 문제점을 진단하고, 데이터 수준 처리(언더샘플링, 오버샘플링, SMOTE)와 모델 수준 처리(클래스 가중치 조정) 방법을 학습한다.
 
-## 불균형 데이터의 문제점
-
-### 예시
-
-* 전체 정확도 95%
-* 소수 클래스 재현율 10%
-
-"잘 맞춘 것처럼 보이지만 중요한 건 다 틀림"
-
-## 불균형 여부 진단
-
-### 클래스 분포 확인
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
+import pandas as pd
+import numpy as np
 
+# 데이터 로드
 df = sns.load_dataset("penguins").dropna(subset=["species"])
 
-df["species"].value_counts()
+print("데이터 크기:", df.shape)
+print("\n클래스 정보:")
+print(df["species"].unique())
+```
+
+## 불균형 데이터의 문제점
+
+불균형 데이터로 학습된 모델은 다수 클래스만 예측하는 경향이 있다. 이 경우 전체 정확도(Accuracy)는 높아 보이지만, 실제로 중요한 소수 클래스는 거의 예측하지 못한다.
+
+**문제 상황 예시**
+
+의료 진단 모델에서 질병이 있는 경우가 5%, 없는 경우가 95%라고 가정하자.
+
+| 지표 | 값 | 해석 |
+|------|-----|------|
+| 전체 정확도 | 95% | 모든 환자를 "질병 없음"으로 예측해도 달성 |
+| 질병 재현율 | 10% | 실제 질병 환자 중 10%만 탐지 |
+| 결과 | 잘못된 모델 | 높은 정확도에도 불구하고 실제로는 쓸모없음 |
+
+이는 "잘 맞춘 것처럼 보이지만 중요한 건 다 틀림" 상황으로, 정확도만으로는 모델의 실제 성능을 평가할 수 없음을 보여준다.
+
+**불균형으로 인한 문제점**
+
+- 다수 클래스에 편향된 학습
+- 소수 클래스의 패턴을 학습하지 못함
+- 정확도 지표가 실제 성능을 반영하지 못함
+- 비용이 큰 오분류(예: 질병 미탐지) 발생
+
+## 불균형 여부 진단
+
+모델 학습 전에 타겟 변수의 클래스 분포를 확인하여 불균형 정도를 파악해야 한다.
+
+### 클래스 분포 확인
+
+**예제: 클래스별 샘플 수 확인**
+
+```{python}
+# 클래스별 샘플 수
+class_counts = df["species"].value_counts()
+print("클래스별 샘플 수:")
+print(class_counts)
+print(f"\n총 샘플 수: {len(df)}")
 ```
 
 ### 비율로 확인
 
+절대 개수보다 비율로 확인하면 불균형 정도를 더 명확히 파악할 수 있다.
+
+**예제: 클래스별 비율 확인**
+
 ```{python}
-df["species"].value_counts(normalize=True)
+# 클래스별 비율
+class_ratios = df["species"].value_counts(normalize=True)
+print("클래스별 비율:")
+print(class_ratios.round(3))
+
+# 불균형 비율 계산
+max_ratio = class_ratios.max()
+min_ratio = class_ratios.min()
+imbalance_ratio = max_ratio / min_ratio
+
+print(f"\n불균형 비율: {imbalance_ratio:.2f}:1")
+print(f"(가장 많은 클래스가 가장 적은 클래스의 {imbalance_ratio:.2f}배)")
 ```
 
+**불균형 정도 기준**
+
+| 비율 | 불균형 정도 | 조치 |
+|------|-----------|------|
+| 1:1 ~ 3:1 | 균형 | 특별한 조치 불필요 |
+| 3:1 ~ 10:1 | 경미한 불균형 | 클래스 가중치 고려 |
+| 10:1 ~ 100:1 | 심각한 불균형 | 샘플링 기법 필수 |
+| 100:1 이상 | 극심한 불균형 | 복합적 접근 필요 |
+
 ### 시각화
+
+시각적으로 불균형을 확인하면 직관적으로 파악할 수 있다.
+
+**예제: 클래스 분포 시각화**
 
 ```{python}
 import matplotlib.pyplot as plt
 
+# 막대 그래프
+plt.figure(figsize=(8, 5))
 df["species"].value_counts().plot(kind="bar")
+plt.title("Class Distribution")
+plt.xlabel("Species")
+plt.ylabel("Count")
+plt.xticks(rotation=45)
+plt.tight_layout()
 plt.show()
 ```
 
 ## 평가 지표 변경
 
-불균형 데이터에서는 **Accuracy 사용 금물**
+불균형 데이터에서는 정확도(Accuracy)가 모델 성능을 제대로 반영하지 못하므로, 다른 평가 지표를 사용해야 한다.
 
-### 대안 지표
+**적절한 평가 지표**
 
-* Precision
-* Recall
-* F1-score
-* ROC-AUC
-* PR-AUC
+| 지표 | 계산 방식 | 의미 | 사용 상황 |
+|------|----------|------|----------|
+| Precision | TP / (TP + FP) | 양성 예측 중 실제 양성 비율 | 거짓 양성(FP) 비용이 클 때 |
+| Recall | TP / (TP + FN) | 실제 양성 중 예측한 비율 | 거짓 음성(FN) 비용이 클 때 |
+| F1-score | 2 × (Precision × Recall) / (Precision + Recall) | Precision과 Recall의 조화평균 | 균형 잡힌 평가 필요 |
+| ROC-AUC | 곡선 아래 면적 | 클래스 구분 능력 | 이진 분류, 확률 출력 가능 |
+| PR-AUC | Precision-Recall 곡선 아래 면적 | 불균형 데이터에 강건 | 극심한 불균형 |
 
-```python
-from sklearn.metrics import classification_report
+**예제: 다양한 평가 지표 사용**
 
-print(classification_report(y_true, y_pred))
+```{python}
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# 데이터 준비
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+df_clean = df[['species'] + num_cols].dropna()
+
+X = df_clean[num_cols]
+y = df_clean["species"]
+
+# 학습/테스트 분리
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+# 간단한 모델 학습
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# 평가 지표 출력
+print("분류 보고서:")
+print(classification_report(y_test, y_pred))
+
+print("\n혼동 행렬:")
+print(confusion_matrix(y_test, y_pred))
 ```
+
+불균형 데이터에서는 특히 소수 클래스의 Recall(재현율)을 주의 깊게 확인해야 한다.
 
 ## 데이터 수준 처리 방법
 
+데이터 수준 처리는 학습 데이터의 클래스 분포를 직접 조정하는 방법이다. 크게 언더샘플링과 오버샘플링으로 나뉜다.
+
 ### 언더샘플링 (Under-sampling)
 
-#### 개념
+언더샘플링은 다수 클래스의 샘플 일부를 제거하여 클래스 균형을 맞추는 방법이다. 구현이 간단하고 빠르지만, 정보 손실이 발생한다.
 
-다수 클래스 일부 제거
+**예제: 랜덤 언더샘플링**
 
 ```{python}
 from imblearn.under_sampling import RandomUnderSampler
 
-num_cols = [
-    "bill_length_mm",
-    "bill_depth_mm",
-    "flipper_length_mm",
-    "body_mass_g"
-]
+# 데이터 준비
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+df_dropna = df[['species'] + num_cols].dropna()
 
-df_dropna = df[['species']+num_cols].dropna()
-X = df_dropna.drop("species", axis=1)
+X = df_dropna[num_cols]
 y = df_dropna["species"]
 
+# 언더샘플링 적용
 rus = RandomUnderSampler(random_state=42)
 X_under, y_under = rus.fit_resample(X, y)
-print("Before\n", y.value_counts())
-print("After\n", y_under.value_counts())
+
+print("언더샘플링 전:")
+print(y.value_counts())
+print(f"총 샘플 수: {len(y)}")
+
+print("\n언더샘플링 후:")
+print(y_under.value_counts())
+print(f"총 샘플 수: {len(y_under)}")
+print(f"제거된 샘플 수: {len(y) - len(y_under)}")
 ```
 
-빠르다는 장점이 있으나 정보가 손신된다는 단점 존재
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 구현이 간단하고 빠름 | 정보 손실 (유용한 샘플도 제거) |
+| 학습 속도 향상 (데이터 감소) | 데이터가 적으면 성능 저하 |
+| 과적합 위험 감소 | 다수 클래스의 패턴을 놓칠 수 있음 |
+
+**적용 상황**
+
+- 데이터가 충분히 많을 때 (수만 개 이상)
+- 학습 속도가 중요할 때
+- 노이즈가 많아 일부 제거가 유익할 때
 
 ### 오버샘플링 (Over-sampling)
 
-#### 단순 복제
+오버샘플링은 소수 클래스의 샘플을 복제하거나 생성하여 클래스 균형을 맞추는 방법이다.
+
+#### 단순 복제 (Random Over-sampling)
+
+**예제: 랜덤 오버샘플링**
 
 ```{python}
 from imblearn.over_sampling import RandomOverSampler
 
+# 오버샘플링 적용
 ros = RandomOverSampler(random_state=42)
 X_over, y_over = ros.fit_resample(X, y)
 
+print("오버샘플링 전:")
+print(y.value_counts())
+print(f"총 샘플 수: {len(y)}")
+
+print("\n오버샘플링 후:")
 print(y_over.value_counts())
+print(f"총 샘플 수: {len(y_over)}")
+print(f"생성된 샘플 수: {len(y_over) - len(y)}")
 ```
 
-#### 문제점
+**문제점**
 
-과적합 위험
+단순 복제는 동일한 샘플을 여러 번 학습하므로 과적합(overfitting) 위험이 크다. 모델이 복제된 샘플을 암기하게 되어 일반화 성능이 저하될 수 있다.
 
-### SMOTE (Synthetic Minority Over-sampling)
+### SMOTE (Synthetic Minority Over-sampling Technique)
 
-#### 개념
+SMOTE는 소수 클래스의 기존 샘플 사이에 가상의 샘플을 생성하는 방법이다. 단순 복제보다 과적합 위험이 적고, 소수 클래스의 특성 공간을 확장한다.
 
-소수 클래스 사이에 **가상 샘플 생성**
+**SMOTE 작동 원리**
+
+1. 소수 클래스의 각 샘플에 대해 k개의 최근접 이웃(KNN) 찾기
+2. 이웃 중 하나를 무작위로 선택
+3. 선택된 샘플과의 사이에 새로운 샘플 생성 (보간)
+
+**예제: SMOTE 적용**
 
 ```{python}
 from imblearn.over_sampling import SMOTE
 
+# SMOTE 적용
 smote = SMOTE(random_state=42)
 X_smote, y_smote = smote.fit_resample(X, y)
 
+print("SMOTE 전:")
+print(y.value_counts())
+print(f"총 샘플 수: {len(y)}")
+
+print("\nSMOTE 후:")
 print(y_smote.value_counts())
+print(f"총 샘플 수: {len(y_smote)}")
+print(f"생성된 합성 샘플 수: {len(y_smote) - len(y)}")
 ```
 
-### SMOTE 변형
+**장단점**
 
-| 기법               | 특징           |
-| ---------------- | ------------ |
-| Borderline-SMOTE | 경계 근처만 증강    |
-| SMOTE-NC         | 수치 + 범주 혼합   |
-| ADASYN           | 학습 어려운 영역 집중 |
+| 장점 | 단점 |
+|------|------|
+| 정보 손실 없음 (새로운 샘플 생성) | 노이즈가 있으면 노이즈도 증폭 |
+| 과적합 위험 낮음 (단순 복제보다) | 계산 비용이 높음 (KNN 사용) |
+| 특성 공간 확장 | 범주형 변수 처리 어려움 |
+
+**적용 상황**
+
+- 데이터가 적을 때
+- 정보 손실을 최소화하고 싶을 때
+- 연속형 변수가 많을 때
+
+### SMOTE 변형 기법
+
+SMOTE의 한계를 보완한 다양한 변형 기법이 존재한다.
+
+**SMOTE 변형 기법 비교**
+
+| 기법 | 특징 | 장점 | 적용 상황 |
+|------|------|------|----------|
+| Borderline-SMOTE | 경계 근처 샘플만 증강 | 분류 경계 강화 | 클래스 간 겹침이 많을 때 |
+| SMOTE-NC | 수치형 + 범주형 혼합 | 범주형 변수 처리 가능 | 범주형 변수 포함 데이터 |
+| ADASYN | 학습이 어려운 영역 집중 | 어려운 샘플에 집중 | 클래스 내 분포 복잡 |
+| SMOTE-ENN | SMOTE + 노이즈 제거 | 경계 정리 | 노이즈가 많을 때 |
+
+**예제: Borderline-SMOTE**
+
+```{python}
+from imblearn.over_sampling import BorderlineSMOTE
+
+# Borderline-SMOTE 적용
+bsmote = BorderlineSMOTE(random_state=42)
+X_bsmote, y_bsmote = bsmote.fit_resample(X, y)
+
+print("Borderline-SMOTE 결과:")
+print(y_bsmote.value_counts())
+```
+
+**예제: SMOTE-NC (범주형 포함)**
+
+```{python}
+from imblearn.over_sampling import SMOTENC
+
+# 범주형 변수가 포함된 경우 (예시)
+# categorical_features 파라미터에 범주형 변수의 인덱스 지정
+# smotenc = SMOTENC(categorical_features=[0, 1], random_state=42)
+# X_smotenc, y_smotenc = smotenc.fit_resample(X_mixed, y)
+```
 
 ## 모델 수준 처리 방법
 
-### 클래스 가중치 조정
+모델 수준 처리는 데이터를 변경하지 않고 모델의 학습 과정에서 클래스 가중치를 조정하는 방법이다.
+
+### 클래스 가중치 자동 조정
+
+많은 머신러닝 알고리즘은 `class_weight` 파라미터를 제공한다. `class_weight='balanced'`로 설정하면 클래스 비율의 역수로 가중치를 자동 계산한다.
+
+**가중치 계산 공식**
+
+$$
+w_i = \frac{n_{\text{samples}}}{n_{\text{classes}} \times n_{\text{samples}_i}}
+$$
+
+**예제: 자동 클래스 가중치**
 
 ```{python}
 from sklearn.linear_model import LogisticRegression
 
-model = LogisticRegression(
-    class_weight="balanced"
+# 클래스 가중치 자동 조정
+model_balanced = LogisticRegression(
+    class_weight="balanced",
+    max_iter=1000,
+    random_state=42
 )
+
+# 학습
+model_balanced.fit(X_train, y_train)
+y_pred_balanced = model_balanced.predict(X_test)
+
+print("가중치 조정 모델 평가:")
+print(classification_report(y_test, y_pred_balanced))
 ```
 
 ### 수동 가중치 설정
 
+도메인 지식에 따라 클래스별 가중치를 수동으로 설정할 수 있다. 특정 클래스의 오분류 비용이 클 때 유용하다.
+
+**예제: 수동 클래스 가중치**
+
 ```{python}
+# 수동 가중치 설정 (중요한 클래스에 더 높은 가중치)
 weights = {
-    "Adelie": 1,
-    "Gentoo": 2,
-    "Chinstrap": 3
+    "Adelie": 1.0,
+    "Gentoo": 1.5,
+    "Chinstrap": 2.0  # 가장 희귀한 클래스에 높은 가중치
 }
 
-model = LogisticRegression(class_weight=weights)
+model_weighted = LogisticRegression(
+    class_weight=weights,
+    max_iter=1000,
+    random_state=42
+)
+
+model_weighted.fit(X_train, y_train)
+y_pred_weighted = model_weighted.predict(X_test)
+
+print("수동 가중치 모델 평가:")
+print(classification_report(y_test, y_pred_weighted))
 ```
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 데이터 변경 없음 (원본 유지) | 모든 알고리즘이 지원하지 않음 |
+| 구현이 간단함 | 최적 가중치 찾기 어려움 |
+| 학습 시간 증가 없음 | 극심한 불균형에는 한계 있음 |
+
+**적용 상황**
+
+- 데이터가 충분히 많을 때
+- 샘플링으로 인한 정보 손실을 피하고 싶을 때
+- 트리 기반 모델 사용 시
 
 ## 앙상블 + 불균형 대응
 
-### 대표 기법
+앙상블 기법과 불균형 처리를 결합한 방법이다. 여러 모델을 조합하여 성능을 향상시킨다.
 
-* Balanced Random Forest
-* EasyEnsemble
+### Balanced Random Forest
+
+각 트리를 학습할 때 다수 클래스를 언더샘플링하여 균형을 맞춘다.
+
+**예제: Balanced Random Forest**
 
 ```{python}
 from imblearn.ensemble import BalancedRandomForestClassifier
 
-model = BalancedRandomForestClassifier(
+# Balanced Random Forest 모델 생성
+brf = BalancedRandomForestClassifier(
     n_estimators=100,
-    random_state=42
+    random_state=42,
+    n_jobs=-1
 )
+
+# 학습 및 예측
+brf.fit(X_train, y_train)
+y_pred_brf = brf.predict(X_test)
+
+print("Balanced Random Forest 평가:")
+print(classification_report(y_test, y_pred_brf))
 ```
+
+### EasyEnsemble
+
+여러 번 언더샘플링하여 다양한 서브셋을 만들고, 각각에 대해 모델을 학습한 후 앙상블한다.
+
+**예제: EasyEnsemble**
+
+```{python}
+from imblearn.ensemble import EasyEnsembleClassifier
+
+# EasyEnsemble 모델 생성
+eec = EasyEnsembleClassifier(
+    n_estimators=10,
+    random_state=42,
+    n_jobs=-1
+)
+
+eec.fit(X_train, y_train)
+y_pred_eec = eec.predict(X_test)
+
+print("EasyEnsemble 평가:")
+print(classification_report(y_test, y_pred_eec))
+```
+
+**앙상블 기법 장점**
+
+- 여러 모델의 강점을 결합하여 강건성 향상
+- 언더샘플링의 정보 손실을 앙상블로 보완
+- 과적합 위험 감소
 
 ## Pipeline으로 안전하게 적용
 
-**샘플링은 반드시 학습 데이터에만!**
+샘플링 기법을 적용할 때 가장 중요한 원칙은 **학습 데이터에만 적용**하는 것이다. 테스트 데이터에 샘플링을 적용하면 데이터 누수(data leakage)가 발생하여 성능이 과대평가된다.
+
+**예제: Pipeline을 사용한 안전한 샘플링**
 
 ```{python}
-from imblearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
+from imblearn.pipeline import Pipeline as ImbPipeline
+from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
+from sklearn.linear_model import LogisticRegression
 
-pipeline = Pipeline([
+# Pipeline 구성 (SMOTE는 학습 데이터에만 적용됨)
+pipeline = ImbPipeline([
+    ("scaler", StandardScaler()),
     ("smote", SMOTE(random_state=42)),
-    ("model", LogisticRegression())
+    ("model", LogisticRegression(max_iter=1000))
 ])
+
+# 학습 (SMOTE는 fit 시에만 적용)
+pipeline.fit(X_train, y_train)
+
+# 예측 (SMOTE는 적용되지 않음)
+y_pred_pipeline = pipeline.predict(X_test)
+
+print("Pipeline 모델 평가:")
+print(classification_report(y_test, y_pred_pipeline))
 ```
 
-## 권장 상황
+Pipeline을 사용하면 다음과 같은 장점이 있다.
 
-| 상황     | 권장                 |
-| ------ | ------------------ |
-| 데이터 작음 | SMOTE              |
-| 데이터 큼  | 클래스 가중치            |
-| 노이즈 많음 | 언더샘플링              |
-| 범주형 포함 | SMOTE-NC           |
-| 트리 모델  | 가중치 or Balanced RF |
+- 데이터 누수 방지 (샘플링은 학습에만 적용)
+- 교차 검증 시 자동으로 안전하게 처리
+- 코드 간결성 및 재사용성 향상
 
+## 요약
+
+이 장에서는 불균형 데이터의 문제점과 다양한 처리 방법을 학습했다. 주요 내용은 다음과 같다.
+
+**불균형 데이터 처리 방법 비교**
+
+| 방법 | 원리 | 장점 | 단점 | 적용 상황 |
+|------|------|------|------|----------|
+| 언더샘플링 | 다수 클래스 제거 | 빠름, 과적합 감소 | 정보 손실 | 데이터 충분, 노이즈 많음 |
+| 오버샘플링 | 소수 클래스 복제 | 정보 손실 없음 | 과적합 위험 | 데이터 적음 |
+| SMOTE | 합성 샘플 생성 | 과적합 감소, 공간 확장 | 노이즈 증폭 | 데이터 적음, 연속형 변수 |
+| 클래스 가중치 | 모델 학습 조정 | 데이터 변경 없음 | 극심한 불균형 한계 | 데이터 충분, 원본 유지 |
+| 앙상블 | 여러 모델 결합 | 강건성 높음 | 계산 비용 높음 | 성능 중요, 트리 모델 |
+
+**권장 처리 전략**
+
+| 상황 | 1순위 권장 | 2순위 권장 | 이유 |
+|------|----------|----------|------|
+| 데이터 적음 (수천 개 이하) | SMOTE | 오버샘플링 | 정보 손실 최소화 |
+| 데이터 많음 (수만 개 이상) | 클래스 가중치 | 언더샘플링 | 원본 보존, 학습 속도 |
+| 노이즈 많음 | 언더샘플링 | Borderline-SMOTE | 노이즈 제거 효과 |
+| 범주형 변수 포함 | SMOTE-NC | 클래스 가중치 | 범주형 처리 가능 |
+| 트리 기반 모델 | 클래스 가중치 | Balanced RF | 가중치 기본 지원 |
+| 극심한 불균형 (100:1 이상) | SMOTE + 가중치 | 앙상블 | 복합적 접근 |
+
+**불균형 데이터 처리 프로세스**
+
+1. **불균형 진단**: 클래스 분포 확인 및 비율 계산
+2. **평가 지표 설정**: Precision, Recall, F1-score, ROC-AUC 등 선택
+3. **처리 방법 선택**: 데이터 크기, 특성, 모델에 따라 결정
+4. **Pipeline 구성**: 데이터 누수 방지를 위한 안전한 적용
+5. **교차 검증**: Stratified K-Fold로 성능 평가
+6. **하이퍼파라미터 튜닝**: 처리 방법별 최적 파라미터 찾기
+
+**주의사항**
+
+- **데이터 누수 방지**: 샘플링은 반드시 학습 데이터에만 적용
+- **평가 지표**: 정확도 대신 Recall, F1-score 등 사용
+- **Stratified Split**: 학습/테스트 분리 시 클래스 비율 유지
+- **과적합 모니터링**: 학습/검증 성능 차이 확인
+
+불균형 데이터 처리는 실무에서 매우 흔하게 마주치는 문제이다. 데이터의 특성과 비즈니스 목표를 고려하여 적절한 방법을 선택하고, Pipeline을 사용하여 안전하게 적용하는 것이 중요하다. 이제 전처리의 모든 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.
