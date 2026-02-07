@@ -1,2 +1,308 @@
 # 모델 해석
 
+## 왜 모델 해석이 필요한가
+
+머신러닝 모델은 점점 복잡해지고 있다. 하지만 실무에서는 다음 질문에 답해야 한다.
+
+* 어떤 변수가 가장 중요한가?
+* 특정 예측은 왜 이렇게 나왔는가?
+* 모델이 편향되어 있지는 않은가?
+
+👉 **모델 해석(Model Interpretation)은 선택이 아니라 필수**
+
+## 모델 해석의 범주
+
+모델 해석은 크게 두 가지 관점으로 나뉜다.
+
+| 구분    | 설명                   |
+| ----- | -------------------- |
+| 전역 해석 | 모델 전체에서 중요한 변수는 무엇인가 |
+| 국소 해석 | 개별 샘플의 예측 이유         |
+
+## 특성 중요도 
+
+### 개념
+
+특성 중요도(Feature Importance)는 **모델이 예측에 얼마나 해당 변수를 활용했는지**를 수치로 표현한 것이다. 주로 트리 기반 모델에서 제공된다.
+
+## 트리 기반 모델의 특성 중요도
+
+### penguins 데이터 준비
+
+```{python}
+from palmerpenguins import load_penguins
+import pandas as pd
+
+df = load_penguins().dropna()
+
+X = df[[
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]]
+y = df["species"]
+```
+
+### RandomForest 학습
+
+```{python}
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=200,
+    random_state=42
+)
+
+rf.fit(X, y)
+```
+
+### 특성 중요도 확인
+
+```{python}
+import pandas as pd
+
+importance = pd.Series(
+    rf.feature_importances_,
+    index=X.columns
+).sort_values(ascending=False)
+
+importance
+```
+
+### 해석 포인트
+
+* 값이 클수록 모델 분기에서 자주 사용됨
+* **인과 관계는 아님**
+* 변수 간 상관성이 있으면 왜곡 가능
+
+## Permutation Importance 
+
+### 개념
+
+* 특정 변수를 무작위로 섞었을 때
+* 성능이 얼마나 떨어지는지 측정
+
+모델 종류에 상관없이 사용 가능
+
+### 예제
+
+```{python}
+from sklearn.inspection import permutation_importance
+
+result = permutation_importance(
+    rf,
+    X,
+    y,
+    n_repeats=10,
+    random_state=42
+)
+
+perm_importance = pd.Series(
+    result.importances_mean,
+    index=X.columns
+).sort_values(ascending=False)
+
+perm_importance
+```
+
+**실무에서는 기본 feature_importance보다 신뢰도 높음**
+
+## SHAP 개요
+
+shap는 Python 3.6 ~ 3.10에서 지원한다. 이외 버전인 경우 대체, 보완 방법을 사용한다.
+
+### SHAP (SHapley Additive exPlanations)
+
+* 게임 이론 기반
+* 각 특성이 예측값에 기여한 정도를 계산
+* 전역 + 국소 해석 모두 가능
+
+**현재 가장 표준적인 모델 해석 방법**
+
+## SHAP 값의 핵심 개념
+
+* 기준값(base value)에서 출발
+* 각 특성이 예측값을 얼마나 밀었는지
+* 모든 기여도의 합 = 최종 예측
+
+## SHAP 적용 (Tree 기반)
+
+```python
+import shap
+
+explainer = shap.TreeExplainer(rf)
+shap_values = explainer.shap_values(X)
+```
+
+### 전역 해석 – Summary Plot
+
+```python
+shap.summary_plot(
+    shap_values,
+    X,
+    plot_type="bar"
+)
+```
+
+의미
+
+* 전체 모델에서 중요한 변수 순위
+* 방향성은 알 수 없음 (막대형)
+
+### 분포 기반 Summary Plot
+
+```python
+shap.summary_plot(
+    shap_values,
+    X
+)
+```
+
+해석 포인트
+
+* 색상: 특성 값 크기
+* 위치: 예측에 미친 영향 방향
+* 변수별 영향 분포 확인 가능
+
+## 개별 예측 해석 (Local Explanation)
+
+### 특정 샘플 선택
+
+```python
+i = 0
+```
+
+### Force Plot
+
+```python
+shap.force_plot(
+    explainer.expected_value[0],
+    shap_values[0][i],
+    X.iloc[i]
+)
+```
+
+“이 펭귄이 왜 이 종으로 분류됐는지” 설명 가능
+
+## SHAP 사용 시 주의점 
+
+* 계산 비용 큼
+* 데이터 크기 클 경우 샘플링 필요
+* 모델 구조에 따라 explainer 선택
+
+| 모델      | Explainer       |
+| ------- | --------------- |
+| Tree 모델 | TreeExplainer   |
+| 일반 모델   | KernelExplainer |
+
+## 특성 중요도 vs SHAP 비교
+
+| 항목    | 특성 중요도 | SHAP |
+| ----- | ------ | ---- |
+| 전역 해석 | 가능     | 가능   |
+| 국소 해석 | 불가     | 가능   |
+| 방향성   | 불가     | 가능   |
+| 계산 비용 | 낮음     | 높음   |
+
+## 정리
+
+* **모델 성능만 보고 끝내지 말 것**
+* 의사결정 모델은 반드시 해석 포함
+* 보고서에는 SHAP 시각화 적극 활용
+
+## Python 3.12 기준 모델 해석
+
+Python 3.12 환경에서는 SHAP 대신 **Permutation Importance + PDP** 조합을 사용한다.
+
+### Permutation Importance (전역 중요도)
+
+#### 개념
+
+특정 변수를 무작위로 섞었을 때**모델 성능이 얼마나 감소하는지**로 중요도를 판단한다. 
+
+#### 언제 쓰나
+
+모델이 **어떤 변수를 실제로 의존하는지** 알고 싶을 때 트리·SVM·앙상블 등 **모델 종류 무관**하게 사용할 수 있다.
+
+#### 예제 
+
+```{python}
+from palmerpenguins import load_penguins
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.inspection import permutation_importance
+import pandas as pd
+
+df = load_penguins().dropna()
+
+X = df[['bill_length_mm', 'bill_depth_mm',
+        'flipper_length_mm', 'body_mass_g']]
+y = df['species']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=42
+)
+
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+result = permutation_importance(
+    model, X_test, y_test,
+    n_repeats=10, random_state=42
+)
+
+perm_importance = pd.Series(
+    result.importances_mean,
+    index=X.columns
+).sort_values(ascending=False)
+
+perm_importance
+```
+
+#### 해석 포인트
+
+* 값이 클수록 **예측 성능에 중요한 변수**
+* “모델이 실제로 쓰는 변수”를 보여줌
+
+### Partial Dependence Plot (PDP)
+
+#### 개념
+
+특정 변수가 변할 때 **예측값이 평균적으로 어떻게 변하는지** 시각화한다.
+
+#### 언제 쓰나
+
+변수의 **영향 방향(+/−)**을 알고 싶을 때, 전역적인 경향 설명용으로 적합하다.
+
+#### 예제
+
+```{python}
+from sklearn.inspection import PartialDependenceDisplay
+import matplotlib.pyplot as plt
+
+PartialDependenceDisplay.from_estimator(
+    model,
+    X_train,
+    features=['flipper_length_mm', 'body_mass_g'],
+    target='Gentoo'
+)
+
+plt.show()
+```
+
+### 해석 포인트
+
+* “날개 길이가 증가할수록 특정 종으로 분류될 확률이 증가”
+* 평균 효과 → 개별 샘플 설명은 아님
+
+
+## 정리
+
+* Permutation Importance
+
+  * 무엇이 중요한가 (전역)
+* PDP
+
+  * 어떻게 영향을 주는가 (방향·형태)
+
