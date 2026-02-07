@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,39 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#왜-파이프라인이-필요한가" id="toc-왜-파이프라인이-필요한가" class="nav-link active" data-scroll-target="#왜-파이프라인이-필요한가"><span class="header-section-number">27.1</span> 왜 파이프라인이 필요한가</a></li>
+  <li><a href="#파이프라인의-개념" id="toc-파이프라인의-개념" class="nav-link" data-scroll-target="#파이프라인의-개념"><span class="header-section-number">27.2</span> 파이프라인의 개념</a></li>
+  <li><a href="#기본-파이프라인-구성" id="toc-기본-파이프라인-구성" class="nav-link" data-scroll-target="#기본-파이프라인-구성"><span class="header-section-number">27.3</span> 기본 파이프라인 구성</a>
+  <ul>
+  <li><a href="#penguins-분류-예제" id="toc-penguins-분류-예제" class="nav-link" data-scroll-target="#penguins-분류-예제"><span class="header-section-number">27.3.1</span> penguins 분류 예제</a></li>
+  <li><a href="#학습-및-평가" id="toc-학습-및-평가" class="nav-link" data-scroll-target="#학습-및-평가"><span class="header-section-number">27.3.2</span> 학습 및 평가</a></li>
+  </ul></li>
+  <li><a href="#columntransformer" id="toc-columntransformer" class="nav-link" data-scroll-target="#columntransformer"><span class="header-section-number">27.4</span> ColumnTransformer</a>
+  <ul>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">27.4.1</span> 예제</a></li>
+  <li><a href="#전체-파이프라인" id="toc-전체-파이프라인" class="nav-link" data-scroll-target="#전체-파이프라인"><span class="header-section-number">27.4.2</span> 전체 파이프라인</a></li>
+  </ul></li>
+  <li><a href="#하이퍼파라미터-최적화-개요" id="toc-하이퍼파라미터-최적화-개요" class="nav-link" data-scroll-target="#하이퍼파라미터-최적화-개요"><span class="header-section-number">27.5</span> 하이퍼파라미터 최적화 개요</a></li>
+  <li><a href="#gridsearchcv" id="toc-gridsearchcv" class="nav-link" data-scroll-target="#gridsearchcv"><span class="header-section-number">27.6</span> 3.9.6 GridSearchCV</a>
+  <ul>
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">27.6.1</span> 개념</a></li>
+  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">27.6.2</span> 예제</a></li>
+  <li><a href="#결과-확인" id="toc-결과-확인" class="nav-link" data-scroll-target="#결과-확인"><span class="header-section-number">27.6.3</span> 결과 확인</a></li>
+  </ul></li>
+  <li><a href="#randomizedsearchcv" id="toc-randomizedsearchcv" class="nav-link" data-scroll-target="#randomizedsearchcv"><span class="header-section-number">27.7</span> 3.9.7 RandomizedSearchCV</a>
+  <ul>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">27.7.1</span> 특징</a></li>
+  </ul></li>
+  <li><a href="#교차-검증과-파이프라인의-결합" id="toc-교차-검증과-파이프라인의-결합" class="nav-link" data-scroll-target="#교차-검증과-파이프라인의-결합"><span class="header-section-number">27.8</span> 교차 검증과 파이프라인의 결합</a></li>
+  <li><a href="#성능-평가-흐름-정리" id="toc-성능-평가-흐름-정리" class="nav-link" data-scroll-target="#성능-평가-흐름-정리"><span class="header-section-number">27.9</span> 성능 평가 흐름 정리</a></li>
+  <li><a href="#권장-사항" id="toc-권장-사항" class="nav-link" data-scroll-target="#권장-사항"><span class="header-section-number">27.10</span> 권장 사항</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/09. 파이프라인 및 자동화.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +432,171 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="왜-파이프라인이-필요한가" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="왜-파이프라인이-필요한가"><span class="header-section-number">27.1</span> 왜 파이프라인이 필요한가</h2>
+<p>머신러닝 실무에서 가장 흔한 실수는 다음과 같다.</p>
+<ul>
+<li>학습 데이터와 테스트 데이터에 <strong>다른 전처리 적용</strong></li>
+<li>교차 검증 전에 스케일링 수행</li>
+<li>실험 재현 불가</li>
+</ul>
+<p>파이프라인은 이 모든 문제를 <strong>구조적으로 차단</strong>한다.</p>
+</section>
+<section id="파이프라인의-개념" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="파이프라인의-개념"><span class="header-section-number">27.2</span> 파이프라인의 개념</h2>
+<p><strong>파이프라인(Pipeline)</strong> 은 <code>전처리 → 모델 → 평가</code> 단계를 <strong>하나의 객체로 묶는 구조</strong>다.</p>
+<p>특징</p>
+<ul>
+<li>순차 실행 보장</li>
+<li>데이터 누수 방지</li>
+<li>코드 단순화</li>
+<li>자동화에 최적</li>
+</ul>
+</section>
+<section id="기본-파이프라인-구성" class="level2" data-number="27.3">
+<h2 data-number="27.3" class="anchored" data-anchor-id="기본-파이프라인-구성"><span class="header-section-number">27.3</span> 기본 파이프라인 구성</h2>
+<section id="penguins-분류-예제" class="level3" data-number="27.3.1">
+<h3 data-number="27.3.1" class="anchored" data-anchor-id="penguins-분류-예제"><span class="header-section-number">27.3.1</span> penguins 분류 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="학습-및-평가" class="level3" data-number="27.3.2">
+<h3 data-number="27.3.2" class="anchored" data-anchor-id="학습-및-평가"><span class="header-section-number">27.3.2</span> 학습 및 평가</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pipe.fit(X_train, y_train)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pipe.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>fit()</code> 호출 시</p>
+<ul>
+<li>scaler → fit + transform</li>
+<li>model → fit</li>
+</ul>
+<p>이 순서가 자동으로 수행된다.</p>
+</section>
+</section>
+<section id="columntransformer" class="level2" data-number="27.4">
+<h2 data-number="27.4" class="anchored" data-anchor-id="columntransformer"><span class="header-section-number">27.4</span> ColumnTransformer</h2>
+<p>실제 데이터는 수치형 + 범주형이 섞여 있다. 컬럼별 전처리를 명시적으로 분리해야 한다.</p>
+<section id="예제" class="level3" data-number="27.4.1">
+<h3 data-number="27.4.1" class="anchored" data-anchor-id="예제"><span class="header-section-number">27.4.1</span> 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"sex"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>preprocessor <span class="op">=</span> ColumnTransformer([</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"num"</span>, StandardScaler(), num_cols),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"cat"</span>, OneHotEncoder(handle_unknown<span class="op">=</span><span class="st">"ignore"</span>), cat_cols)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="전체-파이프라인" class="level3" data-number="27.4.2">
+<h3 data-number="27.4.2" class="anchored" data-anchor-id="전체-파이프라인"><span class="header-section-number">27.4.2</span> 전체 파이프라인</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"preprocess"</span>, preprocessor),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="하이퍼파라미터-최적화-개요" class="level2" data-number="27.5">
+<h2 data-number="27.5" class="anchored" data-anchor-id="하이퍼파라미터-최적화-개요"><span class="header-section-number">27.5</span> 하이퍼파라미터 최적화 개요</h2>
+<p>모델 성능은 <strong>하이퍼파라미터 설정</strong>에 크게 좌우된다.</p>
+<ul>
+<li>사람이 일일이 조정 → 비효율</li>
+<li>자동 탐색 필요</li>
+</ul>
+</section>
+<section id="gridsearchcv" class="level2" data-number="27.6">
+<h2 data-number="27.6" class="anchored" data-anchor-id="gridsearchcv"><span class="header-section-number">27.6</span> 3.9.6 GridSearchCV</h2>
+<section id="개념" class="level3" data-number="27.6.1">
+<h3 data-number="27.6.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">27.6.1</span> 개념</h3>
+<ul>
+<li>지정한 모든 파라미터 조합 탐색</li>
+<li>계산 비용 큼</li>
+<li>기준선 모델에 적합</li>
+</ul>
+</section>
+<section id="예제-1" class="level3" data-number="27.6.2">
+<h3 data-number="27.6.2" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">27.6.2</span> 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model__C"</span>: [<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model__penalty"</span>: [<span class="st">"l2"</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>grid <span class="op">=</span> GridSearchCV(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    pipe,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    param_grid,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">"f1_macro"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>grid.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="결과-확인" class="level3" data-number="27.6.3">
+<h3 data-number="27.6.3" class="anchored" data-anchor-id="결과-확인"><span class="header-section-number">27.6.3</span> 결과 확인</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>grid.best_params_</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>grid.best_score_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="randomizedsearchcv" class="level2" data-number="27.7">
+<h2 data-number="27.7" class="anchored" data-anchor-id="randomizedsearchcv"><span class="header-section-number">27.7</span> 3.9.7 RandomizedSearchCV</h2>
+<section id="특징" class="level3" data-number="27.7.1">
+<h3 data-number="27.7.1" class="anchored" data-anchor-id="특징"><span class="header-section-number">27.7.1</span> 특징</h3>
+<ul>
+<li>파라미터 공간에서 무작위 샘플링</li>
+<li>대규모 탐색에 효율적</li>
+<li>실무에서 자주 사용</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>random_search <span class="op">=</span> RandomizedSearchCV(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    pipe,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    param_distributions<span class="op">=</span>{</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model__C"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    n_iter<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">"f1_macro"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="교차-검증과-파이프라인의-결합" class="level2" data-number="27.8">
+<h2 data-number="27.8" class="anchored" data-anchor-id="교차-검증과-파이프라인의-결합"><span class="header-section-number">27.8</span> 교차 검증과 파이프라인의 결합</h2>
+<p>중요 포인트</p>
+<ul>
+<li>교차 검증 <strong>안에서</strong> 전처리 수행</li>
+<li>데이터 누수 완전 차단</li>
+</ul>
+<p>파이프라인 없이 CV는 위험</p>
+</section>
+<section id="성능-평가-흐름-정리" class="level2" data-number="27.9">
+<h2 data-number="27.9" class="anchored" data-anchor-id="성능-평가-흐름-정리"><span class="header-section-number">27.9</span> 성능 평가 흐름 정리</h2>
+<ol type="1">
+<li>파이프라인 정의</li>
+<li>교차 검증 기반 탐색</li>
+<li>최적 모델 선택</li>
+<li>테스트 데이터 최종 평가</li>
+</ol>
+<p>테스트 데이터는 <strong>마지막에 한 번만</strong></p>
+</section>
+<section id="권장-사항" class="level2" data-number="27.10">
+<h2 data-number="27.10" class="anchored" data-anchor-id="권장-사항"><span class="header-section-number">27.10</span> 권장 사항</h2>
+<ul>
+<li>모든 실험은 파이프라인으로 시작</li>
+<li>전처리 로직을 코드 밖으로 빼지 않기</li>
+<li>scoring 기준을 문제에 맞게 선택</li>
+<li>random_state 고정</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1019,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/09. 파이프라인 및 자동화.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/09. 파이프라인 및 자동화.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

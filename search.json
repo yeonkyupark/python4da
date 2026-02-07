@@ -2535,5 +2535,126 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
     ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html",
+    "href": "part3/09. 파이프라인 및 자동화.html",
+    "title": "27  파이프라인 및 자동화",
+    "section": "",
+    "text": "27.1 왜 파이프라인이 필요한가\n머신러닝 실무에서 가장 흔한 실수는 다음과 같다.\n파이프라인은 이 모든 문제를 구조적으로 차단한다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#왜-파이프라인이-필요한가",
+    "href": "part3/09. 파이프라인 및 자동화.html#왜-파이프라인이-필요한가",
+    "title": "27  파이프라인 및 자동화",
+    "section": "",
+    "text": "학습 데이터와 테스트 데이터에 다른 전처리 적용\n교차 검증 전에 스케일링 수행\n실험 재현 불가",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#파이프라인의-개념",
+    "href": "part3/09. 파이프라인 및 자동화.html#파이프라인의-개념",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.2 파이프라인의 개념",
+    "text": "27.2 파이프라인의 개념\n파이프라인(Pipeline) 은 전처리 → 모델 → 평가 단계를 하나의 객체로 묶는 구조다.\n특징\n\n순차 실행 보장\n데이터 누수 방지\n코드 단순화\n자동화에 최적",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#기본-파이프라인-구성",
+    "href": "part3/09. 파이프라인 및 자동화.html#기본-파이프라인-구성",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.3 기본 파이프라인 구성",
+    "text": "27.3 기본 파이프라인 구성\n\n27.3.1 penguins 분류 예제\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\npipe = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", LogisticRegression(max_iter=1000))\n])\n\n\n27.3.2 학습 및 평가\npipe.fit(X_train, y_train)\npipe.score(X_test, y_test)\nfit() 호출 시\n\nscaler → fit + transform\nmodel → fit\n\n이 순서가 자동으로 수행된다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#columntransformer",
+    "href": "part3/09. 파이프라인 및 자동화.html#columntransformer",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.4 ColumnTransformer",
+    "text": "27.4 ColumnTransformer\n실제 데이터는 수치형 + 범주형이 섞여 있다. 컬럼별 전처리를 명시적으로 분리해야 한다.\n\n27.4.1 예제\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.preprocessing import OneHotEncoder\n\nnum_cols = [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\"]\ncat_cols = [\"sex\"]\n\npreprocessor = ColumnTransformer([\n    (\"num\", StandardScaler(), num_cols),\n    (\"cat\", OneHotEncoder(handle_unknown=\"ignore\"), cat_cols)\n])\n\n\n27.4.2 전체 파이프라인\npipe = Pipeline([\n    (\"preprocess\", preprocessor),\n    (\"model\", LogisticRegression(max_iter=1000))\n])",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#하이퍼파라미터-최적화-개요",
+    "href": "part3/09. 파이프라인 및 자동화.html#하이퍼파라미터-최적화-개요",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.5 하이퍼파라미터 최적화 개요",
+    "text": "27.5 하이퍼파라미터 최적화 개요\n모델 성능은 하이퍼파라미터 설정에 크게 좌우된다.\n\n사람이 일일이 조정 → 비효율\n자동 탐색 필요",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#gridsearchcv",
+    "href": "part3/09. 파이프라인 및 자동화.html#gridsearchcv",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.6 3.9.6 GridSearchCV",
+    "text": "27.6 3.9.6 GridSearchCV\n\n27.6.1 개념\n\n지정한 모든 파라미터 조합 탐색\n계산 비용 큼\n기준선 모델에 적합\n\n\n\n27.6.2 예제\nfrom sklearn.model_selection import GridSearchCV\n\nparam_grid = {\n    \"model__C\": [0.1, 1, 10],\n    \"model__penalty\": [\"l2\"]\n}\n\ngrid = GridSearchCV(\n    pipe,\n    param_grid,\n    cv=5,\n    scoring=\"f1_macro\"\n)\n\ngrid.fit(X_train, y_train)\n\n\n27.6.3 결과 확인\ngrid.best_params_\ngrid.best_score_",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#randomizedsearchcv",
+    "href": "part3/09. 파이프라인 및 자동화.html#randomizedsearchcv",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.7 3.9.7 RandomizedSearchCV",
+    "text": "27.7 3.9.7 RandomizedSearchCV\n\n27.7.1 특징\n\n파라미터 공간에서 무작위 샘플링\n대규모 탐색에 효율적\n실무에서 자주 사용\n\nfrom sklearn.model_selection import RandomizedSearchCV\n\nrandom_search = RandomizedSearchCV(\n    pipe,\n    param_distributions={\n        \"model__C\": [0.01, 0.1, 1, 10, 100]\n    },\n    n_iter=10,\n    cv=5,\n    scoring=\"f1_macro\",\n    random_state=42\n)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#교차-검증과-파이프라인의-결합",
+    "href": "part3/09. 파이프라인 및 자동화.html#교차-검증과-파이프라인의-결합",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.8 교차 검증과 파이프라인의 결합",
+    "text": "27.8 교차 검증과 파이프라인의 결합\n중요 포인트\n\n교차 검증 안에서 전처리 수행\n데이터 누수 완전 차단\n\n파이프라인 없이 CV는 위험",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#성능-평가-흐름-정리",
+    "href": "part3/09. 파이프라인 및 자동화.html#성능-평가-흐름-정리",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.9 성능 평가 흐름 정리",
+    "text": "27.9 성능 평가 흐름 정리\n\n파이프라인 정의\n교차 검증 기반 탐색\n최적 모델 선택\n테스트 데이터 최종 평가\n\n테스트 데이터는 마지막에 한 번만",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
+  },
+  {
+    "objectID": "part3/09. 파이프라인 및 자동화.html#권장-사항",
+    "href": "part3/09. 파이프라인 및 자동화.html#권장-사항",
+    "title": "27  파이프라인 및 자동화",
+    "section": "27.10 권장 사항",
+    "text": "27.10 권장 사항\n\n모든 실험은 파이프라인으로 시작\n전처리 로직을 코드 밖으로 빼지 않기\nscoring 기준을 문제에 맞게 선택\nrandom_state 고정",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
+    ]
   }
 ]
