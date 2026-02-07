@@ -451,7 +451,18 @@
     "href": "part1/06. 데이터 분포 변환.html",
     "title": "6  데이터 분포 변환",
     "section": "",
-    "text": "6.1 분포 변환 이유\n예제 데이터셋 적재\ndf_num.skew()\n\nbill_length_mm       0.053118\nbill_depth_mm       -0.143465\nflipper_length_mm    0.345682\nbody_mass_g          0.470329\ndtype: float64\n대부분 데이터는 양의 왜도(skewness) 형태를 보이며 평균·분산 기반 모델(선형 회귀, PCA 등)에 불리\n분포를 대칭에 가깝게 변환함으로써 극단값 영향 완화, 모델 가정 충족이 목표",
+    "text": "6.1 분포 변환의 필요성\n데이터 분포 변환(Distribution Transformation)은 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 과정이다. 많은 통계 모델과 머신러닝 알고리즘은 데이터가 정규분포를 따른다고 가정하므로, 왜곡된 분포는 모델 성능을 저하시킬 수 있다. 분포 변환을 통해 극단값의 영향을 완화하고 모델의 가정을 충족시킬 수 있다. 이 장에서는 로그 변환, 제곱근 변환, Box-Cox 변환, Yeo-Johnson 변환 등 다양한 분포 변환 기법을 학습한다.\n예제: 데이터 로드\n실제 데이터는 정규분포보다는 왜곡된 분포를 보이는 경우가 많다. 특히 양의 왜도(positive skewness)를 가진 데이터가 일반적이다. 왜도는 분포의 비대칭 정도를 나타내는 지표로, 0에 가까울수록 대칭적이고 절댓값이 클수록 왜곡이 심하다.\n예제: 원본 데이터의 왜도 확인\n# 각 변수의 왜도 계산\nskewness = df_num.skew()\n\nprint(\"변수별 왜도:\")\nprint(skewness)\nprint(\"\\n해석:\")\nprint(\"- 왜도 &gt; 0.5: 오른쪽으로 치우침 (양의 왜도)\")\nprint(\"- -0.5 &lt; 왜도 &lt; 0.5: 대칭에 가까움\")\nprint(\"- 왜도 &lt; -0.5: 왼쪽으로 치우침 (음의 왜도)\")\n\n변수별 왜도:\nbill_length_mm       0.053118\nbill_depth_mm       -0.143465\nflipper_length_mm    0.345682\nbody_mass_g          0.470329\ndtype: float64\n\n해석:\n- 왜도 &gt; 0.5: 오른쪽으로 치우침 (양의 왜도)\n- -0.5 &lt; 왜도 &lt; 0.5: 대칭에 가까움\n- 왜도 &lt; -0.5: 왼쪽으로 치우침 (음의 왜도)\n왜곡된 분포는 다음과 같은 문제를 일으킨다.\n분포 변환의 목표는 데이터를 대칭에 가깝게 만들어 극단값의 영향을 완화하고 모델의 가정을 충족시키는 것이다.",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
+    ]
+  },
+  {
+    "objectID": "part1/06. 데이터 분포 변환.html#분포-변환의-필요성",
+    "href": "part1/06. 데이터 분포 변환.html#분포-변환의-필요성",
+    "title": "6  데이터 분포 변환",
+    "section": "",
+    "text": "문제점\n설명\n\n\n\n\n모델 가정 위배\n선형 회귀, PCA 등은 정규성을 가정함\n\n\n극단값 영향\n평균과 분산이 소수 극단값에 의해 왜곡됨\n\n\n예측 성능 저하\n학습 데이터와 테스트 데이터의 분포 차이 발생\n\n\n해석 어려움\n비선형 관계로 인한 계수 해석의 복잡성 증가",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
@@ -462,7 +473,7 @@
     "href": "part1/06. 데이터 분포 변환.html#로그-변환-log-transform",
     "title": "6  데이터 분포 변환",
     "section": "6.2 로그 변환 (Log Transform)",
-    "text": "6.2 로그 변환 (Log Transform)\n오른쪽 꼬리가 긴 분포(양의 왜도, Positive)에 효과적\n\n6.2.1 수식\n\\[\nx' = \\log(x)\n\\]\n0 이하 값 변환 불가로 보정 필요\n\n\n6.2.2 코드\n\ndf_log = df_num.copy()\n\nfor col in num_cols:\n    df_log[col] = np.log(df_log[col])\n\nprint(df_log)\n\n     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0          3.666122       2.928524           5.198497     8.229511\n1          3.676301       2.856470           5.225747     8.242756\n2          3.696351       2.890372           5.273000     8.086410\n3               NaN            NaN                NaN          NaN\n4          3.602777       2.960105           5.262690     8.146130\n..              ...            ...                ...          ...\n339             NaN            NaN                NaN          NaN\n340        3.845883       2.660260           5.370638     8.486734\n341        3.919991       2.753661           5.402677     8.656955\n342        3.811097       2.694627           5.356586     8.556414\n343        3.910021       2.778819           5.361292     8.594154\n\n[344 rows x 4 columns]\n\n\n\n\n6.2.3 0 포함 변수 안전 처리\n\ndf_log_safe = np.log1p(df_num)\n\nprint(df_log_safe)\n\n     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0          3.691376       2.980619           5.204007     8.229778\n1          3.701302       2.912351           5.231109     8.243019\n2          3.720862       2.944439           5.278115     8.086718\n3               NaN            NaN                NaN          NaN\n4          3.629660       3.010621           5.267858     8.146419\n..              ...            ...                ...          ...\n339             NaN            NaN                NaN          NaN\n340        3.867026       2.727853           5.375278     8.486940\n341        3.939638       2.815409           5.407172     8.657129\n342        3.832980       2.760010           5.361292     8.556606\n343        3.929863       2.839078           5.365976     8.594339\n\n[344 rows x 4 columns]\n\n\n\n\n6.2.4 왜도 변화 확인\n\ndf_log_safe.skew()\n\nbill_length_mm      -0.143463\nbill_depth_mm       -0.315791\nflipper_length_mm    0.251965\nbody_mass_g          0.170721\ndtype: float64",
+    "text": "6.2 로그 변환 (Log Transform)\n로그 변환은 오른쪽 꼬리가 긴 분포(양의 왜도)를 가진 데이터에 가장 효과적인 방법이다. 지수적으로 증가하는 데이터를 선형에 가깝게 만들어준다.\n변환 공식\n\\[\nx' = \\log(x)\n\\]\n로그 변환은 큰 값의 차이를 압축하고 작은 값의 차이를 확대하여 분포를 대칭에 가깝게 만든다. 다만, 0 이하의 값은 변환할 수 없으므로 보정이 필요하다.\n예제: 기본 로그 변환\n\n# 로그 변환 (자연로그 사용)\ndf_log = df_num.copy()\n\nfor col in num_cols:\n    df_log[col] = np.log(df_log[col])\n\nprint(\"로그 변환 결과 (상위 5개):\")\nprint(df_log.head())\n\n로그 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0        3.666122       2.928524           5.198497     8.229511\n1        3.676301       2.856470           5.225747     8.242756\n2        3.696351       2.890372           5.273000     8.086410\n3             NaN            NaN                NaN          NaN\n4        3.602777       2.960105           5.262690     8.146130\n\n\n\n6.2.1 0 포함 변수의 안전한 처리\n데이터에 0이 포함된 경우 np.log(0)는 -inf를 반환하므로 문제가 발생한다. 이를 방지하기 위해 np.log1p(x)를 사용한다. 이 함수는 \\(\\log(1 + x)\\)를 계산하므로 0도 안전하게 처리할 수 있다.\n예제: log1p를 사용한 안전한 로그 변환\n\n# log1p: log(1 + x) 계산\ndf_log_safe = np.log1p(df_num)\n\nprint(\"log1p 변환 결과 (상위 5개):\")\nprint(df_log_safe.head())\n\nlog1p 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0        3.691376       2.980619           5.204007     8.229778\n1        3.701302       2.912351           5.231109     8.243019\n2        3.720862       2.944439           5.278115     8.086718\n3             NaN            NaN                NaN          NaN\n4        3.629660       3.010621           5.267858     8.146419\n\n\n\n\n6.2.2 왜도 변화 확인\n로그 변환 후 왜도가 어떻게 변했는지 확인한다.\n예제: 로그 변환 후 왜도 비교\n\n# 변환 전후 왜도 비교\nprint(\"원본 왜도:\")\nprint(df_num.skew())\nprint(\"\\n로그 변환 후 왜도:\")\nprint(df_log_safe.skew())\n\n원본 왜도:\nbill_length_mm       0.053118\nbill_depth_mm       -0.143465\nflipper_length_mm    0.345682\nbody_mass_g          0.470329\ndtype: float64\n\n로그 변환 후 왜도:\nbill_length_mm      -0.143463\nbill_depth_mm       -0.315791\nflipper_length_mm    0.251965\nbody_mass_g          0.170721\ndtype: float64\n\n\n일반적으로 로그 변환 후 왜도의 절댓값이 감소하여 분포가 더 대칭적이 된다.\n적용 상황\n\n왜도가 매우 큰 경우 (&gt; 1.0)\n극단값(이상치)이 많은 경우\n지수적 증가 패턴을 보이는 데이터\n금융 데이터, 인구 데이터, 소득 데이터 등\n“비율 변화”가 중요한 문제",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
@@ -473,29 +484,29 @@
     "href": "part1/06. 데이터 분포 변환.html#제곱근-변환-square-root-transform",
     "title": "6  데이터 분포 변환",
     "section": "6.3 제곱근 변환 (Square Root Transform)",
-    "text": "6.3 제곱근 변환 (Square Root Transform)\n로그보다 완만한 변환\n\n6.3.1 수식\n\\[\nx' = \\sqrt{x}\n\\]\n\n\n6.3.2 코드\n\ndf_sqrt = np.sqrt(df_num)\n\nprint(df_sqrt)\n\n     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0          6.252999       4.324350          13.453624    61.237244\n1          6.284903       4.171331          13.638182    61.644140\n2          6.348228       4.242641          13.964240    57.008771\n3               NaN            NaN                NaN          NaN\n4          6.058052       4.393177          13.892444    58.736701\n..              ...            ...                ...          ...\n339             NaN            NaN                NaN          NaN\n340        6.841053       3.781534          14.662878    69.641941\n341        7.099296       3.962323          14.899664    75.828754\n342        6.723095       3.847077          14.560220    72.111026\n343        7.063993       4.012481          14.594520    73.484692\n\n[344 rows x 4 columns]\n\n\n\n\n6.3.3 제곱근 변환과 비교\n제곱근이 적합한 경우\n\n왜도가 심하지 않음\n데이터 범위가 크지 않음\n분포를 살짝만 정리하고 싶을 때\n카운트 데이터 (포아송 계열)\n\n로그가 적합한 경우\n\n왜도가 매우 큼\n극단값(outlier)이 많음\n선형 회귀, PCA, 거리 기반 모델\n“비율 변화”가 중요한 문제",
+    "text": "6.3 제곱근 변환 (Square Root Transform)\n제곱근 변환은 로그 변환보다 완만한 변환 방법으로, 왜도가 그리 심하지 않은 데이터에 적합하다. 포아송 분포를 따르는 카운트 데이터에 특히 효과적이다.\n변환 공식\n\\[\nx' = \\sqrt{x}\n\\]\n예제: 제곱근 변환\n\n# 제곱근 변환\ndf_sqrt = np.sqrt(df_num)\n\nprint(\"제곱근 변환 결과 (상위 5개):\")\nprint(df_sqrt.head())\n\n# 왜도 확인\nprint(\"\\n제곱근 변환 후 왜도:\")\nprint(df_sqrt.skew())\n\n제곱근 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0        6.252999       4.324350          13.453624    61.237244\n1        6.284903       4.171331          13.638182    61.644140\n2        6.348228       4.242641          13.964240    57.008771\n3             NaN            NaN                NaN          NaN\n4        6.058052       4.393177          13.892444    58.736701\n\n제곱근 변환 후 왜도:\nbill_length_mm      -0.048524\nbill_depth_mm       -0.235482\nflipper_length_mm    0.298802\nbody_mass_g          0.322080\ndtype: float64\n\n\n\n6.3.1 로그 변환과 제곱근 변환 비교\n두 변환 방법의 선택 기준은 다음과 같다.\n제곱근 변환이 적합한 경우\n\n왜도가 심하지 않음 (0.5 ~ 1.5)\n데이터 범위가 크지 않음\n분포를 약간만 조정하고 싶을 때\n카운트 데이터 (포아송 분포)\n변환 전후 해석이 직관적이어야 할 때\n\n로그 변환이 적합한 경우\n\n왜도가 매우 큼 (&gt; 1.5)\n극단값(이상치)이 많음\n데이터 범위가 매우 넓음 (여러 자릿수 차이)\n선형 회귀, PCA, 거리 기반 모델 사용\n“비율 변화”가 중요한 문제 (예: 수익률, 성장률)",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
     ]
   },
   {
-    "objectID": "part1/06. 데이터 분포 변환.html#boxcox-변환",
-    "href": "part1/06. 데이터 분포 변환.html#boxcox-변환",
+    "objectID": "part1/06. 데이터 분포 변환.html#box-cox-변환",
+    "href": "part1/06. 데이터 분포 변환.html#box-cox-변환",
     "title": "6  데이터 분포 변환",
-    "section": "6.4 Box–Cox 변환",
-    "text": "6.4 Box–Cox 변환\n로그의 일반화 버전으로 λ(람다)를 자동 추정 (단, 양수 전용)\n\n6.4.1 수식\n\\[\nx' =\n\\begin{cases}\n\\frac{x^\\lambda - 1}{\\lambda}, & \\lambda \\neq 0 \\\n\\log(x), & \\lambda = 0\n\\end{cases}\n\\]\n\n\n6.4.2 코드\n\nfrom scipy.stats import boxcox\n\n\ndf_boxcox = df_num.copy()\nlambdas = {}\n\nfor col in num_cols:\n    data = df_boxcox[col].dropna()\n    transformed, lam = boxcox(data)\n    df_boxcox.loc[data.index, col] = transformed\n    lambdas[col] = lam\n\n\nlambdas\n\n{'bill_length_mm': np.float64(0.6201739671602454),\n 'bill_depth_mm': np.float64(1.4747606585324315),\n 'flipper_length_mm': np.float64(-2.0632096556190813),\n 'body_mass_g': np.float64(-0.4656520321320674)}",
+    "section": "6.4 Box-Cox 변환",
+    "text": "6.4 Box-Cox 변환\nBox-Cox 변환은 로그 변환의 일반화된 형태로, 최적의 변환 파라미터 λ(람다)를 자동으로 추정한다. 다양한 변환을 포괄하는 강력한 방법이지만 양수 데이터에만 적용할 수 있다.\n변환 공식\n\\[\nx' =\n\\begin{cases}\n\\frac{x^\\lambda - 1}{\\lambda}, & \\lambda \\neq 0 \\\\\n\\log(x), & \\lambda = 0\n\\end{cases}\n\\]\n여기서 λ는 최대우도추정법(MLE)을 통해 자동으로 결정된다. λ 값에 따라 다음과 같은 변환이 수행된다.\n\n\n\nλ 값\n변환 방법\n\n\n\n\nλ = 1\n변환 없음\n\n\nλ = 0.5\n제곱근 변환\n\n\nλ = 0\n로그 변환\n\n\nλ = -1\n역수 변환\n\n\n\n예제: Box-Cox 변환\n\nfrom scipy.stats import boxcox\n\n# Box-Cox 변환\ndf_boxcox = df_num.copy()\nlambdas = {}\n\nfor col in num_cols:\n    # 결측치 제거\n    data = df_boxcox[col].dropna()\n    \n    # Box-Cox 변환 및 최적 람다 추정\n    transformed, lam = boxcox(data)\n    \n    # 변환 결과 저장\n    df_boxcox.loc[data.index, col] = transformed\n    lambdas[col] = lam\n\nprint(\"Box-Cox 변환 결과 (상위 5개):\")\nprint(df_boxcox.head())\n\nBox-Cox 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0       14.051916      50.248024           0.484671     2.101002\n1       14.151106      45.114142           0.484672     2.101288\n2       14.348349      47.461799           0.484673     2.097796\n3             NaN            NaN                NaN          NaN\n4       13.448467      52.676024           0.484672     2.099160\n\n\n예제: 추정된 λ 값 확인\n\n# 각 변수의 최적 람다 값\nprint(\"변수별 최적 λ 값:\")\nfor col, lam in lambdas.items():\n    print(f\"{col}: {lam:.4f}\")\n\n변수별 최적 λ 값:\nbill_length_mm: 0.6202\nbill_depth_mm: 1.4748\nflipper_length_mm: -2.0632\nbody_mass_g: -0.4657\n\n\nλ 값이 0에 가까우면 로그 변환에 가깝고, 0.5에 가까우면 제곱근 변환에 가깝다.\n적용 상황\n\n양수 데이터만 있는 경우\n최적의 변환을 자동으로 찾고 싶을 때\n통계적 가정(정규성)을 엄격히 만족해야 하는 경우",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
     ]
   },
   {
-    "objectID": "part1/06. 데이터 분포 변환.html#yeojohnson-변환",
-    "href": "part1/06. 데이터 분포 변환.html#yeojohnson-변환",
+    "objectID": "part1/06. 데이터 분포 변환.html#yeo-johnson-변환",
+    "href": "part1/06. 데이터 분포 변환.html#yeo-johnson-변환",
     "title": "6  데이터 분포 변환",
-    "section": "6.5 Yeo–Johnson 변환",
-    "text": "6.5 Yeo–Johnson 변환\nBox–Cox의 확장 방식으로 0, 음수에 대해서도 변환 가능\n\n6.5.1 sklearn 사용\n\nfrom sklearn.preprocessing import PowerTransformer\n\n\npt = PowerTransformer(method=\"yeo-johnson\")\n\ndf_yeojohnson = pd.DataFrame(\n    pt.fit_transform(df_num),\n    columns=num_cols\n)\n\n0, 음수 허용를 허용하며 결측치 제외 후 자동 처리",
+    "section": "6.5 Yeo-Johnson 변환",
+    "text": "6.5 Yeo-Johnson 변환\nYeo-Johnson 변환은 Box-Cox 변환의 확장 버전으로, 0과 음수 값도 처리할 수 있다. 실무에서 가장 권장되는 방법이다.\n변환 공식\nYeo-Johnson 변환은 데이터의 부호에 따라 다른 공식을 적용한다.\n\n\\(x \\geq 0, \\lambda \\neq 0\\): \\(\\frac{(x+1)^\\lambda - 1}{\\lambda}\\)\n\\(x \\geq 0, \\lambda = 0\\): \\(\\log(x+1)\\)\n\\(x &lt; 0, \\lambda \\neq 2\\): \\(-\\frac{(-x+1)^{2-\\lambda} - 1}{2-\\lambda}\\)\n\\(x &lt; 0, \\lambda = 2\\): \\(-\\log(-x+1)\\)\n\n예제: Yeo-Johnson 변환\n\nfrom sklearn.preprocessing import PowerTransformer\n\n# Yeo-Johnson 변환기 생성\npt = PowerTransformer(method=\"yeo-johnson\")\n\n# 변환 수행\ndf_yeojohnson = pd.DataFrame(\n    pt.fit_transform(df_num),\n    columns=num_cols\n)\n\nprint(\"Yeo-Johnson 변환 결과 (상위 5개):\")\nprint(df_yeojohnson.head())\n\n# 추정된 람다 값 확인\nprint(\"\\n변수별 최적 λ 값:\")\nfor i, col in enumerate(num_cols):\n    print(f\"{col}: {pt.lambdas_[i]:.4f}\")\n\nYeo-Johnson 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0       -0.878666       0.778009          -1.580741    -0.481138\n1       -0.802301       0.099099          -1.104687    -0.407311\n2       -0.650437       0.409486          -0.339984    -1.308479\n3             NaN            NaN                NaN          NaN\n4       -1.343166       1.099289          -0.500529    -0.956498\n\n변수별 최적 λ 값:\nbill_length_mm: 0.6153\nbill_depth_mm: 1.5132\nflipper_length_mm: -2.0775\nbody_mass_g: -0.4660\n\n\nYeo-Johnson 변환은 다음과 같은 장점이 있다.\n\n0과 음수 값을 자동으로 처리\n결측치를 제외하고 자동 변환\nsklearn 파이프라인과 통합 가능\n실무에서 가장 안전하고 범용적\n\n적용 상황\n\n0 또는 음수를 포함하는 데이터\n실무에서 기본적으로 사용할 변환 방법\n자동화된 전처리 파이프라인 구축",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
@@ -506,7 +517,7 @@
     "href": "part1/06. 데이터 분포 변환.html#분위수-변환-quantile-transform",
     "title": "6  데이터 분포 변환",
     "section": "6.6 분위수 변환 (Quantile Transform)",
-    "text": "6.6 분위수 변환 (Quantile Transform)\n분포 모양 자체를 바꿈\n\nfrom sklearn.preprocessing import QuantileTransformer\n\n\nqt = QuantileTransformer(\n    output_distribution=\"normal\",\n    random_state=42\n)\n\ndf_quantile = pd.DataFrame(\n    qt.fit_transform(df_num),\n    columns=num_cols\n)\n\nprint(df_quantile)\n\n     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0         -0.704794       0.690633          -1.663512    -0.366106\n1         -0.649469       0.033085          -1.127632    -0.269985\n2         -0.506872       0.288983          -0.176300    -1.347428\n3               NaN            NaN                NaN          NaN\n4         -1.237926       1.107167          -0.335021    -0.890537\n..              ...            ...                ...          ...\n339             NaN            NaN                NaN          NaN\n340        0.449514      -1.286551           0.796647     0.737791\n341        1.120759      -0.627072           1.413753     1.848596\n342        0.091477      -0.963539           0.596232     1.042077\n343        0.965467      -0.465743           0.653988     1.245827\n\n[344 rows x 4 columns]",
+    "text": "6.6 분위수 변환 (Quantile Transform)\n분위수 변환은 데이터의 분위수를 목표 분포의 분위수로 매핑하여 분포 자체를 강제로 변환하는 방법이다. 다른 변환 방법과 달리 순위 정보만 유지하고 분포 형태를 완전히 바꾼다.\n예제: 분위수 변환 (정규분포)\n\nfrom sklearn.preprocessing import QuantileTransformer\n\n# 분위수 변환기 생성 (출력 분포: 정규분포)\nqt = QuantileTransformer(\n    output_distribution=\"normal\",\n    random_state=42\n)\n\n# 변환 수행\ndf_quantile = pd.DataFrame(\n    qt.fit_transform(df_num),\n    columns=num_cols\n)\n\nprint(\"분위수 변환 결과 (상위 5개):\")\nprint(df_quantile.head())\n\n# 왜도 확인\nprint(\"\\n분위수 변환 후 왜도:\")\nprint(df_quantile.skew())\n\n분위수 변환 결과 (상위 5개):\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0       -0.704794       0.690633          -1.663512    -0.366106\n1       -0.649469       0.033085          -1.127632    -0.269985\n2       -0.506872       0.288983          -0.176300    -1.347428\n3             NaN            NaN                NaN          NaN\n4       -1.237926       1.107167          -0.335021    -0.890537\n\n분위수 변환 후 왜도:\nbill_length_mm       0.000202\nbill_depth_mm       -0.010882\nflipper_length_mm   -0.020028\nbody_mass_g          0.006647\ndtype: float64\n\n\n분위수 변환은 왜도가 거의 0에 가까워지며 완벽한 정규분포에 가까운 형태가 된다.\n장단점\n\n\n\n장점\n단점\n\n\n\n\n완벽한 정규분포 생성\n원본 데이터의 실제 거리 정보 손실\n\n\n이상치 영향 제거\n새로운 데이터 처리 시 범위 문제 발생 가능\n\n\n비정상 분포에도 효과적\n해석이 어려움\n\n\n\n적용 상황\n\n극심하게 왜곡된 비정상 분포\n트리 기반 모델이 아닌 알고리즘 사용\n이상치를 완전히 무시하고 싶을 때\n순위 정보만 중요한 경우",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
@@ -516,30 +527,30 @@
     "objectID": "part1/06. 데이터 분포 변환.html#변환-전후-왜도-비교",
     "href": "part1/06. 데이터 분포 변환.html#변환-전후-왜도-비교",
     "title": "6  데이터 분포 변환",
-    "section": "6.7 변환 전·후 왜도 비교",
-    "text": "6.7 변환 전·후 왜도 비교\n\nskew_compare = pd.DataFrame({\n    \"original\": df_num.skew(),\n    \"log\": df_log_safe.skew(),\n    \"yeo-johnson\": df_yeojohnson.skew()\n})\n\nskew_compare\n\n\n\n\n\n\n\n\noriginal\nlog\nyeo-johnson\n\n\n\n\nbill_length_mm\n0.053118\n-0.143463\n-0.023577\n\n\nbill_depth_mm\n-0.143465\n-0.315791\n-0.052609\n\n\nflipper_length_mm\n0.345682\n0.251965\n0.050271\n\n\nbody_mass_g\n0.470329\n0.170721\n0.026153",
+    "section": "6.7 변환 전후 왜도 비교",
+    "text": "6.7 변환 전후 왜도 비교\n다양한 변환 방법의 효과를 정량적으로 비교한다.\n예제: 변환 방법별 왜도 비교\n\n# 왜도 비교 테이블\nskew_compare = pd.DataFrame({\n    \"원본\": df_num.skew(),\n    \"로그\": df_log_safe.skew(),\n    \"제곱근\": df_sqrt.skew(),\n    \"Box-Cox\": df_boxcox.skew(),\n    \"Yeo-Johnson\": df_yeojohnson.skew(),\n    \"분위수\": df_quantile.skew()\n})\n\nprint(\"변환 방법별 왜도 비교:\")\nprint(skew_compare.round(3))\n\n변환 방법별 왜도 비교:\n                      원본     로그    제곱근  Box-Cox  Yeo-Johnson    분위수\nbill_length_mm     0.053 -0.143 -0.049   -0.024       -0.024  0.000\nbill_depth_mm     -0.143 -0.316 -0.235   -0.055       -0.053 -0.011\nflipper_length_mm  0.346  0.252  0.299    0.050        0.050 -0.020\nbody_mass_g        0.470  0.171  0.322    0.026        0.026  0.007\n\n\n일반적으로 분위수 변환이 왜도를 가장 효과적으로 0에 가깝게 만들지만, 원본 데이터의 정보 손실이 가장 크다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
     ]
   },
   {
-    "objectID": "part1/06. 데이터 분포 변환.html#선택-가이드-교안-요약",
-    "href": "part1/06. 데이터 분포 변환.html#선택-가이드-교안-요약",
+    "objectID": "part1/06. 데이터 분포 변환.html#분포-변환과-스케일링의-관계",
+    "href": "part1/06. 데이터 분포 변환.html#분포-변환과-스케일링의-관계",
     "title": "6  데이터 분포 변환",
-    "section": "6.8 선택 가이드 (교안 요약)",
-    "text": "6.8 선택 가이드 (교안 요약)\n\n\n\n방법\n특징\n추천\n\n\n\n\nLog\n단순\n기초\n\n\nSqrt\n완만\n보조\n\n\nBox–Cox\n최적 λ\n양수 데이터\n\n\nYeo–Johnson\n범용\n실무 기본\n\n\nQuantile\n분포 강제\n비정상 분포",
+    "section": "6.8 분포 변환과 스케일링의 관계",
+    "text": "6.8 분포 변환과 스케일링의 관계\n분포 변환과 스케일링은 서로 다른 목적을 가진 전처리 과정이다.\n분포 변환과 스케일링 비교\n\n\n\n구분\n분포 변환\n스케일링\n\n\n\n\n목적\n분포의 모양 변경 (대칭화)\n변수의 크기 조정\n\n\n효과\n왜도 감소, 정규성 개선\n변수 간 스케일 통일\n\n\n변환 예시\n로그, 제곱근, Box-Cox\nMin-Max, Standard, Robust\n\n\n적용 순서\n먼저 수행\n나중에 수행\n\n\n\n일반적인 전처리 순서\n\n결측치 처리: 결측값 제거 또는 대체\n이상치 처리: 이상치 탐지 및 제거/대체\n분포 변환: 왜곡된 분포를 대칭화 (본 장)\n스케일링: 변수 간 크기 통일 (이전 장)\n인코딩: 범주형 변수를 수치형으로 변환\n\n분포 변환을 먼저 수행하는 이유는 왜곡된 분포에서 스케일링을 하면 극단값의 영향을 충분히 제거하지 못하기 때문이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
     ]
   },
   {
-    "objectID": "part1/06. 데이터 분포 변환.html#스케일링과의-관계",
-    "href": "part1/06. 데이터 분포 변환.html#스케일링과의-관계",
+    "objectID": "part1/06. 데이터 분포 변환.html#요약",
+    "href": "part1/06. 데이터 분포 변환.html#요약",
     "title": "6  데이터 분포 변환",
-    "section": "6.9 스케일링과의 관계",
-    "text": "6.9 스케일링과의 관계\n\n분포 변환 → 모양 변경\n스케일링 → 크기 조정\n일반 순서 분포 변환 → 스케일링",
+    "section": "6.9 요약",
+    "text": "6.9 요약\n이 장에서는 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 다양한 변환 기법을 학습했다. 주요 내용은 다음과 같다.\n분포 변환 방법 비교\n\n\n\n\n\n\n\n\n\n\n방법\n공식\n장점\n단점\n적용 상황\n\n\n\n\n로그\n\\(\\log(x)\\)\n간단, 해석 용이\n0 이하 불가\n왜도가 큰 양수 데이터, 지수적 증가\n\n\n제곱근\n\\(\\sqrt{x}\\)\n완만한 변환, 직관적\n효과 제한적\n약한 왜도, 카운트 데이터\n\n\nBox-Cox\n\\(\\frac{x^\\lambda - 1}{\\lambda}\\)\n최적 λ 자동 추정\n양수 전용\n양수 데이터, 최적 변환 필요\n\n\nYeo-Johnson\nBox-Cox 확장\n0, 음수 처리 가능\n해석 복잡\n실무 기본 권장 (범용적)\n\n\n분위수\n순위 기반 매핑\n완벽한 정규분포 생성\n정보 손실\n극심한 왜곡, 비정상 분포\n\n\n\n분포 변환 선택 가이드\n\n기본 선택: Yeo-Johnson 변환 (0, 음수 처리 가능, 실무 권장)\n단순한 경우: 로그 변환 (양수만 있고 왜도가 큰 경우)\n약한 왜곡: 제곱근 변환 (카운트 데이터, 포아송 분포)\n최적화 필요: Box-Cox 변환 (양수 데이터, 통계적 엄격성)\n극심한 왜곡: 분위수 변환 (비정상 분포, 순위만 중요)\n\n실무 전처리 순서\n분포 변환 → 스케일링 순서로 진행한다.\n\n분포 변환: 데이터 분포의 모양을 대칭에 가깝게 변경\n스케일링: 변수 간 크기를 통일\n\n이 순서를 지키면 극단값의 영향을 효과적으로 완화하고 모델의 성능을 향상시킬 수 있다.\n분포 변환은 모델의 가정을 충족시키고 예측 성능을 향상시키는 중요한 전처리 과정이다. 데이터의 분포 특성과 모델의 요구사항을 고려하여 적절한 변환 방법을 선택하는 것이 중요하다. 다음 장에서는 범주형 변수를 수치형으로 변환하는 인코딩 기법을 학습할 것이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>데이터 분포 변환</span>"
@@ -1694,7 +1705,7 @@
     "href": "part2/08. 상관 분석.html#pearson-상관-분석",
     "title": "18  상관 분석",
     "section": "18.3 Pearson 상관 분석",
-    "text": "18.3 Pearson 상관 분석\n\n18.3.1 개념\n\n선형(linear) 관계 측정\n평균과 분산을 기반으로 계산\n정규성 가정이 비교적 중요\n\n\n\n18.3.2 사용 조건\n\n연속형 변수\n선형 관계\n극단값이 많지 않음\n\n\n\n18.3.3 가설 설정\n\nH₀: 두 변수 간 선형 상관이 없다 (ρ = 0)\nH₁: 두 변수 간 선형 상관이 있다 (ρ ≠ 0)\n\n\n\n18.3.4 예제\n\n18.3.4.1 분석 목표\n\n부리 길이(bill_length_mm)와 부리 깊이(bill_depth_mm) 사이의 관계\n\n\nimport seaborn as sns\nfrom scipy.stats import pearsonr\n\ndf = sns.load_dataset(\"penguins\")\n\nx = df[\"bill_length_mm\"]\ny = df[\"bill_depth_mm\"]\n\ndf_corr = df[[\"bill_length_mm\", \"bill_depth_mm\"]].dropna()\n\n\n\n18.3.4.2 Pearson 상관계수 계산\n\nr, p_value = pearsonr(\n    df_corr[\"bill_length_mm\"],\n    df_corr[\"bill_depth_mm\"]\n)\n\nr, p_value\n\n(np.float64(-0.2350528703555327), np.float64(1.1196621961373343e-05))\n\n\n\n\n\n18.3.5 결과 해석\n\nr &gt; 0\n\n양의 선형 관계\n\n|r|가 클수록\n\n관계가 강함\n\np-value &lt; 0.05\n\n상관관계가 통계적으로 유의함",
+    "text": "18.3 Pearson 상관 분석\n\n18.3.1 개념\n\n선형(linear) 관계 측정\n평균과 분산을 기반으로 계산\n정규성 가정이 비교적 중요\n\n\n\n18.3.2 사용 조건\n\n연속형 변수\n선형 관계\n극단값이 많지 않음\n\n\n\n18.3.3 가설 설정\n\nH₀: 두 변수 간 선형 상관이 없다 (ρ = 0)\nH₁: 두 변수 간 선형 상관이 있다 (ρ ≠ 0)\n\n\n\n18.3.4 예제\n\n18.3.4.1 분석 목표\n\n부리 길이(bill_length_mm)와 부리 깊이(bill_depth_mm) 사이의 관계\n\n\nimport seaborn as sns\nfrom scipy.stats import pearsonr\n\ndf = sns.load_dataset(\"penguins\")\n\nx = df[\"bill_length_mm\"]\ny = df[\"bill_depth_mm\"]\n\ndf_corr = df[[\"bill_length_mm\", \"bill_depth_mm\"]].dropna()\n\n\n\n18.3.4.2 Pearson 상관계수 계산\n\nr, p_value = pearsonr(\n    df_corr[\"bill_length_mm\"],\n    df_corr[\"bill_depth_mm\"]\n)\n\nr, p_value\n\n(np.float64(-0.23505287035553268), np.float64(1.1196621961373564e-05))\n\n\n\n\n\n18.3.5 결과 해석\n\nr &gt; 0\n\n양의 선형 관계\n\n|r|가 클수록\n\n관계가 강함\n\np-value &lt; 0.05\n\n상관관계가 통계적으로 유의함",
     "crumbs": [
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
@@ -2057,7 +2068,7 @@
     "href": "part3/04. 회귀 모델.html#선형-회귀",
     "title": "22  회귀 모델",
     "section": "22.2 선형 회귀",
-    "text": "22.2 선형 회귀\n\n22.2.1 기본 개념\n선형 회귀(Linear Regression)는 입력 변수와 출력 변수 사이의 관계를 선형 결합으로 표현한다.\n\n22.2.1.1 수식 형태\n\\[\ny = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots + \\beta_p x_p + \\varepsilon\n\\]\n\n\\(\\beta\\): 회귀 계수\n\\(\\varepsilon\\): 오차항\n\n\n\n\n22.2.2 선형 회귀의 가정\n\n선형성\n독립성\n등분산성\n정규성 (오차)\n\n현실 데이터에서는 완벽히 만족하지 않는 경우가 많음\n\n\n22.2.3 선형 회귀 예제\n\nimport seaborn as sns\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import train_test_split\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\nX = df[[\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\"]]\ny = df[\"body_mass_g\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\nmodel.coef_, model.intercept_\n\n(array([ 3.85768347, 10.05813347, 50.24725463]),\n np.float64(-6227.688410615796))\n\n\n\n\n22.2.4 선형 회귀의 한계\n\n다중공선성 문제\n과적합 위험\n변수 수가 많을수록 불안정\n\n이를 해결하기 위한 방법이 정규화 회귀",
+    "text": "22.2 선형 회귀\n\n22.2.1 기본 개념\n선형 회귀(Linear Regression)는 입력 변수와 출력 변수 사이의 관계를 선형 결합으로 표현한다.\n\n22.2.1.1 수식 형태\n\\[\ny = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots + \\beta_p x_p + \\varepsilon\n\\]\n\n\\(\\beta\\): 회귀 계수\n\\(\\varepsilon\\): 오차항\n\n\n\n\n22.2.2 선형 회귀의 가정\n\n선형성\n독립성\n등분산성\n정규성 (오차)\n\n현실 데이터에서는 완벽히 만족하지 않는 경우가 많음\n\n\n22.2.3 선형 회귀 예제\n\nimport seaborn as sns\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import train_test_split\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\nX = df[[\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\"]]\ny = df[\"body_mass_g\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\nmodel.coef_, model.intercept_\n\n(array([ 3.85768347, 10.05813347, 50.24725463]),\n np.float64(-6227.688410615794))\n\n\n\n\n22.2.4 선형 회귀의 한계\n\n다중공선성 문제\n과적합 위험\n변수 수가 많을수록 불안정\n\n이를 해결하기 위한 방법이 정규화 회귀",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"

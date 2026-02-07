@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,9 +107,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -407,33 +404,22 @@ window.Quarto = {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#분포-변환-이유" id="toc-분포-변환-이유" class="nav-link active" data-scroll-target="#분포-변환-이유"><span class="header-section-number">6.1</span> 분포 변환 이유</a></li>
+  <li><a href="#분포-변환의-필요성" id="toc-분포-변환의-필요성" class="nav-link active" data-scroll-target="#분포-변환의-필요성"><span class="header-section-number">6.1</span> 분포 변환의 필요성</a></li>
   <li><a href="#로그-변환-log-transform" id="toc-로그-변환-log-transform" class="nav-link" data-scroll-target="#로그-변환-log-transform"><span class="header-section-number">6.2</span> 로그 변환 (Log Transform)</a>
   <ul>
-  <li><a href="#수식" id="toc-수식" class="nav-link" data-scroll-target="#수식"><span class="header-section-number">6.2.1</span> 수식</a></li>
-  <li><a href="#코드" id="toc-코드" class="nav-link" data-scroll-target="#코드"><span class="header-section-number">6.2.2</span> 코드</a></li>
-  <li><a href="#포함-변수-안전-처리" id="toc-포함-변수-안전-처리" class="nav-link" data-scroll-target="#포함-변수-안전-처리"><span class="header-section-number">6.2.3</span> 0 포함 변수 안전 처리</a></li>
-  <li><a href="#왜도-변화-확인" id="toc-왜도-변화-확인" class="nav-link" data-scroll-target="#왜도-변화-확인"><span class="header-section-number">6.2.4</span> 왜도 변화 확인</a></li>
+  <li><a href="#포함-변수의-안전한-처리" id="toc-포함-변수의-안전한-처리" class="nav-link" data-scroll-target="#포함-변수의-안전한-처리"><span class="header-section-number">6.2.1</span> 0 포함 변수의 안전한 처리</a></li>
+  <li><a href="#왜도-변화-확인" id="toc-왜도-변화-확인" class="nav-link" data-scroll-target="#왜도-변화-확인"><span class="header-section-number">6.2.2</span> 왜도 변화 확인</a></li>
   </ul></li>
   <li><a href="#제곱근-변환-square-root-transform" id="toc-제곱근-변환-square-root-transform" class="nav-link" data-scroll-target="#제곱근-변환-square-root-transform"><span class="header-section-number">6.3</span> 제곱근 변환 (Square Root Transform)</a>
   <ul>
-  <li><a href="#수식-1" id="toc-수식-1" class="nav-link" data-scroll-target="#수식-1"><span class="header-section-number">6.3.1</span> 수식</a></li>
-  <li><a href="#코드-1" id="toc-코드-1" class="nav-link" data-scroll-target="#코드-1"><span class="header-section-number">6.3.2</span> 코드</a></li>
-  <li><a href="#제곱근-변환과-비교" id="toc-제곱근-변환과-비교" class="nav-link" data-scroll-target="#제곱근-변환과-비교"><span class="header-section-number">6.3.3</span> 제곱근 변환과 비교</a></li>
+  <li><a href="#로그-변환과-제곱근-변환-비교" id="toc-로그-변환과-제곱근-변환-비교" class="nav-link" data-scroll-target="#로그-변환과-제곱근-변환-비교"><span class="header-section-number">6.3.1</span> 로그 변환과 제곱근 변환 비교</a></li>
   </ul></li>
-  <li><a href="#boxcox-변환" id="toc-boxcox-변환" class="nav-link" data-scroll-target="#boxcox-변환"><span class="header-section-number">6.4</span> Box–Cox 변환</a>
-  <ul>
-  <li><a href="#수식-2" id="toc-수식-2" class="nav-link" data-scroll-target="#수식-2"><span class="header-section-number">6.4.1</span> 수식</a></li>
-  <li><a href="#코드-2" id="toc-코드-2" class="nav-link" data-scroll-target="#코드-2"><span class="header-section-number">6.4.2</span> 코드</a></li>
-  </ul></li>
-  <li><a href="#yeojohnson-변환" id="toc-yeojohnson-변환" class="nav-link" data-scroll-target="#yeojohnson-변환"><span class="header-section-number">6.5</span> Yeo–Johnson 변환</a>
-  <ul>
-  <li><a href="#sklearn-사용" id="toc-sklearn-사용" class="nav-link" data-scroll-target="#sklearn-사용"><span class="header-section-number">6.5.1</span> sklearn 사용</a></li>
-  </ul></li>
+  <li><a href="#box-cox-변환" id="toc-box-cox-변환" class="nav-link" data-scroll-target="#box-cox-변환"><span class="header-section-number">6.4</span> Box-Cox 변환</a></li>
+  <li><a href="#yeo-johnson-변환" id="toc-yeo-johnson-변환" class="nav-link" data-scroll-target="#yeo-johnson-변환"><span class="header-section-number">6.5</span> Yeo-Johnson 변환</a></li>
   <li><a href="#분위수-변환-quantile-transform" id="toc-분위수-변환-quantile-transform" class="nav-link" data-scroll-target="#분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</a></li>
-  <li><a href="#변환-전후-왜도-비교" id="toc-변환-전후-왜도-비교" class="nav-link" data-scroll-target="#변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전·후 왜도 비교</a></li>
-  <li><a href="#선택-가이드-교안-요약" id="toc-선택-가이드-교안-요약" class="nav-link" data-scroll-target="#선택-가이드-교안-요약"><span class="header-section-number">6.8</span> 선택 가이드 (교안 요약)</a></li>
-  <li><a href="#스케일링과의-관계" id="toc-스케일링과의-관계" class="nav-link" data-scroll-target="#스케일링과의-관계"><span class="header-section-number">6.9</span> 스케일링과의 관계</a></li>
+  <li><a href="#변환-전후-왜도-비교" id="toc-변환-전후-왜도-비교" class="nav-link" data-scroll-target="#변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전후 왜도 비교</a></li>
+  <li><a href="#분포-변환과-스케일링의-관계" id="toc-분포-변환과-스케일링의-관계" class="nav-link" data-scroll-target="#분포-변환과-스케일링의-관계"><span class="header-section-number">6.8</span> 분포 변환과 스케일링의 관계</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">6.9</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/06. 데이터 분포 변환.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -465,359 +451,600 @@ window.Quarto = {
 </header>
 
 
-<p>예제 데이터셋 적재</p>
-<div id="4ea77f94" class="cell" data-execution_count="1">
+<p>데이터 분포 변환(Distribution Transformation)은 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 과정이다. 많은 통계 모델과 머신러닝 알고리즘은 데이터가 정규분포를 따른다고 가정하므로, 왜곡된 분포는 모델 성능을 저하시킬 수 있다. 분포 변환을 통해 극단값의 영향을 완화하고 모델의 가정을 충족시킬 수 있다. 이 장에서는 로그 변환, 제곱근 변환, Box-Cox 변환, Yeo-Johnson 변환 등 다양한 분포 변환 기법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="5aa72cbd" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df_num <span class="op">=</span> df[num_cols]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 수치형 컬럼 선택</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>df_num <span class="op">=</span> df[num_cols]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="분포-변환-이유" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="분포-변환-이유"><span class="header-section-number">6.1</span> 분포 변환 이유</h2>
-<div id="250dc531" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_num.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>bill_length_mm       0.053118
+<section id="분포-변환의-필요성" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="분포-변환의-필요성"><span class="header-section-number">6.1</span> 분포 변환의 필요성</h2>
+<p>실제 데이터는 정규분포보다는 왜곡된 분포를 보이는 경우가 많다. 특히 양의 왜도(positive skewness)를 가진 데이터가 일반적이다. 왜도는 분포의 비대칭 정도를 나타내는 지표로, 0에 가까울수록 대칭적이고 절댓값이 클수록 왜곡이 심하다.</p>
+<p><strong>예제: 원본 데이터의 왜도 확인</strong></p>
+<div id="4b235c4d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 변수의 왜도 계산</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>skewness <span class="op">=</span> df_num.skew()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"변수별 왜도:"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(skewness)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">해석:"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"- 왜도 &gt; 0.5: 오른쪽으로 치우침 (양의 왜도)"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"- -0.5 &lt; 왜도 &lt; 0.5: 대칭에 가까움"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"- 왜도 &lt; -0.5: 왼쪽으로 치우침 (음의 왜도)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>변수별 왜도:
+bill_length_mm       0.053118
 bill_depth_mm       -0.143465
 flipper_length_mm    0.345682
 body_mass_g          0.470329
-dtype: float64</code></pre>
+dtype: float64
+
+해석:
+- 왜도 &gt; 0.5: 오른쪽으로 치우침 (양의 왜도)
+- -0.5 &lt; 왜도 &lt; 0.5: 대칭에 가까움
+- 왜도 &lt; -0.5: 왼쪽으로 치우침 (음의 왜도)</code></pre>
 </div>
 </div>
-<p>대부분 데이터는 <strong>양의 왜도(skewness)</strong> 형태를 보이며 평균·분산 기반 모델(선형 회귀, PCA 등)에 불리</p>
-<p>분포를 <strong>대칭에 가깝게</strong> 변환함으로써 극단값 영향 완화, 모델 가정 충족이 목표</p>
+<p>왜곡된 분포는 다음과 같은 문제를 일으킨다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>문제점</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모델 가정 위배</td>
+<td>선형 회귀, PCA 등은 정규성을 가정함</td>
+</tr>
+<tr class="even">
+<td>극단값 영향</td>
+<td>평균과 분산이 소수 극단값에 의해 왜곡됨</td>
+</tr>
+<tr class="odd">
+<td>예측 성능 저하</td>
+<td>학습 데이터와 테스트 데이터의 분포 차이 발생</td>
+</tr>
+<tr class="even">
+<td>해석 어려움</td>
+<td>비선형 관계로 인한 계수 해석의 복잡성 증가</td>
+</tr>
+</tbody>
+</table>
+<p>분포 변환의 목표는 데이터를 대칭에 가깝게 만들어 극단값의 영향을 완화하고 모델의 가정을 충족시키는 것이다.</p>
 </section>
 <section id="로그-변환-log-transform" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="로그-변환-log-transform"><span class="header-section-number">6.2</span> 로그 변환 (Log Transform)</h2>
-<p>오른쪽 꼬리가 긴 분포(양의 왜도, Positive)에 효과적</p>
-<section id="수식" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="수식"><span class="header-section-number">6.2.1</span> 수식</h3>
+<p>로그 변환은 오른쪽 꼬리가 긴 분포(양의 왜도)를 가진 데이터에 가장 효과적인 방법이다. 지수적으로 증가하는 데이터를 선형에 가깝게 만들어준다.</p>
+<p><strong>변환 공식</strong></p>
 <p><span class="math display">\[
 x' = \log(x)
 \]</span></p>
-<p>0 이하 값 변환 불가로 보정 필요</p>
-</section>
-<section id="코드" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="코드"><span class="header-section-number">6.2.2</span> 코드</h3>
-<div id="d7021462" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_log <span class="op">=</span> df_num.copy()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    df_log[col] <span class="op">=</span> np.log(df_log[col])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>로그 변환은 큰 값의 차이를 압축하고 작은 값의 차이를 확대하여 분포를 대칭에 가깝게 만든다. 다만, 0 이하의 값은 변환할 수 없으므로 보정이 필요하다.</p>
+<p><strong>예제: 기본 로그 변환</strong></p>
+<div id="12ee54df" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 변환 (자연로그 사용)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_log <span class="op">=</span> df_num.copy()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    df_log[col] <span class="op">=</span> np.log(df_log[col])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"로그 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
-0          3.666122       2.928524           5.198497     8.229511
-1          3.676301       2.856470           5.225747     8.242756
-2          3.696351       2.890372           5.273000     8.086410
-3               NaN            NaN                NaN          NaN
-4          3.602777       2.960105           5.262690     8.146130
-..              ...            ...                ...          ...
-339             NaN            NaN                NaN          NaN
-340        3.845883       2.660260           5.370638     8.486734
-341        3.919991       2.753661           5.402677     8.656955
-342        3.811097       2.694627           5.356586     8.556414
-343        3.910021       2.778819           5.361292     8.594154
-
-[344 rows x 4 columns]</code></pre>
+<pre><code>로그 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0        3.666122       2.928524           5.198497     8.229511
+1        3.676301       2.856470           5.225747     8.242756
+2        3.696351       2.890372           5.273000     8.086410
+3             NaN            NaN                NaN          NaN
+4        3.602777       2.960105           5.262690     8.146130</code></pre>
 </div>
 </div>
-</section>
-<section id="포함-변수-안전-처리" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="포함-변수-안전-처리"><span class="header-section-number">6.2.3</span> 0 포함 변수 안전 처리</h3>
-<div id="08b161c7" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_log_safe <span class="op">=</span> np.log1p(df_num)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log_safe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="포함-변수의-안전한-처리" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="포함-변수의-안전한-처리"><span class="header-section-number">6.2.1</span> 0 포함 변수의 안전한 처리</h3>
+<p>데이터에 0이 포함된 경우 <code>np.log(0)</code>는 <code>-inf</code>를 반환하므로 문제가 발생한다. 이를 방지하기 위해 <code>np.log1p(x)</code>를 사용한다. 이 함수는 <span class="math inline">\(\log(1 + x)\)</span>를 계산하므로 0도 안전하게 처리할 수 있다.</p>
+<p><strong>예제: log1p를 사용한 안전한 로그 변환</strong></p>
+<div id="e17971f7" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># log1p: log(1 + x) 계산</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_log_safe <span class="op">=</span> np.log1p(df_num)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"log1p 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log_safe.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
-0          3.691376       2.980619           5.204007     8.229778
-1          3.701302       2.912351           5.231109     8.243019
-2          3.720862       2.944439           5.278115     8.086718
-3               NaN            NaN                NaN          NaN
-4          3.629660       3.010621           5.267858     8.146419
-..              ...            ...                ...          ...
-339             NaN            NaN                NaN          NaN
-340        3.867026       2.727853           5.375278     8.486940
-341        3.939638       2.815409           5.407172     8.657129
-342        3.832980       2.760010           5.361292     8.556606
-343        3.929863       2.839078           5.365976     8.594339
-
-[344 rows x 4 columns]</code></pre>
+<pre><code>log1p 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0        3.691376       2.980619           5.204007     8.229778
+1        3.701302       2.912351           5.231109     8.243019
+2        3.720862       2.944439           5.278115     8.086718
+3             NaN            NaN                NaN          NaN
+4        3.629660       3.010621           5.267858     8.146419</code></pre>
 </div>
 </div>
 </section>
-<section id="왜도-변화-확인" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="왜도-변화-확인"><span class="header-section-number">6.2.4</span> 왜도 변화 확인</h3>
-<div id="0978fa2d" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_log_safe.skew()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>bill_length_mm      -0.143463
+<section id="왜도-변화-확인" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="왜도-변화-확인"><span class="header-section-number">6.2.2</span> 왜도 변화 확인</h3>
+<p>로그 변환 후 왜도가 어떻게 변했는지 확인한다.</p>
+<p><strong>예제: 로그 변환 후 왜도 비교</strong></p>
+<div id="f2a577c0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환 전후 왜도 비교</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"원본 왜도:"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_num.skew())</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">로그 변환 후 왜도:"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_log_safe.skew())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>원본 왜도:
+bill_length_mm       0.053118
+bill_depth_mm       -0.143465
+flipper_length_mm    0.345682
+body_mass_g          0.470329
+dtype: float64
+
+로그 변환 후 왜도:
+bill_length_mm      -0.143463
 bill_depth_mm       -0.315791
 flipper_length_mm    0.251965
 body_mass_g          0.170721
 dtype: float64</code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="제곱근-변환-square-root-transform" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="제곱근-변환-square-root-transform"><span class="header-section-number">6.3</span> 제곱근 변환 (Square Root Transform)</h2>
-<p>로그보다 완만한 변환</p>
-<section id="수식-1" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="수식-1"><span class="header-section-number">6.3.1</span> 수식</h3>
-<p><span class="math display">\[
-x' = \sqrt{x}
-\]</span></p>
-</section>
-<section id="코드-1" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="코드-1"><span class="header-section-number">6.3.2</span> 코드</h3>
-<div id="7fc8996f" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_sqrt <span class="op">=</span> np.sqrt(df_num)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_sqrt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
-0          6.252999       4.324350          13.453624    61.237244
-1          6.284903       4.171331          13.638182    61.644140
-2          6.348228       4.242641          13.964240    57.008771
-3               NaN            NaN                NaN          NaN
-4          6.058052       4.393177          13.892444    58.736701
-..              ...            ...                ...          ...
-339             NaN            NaN                NaN          NaN
-340        6.841053       3.781534          14.662878    69.641941
-341        7.099296       3.962323          14.899664    75.828754
-342        6.723095       3.847077          14.560220    72.111026
-343        7.063993       4.012481          14.594520    73.484692
-
-[344 rows x 4 columns]</code></pre>
-</div>
-</div>
-</section>
-<section id="제곱근-변환과-비교" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="제곱근-변환과-비교"><span class="header-section-number">6.3.3</span> 제곱근 변환과 비교</h3>
-<p>제곱근이 적합한 경우</p>
+<p>일반적으로 로그 변환 후 왜도의 절댓값이 감소하여 분포가 더 대칭적이 된다.</p>
+<p><strong>적용 상황</strong></p>
 <ul>
-<li>왜도가 심하지 않음</li>
-<li>데이터 범위가 크지 않음</li>
-<li>분포를 살짝만 정리하고 싶을 때</li>
-<li>카운트 데이터 (포아송 계열)</li>
-</ul>
-<p>로그가 적합한 경우</p>
-<ul>
-<li>왜도가 매우 큼</li>
-<li>극단값(outlier)이 많음</li>
-<li>선형 회귀, PCA, 거리 기반 모델</li>
+<li>왜도가 매우 큰 경우 (&gt; 1.0)</li>
+<li>극단값(이상치)이 많은 경우</li>
+<li>지수적 증가 패턴을 보이는 데이터</li>
+<li>금융 데이터, 인구 데이터, 소득 데이터 등</li>
 <li>“비율 변화”가 중요한 문제</li>
 </ul>
 </section>
 </section>
-<section id="boxcox-변환" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="boxcox-변환"><span class="header-section-number">6.4</span> Box–Cox 변환</h2>
-<p>로그의 일반화 버전으로 λ(람다)를 자동 추정 (단, 양수 전용)</p>
-<section id="수식-2" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="수식-2"><span class="header-section-number">6.4.1</span> 수식</h3>
+<section id="제곱근-변환-square-root-transform" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="제곱근-변환-square-root-transform"><span class="header-section-number">6.3</span> 제곱근 변환 (Square Root Transform)</h2>
+<p>제곱근 변환은 로그 변환보다 완만한 변환 방법으로, 왜도가 그리 심하지 않은 데이터에 적합하다. 포아송 분포를 따르는 카운트 데이터에 특히 효과적이다.</p>
+<p><strong>변환 공식</strong></p>
+<p><span class="math display">\[
+x' = \sqrt{x}
+\]</span></p>
+<p><strong>예제: 제곱근 변환</strong></p>
+<div id="91b93135" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 제곱근 변환</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_sqrt <span class="op">=</span> np.sqrt(df_num)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"제곱근 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_sqrt.head())</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 왜도 확인</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">제곱근 변환 후 왜도:"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_sqrt.skew())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>제곱근 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0        6.252999       4.324350          13.453624    61.237244
+1        6.284903       4.171331          13.638182    61.644140
+2        6.348228       4.242641          13.964240    57.008771
+3             NaN            NaN                NaN          NaN
+4        6.058052       4.393177          13.892444    58.736701
+
+제곱근 변환 후 왜도:
+bill_length_mm      -0.048524
+bill_depth_mm       -0.235482
+flipper_length_mm    0.298802
+body_mass_g          0.322080
+dtype: float64</code></pre>
+</div>
+</div>
+<section id="로그-변환과-제곱근-변환-비교" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="로그-변환과-제곱근-변환-비교"><span class="header-section-number">6.3.1</span> 로그 변환과 제곱근 변환 비교</h3>
+<p>두 변환 방법의 선택 기준은 다음과 같다.</p>
+<p><strong>제곱근 변환이 적합한 경우</strong></p>
+<ul>
+<li>왜도가 심하지 않음 (0.5 ~ 1.5)</li>
+<li>데이터 범위가 크지 않음</li>
+<li>분포를 약간만 조정하고 싶을 때</li>
+<li>카운트 데이터 (포아송 분포)</li>
+<li>변환 전후 해석이 직관적이어야 할 때</li>
+</ul>
+<p><strong>로그 변환이 적합한 경우</strong></p>
+<ul>
+<li>왜도가 매우 큼 (&gt; 1.5)</li>
+<li>극단값(이상치)이 많음</li>
+<li>데이터 범위가 매우 넓음 (여러 자릿수 차이)</li>
+<li>선형 회귀, PCA, 거리 기반 모델 사용</li>
+<li>“비율 변화”가 중요한 문제 (예: 수익률, 성장률)</li>
+</ul>
+</section>
+</section>
+<section id="box-cox-변환" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="box-cox-변환"><span class="header-section-number">6.4</span> Box-Cox 변환</h2>
+<p>Box-Cox 변환은 로그 변환의 일반화된 형태로, 최적의 변환 파라미터 λ(람다)를 자동으로 추정한다. 다양한 변환을 포괄하는 강력한 방법이지만 양수 데이터에만 적용할 수 있다.</p>
+<p><strong>변환 공식</strong></p>
 <p><span class="math display">\[
 x' =
 \begin{cases}
-\frac{x^\lambda - 1}{\lambda}, &amp; \lambda \neq 0 \
+\frac{x^\lambda - 1}{\lambda}, &amp; \lambda \neq 0 \\
 \log(x), &amp; \lambda = 0
 \end{cases}
 \]</span></p>
-</section>
-<section id="코드-2" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="코드-2"><span class="header-section-number">6.4.2</span> 코드</h3>
-<div id="6b896346" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> boxcox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="987e469f" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_boxcox <span class="op">=</span> df_num.copy()</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> {}</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_boxcox[col].dropna()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    transformed, lam <span class="op">=</span> boxcox(data)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    df_boxcox.loc[data.index, col] <span class="op">=</span> transformed</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    lambdas[col] <span class="op">=</span> lam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="184c2ef7" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lambdas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>{'bill_length_mm': np.float64(0.6201739671602454),
- 'bill_depth_mm': np.float64(1.4747606585324315),
- 'flipper_length_mm': np.float64(-2.0632096556190813),
- 'body_mass_g': np.float64(-0.4656520321320674)}</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="yeojohnson-변환" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="yeojohnson-변환"><span class="header-section-number">6.5</span> Yeo–Johnson 변환</h2>
-<p>Box–Cox의 확장 방식으로 0, 음수에 대해서도 변환 가능</p>
-<section id="sklearn-사용" class="level3" data-number="6.5.1">
-<h3 data-number="6.5.1" class="anchored" data-anchor-id="sklearn-사용"><span class="header-section-number">6.5.1</span> sklearn 사용</h3>
-<div id="27e70658" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="36e40d5f" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_yeojohnson <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    pt.fit_transform(df_num),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>0, 음수 허용를 허용하며 결측치 제외 후 자동 처리</p>
-</section>
-</section>
-<section id="분위수-변환-quantile-transform" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</h2>
-<p>분포 모양 자체를 바꿈</p>
-<div id="f0defa66" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="94de5591" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>qt <span class="op">=</span> QuantileTransformer(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output_distribution<span class="op">=</span><span class="st">"normal"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>df_quantile <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    qt.fit_transform(df_num),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_quantile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
-0         -0.704794       0.690633          -1.663512    -0.366106
-1         -0.649469       0.033085          -1.127632    -0.269985
-2         -0.506872       0.288983          -0.176300    -1.347428
-3               NaN            NaN                NaN          NaN
-4         -1.237926       1.107167          -0.335021    -0.890537
-..              ...            ...                ...          ...
-339             NaN            NaN                NaN          NaN
-340        0.449514      -1.286551           0.796647     0.737791
-341        1.120759      -0.627072           1.413753     1.848596
-342        0.091477      -0.963539           0.596232     1.042077
-343        0.965467      -0.465743           0.653988     1.245827
-
-[344 rows x 4 columns]</code></pre>
-</div>
-</div>
-</section>
-<section id="변환-전후-왜도-비교" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전·후 왜도 비교</h2>
-<div id="c5e62af1" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>skew_compare <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"original"</span>: df_num.skew(),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"log"</span>: df_log_safe.skew(),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"yeo-johnson"</span>: df_yeojohnson.skew()</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>skew_compare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">original</th>
-<th data-quarto-table-cell-role="th">log</th>
-<th data-quarto-table-cell-role="th">yeo-johnson</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">bill_length_mm</th>
-<td>0.053118</td>
-<td>-0.143463</td>
-<td>-0.023577</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">bill_depth_mm</th>
-<td>-0.143465</td>
-<td>-0.315791</td>
-<td>-0.052609</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">flipper_length_mm</th>
-<td>0.345682</td>
-<td>0.251965</td>
-<td>0.050271</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">body_mass_g</th>
-<td>0.470329</td>
-<td>0.170721</td>
-<td>0.026153</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="선택-가이드-교안-요약" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="선택-가이드-교안-요약"><span class="header-section-number">6.8</span> 선택 가이드 (교안 요약)</h2>
+<p>여기서 λ는 최대우도추정법(MLE)을 통해 자동으로 결정된다. λ 값에 따라 다음과 같은 변환이 수행된다.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>방법</th>
-<th>특징</th>
-<th>추천</th>
+<th>λ 값</th>
+<th>변환 방법</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Log</td>
-<td>단순</td>
-<td>기초</td>
+<td>λ = 1</td>
+<td>변환 없음</td>
 </tr>
 <tr class="even">
-<td>Sqrt</td>
-<td>완만</td>
-<td>보조</td>
+<td>λ = 0.5</td>
+<td>제곱근 변환</td>
 </tr>
 <tr class="odd">
-<td>Box–Cox</td>
-<td>최적 λ</td>
-<td>양수 데이터</td>
+<td>λ = 0</td>
+<td>로그 변환</td>
 </tr>
 <tr class="even">
-<td>Yeo–Johnson</td>
-<td>범용</td>
-<td><strong>실무 기본</strong></td>
-</tr>
-<tr class="odd">
-<td>Quantile</td>
-<td>분포 강제</td>
-<td>비정상 분포</td>
+<td>λ = -1</td>
+<td>역수 변환</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="스케일링과의-관계" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="스케일링과의-관계"><span class="header-section-number">6.9</span> 스케일링과의 관계</h2>
+<p><strong>예제: Box-Cox 변환</strong></p>
+<div id="29f6a549" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> boxcox</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Box-Cox 변환</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df_boxcox <span class="op">=</span> df_num.copy()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>lambdas <span class="op">=</span> {}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 결측치 제거</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df_boxcox[col].dropna()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Box-Cox 변환 및 최적 람다 추정</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    transformed, lam <span class="op">=</span> boxcox(data)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 변환 결과 저장</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    df_boxcox.loc[data.index, col] <span class="op">=</span> transformed</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    lambdas[col] <span class="op">=</span> lam</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Box-Cox 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_boxcox.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Box-Cox 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0       14.051916      50.248024           0.484671     2.101002
+1       14.151106      45.114142           0.484672     2.101288
+2       14.348349      47.461799           0.484673     2.097796
+3             NaN            NaN                NaN          NaN
+4       13.448467      52.676024           0.484672     2.099160</code></pre>
+</div>
+</div>
+<p><strong>예제: 추정된 λ 값 확인</strong></p>
+<div id="ae915bfb" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 변수의 최적 람다 값</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"변수별 최적 λ 값:"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, lam <span class="kw">in</span> lambdas.items():</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>lam<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>변수별 최적 λ 값:
+bill_length_mm: 0.6202
+bill_depth_mm: 1.4748
+flipper_length_mm: -2.0632
+body_mass_g: -0.4657</code></pre>
+</div>
+</div>
+<p>λ 값이 0에 가까우면 로그 변환에 가깝고, 0.5에 가까우면 제곱근 변환에 가깝다.</p>
+<p><strong>적용 상황</strong></p>
 <ul>
-<li>분포 변환 → <strong>모양 변경</strong></li>
-<li>스케일링 → <strong>크기 조정</strong></li>
-<li>일반 순서 <strong>분포 변환 → 스케일링</strong></li>
+<li>양수 데이터만 있는 경우</li>
+<li>최적의 변환을 자동으로 찾고 싶을 때</li>
+<li>통계적 가정(정규성)을 엄격히 만족해야 하는 경우</li>
 </ul>
+</section>
+<section id="yeo-johnson-변환" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="yeo-johnson-변환"><span class="header-section-number">6.5</span> Yeo-Johnson 변환</h2>
+<p>Yeo-Johnson 변환은 Box-Cox 변환의 확장 버전으로, 0과 음수 값도 처리할 수 있다. 실무에서 가장 권장되는 방법이다.</p>
+<p><strong>변환 공식</strong></p>
+<p>Yeo-Johnson 변환은 데이터의 부호에 따라 다른 공식을 적용한다.</p>
+<ul>
+<li><span class="math inline">\(x \geq 0, \lambda \neq 0\)</span>: <span class="math inline">\(\frac{(x+1)^\lambda - 1}{\lambda}\)</span></li>
+<li><span class="math inline">\(x \geq 0, \lambda = 0\)</span>: <span class="math inline">\(\log(x+1)\)</span></li>
+<li><span class="math inline">\(x &lt; 0, \lambda \neq 2\)</span>: <span class="math inline">\(-\frac{(-x+1)^{2-\lambda} - 1}{2-\lambda}\)</span></li>
+<li><span class="math inline">\(x &lt; 0, \lambda = 2\)</span>: <span class="math inline">\(-\log(-x+1)\)</span></li>
+</ul>
+<p><strong>예제: Yeo-Johnson 변환</strong></p>
+<div id="d2503892" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Yeo-Johnson 변환기 생성</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환 수행</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>df_yeojohnson <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    pt.fit_transform(df_num),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Yeo-Johnson 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_yeojohnson.head())</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 추정된 람다 값 확인</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">변수별 최적 λ 값:"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, col <span class="kw">in</span> <span class="bu">enumerate</span>(num_cols):</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>pt<span class="sc">.</span>lambdas_[i]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Yeo-Johnson 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0       -0.878666       0.778009          -1.580741    -0.481138
+1       -0.802301       0.099099          -1.104687    -0.407311
+2       -0.650437       0.409486          -0.339984    -1.308479
+3             NaN            NaN                NaN          NaN
+4       -1.343166       1.099289          -0.500529    -0.956498
+
+변수별 최적 λ 값:
+bill_length_mm: 0.6153
+bill_depth_mm: 1.5132
+flipper_length_mm: -2.0775
+body_mass_g: -0.4660</code></pre>
+</div>
+</div>
+<p>Yeo-Johnson 변환은 다음과 같은 장점이 있다.</p>
+<ul>
+<li>0과 음수 값을 자동으로 처리</li>
+<li>결측치를 제외하고 자동 변환</li>
+<li>sklearn 파이프라인과 통합 가능</li>
+<li>실무에서 가장 안전하고 범용적</li>
+</ul>
+<p><strong>적용 상황</strong></p>
+<ul>
+<li>0 또는 음수를 포함하는 데이터</li>
+<li>실무에서 기본적으로 사용할 변환 방법</li>
+<li>자동화된 전처리 파이프라인 구축</li>
+</ul>
+</section>
+<section id="분위수-변환-quantile-transform" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="분위수-변환-quantile-transform"><span class="header-section-number">6.6</span> 분위수 변환 (Quantile Transform)</h2>
+<p>분위수 변환은 데이터의 분위수를 목표 분포의 분위수로 매핑하여 분포 자체를 강제로 변환하는 방법이다. 다른 변환 방법과 달리 순위 정보만 유지하고 분포 형태를 완전히 바꾼다.</p>
+<p><strong>예제: 분위수 변환 (정규분포)</strong></p>
+<div id="7941166b" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> QuantileTransformer</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 분위수 변환기 생성 (출력 분포: 정규분포)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>qt <span class="op">=</span> QuantileTransformer(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    output_distribution<span class="op">=</span><span class="st">"normal"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환 수행</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df_quantile <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    qt.fit_transform(df_num),</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>num_cols</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"분위수 변환 결과 (상위 5개):"</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_quantile.head())</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 왜도 확인</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">분위수 변환 후 왜도:"</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_quantile.skew())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>분위수 변환 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+0       -0.704794       0.690633          -1.663512    -0.366106
+1       -0.649469       0.033085          -1.127632    -0.269985
+2       -0.506872       0.288983          -0.176300    -1.347428
+3             NaN            NaN                NaN          NaN
+4       -1.237926       1.107167          -0.335021    -0.890537
+
+분위수 변환 후 왜도:
+bill_length_mm       0.000202
+bill_depth_mm       -0.010882
+flipper_length_mm   -0.020028
+body_mass_g          0.006647
+dtype: float64</code></pre>
+</div>
+</div>
+<p>분위수 변환은 왜도가 거의 0에 가까워지며 완벽한 정규분포에 가까운 형태가 된다.</p>
+<p><strong>장단점</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>완벽한 정규분포 생성</td>
+<td>원본 데이터의 실제 거리 정보 손실</td>
+</tr>
+<tr class="even">
+<td>이상치 영향 제거</td>
+<td>새로운 데이터 처리 시 범위 문제 발생 가능</td>
+</tr>
+<tr class="odd">
+<td>비정상 분포에도 효과적</td>
+<td>해석이 어려움</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적용 상황</strong></p>
+<ul>
+<li>극심하게 왜곡된 비정상 분포</li>
+<li>트리 기반 모델이 아닌 알고리즘 사용</li>
+<li>이상치를 완전히 무시하고 싶을 때</li>
+<li>순위 정보만 중요한 경우</li>
+</ul>
+</section>
+<section id="변환-전후-왜도-비교" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="변환-전후-왜도-비교"><span class="header-section-number">6.7</span> 변환 전후 왜도 비교</h2>
+<p>다양한 변환 방법의 효과를 정량적으로 비교한다.</p>
+<p><strong>예제: 변환 방법별 왜도 비교</strong></p>
+<div id="8ff73cbe" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 왜도 비교 테이블</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>skew_compare <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"원본"</span>: df_num.skew(),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"로그"</span>: df_log_safe.skew(),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"제곱근"</span>: df_sqrt.skew(),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Box-Cox"</span>: df_boxcox.skew(),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Yeo-Johnson"</span>: df_yeojohnson.skew(),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"분위수"</span>: df_quantile.skew()</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"변환 방법별 왜도 비교:"</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(skew_compare.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>변환 방법별 왜도 비교:
+                      원본     로그    제곱근  Box-Cox  Yeo-Johnson    분위수
+bill_length_mm     0.053 -0.143 -0.049   -0.024       -0.024  0.000
+bill_depth_mm     -0.143 -0.316 -0.235   -0.055       -0.053 -0.011
+flipper_length_mm  0.346  0.252  0.299    0.050        0.050 -0.020
+body_mass_g        0.470  0.171  0.322    0.026        0.026  0.007</code></pre>
+</div>
+</div>
+<p>일반적으로 분위수 변환이 왜도를 가장 효과적으로 0에 가깝게 만들지만, 원본 데이터의 정보 손실이 가장 크다.</p>
+</section>
+<section id="분포-변환과-스케일링의-관계" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="분포-변환과-스케일링의-관계"><span class="header-section-number">6.8</span> 분포 변환과 스케일링의 관계</h2>
+<p>분포 변환과 스케일링은 서로 다른 목적을 가진 전처리 과정이다.</p>
+<p><strong>분포 변환과 스케일링 비교</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>분포 변환</th>
+<th>스케일링</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>목적</td>
+<td>분포의 모양 변경 (대칭화)</td>
+<td>변수의 크기 조정</td>
+</tr>
+<tr class="even">
+<td>효과</td>
+<td>왜도 감소, 정규성 개선</td>
+<td>변수 간 스케일 통일</td>
+</tr>
+<tr class="odd">
+<td>변환 예시</td>
+<td>로그, 제곱근, Box-Cox</td>
+<td>Min-Max, Standard, Robust</td>
+</tr>
+<tr class="even">
+<td>적용 순서</td>
+<td>먼저 수행</td>
+<td>나중에 수행</td>
+</tr>
+</tbody>
+</table>
+<p><strong>일반적인 전처리 순서</strong></p>
+<ol type="1">
+<li><strong>결측치 처리</strong>: 결측값 제거 또는 대체</li>
+<li><strong>이상치 처리</strong>: 이상치 탐지 및 제거/대체</li>
+<li><strong>분포 변환</strong>: 왜곡된 분포를 대칭화 (본 장)</li>
+<li><strong>스케일링</strong>: 변수 간 크기 통일 (이전 장)</li>
+<li><strong>인코딩</strong>: 범주형 변수를 수치형으로 변환</li>
+</ol>
+<p>분포 변환을 먼저 수행하는 이유는 왜곡된 분포에서 스케일링을 하면 극단값의 영향을 충분히 제거하지 못하기 때문이다.</p>
+</section>
+<section id="요약" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="요약"><span class="header-section-number">6.9</span> 요약</h2>
+<p>이 장에서는 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 다양한 변환 기법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>분포 변환 방법 비교</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>공식</th>
+<th>장점</th>
+<th>단점</th>
+<th>적용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>로그</td>
+<td><span class="math inline">\(\log(x)\)</span></td>
+<td>간단, 해석 용이</td>
+<td>0 이하 불가</td>
+<td>왜도가 큰 양수 데이터, 지수적 증가</td>
+</tr>
+<tr class="even">
+<td>제곱근</td>
+<td><span class="math inline">\(\sqrt{x}\)</span></td>
+<td>완만한 변환, 직관적</td>
+<td>효과 제한적</td>
+<td>약한 왜도, 카운트 데이터</td>
+</tr>
+<tr class="odd">
+<td>Box-Cox</td>
+<td><span class="math inline">\(\frac{x^\lambda - 1}{\lambda}\)</span></td>
+<td>최적 λ 자동 추정</td>
+<td>양수 전용</td>
+<td>양수 데이터, 최적 변환 필요</td>
+</tr>
+<tr class="even">
+<td>Yeo-Johnson</td>
+<td>Box-Cox 확장</td>
+<td>0, 음수 처리 가능</td>
+<td>해석 복잡</td>
+<td>실무 기본 권장 (범용적)</td>
+</tr>
+<tr class="odd">
+<td>분위수</td>
+<td>순위 기반 매핑</td>
+<td>완벽한 정규분포 생성</td>
+<td>정보 손실</td>
+<td>극심한 왜곡, 비정상 분포</td>
+</tr>
+</tbody>
+</table>
+<p><strong>분포 변환 선택 가이드</strong></p>
+<ol type="1">
+<li><strong>기본 선택</strong>: Yeo-Johnson 변환 (0, 음수 처리 가능, 실무 권장)</li>
+<li><strong>단순한 경우</strong>: 로그 변환 (양수만 있고 왜도가 큰 경우)</li>
+<li><strong>약한 왜곡</strong>: 제곱근 변환 (카운트 데이터, 포아송 분포)</li>
+<li><strong>최적화 필요</strong>: Box-Cox 변환 (양수 데이터, 통계적 엄격성)</li>
+<li><strong>극심한 왜곡</strong>: 분위수 변환 (비정상 분포, 순위만 중요)</li>
+</ol>
+<p><strong>실무 전처리 순서</strong></p>
+<p>분포 변환 → 스케일링 순서로 진행한다.</p>
+<ul>
+<li><strong>분포 변환</strong>: 데이터 분포의 모양을 대칭에 가깝게 변경</li>
+<li><strong>스케일링</strong>: 변수 간 크기를 통일</li>
+</ul>
+<p>이 순서를 지키면 극단값의 영향을 효과적으로 완화하고 모델의 성능을 향상시킬 수 있다.</p>
+<p>분포 변환은 모델의 가정을 충족시키고 예측 성능을 향상시키는 중요한 전처리 과정이다. 데이터의 분포 특성과 모델의 요구사항을 고려하여 적절한 변환 방법을 선택하는 것이 중요하다. 다음 장에서는 범주형 변수를 수치형으로 변환하는 인코딩 기법을 학습할 것이다.</p>
 
 
 </section>
