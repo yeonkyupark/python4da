@@ -1,6 +1,6 @@
-# 적합성 및 독립성 검정
+# 평균 비교 검정
 
-적합성 검정(Goodness-of-Fit Test)과 독립성 검정(Test of Independence)은 범주형 데이터의 빈도와 구조를 분석하는 방법이다. 이 검정들은 평균이 아닌 관측 빈도와 기대 빈도의 차이를 통해 데이터의 패턴을 파악한다. 적합성 검정은 "데이터가 특정 이론적 분포를 따르는가?"를, 독립성 검정은 "두 범주형 변수가 서로 관련이 있는가?"를 확인한다. 이 장에서는 카이제곱 검정을 중심으로 범주형 데이터 분석 방법을 학습한다.
+평균 비교 검정(Mean Comparison Test)은 두 개 이상 집단 간 평균 차이가 단순한 우연인지 통계적으로 유의한지를 판단하는 방법이다. 범주형 변수로 집단을 나누고 연속형 변수의 평균을 비교한다. 이는 실무에서 가장 흔하게 사용되는 통계 기법 중 하나로, 약물 효과, 마케팅 전략, 제품 품질 등 다양한 분야에서 집단 간 차이를 과학적으로 검증하는 데 사용된다. 이 장에서는 t-검정과 ANOVA, 그리고 사후검정을 학습한다.
 
 **예제: 데이터 로드**
 
@@ -9,459 +9,538 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import chisquare, chi2_contingency, f
+from scipy import stats
 
 # 데이터 로드
-df = sns.load_dataset("penguins").dropna()
+df = sns.load_dataset("penguins")
 
 print("데이터 크기:", df.shape)
-print("\n범주형 변수:")
-print(df.select_dtypes(include=['object', 'category']).columns.tolist())
+print("\n범주형 변수:", df.select_dtypes(include=['object', 'category']).columns.tolist())
+print("연속형 변수:", df.select_dtypes(include=[np.number]).columns.tolist())
 ```
 
-## 검정 유형과 적용 시점
+## 평균 비교 검정의 개념
 
-적합성 검정과 독립성 검정은 다음과 같은 질문에 답한다.
+평균 비교 검정은 집단 간 평균의 차이가 우연에 의한 것인지, 실제로 의미 있는 차이인지를 통계적으로 판단한다.
 
-**검정 유형별 질문**
+**평균 비교 검정의 예시**
 
-| 검정 유형 | 핵심 질문 | 변수 개수 | 비교 대상 |
-|----------|---------|---------|----------|
-| 적합성 검정 | 이 데이터는 내가 기대한 분포를 따르는가? | 1개 | 관측 분포 vs 이론 분포 |
-| 독립성 검정 | 두 범주형 변수는 서로 관련이 있는가? | 2개 | 변수 간 연관성 |
-| 동질성 검정 | 여러 집단의 분포가 같은가? | 2개 | 집단 간 분포 |
+| 질문 | 독립 변수 (범주형) | 종속 변수 (연속형) | 검정 방법 |
+|------|------------------|------------------|----------|
+| 성별에 따라 몸무게가 다른가? | 성별 (2그룹) | 몸무게 | 독립표본 t-검정 |
+| 종에 따라 부리 길이가 다른가? | 종 (3그룹) | 부리 길이 | ANOVA |
+| 약물 투여 전후 혈압이 달라졌는가? | 시점 (전/후) | 혈압 | 대응표본 t-검정 |
+| 교육 방법별 시험 점수가 다른가? | 교육 방법 (4그룹) | 시험 점수 | ANOVA |
 
-이러한 검정은 평균이 아니라 **빈도와 구조**를 파악하기 위해 수행하며, t-검정이나 ANOVA와는 다른 목적으로 사용된다.
+### 검정 방법 선택 기준
 
-**검정 적용 시점**
+**평균 비교 검정 종류**
 
-- 범주형 변수의 분포를 이론적 분포와 비교할 때
-- 두 범주형 변수 간 관계를 탐색할 때
-- 샘플링이 모집단을 대표하는지 확인할 때
-- 실험 설계의 균형성을 검증할 때
+| 상황 | 집단 수 | 표본 관계 | 사용 검정 | 조건 |
+|------|---------|---------|----------|------|
+| 두 독립 집단 비교 | 2 | 독립 | 독립표본 t-검정 | 정규성, 등분산성 |
+| 두 독립 집단 (등분산 X) | 2 | 독립 | Welch t-검정 | 정규성 |
+| 동일 대상 전후 비교 | 2 | 대응 | 대응표본 t-검정 | 차이값의 정규성 |
+| 세 집단 이상 비교 | 3+ | 독립 | 일원분산분석(ANOVA) | 정규성, 등분산성 |
 
-## 카이제곱(χ²) 검정의 기본 원리
+### 평균 비교 전 필수 가정 확인
 
-모든 카이제곱 검정은 관측 빈도와 기대 빈도의 차이를 측정한다.
+평균 비교 검정은 다음 가정들을 전제로 한다.
 
-**카이제곱 검정 통계량**
+**검정 가정**
 
-$$
-\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
-$$
+| 가정 | 내용 | 확인 방법 | 위배 시 대응 |
+|------|------|----------|-------------|
+| 1. 정규성 | 각 집단의 데이터가 정규분포를 따름 | Shapiro-Wilk, Q-Q plot | 비모수 검정, 변환 |
+| 2. 등분산성 | 집단 간 분산이 동일함 | Levene 검정 | Welch 검정, Games-Howell |
+| 3. 독립성 | 각 관측치가 서로 독립적 | 실험 설계 확인 | 혼합 모델, 반복측정 ANOVA |
 
-여기서:
-- $O_i$: 관측 빈도(Observed frequency)
-- $E_i$: 기대 빈도(Expected frequency)
-- $k$: 범주의 개수
+**가정 위배 시 강건성**
 
-**검정 통계량의 의미**
+- 표본 크기가 충분히 크면(n ≥ 30) 중심극한정리에 의해 정규성 가정이 완화됨
+- 등분산성은 표본 크기가 집단 간 유사하면 어느 정도 강건함
+- 독립성은 절대 위배되어서는 안 되는 가정
 
-| χ² 값 | 의미 | 결론 |
-|-------|------|------|
-| 0에 가까움 | 관측값 ≈ 기대값 | 귀무가설 지지 |
-| 큼 | 관측값 ≠ 기대값 | 대립가설 지지 |
+## 두 집단 평균 비교: 독립표본 t-검정
 
-χ² 값이 클수록 관측 데이터가 기대 분포에서 벗어난 정도가 크다.
-
-## 적합성 검정 (Goodness-of-Fit Test)
-
-적합성 검정은 관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는지 확인하는 검정이다.
+독립표본 t-검정(Independent Samples t-test)은 서로 독립된 두 집단의 평균을 비교하는 가장 기본적인 검정이다.
 
 **가설 설정**
 
-- H₀ (귀무가설): 관측 분포 = 기대 분포 (데이터가 이론 분포를 따름)
-- H₁ (대립가설): 관측 분포 ≠ 기대 분포 (데이터가 이론 분포를 따르지 않음)
+- H₀ (귀무가설): μ₁ = μ₂ (두 집단의 모평균이 같다)
+- H₁ (대립가설): μ₁ ≠ μ₂ (두 집단의 모평균이 다르다)
 
-### 균등 분포 검정
+**t-통계량**
 
-가장 기본적인 적합성 검정은 모든 범주가 동일한 비율로 나타나는지 확인하는 것이다.
+$$
+t = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+$$
 
-**예제: 종 분포가 균등한가?**
+여기서 $s_p$는 합동 표준편차(pooled standard deviation)이다.
+
+### 예제: 성별에 따른 체중 비교
+
+**예제: 데이터 준비 및 탐색**
 
 ```{python}
-# 종별 관측 빈도
-observed = df["species"].value_counts().sort_index()
+from scipy.stats import ttest_ind
 
-print("=== 관측 빈도 ===")
-print(observed)
-print(f"\n총 개체 수: {observed.sum()}")
+# 필요한 열만 선택 및 결측치 제거
+df_t = df[["sex", "body_mass_g"]].dropna()
 
-# 균등 분포 기대 빈도
-expected = [observed.sum() / len(observed)] * len(observed)
+print("=== 집단별 기술 통계량 ===")
+summary = df_t.groupby("sex")["body_mass_g"].agg(['count', 'mean', 'std', 'min', 'max'])
+print(summary)
 
-print("\n=== 기대 빈도 (균등 분포) ===")
-for species, exp in zip(observed.index, expected):
-    print(f"{species}: {exp:.2f}")
+# 집단 분리
+male = df_t[df_t["sex"] == "Male"]["body_mass_g"]
+female = df_t[df_t["sex"] == "Female"]["body_mass_g"]
+
+print(f"\n남성 표본 크기: {len(male)}")
+print(f"여성 표본 크기: {len(female)}")
 ```
 
-**예제: 카이제곱 적합성 검정**
+**예제: 가정 확인**
 
 ```{python}
-# 적합성 검정
-stat, p_value = chisquare(f_obs=observed, f_exp=expected)
+# 1. 정규성 검정
+from scipy.stats import shapiro, levene
 
-print("\n=== 카이제곱 적합성 검정 ===")
-print(f"χ² 통계량: {stat:.4f}")
+print("\n=== 정규성 검정 (Shapiro-Wilk) ===")
+_, p_male = shapiro(male)
+_, p_female = shapiro(female)
+print(f"남성: p = {p_male:.4f} {'(정규)' if p_male > 0.05 else '(비정규)'}")
+print(f"여성: p = {p_female:.4f} {'(정규)' if p_female > 0.05 else '(비정규)'}")
+
+# 2. 등분산성 검정
+print("\n=== 등분산성 검정 (Levene) ===")
+_, p_levene = levene(male, female)
+print(f"p = {p_levene:.4f} {'(등분산)' if p_levene > 0.05 else '(이분산)'}")
+```
+
+**예제: 독립표본 t-검정**
+
+```{python}
+# 독립표본 t-검정 (등분산 가정)
+t_stat, p_value = ttest_ind(male, female, equal_var=True)
+
+print("\n=== 독립표본 t-검정 (Student) ===")
+print(f"t-통계량: {t_stat:.4f}")
 print(f"p-value: {p_value:.4f}")
-print(f"\n유의수준 0.05 기준: ", end="")
-if p_value > 0.05:
-    print("균등 분포를 따른다고 볼 수 있음 (H₀ 채택)")
-else:
-    print("균등 분포가 아님 (H₀ 기각)")
+print(f"자유도: {len(male) + len(female) - 2}")
 
+# 결과 해석
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print(f"✓ 귀무가설 기각: 성별에 따른 체중 차이가 유의함")
+    print(f"  평균 차이: {male.mean() - female.mean():.2f}g")
+else:
+    print(f"✗ 귀무가설 채택: 성별에 따른 체중 차이가 유의하지 않음")
+```
+
+**예제: 시각화**
+
+```{python}
 # 시각화
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-# 관측 빈도
-axes[0].bar(observed.index, observed.values, alpha=0.7, edgecolor='black')
-axes[0].set_title("Observed Frequencies")
-axes[0].set_xlabel("Species")
-axes[0].set_ylabel("Count")
+# 박스플롯
+sns.boxplot(x="sex", y="body_mass_g", data=df_t, ax=axes[0])
+axes[0].set_title("Body Mass by Sex")
+axes[0].set_xlabel("Sex")
+axes[0].set_ylabel("Body Mass (g)")
 
-# 관측 vs 기대 비교
-x = np.arange(len(observed))
-width = 0.35
-axes[1].bar(x - width/2, observed.values, width, label='Observed', alpha=0.7)
-axes[1].bar(x + width/2, expected, width, label='Expected (Uniform)', alpha=0.7)
-axes[1].set_xlabel("Species")
-axes[1].set_ylabel("Count")
-axes[1].set_title("Observed vs Expected")
-axes[1].set_xticks(x)
-axes[1].set_xticklabels(observed.index)
+# 히스토그램
+axes[1].hist(male, alpha=0.5, label=f'Male (n={len(male)})', bins=20, edgecolor='black')
+axes[1].hist(female, alpha=0.5, label=f'Female (n={len(female)})', bins=20, edgecolor='black')
+axes[1].axvline(male.mean(), color='blue', linestyle='--', linewidth=2, label=f'Male mean')
+axes[1].axvline(female.mean(), color='orange', linestyle='--', linewidth=2, label=f'Female mean')
+axes[1].set_title("Distribution of Body Mass")
+axes[1].set_xlabel("Body Mass (g)")
+axes[1].set_ylabel("Frequency")
 axes[1].legend()
 
 plt.tight_layout()
 plt.show()
 ```
 
-### 특정 비율 검정
+### 효과 크기 (Effect Size)
 
-이론적으로 특정 비율이 예상되는 경우, 그 비율과 관측 데이터를 비교할 수 있다.
+p-value는 차이의 존재 여부만 알려주므로, 차이의 크기를 측정하는 효과 크기를 함께 확인해야 한다.
 
-**예제: 특정 비율 검정**
+**예제: Cohen's d 계산**
 
 ```{python}
-# 이론적 비율 설정 (예: 4:3:3)
-theoretical_ratio = [4, 3, 3]
-total = observed.sum()
+# Cohen's d 계산
+pooled_std = np.sqrt(((len(male)-1)*male.std()**2 + (len(female)-1)*female.std()**2) / 
+                     (len(male) + len(female) - 2))
+cohens_d = (male.mean() - female.mean()) / pooled_std
 
-# 비율에 맞는 기대 빈도 계산
-expected_ratio = [total * r / sum(theoretical_ratio) for r in theoretical_ratio]
+print(f"\n=== 효과 크기 ===")
+print(f"Cohen's d: {cohens_d:.4f}")
 
-print("=== 특정 비율 검정 (4:3:3) ===")
-print(f"기대 비율: {theoretical_ratio}")
-print(f"\n기대 빈도:")
-for species, exp in zip(observed.index, expected_ratio):
-    print(f"{species}: {exp:.2f}")
-
-# 검정
-stat, p_value = chisquare(f_obs=observed, f_exp=expected_ratio)
-
-print(f"\nχ² 통계량: {stat:.4f}")
-print(f"p-value: {p_value:.4f}")
-print(f"\n유의수준 0.05 기준: ", end="")
-if p_value > 0.05:
-    print("이론적 비율과 일치 (H₀ 채택)")
+# 해석
+if abs(cohens_d) < 0.2:
+    effect = "매우 작음"
+elif abs(cohens_d) < 0.5:
+    effect = "작음"
+elif abs(cohens_d) < 0.8:
+    effect = "중간"
 else:
-    print("이론적 비율과 다름 (H₀ 기각)")
+    effect = "큼"
+
+print(f"효과 크기: {effect}")
 ```
 
-### 적합성 검정의 활용 사례
+**Cohen's d 해석 기준**
 
-**적용 분야**
+| |d| 값 | 효과 크기 |
+|--------|----------|
+| 0.2 미만 | 매우 작음 |
+| 0.2 ~ 0.5 | 작음 |
+| 0.5 ~ 0.8 | 중간 |
+| 0.8 이상 | 큼 |
 
-| 분야 | 질문 | 예시 |
-|------|------|------|
-| 품질 관리 | 제품 불량률이 기준치인가? | 불량품 5% 예상 vs 실제 관측 |
-| 유전학 | 멘델의 법칙을 따르는가? | 3:1 비율 검정 |
-| 게임 | 주사위가 공정한가? | 각 면이 1/6 확률 |
-| 샘플링 | 표본이 모집단을 대표하는가? | 성별/연령 분포 비교 |
-| 마케팅 | 광고 효과가 균등한가? | 요일별 방문자 수 |
+## Welch t-검정 (등분산 가정 불필요)
 
-## 독립성 검정 (Test of Independence)
+등분산 가정이 의심되면 Welch t-검정을 사용한다. 이는 등분산을 가정하지 않는 t-검정으로, 더 보수적인 결과를 제공한다.
 
-독립성 검정은 두 범주형 변수가 서로 독립적인지, 즉 하나의 변수를 알았을 때 다른 변수의 분포가 변하는지를 확인하는 검정이다.
+**예제: Welch t-검정**
+
+```{python}
+# Welch t-검정 (등분산 가정 불필요)
+t_stat_welch, p_value_welch = ttest_ind(male, female, equal_var=False)
+
+print("\n=== Welch t-검정 ===")
+print(f"t-통계량: {t_stat_welch:.4f}")
+print(f"p-value: {p_value_welch:.4f}")
+
+# Student vs Welch 비교
+print("\n=== t-검정 비교 ===")
+print(f"Student t-test: t = {t_stat:.4f}, p = {p_value:.4f}")
+print(f"Welch t-test:   t = {t_stat_welch:.4f}, p = {p_value_welch:.4f}")
+```
+
+**Student vs Welch 선택 기준**
+
+- 등분산성 만족 → Student t-검정 (검정력 높음)
+- 등분산성 의심 → Welch t-검정 (안전)
+- 확신 없음 → Welch t-검정 (기본 선택 권장)
+
+## 세 집단 이상 비교: 일원분산분석 (ANOVA)
+
+일원분산분석(One-way ANOVA)은 세 개 이상 집단의 평균을 동시에 비교한다. 여러 번의 t-검정 대신 ANOVA를 사용하는 이유는 다중 비교로 인한 1종 오류 증가를 방지하기 위해서다.
 
 **가설 설정**
 
-- H₀ (귀무가설): 두 변수는 독립이다 (관련이 없다)
-- H₁ (대립가설): 두 변수는 독립이 아니다 (관련이 있다)
+- H₀ (귀무가설): μ₁ = μ₂ = μ₃ = ⋯ = μₖ (모든 집단의 모평균이 같다)
+- H₁ (대립가설): 적어도 하나의 모평균이 다르다
 
-**독립의 의미**
-
-두 변수 A와 B가 독립이라는 것은 다음을 의미한다.
+**F-통계량**
 
 $$
-P(A \cap B) = P(A) \times P(B)
+F = \frac{\text{집단 간 분산}}{\text{집단 내 분산}} = \frac{MSB}{MSW}
 $$
 
-즉, A와 B가 동시에 일어날 확률이 각각의 확률의 곱과 같다.
+F 값이 클수록 집단 간 차이가 집단 내 변동에 비해 크다는 의미이다.
 
-### 교차표 (Contingency Table)
+### 예제: 종별 부리 길이 비교
 
-독립성 검정은 교차표를 기반으로 수행한다.
-
-**예제: 종과 성별의 교차표**
+**예제: 데이터 준비 및 탐색**
 
 ```{python}
-# 교차표 생성
-contingency_table = pd.crosstab(
-    df["species"],
-    df["sex"],
-    margins=True  # 합계 포함
-)
+from scipy.stats import f_oneway
 
-print("=== 교차표: 종 × 성별 ===")
-print(contingency_table)
+# 필요한 열 선택 및 결측치 제거
+df_a = df[["species", "bill_length_mm"]].dropna()
 
-# 비율로 변환 (행 기준)
-contingency_pct = pd.crosstab(
-    df["species"],
-    df["sex"],
-    normalize='index'
-) * 100
+print("=== 종별 부리 길이 기술 통계량 ===")
+summary = df_a.groupby("species")["bill_length_mm"].agg(['count', 'mean', 'std'])
+print(summary)
 
-print("\n=== 종별 성별 비율 (%) ===")
-print(contingency_pct.round(1))
+# 집단별 데이터 분리
+adelie = df_a[df_a["species"] == "Adelie"]["bill_length_mm"]
+chinstrap = df_a[df_a["species"] == "Chinstrap"]["bill_length_mm"]
+gentoo = df_a[df_a["species"] == "Gentoo"]["bill_length_mm"]
 ```
 
-**예제: 교차표 시각화**
+**예제: 가정 확인**
 
 ```{python}
-# 교차표 시각화 (합계 제외)
-contingency_no_margin = pd.crosstab(df["species"], df["sex"])
+# 1. 각 집단의 정규성 검정
+print("\n=== 정규성 검정 ===")
+for species, data in [("Adelie", adelie), ("Chinstrap", chinstrap), ("Gentoo", gentoo)]:
+    _, p = shapiro(data)
+    print(f"{species}: p = {p:.4f} {'(정규)' if p > 0.05 else '(비정규)'}")
 
-# 히트맵
-plt.figure(figsize=(8, 5))
-sns.heatmap(contingency_no_margin, annot=True, fmt='d', cmap='Blues')
-plt.title("Contingency Table: Species × Sex")
-plt.xlabel("Sex")
-plt.ylabel("Species")
-plt.show()
+# 2. 등분산성 검정
+print("\n=== 등분산성 검정 (Levene) ===")
+_, p_levene = levene(adelie, chinstrap, gentoo)
+print(f"p = {p_levene:.4f} {'(등분산)' if p_levene > 0.05 else '(이분산)'}")
+```
 
-# 그룹화 막대 그래프
-contingency_no_margin.plot(kind='bar', figsize=(10, 5))
-plt.title("Species and Sex Distribution")
-plt.xlabel("Species")
-plt.ylabel("Count")
-plt.xticks(rotation=0)
-plt.legend(title="Sex")
+**예제: 일원분산분석**
+
+```{python}
+# ANOVA 수행
+f_stat, p_value = f_oneway(adelie, chinstrap, gentoo)
+
+print("\n=== 일원분산분석 (One-way ANOVA) ===")
+print(f"F-통계량: {f_stat:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+# 결과 해석
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print(f"✓ 귀무가설 기각: 종에 따른 부리 길이 차이가 유의함")
+    print(f"  → 사후검정(Post-hoc test) 필요")
+else:
+    print(f"✗ 귀무가설 채택: 종에 따른 부리 길이 차이가 유의하지 않음")
+```
+
+**예제: 시각화**
+
+```{python}
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 박스플롯
+sns.boxplot(x="species", y="bill_length_mm", data=df_a, ax=axes[0])
+axes[0].set_title("Bill Length by Species")
+axes[0].set_xlabel("Species")
+axes[0].set_ylabel("Bill Length (mm)")
+
+# 바이올린 플롯
+sns.violinplot(x="species", y="bill_length_mm", data=df_a, ax=axes[1])
+axes[1].set_title("Bill Length Distribution by Species")
+axes[1].set_xlabel("Species")
+axes[1].set_ylabel("Bill Length (mm)")
+
 plt.tight_layout()
 plt.show()
 ```
 
-### 카이제곱 독립성 검정
+### ANOVA의 한계와 사후검정 필요성
 
-**예제: 독립성 검정 수행**
+ANOVA는 "적어도 하나의 평균이 다르다"는 것만 알려주고, 구체적으로 어떤 집단 간 차이가 있는지는 알려주지 않는다. 이를 확인하기 위해 **사후검정(Post-hoc Test)**이 필요하다.
 
-```{python}
-# 독립성 검정 (합계 제외)
-chi2, p_value, dof, expected_freq = chi2_contingency(contingency_no_margin)
+**다중 비교 문제**
 
-print("=== 카이제곱 독립성 검정 ===")
-print(f"χ² 통계량: {chi2:.4f}")
-print(f"자유도(df): {dof}")
-print(f"p-value: {p_value:.4f}")
-print(f"\n유의수준 0.05 기준: ", end="")
-if p_value > 0.05:
-    print("두 변수는 독립이다 (관련 없음, H₀ 채택)")
-else:
-    print("두 변수는 독립이 아니다 (관련 있음, H₀ 기각)")
+여러 번의 t-검정을 반복하면 1종 오류(α)가 누적되어 증가한다.
+
+- 3개 집단: 3번 비교 → 전체 α ≈ 0.14
+- 4개 집단: 6번 비교 → 전체 α ≈ 0.26
+- 5개 집단: 10번 비교 → 전체 α ≈ 0.40
+
+사후검정은 이러한 다중 비교 문제를 보정한다.
+
+## 대응표본 t-검정
+
+대응표본 t-검정(Paired Samples t-test)은 동일한 대상의 전후 변화를 비교한다. 각 대상의 차이값(전 - 후)을 계산하고, 이 차이값의 평균이 0인지 검정한다.
+
+**가설 설정**
+
+- H₀ (귀무가설): μd = 0 (전후 평균 차이가 0이다)
+- H₁ (대립가설): μd ≠ 0 (전후 평균 차이가 0이 아니다)
+
+**예제 구조 (개념적)**
+
+```python
+from scipy.stats import ttest_rel
+
+# 전후 데이터 (예시)
+# before = [120, 125, 130, 135, 128]  # 처치 전 혈압
+# after = [115, 120, 125, 130, 122]   # 처치 후 혈압
+
+# 대응표본 t-검정
+# t_stat, p_value = ttest_rel(before, after)
+
+# print(f"t-통계량: {t_stat:.4f}")
+# print(f"p-value: {p_value:.4f}")
+# 
+# if p_value < 0.05:
+#     print("처치 효과가 유의함")
+# else:
+#     print("처치 효과가 유의하지 않음")
 ```
 
-### 기대 빈도 확인
+**대응표본 vs 독립표본**
 
-카이제곱 검정의 신뢰도는 기대 빈도에 의존한다.
+| 구분 | 대응표본 t-검정 | 독립표본 t-검정 |
+|------|----------------|----------------|
+| 데이터 구조 | 동일 대상 전후 | 서로 다른 대상 |
+| 예시 | 약물 투여 전후 혈압 | 남성 vs 여성 체중 |
+| 장점 | 개인차 통제, 검정력 높음 | 구현 간단 |
+| 가정 | 차이값의 정규성 | 각 집단의 정규성, 등분산성 |
 
-**예제: 기대 빈도 확인**
+## 사후검정 (Post-hoc Test)
+
+ANOVA에서 유의한 결과가 나오면, 구체적으로 어떤 집단 간 차이가 있는지 확인하기 위해 사후검정을 수행한다.
+
+### 대표적인 사후검정 방법
+
+**사후검정 비교**
+
+| 방법 | 특징 | 보수성 | 가정 | 사용 상황 |
+|------|------|--------|------|----------|
+| Tukey HSD | 가장 많이 사용 | 중간 | 등분산 | ANOVA 후 표준 선택 |
+| Bonferroni | 매우 보수적 | 높음 | 등분산 | 비교 횟수 적을 때 |
+| Scheffé | 매우 보수적 | 매우 높음 | 등분산 | 모든 선형 조합 비교 |
+| Games-Howell | 등분산 불필요 | 중간 | 정규성만 | 이분산 시 사용 |
+| Dunnett | 대조군 비교 | 중간 | 등분산 | 하나의 대조군과 비교 |
+
+### Tukey HSD (Honestly Significant Difference)
+
+Tukey HSD는 ANOVA 이후 가장 표준적인 사후검정으로, 모든 집단 쌍의 평균 차이를 전체 유의수준을 유지하면서 비교한다.
+
+**예제: Tukey HSD 수행**
 
 ```{python}
-# 기대 빈도 출력
-expected_df = pd.DataFrame(
-    expected_freq,
-    index=contingency_no_margin.index,
-    columns=contingency_no_margin.columns
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+# Tukey HSD 사후검정
+tukey = pairwise_tukeyhsd(
+    endog=df_a["bill_length_mm"],   # 비교할 연속형 변수
+    groups=df_a["species"],          # 집단 변수
+    alpha=0.05                        # 유의수준
 )
 
-print("\n=== 기대 빈도 ===")
-print(expected_df.round(2))
-
-# 기대 빈도 < 5인 셀 확인
-low_expected = (expected_df < 5).sum().sum()
-total_cells = expected_df.size
-
-print(f"\n기대 빈도 < 5인 셀: {low_expected}/{total_cells}")
-
-if low_expected > 0:
-    print("⚠️ 주의: 기대 빈도가 5 미만인 셀이 있으면 카이제곱 검정 신뢰도 저하")
-    print("   → 범주 통합 또는 Fisher의 정확 검정 고려")
-else:
-    print("✓ 모든 셀의 기대 빈도가 5 이상으로 검정 신뢰도 양호")
+print("=== Tukey HSD 사후검정 ===")
+print(tukey)
 ```
 
-**기대 빈도 조건**
+**출력 결과 해석**
 
-| 조건 | 권장 조치 |
-|------|----------|
-| 모든 셀의 기대 빈도 ≥ 5 | 카이제곱 검정 사용 가능 |
-| 20% 이상의 셀이 기대 빈도 < 5 | 범주 통합 또는 Fisher 정확 검정 |
-| 2×2 표에서 기대 빈도 < 5 | Yates 연속성 수정 또는 Fisher 정확 검정 |
+| 열 | 의미 |
+|----|------|
+| group1, group2 | 비교되는 두 집단 |
+| meandiff | 평균 차이 (group1 - group2) |
+| p-adj | 보정된 p-value (다중 비교 보정) |
+| lower, upper | 평균 차이의 95% 신뢰구간 |
+| reject | 귀무가설 기각 여부 (True = 유의한 차이) |
 
-### 연관성의 강도 측정
-
-카이제곱 검정은 연관성의 존재 여부만 알려주므로, 연관성의 강도를 측정하려면 추가 지표가 필요하다.
-
-**예제: Cramér's V 계산**
+**예제: 사후검정 시각화**
 
 ```{python}
-# Cramér's V 계산
-n = contingency_no_margin.sum().sum()
-min_dim = min(contingency_no_margin.shape[0] - 1, contingency_no_margin.shape[1] - 1)
-cramers_v = np.sqrt(chi2 / (n * min_dim))
+# Tukey HSD 결과 시각화
+tukey.plot_simultaneous()
+plt.title("Tukey HSD: Simultaneous Confidence Intervals")
+plt.show()
 
-print(f"\n=== 연관성 강도 ===")
-print(f"Cramér's V: {cramers_v:.4f}")
+# 박스플롯과 함께 비교
+plt.figure(figsize=(10, 6))
+sns.boxplot(x="species", y="bill_length_mm", data=df_a)
+plt.title("Bill Length by Species with Post-hoc Results")
+plt.xlabel("Species")
+plt.ylabel("Bill Length (mm)")
 
-# 해석
-if cramers_v < 0.1:
-    strength = "매우 약함"
-elif cramers_v < 0.3:
-    strength = "약함"
-elif cramers_v < 0.5:
-    strength = "중간"
-else:
-    strength = "강함"
-
-print(f"연관성 강도: {strength}")
+# 유의한 차이가 있는 쌍에 별표 표시 (수동)
+# (실제로는 자동화된 시각화 패키지 사용 권장)
+plt.show()
 ```
 
-**Cramér's V 해석**
+### Bonferroni 보정
 
-| Cramér's V | 연관성 강도 |
-|------------|-----------|
-| 0.00 ~ 0.10 | 매우 약함 |
-| 0.10 ~ 0.30 | 약함 |
-| 0.30 ~ 0.50 | 중간 |
-| 0.50 이상 | 강함 |
-
-## F 검정 (분산 비교)
-
-F 검정은 두 집단의 분산이 같은지 확인하는 검정이다. 등분산성 검정의 가장 기본적인 형태이지만, 정규성에 매우 민감하여 실무에서는 Levene 검정을 더 많이 사용한다.
-
-**F 통계량**
+Bonferroni 보정은 가장 보수적인 방법으로, 각 비교의 유의수준을 비교 횟수로 나눈다.
 
 $$
-F = \frac{s_1^2}{s_2^2}
+\alpha_{\text{adjusted}} = \frac{\alpha}{k}
 $$
 
-여기서 $s_1^2$와 $s_2^2$는 각 집단의 표본 분산이다.
+여기서 k는 비교 횟수이다.
 
-**예제: F 검정**
+**예제: Bonferroni 보정 수동 적용**
 
 ```{python}
-# 두 종 선택
-group1 = df[df["species"] == "Adelie"]["body_mass_g"].dropna()
-group2 = df[df["species"] == "Chinstrap"]["body_mass_g"].dropna()
+# 3개 집단의 모든 쌍 비교 (3C2 = 3번)
+comparisons = [
+    ("Adelie", "Chinstrap"),
+    ("Adelie", "Gentoo"),
+    ("Chinstrap", "Gentoo")
+]
 
-# F 통계량 계산
-f_stat = group1.var() / group2.var()
+# Bonferroni 보정 유의수준
+alpha = 0.05
+k = len(comparisons)
+alpha_bonf = alpha / k
 
-print("=== F 검정: Adelie vs Chinstrap ===")
-print(f"\nAdelie 분산: {group1.var():.2f}")
-print(f"Chinstrap 분산: {group2.var():.2f}")
-print(f"\nF 통계량: {f_stat:.4f}")
+print(f"\n=== Bonferroni 보정 ===")
+print(f"원래 유의수준: {alpha}")
+print(f"비교 횟수: {k}")
+print(f"보정된 유의수준: {alpha_bonf:.4f}")
 
-# 자유도
-df1 = len(group1) - 1
-df2 = len(group2) - 1
-
-# p-value 계산 (양측 검정)
-p_value = 2 * min(f.cdf(f_stat, df1, df2), 1 - f.cdf(f_stat, df1, df2))
-
-print(f"p-value: {p_value:.4f}")
-print(f"\n유의수준 0.05 기준: ", end="")
-if p_value > 0.05:
-    print("등분산 (H₀ 채택)")
-else:
-    print("이분산 (H₀ 기각)")
-
-print("\n⚠️ 주의: F 검정은 정규성에 매우 민감")
-print("   → 실무에서는 Levene 검정 권장")
+print("\n개별 t-검정 결과:")
+for sp1, sp2 in comparisons:
+    group1 = df_a[df_a["species"] == sp1]["bill_length_mm"]
+    group2 = df_a[df_a["species"] == sp2]["bill_length_mm"]
+    
+    t_stat, p_val = ttest_ind(group1, group2)
+    
+    print(f"\n{sp1} vs {sp2}:")
+    print(f"  p-value: {p_val:.4f}")
+    print(f"  결과: ", end="")
+    if p_val < alpha_bonf:
+        print("유의한 차이 (Bonferroni 보정 후)")
+    else:
+        print("유의하지 않음 (Bonferroni 보정 후)")
 ```
 
-**F 검정 vs Levene 검정**
+### Games-Howell (등분산 불필요)
 
-| 항목 | F 검정 | Levene 검정 |
-|------|--------|------------|
-| 가정 | 정규성 필요 | 정규성 불필요 |
-| 강건성 | 정규성 위배 시 부정확 | 안정적 |
-| 용도 | 이론 설명용 | 실무 권장 |
+등분산 가정이 위배된 경우 Games-Howell 검정을 사용한다. 이는 Welch t-검정의 다중 비교 버전이다.
 
-## 검정 방법 종합 비교
-
-**검정 유형별 정리**
-
-| 목적 | 데이터 유형 | 변수 개수 | 검정 방법 | 주요 사용 |
-|------|-----------|---------|----------|----------|
-| 분포 적합성 | 범주형 | 1개 | χ² 적합성 검정 | 이론 분포와 비교 |
-| 변수 관계 | 범주형 × 범주형 | 2개 | χ² 독립성 검정 | 범주 간 연관성 |
-| 분산 비교 (이론) | 연속형 | 2개 | F 검정 | 교육 목적 |
-| 분산 비교 (실무) | 연속형 | 2개 이상 | Levene 검정 | 등분산성 검정 |
-| 평균 비교 | 연속형 | 2개 | t-검정 | 그룹 간 평균 차이 |
-| 평균 비교 | 연속형 | 3개 이상 | ANOVA | 다집단 평균 비교 |
-
-## 자주 하는 오해와 주의사항
-
-**흔한 오해**
-
-| 오해 | 진실 |
-|------|------|
-| "p < 0.05이면 강한 관계" | p-value는 관계의 존재 여부만 판단, 강도는 별도 측정 필요 |
-| "카이제곱은 평균을 비교한다" | 카이제곱은 빈도를 비교하는 검정 |
-| "카이제곱은 모든 데이터에 적용 가능" | 표본 크기와 기대 빈도 조건이 중요 |
-| "독립성 검정에서 귀무가설 채택 = 변수가 독립" | 귀무가설 기각 실패 ≠ 독립 증명 |
-
-**주의사항**
-
-1. **기대 빈도 확인**: 기대 빈도가 5 미만인 셀이 많으면 검정 신뢰도 저하
-2. **표본 크기**: 표본이 너무 크면 실무적으로 의미 없는 차이도 유의하게 나옴
-3. **연관성 강도**: p-value만으로 연관성 강도를 판단하지 말 것
-4. **인과관계**: 독립성 검정은 상관관계만 확인, 인과관계는 아님
-5. **다중 비교**: 여러 검정을 동시에 수행하면 1종 오류 증가
+```python
+# Games-Howell은 pingouin 라이브러리 사용 권장
+# import pingouin as pg
+# 
+# games_howell = pg.pairwise_gameshowell(
+#     data=df_a,
+#     dv="bill_length_mm",
+#     between="species"
+# )
+# 
+# print(games_howell)
+```
 
 ## 요약
 
-이 장에서는 범주형 데이터의 빈도와 구조를 분석하는 카이제곱 검정을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 집단 간 평균을 비교하는 다양한 검정 방법을 학습했다. 주요 내용은 다음과 같다.
 
-**검정 유형별 요약**
+**평균 비교 검정 종합**
 
-| 검정 | 목적 | 비교 대상 | 주요 사용 |
-|------|------|----------|----------|
-| 적합성 검정 | 분포가 이론과 일치하는가? | 관측 분포 vs 이론 분포 | 샘플링 검증, 품질 관리 |
-| 독립성 검정 | 두 변수가 관련 있는가? | 변수 간 연관성 | 변수 관계 탐색 |
-| F 검정 | 두 분산이 같은가? | 집단 간 분산 | 이론 학습 (실무는 Levene) |
+| 상황 | 집단 수 | 표본 관계 | 등분산 가정 | 검정 방법 |
+|------|---------|---------|-----------|----------|
+| 두 집단 비교 | 2 | 독립 | 만족 | Student t-검정 |
+| 두 집단 비교 | 2 | 독립 | 위배 | Welch t-검정 |
+| 동일 대상 전후 | 2 | 대응 | - | 대응표본 t-검정 |
+| 다집단 비교 | 3+ | 독립 | 만족 | ANOVA + Tukey |
+| 다집단 비교 | 3+ | 독립 | 위배 | ANOVA + Games-Howell |
 
-**카이제곱 검정 핵심**
+**분석 흐름**
 
-- **원리**: 관측 빈도와 기대 빈도의 차이를 측정
-- **통계량**: $\chi^2 = \sum \frac{(O - E)^2}{E}$
-- **조건**: 기대 빈도가 모든 셀에서 5 이상 권장
-- **해석**: p-value는 관계 존재 여부, 강도는 Cramér's V 등으로 측정
+1. **가정 확인**: 정규성(Shapiro-Wilk), 등분산성(Levene)
+2. **적절한 검정 선택**: 집단 수, 표본 관계, 가정 만족 여부
+3. **검정 수행**: t-검정 또는 ANOVA
+4. **효과 크기 측정**: Cohen's d 또는 η² (eta-squared)
+5. **사후검정** (ANOVA만): Tukey HSD 또는 Games-Howell
+6. **시각화**: 박스플롯, 바이올린 플롯
 
-**실무 체크리스트**
+**핵심 포인트**
 
-- [ ] 범주형 데이터인가?
-- [ ] 표본 크기가 충분한가?
-- [ ] 기대 빈도가 5 이상인가?
-- [ ] 검정 목적이 명확한가? (적합성 vs 독립성)
-- [ ] 연관성 강도도 측정했는가?
-- [ ] 결과를 시각화했는가?
+- **p-value의 의미**: 차이의 존재 여부만 판단, 크기나 중요도는 별도 측정
+- **효과 크기 필수**: p-value와 함께 Cohen's d 등 효과 크기 보고
+- **다중 비교 보정**: 여러 비교 시 사후검정으로 1종 오류 통제
+- **가정 점검**: 정규성과 등분산성 확인 후 적절한 방법 선택
+- **시각화 중요**: 통계적 결과와 함께 분포를 시각적으로 확인
 
-**다음 단계**
+**주의사항**
 
-- 적합성 검정 → 분포의 이론적 타당성 확인
-- 독립성 검정 → 변수 간 관계 파악 후 추가 분석
-- 평균 비교 전 → 구조적 패턴 먼저 확인
+- 통계적 유의성 ≠ 실무적 중요성
+- 표본 크기가 크면 작은 차이도 유의하게 나올 수 있음
+- 가정 위배 시 적절한 대안 검정 사용
+- 사후검정은 ANOVA가 유의할 때만 수행
+- 결과 해석 시 도메인 지식 함께 고려
 
-카이제곱 검정은 범주형 데이터 분석의 기초이다. 빈도와 구조를 먼저 파악한 후, 필요에 따라 평균 비교나 회귀 분석 등의 고급 기법으로 진행하는 것이 바람직하다. 다음 장에서는 평균 비교를 위한 t-검정과 ANOVA를 학습할 것이다.
+평균 비교 검정은 데이터 분석에서 가장 기본이 되는 기법이다. 적절한 검정을 선택하고 가정을 확인하며, 결과를 올바르게 해석하는 것이 중요하다. 다음 장에서는 변수 간 관계를 분석하는 상관분석과 회귀분석을 학습할 것이다.
