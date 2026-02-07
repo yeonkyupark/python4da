@@ -1,16 +1,26 @@
 # 이상치 탐지
 
+이상치(Outlier)는 다른 관측값들과 현저히 다른 값을 의미한다. 이상치는 측정 오류, 입력 오류, 또는 실제로 극단적인 사건에 의해 발생할 수 있다. 이상치가 존재하면 통계 분석 결과가 왜곡되고 머신러닝 모델의 성능이 저하될 수 있으므로, 적절한 탐지와 처리가 필요하다. 이 장에서는 통계적 방법과 머신러닝 기법을 활용한 다양한 이상치 탐지 방법을 학습한다.
+
+**예제: 데이터 로드**
+
 ```{python}
 import seaborn as sns
 import pandas as pd
 import numpy as np
 
+# 데이터 로드
 df = sns.load_dataset("penguins")
 ```
 
-분석 대상은 **수치형 변수**만 사용
+## 분석 대상 변수 선택
+
+이상치 탐지는 주로 수치형 변수를 대상으로 수행한다. 범주형 변수는 이상치 개념이 명확하지 않기 때문에 일반적으로 제외한다.
+
+**예제: 수치형 변수 추출**
 
 ```{python}
+# 분석 대상 수치형 컬럼
 num_cols = [
     "bill_length_mm",
     "bill_depth_mm",
@@ -18,142 +28,290 @@ num_cols = [
     "body_mass_g"
 ]
 
+# 수치형 데이터만 선택
 df_num = df[num_cols]
+
+# 기본 통계량 확인
+print(df_num.describe())
 ```
 
 ## 분포 기반 이상치 탐지
 
+데이터의 분포를 시각화하여 이상치를 직관적으로 파악하는 방법이다. 박스플롯은 사분위수를 기반으로 이상치를 자동으로 표시해주므로 가장 먼저 사용하는 탐색 도구이다.
+
 ### 박스플롯으로 이상치 확인
+
+박스플롯은 각 변수의 중앙값, 사분위수, 이상치를 한눈에 보여준다. 다만, 변수마다 척도가 다르면 비교가 어려우므로 표준화를 적용하는 것이 좋다.
+
+**예제: 표준화 후 박스플롯**
 
 ```{python}
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
-scale = StandardScaler()
 
-df_num_scaled = pd.DataFrame(scale.fit_transform(df_num[num_cols]),
-                              columns=df_num.columns)
+# 표준화 (평균=0, 표준편차=1)
+scaler = StandardScaler()
+df_num_scaled = pd.DataFrame(
+    scaler.fit_transform(df_num),
+    columns=df_num.columns
+)
 
+# 박스플롯 시각화
 df_num_scaled.boxplot(figsize=(10, 5))
+plt.title("Boxplot of Standardized Numeric Variables")
+plt.ylabel("Standardized Value")
+plt.axhline(y=0, color='r', linestyle='--', linewidth=0.8, alpha=0.5)
 plt.show()
 ```
 
+표준화를 통해 모든 변수가 동일한 척도(평균 0, 표준편차 1)로 변환되어 이상치를 더 쉽게 비교할 수 있다.
+
 ## IQR 기반 이상치 탐지
+
+IQR(Interquartile Range, 사분위수 범위)은 Q3(75 백분위수)에서 Q1(25 백분위수)을 뺀 값으로, 데이터의 중간 50%가 분포하는 범위를 나타낸다. 일반적으로 Q1 - 1.5×IQR 미만이거나 Q3 + 1.5×IQR 초과인 값을 이상치로 정의한다.
 
 ### IQR 계산
 
+**예제: 사분위수 및 IQR 계산**
+
 ```{python}
+# 제1사분위수 (Q1, 25%)
 Q1 = df_num.quantile(0.25)
+
+# 제3사분위수 (Q3, 75%)
 Q3 = df_num.quantile(0.75)
+
+# IQR 계산
 IQR = Q3 - Q1
+
+print("Q1 (25%):")
+print(Q1)
+print("\nQ3 (75%):")
+print(Q3)
+print("\nIQR:")
+print(IQR)
 ```
 
 ### 이상치 조건 정의
 
+IQR 기반 이상치 범위는 다음과 같다.
+
+- 하한: Q1 - 1.5 × IQR
+- 상한: Q3 + 1.5 × IQR
+
+이 범위를 벗어나는 값을 이상치로 판단한다.
+
+**예제: 이상치 조건 정의**
+
 ```{python}
+# 이상치 조건: 하한 미만 또는 상한 초과
 outlier_condition = (df_num < (Q1 - 1.5 * IQR)) | (df_num > (Q3 + 1.5 * IQR))
+
+# 컬럼별 이상치 개수
+print("컬럼별 이상치 개수:")
+print(outlier_condition.sum())
 ```
 
 ### 이상치가 있는 행 확인
 
-```{python}
-outlier_rows = outlier_condition.any(axis=1)
-df[outlier_rows]
-```
+하나의 컬럼이라도 이상치가 있으면 해당 행 전체를 이상치로 판단하는 방법이다.
 
-컬럼 중 **하나라도 이상치면 해당 행 전체를 이상치로 판단**
+**예제: 이상치 행 추출**
+
+```{python}
+# 하나라도 이상치가 있는 행
+outlier_rows = outlier_condition.any(axis=1)
+
+# 이상치 행 확인
+print(f"이상치가 있는 행 수: {outlier_rows.sum()}")
+print("\n이상치 행 샘플:")
+print(df[outlier_rows].head())
+```
 
 ### 이상치 제거
 
+이상치를 제거하여 정제된 데이터셋을 생성한다.
+
+**예제: IQR 기반 이상치 제거**
+
 ```{python}
+# 이상치가 없는 행만 유지
 df_iqr_clean = df[~outlier_rows]
+
+print(f"원본 데이터: {df.shape}")
+print(f"이상치 제거 후: {df_iqr_clean.shape}")
+print(f"제거된 행 수: {outlier_rows.sum()}")
 ```
+
+IQR 방법은 분포에 대한 가정이 없어 안전하게 사용할 수 있으며, 실무에서 가장 기본적으로 사용되는 방법이다.
 
 ## Z-score 기반 이상치 탐지
 
+Z-score는 각 값이 평균으로부터 표준편차의 몇 배만큼 떨어져 있는지를 나타내는 지표이다. 일반적으로 |Z| > 3인 경우를 이상치로 판단한다. 이 방법은 계산이 간단하지만 데이터가 정규분포를 따른다고 가정하므로, 분포가 왜곡된 경우 적절하지 않을 수 있다.
+
+**예제: Z-score 계산 및 이상치 탐지**
+
 ```{python}
 from scipy.stats import zscore
-```
 
-```{python}
+# Z-score 계산
 z_scores = df_num.apply(zscore)
+
+print("Z-score 샘플:")
+print(z_scores.head())
 ```
 
-### 임계값 기준 이상치 탐지 (|z| > 3)
+### 임계값 기준 이상치 탐지
+
+절댓값이 3을 초과하는 Z-score를 가진 값을 이상치로 판단한다.
+
+**예제: Z-score 기반 이상치 제거**
 
 ```{python}
+# |Z-score| > 3 인 경우 이상치로 판단
 outlier_z = (np.abs(z_scores) > 3).any(axis=1)
+
+# 이상치 제거
 df_z_clean = df[~outlier_z]
+
+print(f"원본 데이터: {df.shape}")
+print(f"Z-score 이상치 제거 후: {df_z_clean.shape}")
+print(f"제거된 행 수: {outlier_z.sum()}")
 ```
 
-계산이 간단한 장점이 있으나 **분포 왜곡에 취약**한 단점 존재
+Z-score 방법은 계산이 간단하고 직관적이지만, 정규분포 가정을 위반하면 정확도가 떨어진다. 따라서 데이터의 분포를 먼저 확인한 후 사용하는 것이 좋다.
 
 ## 범주별 이상치 탐지
 
-### species별 IQR 이상치 탐지
+전체 데이터를 대상으로 이상치를 탐지하면 그룹 간 차이가 큰 경우 정상 값이 이상치로 오판될 수 있다. 예를 들어, 펭귄 종에 따라 체중 분포가 크게 다르므로, 종별로 이상치를 탐지하는 것이 더 정확하다.
+
+### 그룹별 IQR 이상치 탐지
+
+각 그룹 내에서 독립적으로 IQR 기반 이상치를 탐지하는 방법이다.
+
+**예제: 종별 IQR 이상치 탐지**
 
 ```{python}
 def iqr_outlier_by_group(group):
+    """그룹별 IQR 기반 이상치 제거 함수"""
+    # 그룹 내 Q1, Q3, IQR 계산
     Q1 = group[num_cols].quantile(0.25)
     Q3 = group[num_cols].quantile(0.75)
     IQR = Q3 - Q1
-
+    
+    # 이상치 조건
     condition = (group[num_cols] < (Q1 - 1.5 * IQR)) | \
                 (group[num_cols] > (Q3 + 1.5 * IQR))
+    
+    # 이상치가 없는 행만 반환
     return group[~condition.any(axis=1)]
-```
 
-```{python}
+# 종별로 이상치 제거 적용
 df_group_iqr_clean = (
     df.groupby("species", group_keys=False)
       .apply(iqr_outlier_by_group)
+      .reset_index(drop=True)
 )
+
+print(f"원본 데이터: {df.shape}")
+print(f"그룹별 IQR 이상치 제거 후: {df_group_iqr_clean.shape}")
+print(f"제거된 행 수: {df.shape[0] - df_group_iqr_clean.shape[0]}")
 ```
 
+그룹별 이상치 탐지는 그룹 간 특성 차이를 고려하므로 실무에서 가장 권장되는 방법이다.
 
 ## 밀도 기반 이상치 탐지 (LOF)
 
+LOF(Local Outlier Factor)는 각 데이터 포인트의 주변 밀도를 계산하여 이상치를 탐지하는 방법이다. 주변 데이터와 비교하여 밀도가 현저히 낮은 점을 이상치로 판단한다. 이 방법은 비선형적인 데이터 분포나 군집 구조가 복잡한 경우에 효과적이다.
+
+**예제: LOF를 사용한 이상치 탐지**
+
 ```{python}
 from sklearn.neighbors import LocalOutlierFactor
-```
 
-```{python}
+# 결측치 제거 (LOF는 결측치를 처리하지 못함)
 df_lof = df_num.dropna()
 
+# LOF 모델 생성 (이웃 수 20개)
 lof = LocalOutlierFactor(n_neighbors=20)
+
+# 이상치 예측 (-1: 이상치, 1: 정상)
 outlier_lof = lof.fit_predict(df_lof)
-```
 
-```{python}
+# 정상 데이터만 추출
 df_lof_clean = df.loc[df_lof.index][outlier_lof == 1]
+
+print(f"분석 대상 데이터: {len(df_lof)}")
+print(f"LOF 이상치 제거 후: {df_lof_clean.shape}")
+print(f"탐지된 이상치 수: {(outlier_lof == -1).sum()}")
 ```
 
-주변 데이터와 **너무 다른 밀도**를 가지면 이상치로 판단하는 방식으로 비선형 데이터에 강함
+LOF는 주변 데이터와의 상대적 밀도를 고려하므로 데이터가 여러 군집으로 구성되어 있거나 비선형 관계가 있는 경우 IQR이나 Z-score보다 우수한 성능을 보인다.
 
 ## 트리 기반 이상치 탐지 (Isolation Forest)
 
+Isolation Forest는 이상치가 정상 데이터보다 쉽게 분리(isolate)된다는 아이디어에 기반한다. 랜덤하게 특성과 분할 값을 선택하여 트리를 구성할 때, 이상치는 적은 분할로 고립되는 반면 정상 데이터는 많은 분할이 필요하다. 이 방법은 고차원 데이터에 강건하며 실무에서 널리 사용된다.
+
+**예제: Isolation Forest를 사용한 이상치 탐지**
+
 ```{python}
 from sklearn.ensemble import IsolationForest
-```
 
-```{python}
+# Isolation Forest 모델 생성
+# contamination: 예상 이상치 비율 (5%)
 iso = IsolationForest(contamination=0.05, random_state=42)
+
+# 이상치 예측 (-1: 이상치, 1: 정상)
 outlier_if = iso.fit_predict(df_lof)
-```
 
-```{python}
+# 정상 데이터만 추출
 df_if_clean = df.loc[df_lof.index][outlier_if == 1]
+
+print(f"분석 대상 데이터: {len(df_lof)}")
+print(f"Isolation Forest 이상치 제거 후: {df_if_clean.shape}")
+print(f"탐지된 이상치 수: {(outlier_if == -1).sum()}")
 ```
 
-이상치는 트리 분류 기준으로 쉽게 분리가 된다는 가정하에 이상치를 탐지하는 방식으로 고차원 데이터에 강함하고 실무에서 자주 사용
+Isolation Forest는 다음과 같은 장점이 있다.
 
-## 단계별 선택 가이드
+- 고차원 데이터에서도 효율적으로 작동
+- 분포에 대한 가정이 없음
+- 계산 속도가 빠름
+- 대규모 데이터셋에 적합
 
-| 단계 | 방법              | 언제 쓰나      |
-| -- | --------------- | ---------- |
-| 1  | 시각화             | 이해, 설명     |
-| 2  | IQR             | 기본, 안전     |
-| 3  | Z-score         | 정규분포 가정    |
-| 4  | 그룹별 IQR         | **가장 실무적** |
-| 5  | LOF             | 비선형, 밀도    |
-| 6  | IsolationForest | 대규모, 고급    |
+`contamination` 파라미터는 데이터셋에서 예상되는 이상치 비율을 지정한다. 일반적으로 0.05~0.1 사이의 값을 사용한다.
 
+## 요약
+
+이 장에서는 통계적 방법부터 머신러닝 기법까지 다양한 이상치 탐지 방법을 학습했다. 주요 내용은 다음과 같다.
+
+**이상치 탐지 방법 비교**
+
+| 방법 | 원리 | 장점 | 단점 | 적용 상황 |
+|------|------|------|------|----------|
+| 박스플롯 | 시각적 탐색 | 직관적, 설명 용이 | 정량적 기준 부족 | 초기 탐색 및 보고서 |
+| IQR | 사분위수 범위 | 간단, 분포 가정 불필요 | 그룹 차이 미고려 | 기본적인 이상치 제거 |
+| Z-score | 표준편차 기반 | 계산 간단, 해석 명확 | 정규분포 가정 필요 | 정규분포 데이터 |
+| 그룹별 IQR | 그룹 내 IQR | 그룹 특성 반영 | 구현 복잡도 증가 | 그룹 간 차이가 큰 경우 (가장 실무적) |
+| LOF | 국소 밀도 비교 | 비선형 데이터 강건 | 계산 비용 높음, 파라미터 민감 | 복잡한 군집 구조 |
+| Isolation Forest | 트리 기반 분리 | 고차원 강건, 빠른 속도 | 결과 해석 어려움 | 대규모 고차원 데이터 |
+
+**이상치 탐지 단계별 가이드**
+
+1. **시각적 탐색**: 박스플롯으로 데이터 분포와 이상치 후보 확인
+2. **기본 탐지**: IQR 방법으로 명확한 이상치 제거
+3. **정규성 확인**: 데이터가 정규분포를 따르면 Z-score 적용
+4. **그룹 고려**: 범주별 차이가 있으면 그룹별 IQR 적용 (실무 권장)
+5. **고급 기법**: 비선형 관계나 복잡한 구조에는 LOF 적용
+6. **대규모 처리**: 고차원 대용량 데이터는 Isolation Forest 사용
+
+**이상치 처리 전략**
+
+이상치를 탐지한 후에는 다음 전략 중 하나를 선택한다.
+
+- 제거: 측정 오류나 입력 오류로 판단되는 경우
+- 대체: 극단값을 상/하한값으로 조정 (Winsorization)
+- 변환: 로그 변환이나 Box-Cox 변환으로 분포 정규화
+- 유지: 실제 극단 사건이며 분석에 중요한 경우
+
+이상치 탐지는 데이터의 품질을 높이는 중요한 과정이지만, 모든 이상치를 무조건 제거하는 것이 아니라 도메인 지식을 바탕으로 신중하게 판단해야 한다. 다음 장에서는 처리된 데이터를 바탕으로 변수 변환과 파생 변수 생성 기법을 학습할 것이다.
