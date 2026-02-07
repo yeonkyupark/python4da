@@ -2656,5 +2656,170 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>27</span>  <span class='chapter-title'>파이프라인 및 자동화</span>"
     ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html",
+    "href": "part3/10. 모델 해석.html",
+    "title": "28  모델 해석",
+    "section": "",
+    "text": "28.1 왜 모델 해석이 필요한가\n머신러닝 모델은 점점 복잡해지고 있다. 하지만 실무에서는 다음 질문에 답해야 한다.\n👉 모델 해석(Model Interpretation)은 선택이 아니라 필수",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#왜-모델-해석이-필요한가",
+    "href": "part3/10. 모델 해석.html#왜-모델-해석이-필요한가",
+    "title": "28  모델 해석",
+    "section": "",
+    "text": "어떤 변수가 가장 중요한가?\n특정 예측은 왜 이렇게 나왔는가?\n모델이 편향되어 있지는 않은가?",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#모델-해석의-범주",
+    "href": "part3/10. 모델 해석.html#모델-해석의-범주",
+    "title": "28  모델 해석",
+    "section": "28.2 모델 해석의 범주",
+    "text": "28.2 모델 해석의 범주\n모델 해석은 크게 두 가지 관점으로 나뉜다.\n\n\n\n구분\n설명\n\n\n\n\n전역 해석\n모델 전체에서 중요한 변수는 무엇인가\n\n\n국소 해석\n개별 샘플의 예측 이유",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#특성-중요도",
+    "href": "part3/10. 모델 해석.html#특성-중요도",
+    "title": "28  모델 해석",
+    "section": "28.3 특성 중요도",
+    "text": "28.3 특성 중요도\n\n28.3.1 개념\n특성 중요도(Feature Importance)는 모델이 예측에 얼마나 해당 변수를 활용했는지를 수치로 표현한 것이다. 주로 트리 기반 모델에서 제공된다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#트리-기반-모델의-특성-중요도",
+    "href": "part3/10. 모델 해석.html#트리-기반-모델의-특성-중요도",
+    "title": "28  모델 해석",
+    "section": "28.4 트리 기반 모델의 특성 중요도",
+    "text": "28.4 트리 기반 모델의 특성 중요도\n\n28.4.1 penguins 데이터 준비\n\nfrom palmerpenguins import load_penguins\nimport pandas as pd\n\ndf = load_penguins().dropna()\n\nX = df[[\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]]\ny = df[\"species\"]\n\n\n\n28.4.2 RandomForest 학습\n\nfrom sklearn.ensemble import RandomForestClassifier\n\nrf = RandomForestClassifier(\n    n_estimators=200,\n    random_state=42\n)\n\nrf.fit(X, y)\n\nRandomForestClassifier(n_estimators=200, random_state=42)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifier?Documentation for RandomForestClassifieriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_estimators n_estimators: int, default=100\n\nThe number of trees in the forest.\n\n.. versionchanged:: 0.22\nThe default value of ``n_estimators`` changed from 10 to 100\nin 0.22.\n200\n\n\n\ncriterion criterion: {\"gini\", \"entropy\", \"log_loss\"}, default=\"gini\"\n\nThe function to measure the quality of a split. Supported criteria are\n\"gini\" for the Gini impurity and \"log_loss\" and \"entropy\" both for the\nShannon information gain, see :ref:`tree_mathematical_formulation`.\nNote: This parameter is tree-specific.\n'gini'\n\n\n\nmax_depth max_depth: int, default=None\n\nThe maximum depth of the tree. If None, then nodes are expanded until\nall leaves are pure or until all leaves contain less than\nmin_samples_split samples.\nNone\n\n\n\nmin_samples_split min_samples_split: int or float, default=2\n\nThe minimum number of samples required to split an internal node:\n\n- If int, then consider `min_samples_split` as the minimum number.\n- If float, then `min_samples_split` is a fraction and\n`ceil(min_samples_split * n_samples)` are the minimum\nnumber of samples for each split.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n2\n\n\n\nmin_samples_leaf min_samples_leaf: int or float, default=1\n\nThe minimum number of samples required to be at a leaf node.\nA split point at any depth will only be considered if it leaves at\nleast ``min_samples_leaf`` training samples in each of the left and\nright branches. This may have the effect of smoothing the model,\nespecially in regression.\n\n- If int, then consider `min_samples_leaf` as the minimum number.\n- If float, then `min_samples_leaf` is a fraction and\n`ceil(min_samples_leaf * n_samples)` are the minimum\nnumber of samples for each node.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n1\n\n\n\nmin_weight_fraction_leaf min_weight_fraction_leaf: float, default=0.0\n\nThe minimum weighted fraction of the sum total of weights (of all\nthe input samples) required to be at a leaf node. Samples have\nequal weight when sample_weight is not provided.\n0.0\n\n\n\nmax_features max_features: {\"sqrt\", \"log2\", None}, int or float, default=\"sqrt\"\n\nThe number of features to consider when looking for the best split:\n\n- If int, then consider `max_features` features at each split.\n- If float, then `max_features` is a fraction and\n`max(1, int(max_features * n_features_in_))` features are considered at each\nsplit.\n- If \"sqrt\", then `max_features=sqrt(n_features)`.\n- If \"log2\", then `max_features=log2(n_features)`.\n- If None, then `max_features=n_features`.\n\n.. versionchanged:: 1.1\nThe default of `max_features` changed from `\"auto\"` to `\"sqrt\"`.\n\nNote: the search for a split does not stop until at least one\nvalid partition of the node samples is found, even if it requires to\neffectively inspect more than ``max_features`` features.\n'sqrt'\n\n\n\nmax_leaf_nodes max_leaf_nodes: int, default=None\n\nGrow trees with ``max_leaf_nodes`` in best-first fashion.\nBest nodes are defined as relative reduction in impurity.\nIf None then unlimited number of leaf nodes.\nNone\n\n\n\nmin_impurity_decrease min_impurity_decrease: float, default=0.0\n\nA node will be split if this split induces a decrease of the impurity\ngreater than or equal to this value.\n\nThe weighted impurity decrease equation is the following::\n\nN_t / N * (impurity - N_t_R / N_t * right_impurity\n- N_t_L / N_t * left_impurity)\n\nwhere ``N`` is the total number of samples, ``N_t`` is the number of\nsamples at the current node, ``N_t_L`` is the number of samples in the\nleft child, and ``N_t_R`` is the number of samples in the right child.\n\n``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,\nif ``sample_weight`` is passed.\n\n.. versionadded:: 0.19\n0.0\n\n\n\nbootstrap bootstrap: bool, default=True\n\nWhether bootstrap samples are used when building trees. If False, the\nwhole dataset is used to build each tree.\nTrue\n\n\n\noob_score oob_score: bool or callable, default=False\n\nWhether to use out-of-bag samples to estimate the generalization score.\nBy default, :func:`~sklearn.metrics.accuracy_score` is used.\nProvide a callable with signature `metric(y_true, y_pred)` to use a\ncustom metric. Only available if `bootstrap=True`.\n\nFor an illustration of out-of-bag (OOB) error estimation, see the example\n:ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`.\nFalse\n\n\n\nn_jobs n_jobs: int, default=None\n\nThe number of jobs to run in parallel. :meth:`fit`, :meth:`predict`,\n:meth:`decision_path` and :meth:`apply` are all parallelized over the\ntrees. ``None`` means 1 unless in a :obj:`joblib.parallel_backend`\ncontext. ``-1`` means using all processors. See :term:`Glossary\n` for more details.\nNone\n\n\n\nrandom_state random_state: int, RandomState instance or None, default=None\n\nControls both the randomness of the bootstrapping of the samples used\nwhen building trees (if ``bootstrap=True``) and the sampling of the\nfeatures to consider when looking for the best split at each node\n(if ``max_features &lt; n_features``).\nSee :term:`Glossary ` for details.\n42\n\n\n\nverbose verbose: int, default=0\n\nControls the verbosity when fitting and predicting.\n0\n\n\n\nwarm_start warm_start: bool, default=False\n\nWhen set to ``True``, reuse the solution of the previous call to fit\nand add more estimators to the ensemble, otherwise, just fit a whole\nnew forest. See :term:`Glossary ` and\n:ref:`tree_ensemble_warm_start` for details.\nFalse\n\n\n\nclass_weight class_weight: {\"balanced\", \"balanced_subsample\"}, dict or list of dicts, default=None\n\nWeights associated with classes in the form ``{class_label: weight}``.\nIf not given, all classes are supposed to have weight one. For\nmulti-output problems, a list of dicts can be provided in the same\norder as the columns of y.\n\nNote that for multioutput (including multilabel) weights should be\ndefined for each class of every column in its own dict. For example,\nfor four-class multilabel classification weights should be\n[{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of\n[{1:1}, {2:5}, {3:1}, {4:1}].\n\nThe \"balanced\" mode uses the values of y to automatically adjust\nweights inversely proportional to class frequencies in the input data\nas ``n_samples / (n_classes * np.bincount(y))``\n\nThe \"balanced_subsample\" mode is the same as \"balanced\" except that\nweights are computed based on the bootstrap sample for every tree\ngrown.\n\nFor multi-output, the weights of each column of y will be multiplied.\n\nNote that these weights will be multiplied with sample_weight (passed\nthrough the fit method) if sample_weight is specified.\nNone\n\n\n\nccp_alpha ccp_alpha: non-negative float, default=0.0\n\nComplexity parameter used for Minimal Cost-Complexity Pruning. The\nsubtree with the largest cost complexity that is smaller than\n``ccp_alpha`` will be chosen. By default, no pruning is performed. See\n:ref:`minimal_cost_complexity_pruning` for details. See\n:ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`\nfor an example of such pruning.\n\n.. versionadded:: 0.22\n0.0\n\n\n\nmax_samples max_samples: int or float, default=None\n\nIf bootstrap is True, the number of samples to draw from X\nto train each base estimator.\n\n- If None (default), then draw `X.shape[0]` samples.\n- If int, then draw `max_samples` samples.\n- If float, then draw `max(round(n_samples * max_samples), 1)` samples. Thus,\n`max_samples` should be in the interval `(0.0, 1.0]`.\n\n.. versionadded:: 0.22\nNone\n\n\n\nmonotonic_cst monotonic_cst: array-like of int of shape (n_features), default=None\n\nIndicates the monotonicity constraint to enforce on each feature.\n- 1: monotonic increase\n- 0: no constraint\n- -1: monotonic decrease\n\nIf monotonic_cst is None, no constraints are applied.\n\nMonotonicity constraints are not supported for:\n- multiclass classifications (i.e. when `n_classes &gt; 2`),\n- multioutput classifications (i.e. when `n_outputs_ &gt; 1`),\n- classifications trained on data with missing values.\n\nThe constraints hold over the probability of the positive class.\n\nRead more in the :ref:`User Guide `.\n\n.. versionadded:: 1.4\nNone\n\n\n\n\n            \n        \n    \n\n\n\n\n28.4.3 특성 중요도 확인\n\nimport pandas as pd\n\nimportance = pd.Series(\n    rf.feature_importances_,\n    index=X.columns\n).sort_values(ascending=False)\n\nimportance\n\nbill_length_mm       0.419905\nflipper_length_mm    0.324162\nbill_depth_mm        0.172930\nbody_mass_g          0.083002\ndtype: float64\n\n\n\n\n28.4.4 해석 포인트\n\n값이 클수록 모델 분기에서 자주 사용됨\n인과 관계는 아님\n변수 간 상관성이 있으면 왜곡 가능",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#permutation-importance",
+    "href": "part3/10. 모델 해석.html#permutation-importance",
+    "title": "28  모델 해석",
+    "section": "28.5 Permutation Importance",
+    "text": "28.5 Permutation Importance\n\n28.5.1 개념\n\n특정 변수를 무작위로 섞었을 때\n성능이 얼마나 떨어지는지 측정\n\n모델 종류에 상관없이 사용 가능\n\n\n28.5.2 예제\n\nfrom sklearn.inspection import permutation_importance\n\nresult = permutation_importance(\n    rf,\n    X,\n    y,\n    n_repeats=10,\n    random_state=42\n)\n\nperm_importance = pd.Series(\n    result.importances_mean,\n    index=X.columns\n).sort_values(ascending=False)\n\nperm_importance\n\nbill_length_mm       0.323123\nbill_depth_mm        0.139039\nflipper_length_mm    0.096697\nbody_mass_g          0.023423\ndtype: float64\n\n\n실무에서는 기본 feature_importance보다 신뢰도 높음",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#shap-개요",
+    "href": "part3/10. 모델 해석.html#shap-개요",
+    "title": "28  모델 해석",
+    "section": "28.6 SHAP 개요",
+    "text": "28.6 SHAP 개요\nshap는 Python 3.6 ~ 3.10에서 지원한다. 이외 버전인 경우 대체, 보완 방법을 사용한다.\n\n28.6.1 SHAP (SHapley Additive exPlanations)\n\n게임 이론 기반\n각 특성이 예측값에 기여한 정도를 계산\n전역 + 국소 해석 모두 가능\n\n현재 가장 표준적인 모델 해석 방법",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#shap-값의-핵심-개념",
+    "href": "part3/10. 모델 해석.html#shap-값의-핵심-개념",
+    "title": "28  모델 해석",
+    "section": "28.7 SHAP 값의 핵심 개념",
+    "text": "28.7 SHAP 값의 핵심 개념\n\n기준값(base value)에서 출발\n각 특성이 예측값을 얼마나 밀었는지\n모든 기여도의 합 = 최종 예측",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#shap-적용-tree-기반",
+    "href": "part3/10. 모델 해석.html#shap-적용-tree-기반",
+    "title": "28  모델 해석",
+    "section": "28.8 SHAP 적용 (Tree 기반)",
+    "text": "28.8 SHAP 적용 (Tree 기반)\nimport shap\n\nexplainer = shap.TreeExplainer(rf)\nshap_values = explainer.shap_values(X)\n\n28.8.1 전역 해석 – Summary Plot\nshap.summary_plot(\n    shap_values,\n    X,\n    plot_type=\"bar\"\n)\n의미\n\n전체 모델에서 중요한 변수 순위\n방향성은 알 수 없음 (막대형)\n\n\n\n28.8.2 분포 기반 Summary Plot\nshap.summary_plot(\n    shap_values,\n    X\n)\n해석 포인트\n\n색상: 특성 값 크기\n위치: 예측에 미친 영향 방향\n변수별 영향 분포 확인 가능",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#개별-예측-해석-local-explanation",
+    "href": "part3/10. 모델 해석.html#개별-예측-해석-local-explanation",
+    "title": "28  모델 해석",
+    "section": "28.9 개별 예측 해석 (Local Explanation)",
+    "text": "28.9 개별 예측 해석 (Local Explanation)\n\n28.9.1 특정 샘플 선택\ni = 0\n\n\n28.9.2 Force Plot\nshap.force_plot(\n    explainer.expected_value[0],\n    shap_values[0][i],\n    X.iloc[i]\n)\n“이 펭귄이 왜 이 종으로 분류됐는지” 설명 가능",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#shap-사용-시-주의점",
+    "href": "part3/10. 모델 해석.html#shap-사용-시-주의점",
+    "title": "28  모델 해석",
+    "section": "28.10 SHAP 사용 시 주의점",
+    "text": "28.10 SHAP 사용 시 주의점\n\n계산 비용 큼\n데이터 크기 클 경우 샘플링 필요\n모델 구조에 따라 explainer 선택\n\n\n\n\n모델\nExplainer\n\n\n\n\nTree 모델\nTreeExplainer\n\n\n일반 모델\nKernelExplainer",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#특성-중요도-vs-shap-비교",
+    "href": "part3/10. 모델 해석.html#특성-중요도-vs-shap-비교",
+    "title": "28  모델 해석",
+    "section": "28.11 특성 중요도 vs SHAP 비교",
+    "text": "28.11 특성 중요도 vs SHAP 비교\n\n\n\n항목\n특성 중요도\nSHAP\n\n\n\n\n전역 해석\n가능\n가능\n\n\n국소 해석\n불가\n가능\n\n\n방향성\n불가\n가능\n\n\n계산 비용\n낮음\n높음",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#정리",
+    "href": "part3/10. 모델 해석.html#정리",
+    "title": "28  모델 해석",
+    "section": "28.12 정리",
+    "text": "28.12 정리\n\n모델 성능만 보고 끝내지 말 것\n의사결정 모델은 반드시 해석 포함\n보고서에는 SHAP 시각화 적극 활용",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#python-3.12-기준-모델-해석",
+    "href": "part3/10. 모델 해석.html#python-3.12-기준-모델-해석",
+    "title": "28  모델 해석",
+    "section": "28.13 Python 3.12 기준 모델 해석",
+    "text": "28.13 Python 3.12 기준 모델 해석\nPython 3.12 환경에서는 SHAP 대신 Permutation Importance + PDP 조합을 사용한다.\n\n28.13.1 Permutation Importance (전역 중요도)\n\n28.13.1.1 개념\n특정 변수를 무작위로 섞었을 때모델 성능이 얼마나 감소하는지로 중요도를 판단한다.\n\n\n28.13.1.2 언제 쓰나\n모델이 어떤 변수를 실제로 의존하는지 알고 싶을 때 트리·SVM·앙상블 등 모델 종류 무관하게 사용할 수 있다.\n\n\n28.13.1.3 예제\n\nfrom palmerpenguins import load_penguins\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.inspection import permutation_importance\nimport pandas as pd\n\ndf = load_penguins().dropna()\n\nX = df[['bill_length_mm', 'bill_depth_mm',\n        'flipper_length_mm', 'body_mass_g']]\ny = df['species']\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, random_state=42\n)\n\nmodel = RandomForestClassifier(random_state=42)\nmodel.fit(X_train, y_train)\n\nresult = permutation_importance(\n    model, X_test, y_test,\n    n_repeats=10, random_state=42\n)\n\nperm_importance = pd.Series(\n    result.importances_mean,\n    index=X.columns\n).sort_values(ascending=False)\n\nperm_importance\n\nbill_length_mm       0.307143\nbill_depth_mm        0.146429\nflipper_length_mm    0.033333\nbody_mass_g          0.001190\ndtype: float64\n\n\n\n\n28.13.1.4 해석 포인트\n\n값이 클수록 예측 성능에 중요한 변수\n“모델이 실제로 쓰는 변수”를 보여줌\n\n\n\n\n28.13.2 Partial Dependence Plot (PDP)\n\n28.13.2.1 개념\n특정 변수가 변할 때 예측값이 평균적으로 어떻게 변하는지 시각화한다.\n\n\n28.13.2.2 언제 쓰나\n변수의 영향 방향(+/−)을 알고 싶을 때, 전역적인 경향 설명용으로 적합하다.\n\n\n28.13.2.3 예제\n\nfrom sklearn.inspection import PartialDependenceDisplay\nimport matplotlib.pyplot as plt\n\nPartialDependenceDisplay.from_estimator(\n    model,\n    X_train,\n    features=['flipper_length_mm', 'body_mass_g'],\n    target='Gentoo'\n)\n\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n28.13.3 해석 포인트\n\n“날개 길이가 증가할수록 특정 종으로 분류될 확률이 증가”\n평균 효과 → 개별 샘플 설명은 아님",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
+  },
+  {
+    "objectID": "part3/10. 모델 해석.html#정리-1",
+    "href": "part3/10. 모델 해석.html#정리-1",
+    "title": "28  모델 해석",
+    "section": "28.14 정리",
+    "text": "28.14 정리\n\nPermutation Importance\n\n무엇이 중요한가 (전역)\n\nPDP\n\n어떻게 영향을 주는가 (방향·형태)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>모델 해석</span>"
+    ]
   }
 ]
