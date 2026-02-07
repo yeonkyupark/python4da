@@ -88,7 +88,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "",
-    "text": "2.1 라이브러리 로드 & 데이터 불러오기\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# seaborn 내장 penguins 데이터셋 로드\ndf = sns.load_dataset(\"penguins\")\n\ndf.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nMale\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nFemale\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nFemale\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nFemale",
+    "text": "2.1 라이브러리 로드 및 데이터 불러오기\n탐색적 데이터 분석(Exploratory Data Analysis, EDA)은 데이터의 특성과 패턴을 파악하기 위해 시각화와 통계적 방법을 활용하는 과정이다. EDA를 통해 데이터의 분포, 변수 간 관계, 이상치, 결측치 등을 발견할 수 있으며, 이는 본격적인 분석이나 모델링 전략을 수립하는 데 중요한 기반이 된다. 이 장에서는 Python의 pandas, seaborn, matplotlib 라이브러리를 활용하여 체계적인 EDA를 수행하는 방법을 학습한다.\nEDA를 수행하기 위해서는 데이터 처리를 위한 pandas, 시각화를 위한 seaborn과 matplotlib 라이브러리가 필요하다. 여기서는 seaborn에 내장된 penguins 데이터셋을 사용한다.\n예제: 필수 라이브러리 로드 및 데이터 불러오기\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# seaborn 내장 penguins 데이터셋 로드\ndf = sns.load_dataset(\"penguins\")\n\n# 데이터 미리보기\ndf.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nMale\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nFemale\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nFemale\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nFemale",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -99,7 +99,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#데이터-구조-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.2 데이터 구조 확인",
-    "text": "2.2 데이터 구조 확인\n\ndf.shape\n\n(344, 7)\n\n\n\ndf.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 344 entries, 0 to 343\nData columns (total 7 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   species            344 non-null    str    \n 1   island             344 non-null    str    \n 2   bill_length_mm     342 non-null    float64\n 3   bill_depth_mm      342 non-null    float64\n 4   flipper_length_mm  342 non-null    float64\n 5   body_mass_g        342 non-null    float64\n 6   sex                333 non-null    str    \ndtypes: float64(4), str(3)\nmemory usage: 18.9 KB\n\n\n확인 포인트\n\n행(row), 열(column) 개수\n변수 타입 (수치형 / 범주형)\n결측치 여부",
+    "text": "2.2 데이터 구조 확인\n데이터 분석의 첫 단계는 전체 데이터의 구조를 파악하는 것이다. 데이터의 크기, 각 컬럼의 데이터 타입, 결측치 존재 여부 등을 확인하여 데이터의 전반적인 특성을 이해할 수 있다.\n예제: 데이터 크기 확인\n\n# 행과 열의 개수 확인\ndf.shape\n\n(344, 7)\n\n\n예제: 데이터 상세 정보 확인\n\n# 컬럼별 데이터 타입 및 결측치 정보\ndf.info()\n\n&lt;class 'pandas.DataFrame'&gt;\nRangeIndex: 344 entries, 0 to 343\nData columns (total 7 columns):\n #   Column             Non-Null Count  Dtype  \n---  ------             --------------  -----  \n 0   species            344 non-null    str    \n 1   island             344 non-null    str    \n 2   bill_length_mm     342 non-null    float64\n 3   bill_depth_mm      342 non-null    float64\n 4   flipper_length_mm  342 non-null    float64\n 5   body_mass_g        342 non-null    float64\n 6   sex                333 non-null    str    \ndtypes: float64(4), str(3)\nmemory usage: 18.9 KB\n\n\n위 결과에서 확인해야 할 주요 사항은 다음과 같다.\n\n\n\n확인 항목\n설명\n\n\n\n\n행(row) 개수\n전체 관측치의 수\n\n\n열(column) 개수\n변수의 수\n\n\n변수 타입\n수치형(int64, float64) 또는 범주형(object)\n\n\n결측치 여부\nNon-Null Count가 전체 행 수보다 적은 경우 결측치 존재",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -110,7 +110,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#기초-통계량-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.3 기초 통계량 확인",
-    "text": "2.3 기초 통계량 확인\n\n2.3.1 수치형 변수 요약\n\ndf.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n\n\n2.3.2 범주형 변수 요약\n\ndf.describe(include=\"object\")\n\n\n\n\n\n\n\n\nspecies\nisland\nsex\n\n\n\n\ncount\n344\n344\n333\n\n\nunique\n3\n3\n2\n\n\ntop\nAdelie\nBiscoe\nMale\n\n\nfreq\n152\n168\n168",
+    "text": "2.3 기초 통계량 확인\n기술 통계량은 데이터의 중심 경향성과 분산 정도를 수치로 요약하여 제공한다. 수치형 변수와 범주형 변수는 서로 다른 방법으로 요약해야 한다.\n\n2.3.1 수치형 변수 요약\n수치형 변수는 평균, 표준편차, 최솟값, 최댓값, 사분위수 등의 통계량으로 요약할 수 있다.\n예제: 수치형 변수 기술 통계량\n\n# 수치형 컬럼의 기술 통계량\ndf.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n\n\n2.3.2 범주형 변수 요약\n범주형 변수는 고유값의 개수, 최빈값, 빈도 등으로 요약할 수 있다.\n예제: 범주형 변수 기술 통계량\n\n# 범주형 컬럼의 기술 통계량\ndf.describe(include=\"object\")\n\n\n\n\n\n\n\n\nspecies\nisland\nsex\n\n\n\n\ncount\n344\n344\n333\n\n\nunique\n3\n3\n2\n\n\ntop\nAdelie\nBiscoe\nMale\n\n\nfreq\n152\n168\n168\n\n\n\n\n\n\n\n위 결과에서 확인할 수 있는 정보는 다음과 같다.\n\n\n\n통계량\n설명\n\n\n\n\ncount\n결측치를 제외한 데이터 개수\n\n\nunique\n고유한 값의 개수\n\n\ntop\n최빈값(가장 자주 나타나는 값)\n\n\nfreq\n최빈값의 빈도",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -121,7 +121,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#결측치-탐색",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.4 결측치 탐색",
-    "text": "2.4 결측치 탐색\n\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64\n\n\n\n(df.isna().mean() * 100).round(1)\n\nspecies              0.0\nisland               0.0\nbill_length_mm       0.6\nbill_depth_mm        0.6\nflipper_length_mm    0.6\nbody_mass_g          0.6\nsex                  3.2\ndtype: float64",
+    "text": "2.4 결측치 탐색\n결측치는 데이터 분석 결과를 왜곡할 수 있으므로 반드시 확인하고 적절히 처리해야 한다. 결측치의 개수와 비율을 파악하여 처리 전략을 수립할 수 있다.\n예제: 컬럼별 결측치 개수 확인\n\n# 각 컬럼의 결측치 개수\ndf.isna().sum()\n\nspecies               0\nisland                0\nbill_length_mm        2\nbill_depth_mm         2\nflipper_length_mm     2\nbody_mass_g           2\nsex                  11\ndtype: int64\n\n\n예제: 컬럼별 결측치 비율 확인\n\n# 각 컬럼의 결측치 비율 (%)\n(df.isna().mean() * 100).round(1)\n\nspecies              0.0\nisland               0.0\nbill_length_mm       0.6\nbill_depth_mm        0.6\nflipper_length_mm    0.6\nbody_mass_g          0.6\nsex                  3.2\ndtype: float64\n\n\n결측치가 5% 미만인 경우 해당 행을 제거하는 것이 일반적이며, 10% 이상인 경우 평균값이나 중앙값으로 대체하거나 별도의 결측치 처리 기법을 고려해야 한다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -132,7 +132,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#범주형-변수-탐색",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.5 범주형 변수 탐색",
-    "text": "2.5 범주형 변수 탐색\n\n2.5.1 종(species) 분포\n\ndf[\"species\"].value_counts()\n\nspecies\nAdelie       152\nGentoo       124\nChinstrap     68\nName: count, dtype: int64\n\n\n\nsns.countplot(data=df, x=\"species\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.5.2 성별(sex) 분포\n\nsns.countplot(data=df, x=\"sex\")\nplt.show()",
+    "text": "2.5 범주형 변수 탐색\n범주형 변수는 각 범주의 빈도를 확인하여 데이터의 분포를 파악한다. 시각화를 통해 불균형 여부를 쉽게 확인할 수 있다.\n\n2.5.1 종(species) 분포\n펭귄 종별 개체 수를 확인하여 데이터의 균형 상태를 파악한다.\n예제: 종별 빈도 확인\n\n# 종(species)별 개체 수\ndf[\"species\"].value_counts()\n\nspecies\nAdelie       152\nGentoo       124\nChinstrap     68\nName: count, dtype: int64\n\n\n예제: 종별 분포 시각화\n\n# 종별 분포 막대 그래프\nsns.countplot(data=df, x=\"species\")\nplt.title(\"Distribution of Penguin Species\")\nplt.xlabel(\"Species\")\nplt.ylabel(\"Count\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.5.2 성별(sex) 분포\n성별 분포를 확인하여 데이터 수집 과정에서 성별 편향이 있는지 파악한다.\n예제: 성별 분포 시각화\n\n# 성별 분포 막대 그래프\nsns.countplot(data=df, x=\"sex\")\nplt.title(\"Distribution of Penguin Sex\")\nplt.xlabel(\"Sex\")\nplt.ylabel(\"Count\")\nplt.show()",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -143,7 +143,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#수치형-변수-분포-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.6 수치형 변수 분포 확인",
-    "text": "2.6 수치형 변수 분포 확인\n\n2.6.1 히스토그램\n\ndf.hist(bins=20, figsize=(10, 8))\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.2 박스플롯 (이상치 탐색)\n\nplt.figure(figsize=(8, 4))\nsns.boxplot(data=df, x=\"species\", y=\"body_mass_g\")\nplt.show()",
+    "text": "2.6 수치형 변수 분포 확인\n수치형 변수의 분포를 시각화하면 데이터의 중심, 퍼짐 정도, 왜도(skewness), 이상치 등을 직관적으로 파악할 수 있다.\n\n2.6.1 히스토그램\n히스토그램은 수치형 변수의 분포를 구간별 빈도로 나타낸 그래프이다. 데이터가 정규분포를 따르는지, 왜곡되어 있는지 등을 확인할 수 있다.\n예제: 전체 수치형 변수 히스토그램\n\n# 모든 수치형 변수의 히스토그램\ndf.hist(bins=20, figsize=(10, 8))\nplt.tight_layout()\nplt.suptitle(\"Histograms of Numeric Variables\", y=1.02)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.6.2 박스플롯 (이상치 탐색)\n박스플롯은 사분위수를 기반으로 데이터의 분포와 이상치를 시각화하는 도구이다. 박스 밖의 점들은 이상치 후보로 간주할 수 있다.\n예제: 종별 체중 분포 및 이상치 확인\n\n# 종별 체중 분포 박스플롯\nplt.figure(figsize=(8, 4))\nsns.boxplot(data=df, x=\"species\", y=\"body_mass_g\")\nplt.title(\"Body Mass Distribution by Species\")\nplt.xlabel(\"Species\")\nplt.ylabel(\"Body Mass (g)\")\nplt.show()\n\n\n\n\n\n\n\n\n박스플롯에서 확인할 수 있는 정보는 다음과 같다.\n\n\n\n요소\n설명\n\n\n\n\n박스 아래쪽 경계\n제1사분위수(Q1, 25 백분위수)\n\n\n박스 중앙선\n중앙값(Q2, 50 백분위수)\n\n\n박스 위쪽 경계\n제3사분위수(Q3, 75 백분위수)\n\n\n수염(whisker)\nQ1 - 1.5×IQR ~ Q3 + 1.5×IQR 범위\n\n\n개별 점\n이상치 후보",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -154,7 +154,7 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#변수-간-관계-탐색",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.7 변수 간 관계 탐색",
-    "text": "2.7 변수 간 관계 탐색\n\n2.7.1 두 수치형 변수 관계\n\nsns.scatterplot(\n    data=df,\n    x=\"bill_length_mm\",\n    y=\"bill_depth_mm\",\n    hue=\"species\"\n)\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.7.2 페어플롯\n\nsns.pairplot(\n    df,\n    hue=\"species\",\n    diag_kind=\"hist\"\n)\nplt.show()",
+    "text": "2.7 변수 간 관계 탐색\n두 변수 간의 관계를 파악하면 변수 간 상관성, 패턴, 군집 등을 발견할 수 있다. 이는 예측 모델링이나 가설 검정의 기초 자료가 된다.\n\n2.7.1 두 수치형 변수 관계\n산점도는 두 수치형 변수 간의 관계를 점으로 표현한 그래프이다. 범주형 변수로 색상을 구분하면 그룹별 패턴을 동시에 확인할 수 있다.\n예제: 부리 길이와 깊이의 관계\n\n# 부리 길이와 깊이의 산점도 (종별 구분)\nsns.scatterplot(\n    data=df,\n    x=\"bill_length_mm\",\n    y=\"bill_depth_mm\",\n    hue=\"species\"\n)\nplt.title(\"Relationship between Bill Length and Depth\")\nplt.xlabel(\"Bill Length (mm)\")\nplt.ylabel(\"Bill Depth (mm)\")\nplt.legend(title=\"Species\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n2.7.2 페어플롯\n페어플롯은 모든 수치형 변수 쌍에 대한 산점도를 행렬 형태로 배치한 그래프이다. 대각선에는 각 변수의 히스토그램이나 커널 밀도 추정(KDE) 그래프가 표시된다.\n예제: 전체 변수 간 관계 확인\n\n# 모든 수치형 변수 쌍의 관계 시각화\nsns.pairplot(\n    df,\n    hue=\"species\",\n    diag_kind=\"hist\"\n)\nplt.suptitle(\"Pairplot of Penguin Features\", y=1.02)\nplt.show()\n\n\n\n\n\n\n\n\n페어플롯을 통해 다음을 파악할 수 있다.\n\n변수 간 선형 또는 비선형 관계\n그룹별 분포 차이\n다변량 군집 패턴\n변수 간 상관성",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
@@ -165,29 +165,18 @@
     "href": "part1/02. 탐색적 데이터 분석(EDA).html#그룹별-통계-확인",
     "title": "2  탐색적 데이터 분석(EDA)",
     "section": "2.8 그룹별 통계 확인",
-    "text": "2.8 그룹별 통계 확인\n\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].mean()\n\n\n\n\n\n\n\n\nbill_length_mm\nbody_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n38.791391\n3700.662252\n\n\nChinstrap\n48.833824\n3733.088235\n\n\nGentoo\n47.504878\n5076.016260",
+    "text": "2.8 그룹별 통계 확인\n그룹별 통계량을 비교하면 범주형 변수가 수치형 변수에 미치는 영향을 정량적으로 파악할 수 있다.\n예제: 종별 평균 통계\n\n# 종별 부리 길이와 체중의 평균\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].mean()\n\n\n\n\n\n\n\n\nbill_length_mm\nbody_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n38.791391\n3700.662252\n\n\nChinstrap\n48.833824\n3733.088235\n\n\nGentoo\n47.504878\n5076.016260\n\n\n\n\n\n\n\n추가적으로 표준편차, 중앙값 등 다양한 통계량을 함께 확인할 수 있다.\n예제: 종별 다양한 통계량\n\n# 종별 다양한 통계량 확인\ndf.groupby(\"species\")[[\"bill_length_mm\", \"body_mass_g\"]].agg([\"mean\", \"std\", \"median\"])\n\n\n\n\n\n\n\n\nbill_length_mm\nbody_mass_g\n\n\n\nmean\nstd\nmedian\nmean\nstd\nmedian\n\n\nspecies\n\n\n\n\n\n\n\n\n\n\nAdelie\n38.791391\n2.663405\n38.80\n3700.662252\n458.566126\n3700.0\n\n\nChinstrap\n48.833824\n3.339256\n49.55\n3733.088235\n384.335081\n3700.0\n\n\nGentoo\n47.504878\n3.081857\n47.30\n5076.016260\n504.116237\n5000.0",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
     ]
   },
   {
-    "objectID": "part1/02. 탐색적 데이터 분석(EDA).html#간단한-eda-결론-예시",
-    "href": "part1/02. 탐색적 데이터 분석(EDA).html#간단한-eda-결론-예시",
+    "objectID": "part1/02. 탐색적 데이터 분석(EDA).html#요약",
+    "href": "part1/02. 탐색적 데이터 분석(EDA).html#요약",
     "title": "2  탐색적 데이터 분석(EDA)",
-    "section": "2.9 간단한 EDA 결론 예시",
-    "text": "2.9 간단한 EDA 결론 예시\n\n종(species)에 따라 부리 길이와 몸무게 분포가 뚜렷하게 구분된다.\nAdelie 종은 상대적으로 몸무게와 부리 길이가 작다.\n일부 변수에 결측치가 존재하므로 분석 전 처리 전략이 필요하다.",
-    "crumbs": [
-      "Ⅰ. 데이터 전처리 및 변환",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
-    ]
-  },
-  {
-    "objectID": "part1/02. 탐색적 데이터 분석(EDA).html#eda-기본-흐름-요약",
-    "href": "part1/02. 탐색적 데이터 분석(EDA).html#eda-기본-흐름-요약",
-    "title": "2  탐색적 데이터 분석(EDA)",
-    "section": "2.10 EDA 기본 흐름 요약",
-    "text": "2.10 EDA 기본 흐름 요약\n\n데이터 구조 확인 → info(), shape\n기초 통계 → describe()\n결측치 → isna()\n분포 → 히스토그램, 박스플롯\n관계 → 산점도, pairplot\n그룹 비교 → groupby()",
+    "section": "2.9 요약",
+    "text": "2.9 요약\n이 장에서는 탐색적 데이터 분석(EDA)의 기본 과정과 주요 기법을 학습했다. 주요 내용은 다음과 같다.\nEDA 기본 단계\n\n\n\n\n\n\n\n\n단계\n주요 함수/기법\n목적\n\n\n\n\n데이터 구조 확인\nshape, info()\n데이터 크기, 타입, 결측치 파악\n\n\n기초 통계량 확인\ndescribe()\n중심 경향성과 분산 이해\n\n\n결측치 탐색\nisna(), sum(), mean()\n결측치 개수와 비율 확인\n\n\n분포 확인\n히스토그램, 박스플롯\n데이터 분포와 이상치 탐색\n\n\n관계 탐색\n산점도, 페어플롯\n변수 간 상관성과 패턴 발견\n\n\n그룹 비교\ngroupby()\n그룹별 통계적 차이 확인\n\n\n\n주요 발견 사항 (펭귄 데이터 예시)\n\n펭귄 종(species)에 따라 부리 길이와 체중 분포가 명확하게 구분된다\nAdelie 종은 다른 종에 비해 상대적으로 체중과 부리 길이가 작다\n일부 변수에 결측치가 존재하므로 본격적인 분석 전에 처리 전략이 필요하다\n성별과 종에 따른 신체 측정값의 차이가 관찰된다\n\nEDA는 데이터의 특성을 이해하고 가설을 수립하는 필수 과정이다. 다음 장에서는 EDA를 통해 발견한 결측치와 이상치를 처리하는 데이터 전처리 기법을 학습할 것이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>탐색적 데이터 분석(EDA)</span>"
