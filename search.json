@@ -2139,5 +2139,93 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
     ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html",
+    "href": "part3/05. 분류 모델.html",
+    "title": "23  분류 모델",
+    "section": "",
+    "text": "23.1 분류 모델 개요\n분류 모델(Classification Models)은 입력 변수(X)를 기반으로 범주형 타깃 변수(y) 를 예측하는 모델이다.\npenguins 데이터셋에서는 다음이 대표적인 분류 문제다.\nimport seaborn as sns\nimport pandas as pd\n\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\nX = df[[\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]]\n\ny = df[\"species\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y,\n    test_size=0.2,\n    random_state=42,\n    stratify=y\n)\nstratify=y",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#분류-모델-개요",
+    "href": "part3/05. 분류 모델.html#분류-모델-개요",
+    "title": "23  분류 모델",
+    "section": "",
+    "text": "출력: 이산적인 클래스\n예: 펭귄 종(species) 분류\n\n\n\n타깃 변수: species\n입력 변수: 부리 길이, 부리 깊이, 날개 길이, 체중 등\n\n\n\n\n클래스 비율 유지 (분류 문제에서 매우 중요)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#선형-분류-모델",
+    "href": "part3/05. 분류 모델.html#선형-분류-모델",
+    "title": "23  분류 모델",
+    "section": "23.2 선형 분류 모델",
+    "text": "23.2 선형 분류 모델\n\n23.2.1 로지스틱 회귀\n로지스틱 회귀(Logistic Regression)의 이름은 회귀지만 분류 모델이다.\n\n선형 결정 경계\n확률 기반 예측\n이진 분류, 다중 분류 모두 가능\n\n\n\n23.2.2 개념 요약\n\n선형 결합 결과 → 시그모이드 함수\n출력값을 확률로 해석\n가장 확률이 높은 클래스를 예측값으로 선택\n\n\n\n23.2.3 로지스틱 회귀 예제\nfrom sklearn.linear_model import LogisticRegression\n\npipe_lr = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", LogisticRegression(max_iter=1000))\n])\n\npipe_lr.fit(X_train, y_train)\n\npipe_lr.score(X_test, y_test)\n\n\n23.2.4 특징\n\n해석 가능성 높음\n고차원 데이터에 강함\n비선형 경계 표현에는 한계",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#거리-기반-모델",
+    "href": "part3/05. 분류 모델.html#거리-기반-모델",
+    "title": "23  분류 모델",
+    "section": "23.3 거리 기반 모델",
+    "text": "23.3 거리 기반 모델\n\n23.3.1 k-최근접 이웃 (k-NN)\n가장 직관적인 분류 모델로 새로운 데이터 주변의 k개 이웃을 기준으로 분류한다. 거리 기반으로 클래스를 판단한다.\n\n\n23.3.2 개념 요약\n\n학습 과정 없음\n거리 계산이 핵심\n스케일에 매우 민감\n\n\n\n23.3.3 k-NN 예제\nfrom sklearn.neighbors import KNeighborsClassifier\n\npipe_knn = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", KNeighborsClassifier(n_neighbors=5))\n])\n\npipe_knn.fit(X_train, y_train)\n\npipe_knn.score(X_test, y_test)\n\n\n23.3.4 k 값의 영향\n\nk가 작음 → 과적합\nk가 큼 → 과소적합\n\n교차 검증으로 선택하는 것이 일반적\n\n\n23.3.5 거리 기반 모델의 한계\n\n데이터 수 증가 시 예측 속도 저하\n고차원 공간에서 거리 의미 약화",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#트리-기반-모델",
+    "href": "part3/05. 분류 모델.html#트리-기반-모델",
+    "title": "23  분류 모델",
+    "section": "23.4 트리 기반 모델",
+    "text": "23.4 트리 기반 모델\n\n23.4.1 결정 트리 (Decision Tree)\n질문을 반복하며 분기하며, 사람이 이해하기 쉬운 구조를 갖는다.\n\n\n23.4.2 개념 요약\n\n불순도 감소 기준으로 분기\n비선형 경계 표현 가능\n스케일링 불필요\n\n\n\n23.4.3 결정 트리 예제\nfrom sklearn.tree import DecisionTreeClassifier\n\ntree = DecisionTreeClassifier(\n    max_depth=4,\n    random_state=42\n)\n\ntree.fit(X_train, y_train)\n\ntree.score(X_test, y_test)\n\n\n23.4.4 단점\n\n과적합에 매우 취약\n데이터 변화에 민감\n\n이를 보완한 것이 앙상블 모델",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#앙상블-모델",
+    "href": "part3/05. 분류 모델.html#앙상블-모델",
+    "title": "23  분류 모델",
+    "section": "23.5 3.5.5 앙상블 모델",
+    "text": "23.5 3.5.5 앙상블 모델\n\n23.5.1 랜덤 포레스트 (Random Forest)\n여러 결정 트리를 결합한 형태로 배깅(Bagging) 기반 모델이다.\n\n\n23.5.2 특징\n\n과적합 감소\n안정적인 성능\n변수 중요도 제공\n\n\n\n23.5.3 랜덤 포레스트 예제\nfrom sklearn.ensemble import RandomForestClassifier\n\nrf = RandomForestClassifier(\n    n_estimators=200,\n    random_state=42\n)\n\nrf.fit(X_train, y_train)\n\nrf.score(X_test, y_test)\n\n\n23.5.4 변수 중요도 확인\npd.Series(\n    rf.feature_importances_,\n    index=X.columns\n).sort_values(ascending=False)\n\n\n23.5.5 그래디언트 부스팅 계열\n\n이전 모델의 오류를 보완하며 학습\n성능은 좋지만 해석과 튜닝 난이도 ↑",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#모델-비교-요약",
+    "href": "part3/05. 분류 모델.html#모델-비교-요약",
+    "title": "23  분류 모델",
+    "section": "23.6 모델 비교 요약",
+    "text": "23.6 모델 비교 요약\n\n로지스틱 회귀\n\n기준 모델\n해석 용이\n\nk-NN\n\n직관적\n스케일 중요\n\n결정 트리\n\n비선형\n과적합 주의\n\n랜덤 포레스트\n\n안정적\n실무 활용도 높음",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/05. 분류 모델.html#선택-가이드",
+    "href": "part3/05. 분류 모델.html#선택-가이드",
+    "title": "23  분류 모델",
+    "section": "23.7 선택 가이드",
+    "text": "23.7 선택 가이드\n\n빠른 기준선\n\n로지스틱 회귀\n\n데이터 구조 탐색\n\n결정 트리\n\n성능 우선\n\n랜덤 포레스트\n\n데이터 수 적음\n\nk-NN (튜닝 필수)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>23</span>  <span class='chapter-title'>분류 모델</span>"
+    ]
   }
 ]

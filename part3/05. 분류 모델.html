@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,46 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#분류-모델-개요" id="toc-분류-모델-개요" class="nav-link active" data-scroll-target="#분류-모델-개요"><span class="header-section-number">23.1</span> 분류 모델 개요</a></li>
+  <li><a href="#선형-분류-모델" id="toc-선형-분류-모델" class="nav-link" data-scroll-target="#선형-분류-모델"><span class="header-section-number">23.2</span> 선형 분류 모델</a>
+  <ul>
+  <li><a href="#로지스틱-회귀" id="toc-로지스틱-회귀" class="nav-link" data-scroll-target="#로지스틱-회귀"><span class="header-section-number">23.2.1</span> 로지스틱 회귀</a></li>
+  <li><a href="#개념-요약" id="toc-개념-요약" class="nav-link" data-scroll-target="#개념-요약"><span class="header-section-number">23.2.2</span> 개념 요약</a></li>
+  <li><a href="#로지스틱-회귀-예제" id="toc-로지스틱-회귀-예제" class="nav-link" data-scroll-target="#로지스틱-회귀-예제"><span class="header-section-number">23.2.3</span> 로지스틱 회귀 예제</a></li>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">23.2.4</span> 특징</a></li>
+  </ul></li>
+  <li><a href="#거리-기반-모델" id="toc-거리-기반-모델" class="nav-link" data-scroll-target="#거리-기반-모델"><span class="header-section-number">23.3</span> 거리 기반 모델</a>
+  <ul>
+  <li><a href="#k-최근접-이웃-k-nn" id="toc-k-최근접-이웃-k-nn" class="nav-link" data-scroll-target="#k-최근접-이웃-k-nn"><span class="header-section-number">23.3.1</span> k-최근접 이웃 (k-NN)</a></li>
+  <li><a href="#개념-요약-1" id="toc-개념-요약-1" class="nav-link" data-scroll-target="#개념-요약-1"><span class="header-section-number">23.3.2</span> 개념 요약</a></li>
+  <li><a href="#k-nn-예제" id="toc-k-nn-예제" class="nav-link" data-scroll-target="#k-nn-예제"><span class="header-section-number">23.3.3</span> k-NN 예제</a></li>
+  <li><a href="#k-값의-영향" id="toc-k-값의-영향" class="nav-link" data-scroll-target="#k-값의-영향"><span class="header-section-number">23.3.4</span> k 값의 영향</a></li>
+  <li><a href="#거리-기반-모델의-한계" id="toc-거리-기반-모델의-한계" class="nav-link" data-scroll-target="#거리-기반-모델의-한계"><span class="header-section-number">23.3.5</span> 거리 기반 모델의 한계</a></li>
+  </ul></li>
+  <li><a href="#트리-기반-모델" id="toc-트리-기반-모델" class="nav-link" data-scroll-target="#트리-기반-모델"><span class="header-section-number">23.4</span> 트리 기반 모델</a>
+  <ul>
+  <li><a href="#결정-트리-decision-tree" id="toc-결정-트리-decision-tree" class="nav-link" data-scroll-target="#결정-트리-decision-tree"><span class="header-section-number">23.4.1</span> 결정 트리 (Decision Tree)</a></li>
+  <li><a href="#개념-요약-2" id="toc-개념-요약-2" class="nav-link" data-scroll-target="#개념-요약-2"><span class="header-section-number">23.4.2</span> 개념 요약</a></li>
+  <li><a href="#결정-트리-예제" id="toc-결정-트리-예제" class="nav-link" data-scroll-target="#결정-트리-예제"><span class="header-section-number">23.4.3</span> 결정 트리 예제</a></li>
+  <li><a href="#단점" id="toc-단점" class="nav-link" data-scroll-target="#단점"><span class="header-section-number">23.4.4</span> 단점</a></li>
+  </ul></li>
+  <li><a href="#앙상블-모델" id="toc-앙상블-모델" class="nav-link" data-scroll-target="#앙상블-모델"><span class="header-section-number">23.5</span> 3.5.5 앙상블 모델</a>
+  <ul>
+  <li><a href="#랜덤-포레스트-random-forest" id="toc-랜덤-포레스트-random-forest" class="nav-link" data-scroll-target="#랜덤-포레스트-random-forest"><span class="header-section-number">23.5.1</span> 랜덤 포레스트 (Random Forest)</a></li>
+  <li><a href="#특징-1" id="toc-특징-1" class="nav-link" data-scroll-target="#특징-1"><span class="header-section-number">23.5.2</span> 특징</a></li>
+  <li><a href="#랜덤-포레스트-예제" id="toc-랜덤-포레스트-예제" class="nav-link" data-scroll-target="#랜덤-포레스트-예제"><span class="header-section-number">23.5.3</span> 랜덤 포레스트 예제</a></li>
+  <li><a href="#변수-중요도-확인" id="toc-변수-중요도-확인" class="nav-link" data-scroll-target="#변수-중요도-확인"><span class="header-section-number">23.5.4</span> 변수 중요도 확인</a></li>
+  <li><a href="#그래디언트-부스팅-계열" id="toc-그래디언트-부스팅-계열" class="nav-link" data-scroll-target="#그래디언트-부스팅-계열"><span class="header-section-number">23.5.5</span> 그래디언트 부스팅 계열</a></li>
+  </ul></li>
+  <li><a href="#모델-비교-요약" id="toc-모델-비교-요약" class="nav-link" data-scroll-target="#모델-비교-요약"><span class="header-section-number">23.6</span> 모델 비교 요약</a></li>
+  <li><a href="#선택-가이드" id="toc-선택-가이드" class="nav-link" data-scroll-target="#선택-가이드"><span class="header-section-number">23.7</span> 선택 가이드</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/05. 분류 모델.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +439,259 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="분류-모델-개요" class="level2" data-number="23.1">
+<h2 data-number="23.1" class="anchored" data-anchor-id="분류-모델-개요"><span class="header-section-number">23.1</span> 분류 모델 개요</h2>
+<p><strong>분류 모델</strong>(Classification Models)은 입력 변수(X)를 기반으로 <strong>범주형 타깃 변수(y)</strong> 를 예측하는 모델이다.</p>
+<ul>
+<li>출력: 이산적인 클래스</li>
+<li>예: 펭귄 종(species) 분류</li>
+</ul>
+<p>penguins 데이터셋에서는 다음이 대표적인 분류 문제다.</p>
+<ul>
+<li>타깃 변수: <code>species</code></li>
+<li>입력 변수: 부리 길이, 부리 깊이, 날개 길이, 체중 등</li>
+</ul>
+<div id="a88b5d94" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>]]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"species"</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    X, y,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>y</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>stratify=y</code></p>
+<ul>
+<li>클래스 비율 유지 (분류 문제에서 매우 중요)</li>
+</ul>
+</section>
+<section id="선형-분류-모델" class="level2" data-number="23.2">
+<h2 data-number="23.2" class="anchored" data-anchor-id="선형-분류-모델"><span class="header-section-number">23.2</span> 선형 분류 모델</h2>
+<section id="로지스틱-회귀" class="level3" data-number="23.2.1">
+<h3 data-number="23.2.1" class="anchored" data-anchor-id="로지스틱-회귀"><span class="header-section-number">23.2.1</span> 로지스틱 회귀</h3>
+<p>로지스틱 회귀(Logistic Regression)의 이름은 회귀지만 <strong>분류 모델</strong>이다.</p>
+<ul>
+<li>선형 결정 경계</li>
+<li>확률 기반 예측</li>
+<li>이진 분류, 다중 분류 모두 가능</li>
+</ul>
+</section>
+<section id="개념-요약" class="level3" data-number="23.2.2">
+<h3 data-number="23.2.2" class="anchored" data-anchor-id="개념-요약"><span class="header-section-number">23.2.2</span> 개념 요약</h3>
+<ul>
+<li>선형 결합 결과 → 시그모이드 함수</li>
+<li>출력값을 확률로 해석</li>
+<li>가장 확률이 높은 클래스를 예측값으로 선택</li>
+</ul>
+</section>
+<section id="로지스틱-회귀-예제" class="level3" data-number="23.2.3">
+<h3 data-number="23.2.3" class="anchored" data-anchor-id="로지스틱-회귀-예제"><span class="header-section-number">23.2.3</span> 로지스틱 회귀 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pipe_lr <span class="op">=</span> Pipeline([</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pipe_lr.fit(X_train, y_train)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pipe_lr.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="특징" class="level3" data-number="23.2.4">
+<h3 data-number="23.2.4" class="anchored" data-anchor-id="특징"><span class="header-section-number">23.2.4</span> 특징</h3>
+<ul>
+<li>해석 가능성 높음</li>
+<li>고차원 데이터에 강함</li>
+<li>비선형 경계 표현에는 한계</li>
+</ul>
+</section>
+</section>
+<section id="거리-기반-모델" class="level2" data-number="23.3">
+<h2 data-number="23.3" class="anchored" data-anchor-id="거리-기반-모델"><span class="header-section-number">23.3</span> 거리 기반 모델</h2>
+<section id="k-최근접-이웃-k-nn" class="level3" data-number="23.3.1">
+<h3 data-number="23.3.1" class="anchored" data-anchor-id="k-최근접-이웃-k-nn"><span class="header-section-number">23.3.1</span> k-최근접 이웃 (k-NN)</h3>
+<p>가장 직관적인 분류 모델로 새로운 데이터 주변의 <strong>k개 이웃</strong>을 기준으로 분류한다. 거리 기반으로 클래스를 판단한다.</p>
+</section>
+<section id="개념-요약-1" class="level3" data-number="23.3.2">
+<h3 data-number="23.3.2" class="anchored" data-anchor-id="개념-요약-1"><span class="header-section-number">23.3.2</span> 개념 요약</h3>
+<ul>
+<li>학습 과정 없음</li>
+<li>거리 계산이 핵심</li>
+<li>스케일에 매우 민감</li>
+</ul>
+</section>
+<section id="k-nn-예제" class="level3" data-number="23.3.3">
+<h3 data-number="23.3.3" class="anchored" data-anchor-id="k-nn-예제"><span class="header-section-number">23.3.3</span> k-NN 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pipe_knn <span class="op">=</span> Pipeline([</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">5</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pipe_knn.fit(X_train, y_train)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>pipe_knn.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="k-값의-영향" class="level3" data-number="23.3.4">
+<h3 data-number="23.3.4" class="anchored" data-anchor-id="k-값의-영향"><span class="header-section-number">23.3.4</span> k 값의 영향</h3>
+<ul>
+<li>k가 작음 → 과적합</li>
+<li>k가 큼 → 과소적합</li>
+</ul>
+<p>교차 검증으로 선택하는 것이 일반적</p>
+</section>
+<section id="거리-기반-모델의-한계" class="level3" data-number="23.3.5">
+<h3 data-number="23.3.5" class="anchored" data-anchor-id="거리-기반-모델의-한계"><span class="header-section-number">23.3.5</span> 거리 기반 모델의 한계</h3>
+<ul>
+<li>데이터 수 증가 시 예측 속도 저하</li>
+<li>고차원 공간에서 거리 의미 약화</li>
+</ul>
+</section>
+</section>
+<section id="트리-기반-모델" class="level2" data-number="23.4">
+<h2 data-number="23.4" class="anchored" data-anchor-id="트리-기반-모델"><span class="header-section-number">23.4</span> 트리 기반 모델</h2>
+<section id="결정-트리-decision-tree" class="level3" data-number="23.4.1">
+<h3 data-number="23.4.1" class="anchored" data-anchor-id="결정-트리-decision-tree"><span class="header-section-number">23.4.1</span> 결정 트리 (Decision Tree)</h3>
+<p>질문을 반복하며 분기하며, 사람이 이해하기 쉬운 구조를 갖는다.</p>
+</section>
+<section id="개념-요약-2" class="level3" data-number="23.4.2">
+<h3 data-number="23.4.2" class="anchored" data-anchor-id="개념-요약-2"><span class="header-section-number">23.4.2</span> 개념 요약</h3>
+<ul>
+<li>불순도 감소 기준으로 분기</li>
+<li>비선형 경계 표현 가능</li>
+<li>스케일링 불필요</li>
+</ul>
+</section>
+<section id="결정-트리-예제" class="level3" data-number="23.4.3">
+<h3 data-number="23.4.3" class="anchored" data-anchor-id="결정-트리-예제"><span class="header-section-number">23.4.3</span> 결정 트리 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    max_depth<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>tree.fit(X_train, y_train)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>tree.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="단점" class="level3" data-number="23.4.4">
+<h3 data-number="23.4.4" class="anchored" data-anchor-id="단점"><span class="header-section-number">23.4.4</span> 단점</h3>
+<ul>
+<li>과적합에 매우 취약</li>
+<li>데이터 변화에 민감</li>
+</ul>
+<p>이를 보완한 것이 <strong>앙상블 모델</strong></p>
+</section>
+</section>
+<section id="앙상블-모델" class="level2" data-number="23.5">
+<h2 data-number="23.5" class="anchored" data-anchor-id="앙상블-모델"><span class="header-section-number">23.5</span> 3.5.5 앙상블 모델</h2>
+<section id="랜덤-포레스트-random-forest" class="level3" data-number="23.5.1">
+<h3 data-number="23.5.1" class="anchored" data-anchor-id="랜덤-포레스트-random-forest"><span class="header-section-number">23.5.1</span> 랜덤 포레스트 (Random Forest)</h3>
+<p>여러 결정 트리를 결합한 형태로 배깅(Bagging) 기반 모델이다.</p>
+</section>
+<section id="특징-1" class="level3" data-number="23.5.2">
+<h3 data-number="23.5.2" class="anchored" data-anchor-id="특징-1"><span class="header-section-number">23.5.2</span> 특징</h3>
+<ul>
+<li>과적합 감소</li>
+<li>안정적인 성능</li>
+<li>변수 중요도 제공</li>
+</ul>
+</section>
+<section id="랜덤-포레스트-예제" class="level3" data-number="23.5.3">
+<h3 data-number="23.5.3" class="anchored" data-anchor-id="랜덤-포레스트-예제"><span class="header-section-number">23.5.3</span> 랜덤 포레스트 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>rf.fit(X_train, y_train)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>rf.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="변수-중요도-확인" class="level3" data-number="23.5.4">
+<h3 data-number="23.5.4" class="anchored" data-anchor-id="변수-중요도-확인"><span class="header-section-number">23.5.4</span> 변수 중요도 확인</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pd.Series(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    rf.feature_importances_,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>X.columns</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>).sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="그래디언트-부스팅-계열" class="level3" data-number="23.5.5">
+<h3 data-number="23.5.5" class="anchored" data-anchor-id="그래디언트-부스팅-계열"><span class="header-section-number">23.5.5</span> 그래디언트 부스팅 계열</h3>
+<ul>
+<li>이전 모델의 오류를 보완하며 학습</li>
+<li>성능은 좋지만 해석과 튜닝 난이도 ↑</li>
+</ul>
+</section>
+</section>
+<section id="모델-비교-요약" class="level2" data-number="23.6">
+<h2 data-number="23.6" class="anchored" data-anchor-id="모델-비교-요약"><span class="header-section-number">23.6</span> 모델 비교 요약</h2>
+<ul>
+<li><p><strong>로지스틱 회귀</strong></p>
+<ul>
+<li>기준 모델</li>
+<li>해석 용이</li>
+</ul></li>
+<li><p><strong>k-NN</strong></p>
+<ul>
+<li>직관적</li>
+<li>스케일 중요</li>
+</ul></li>
+<li><p><strong>결정 트리</strong></p>
+<ul>
+<li>비선형</li>
+<li>과적합 주의</li>
+</ul></li>
+<li><p><strong>랜덤 포레스트</strong></p>
+<ul>
+<li>안정적</li>
+<li>실무 활용도 높음</li>
+</ul></li>
+</ul>
+</section>
+<section id="선택-가이드" class="level2" data-number="23.7">
+<h2 data-number="23.7" class="anchored" data-anchor-id="선택-가이드"><span class="header-section-number">23.7</span> 선택 가이드</h2>
+<ul>
+<li><p>빠른 기준선</p>
+<ul>
+<li>로지스틱 회귀</li>
+</ul></li>
+<li><p>데이터 구조 탐색</p>
+<ul>
+<li>결정 트리</li>
+</ul></li>
+<li><p>성능 우선</p>
+<ul>
+<li>랜덤 포레스트</li>
+</ul></li>
+<li><p>데이터 수 적음</p>
+<ul>
+<li>k-NN (튜닝 필수)</li>
+</ul></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1114,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/05. 분류 모델.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/05. 분류 모델.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
