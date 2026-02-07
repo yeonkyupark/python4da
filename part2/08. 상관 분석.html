@@ -507,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>부리 길이(bill_length_mm)와 부리 깊이(bill_depth_mm) 사이의 관계</li>
 </ul>
-<div id="46374db5" class="cell" data-execution_count="1">
+<div id="7f85f80e" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -521,7 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="pearson-상관계수-계산" class="level4" data-number="18.3.4.2">
 <h4 data-number="18.3.4.2" class="anchored" data-anchor-id="pearson-상관계수-계산"><span class="header-section-number">18.3.4.2</span> Pearson 상관계수 계산</h4>
-<div id="17c2929d" class="cell" data-execution_count="2">
+<div id="fa84e989" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>r, p_value <span class="op">=</span> pearsonr(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df_corr[<span class="st">"bill_length_mm"</span>],</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    df_corr[<span class="st">"bill_depth_mm"</span>]</span>
@@ -579,7 +579,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="예제-1" class="level3" data-number="18.4.4">
 <h3 data-number="18.4.4" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">18.4.4</span> 예제</h3>
-<div id="e0e503a8" class="cell" data-execution_count="3">
+<div id="c1e80ce4" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> spearmanr</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>rho, p_value <span class="op">=</span> spearmanr(</span>
@@ -632,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="18.5" class="anchored" data-anchor-id="상관-행렬correlation-matrix"><span class="header-section-number">18.5</span> 상관 행렬(Correlation Matrix)</h2>
 <section id="여러-변수-간-관계-한-번에-보기" class="level3" data-number="18.5.1">
 <h3 data-number="18.5.1" class="anchored" data-anchor-id="여러-변수-간-관계-한-번에-보기"><span class="header-section-number">18.5.1</span> 여러 변수 간 관계 한 번에 보기</h3>
-<div id="c16292d2" class="cell" data-execution_count="4">
+<div id="97d7a88b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
@@ -694,7 +694,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="시각화" class="level3" data-number="18.5.2">
 <h3 data-number="18.5.2" class="anchored" data-anchor-id="시각화"><span class="header-section-number">18.5.2</span> 시각화</h3>
-<div id="4ed5d56a" class="cell" data-execution_count="5">
+<div id="4386b59f" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -794,7 +794,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="예제-2" class="level3" data-number="18.8.5">
 <h3 data-number="18.8.5" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">18.8.5</span> 예제</h3>
-<div id="b0d1cfa8" class="cell" data-execution_count="6">
+<div id="e51912a3" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kendalltau</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>tau, p_value <span class="op">=</span> kendalltau(</span>

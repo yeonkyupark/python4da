@@ -478,14 +478,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>평균 차이가 있다고 판단</li>
 </ul></li>
 </ul>
-<div id="d12e7891" class="cell" data-execution_count="1">
+<div id="30d5a594" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df_anova <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="10dbf7ef" class="cell" data-execution_count="2">
+<div id="77c2d5ad" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_anova.groupby(<span class="st">"species"</span>)[<span class="st">"bill_length_mm"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -558,7 +558,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="일원-anova-수행" class="level4" data-number="16.2.3.1">
 <h4 data-number="16.2.3.1" class="anchored" data-anchor-id="일원-anova-수행"><span class="header-section-number">16.2.3.1</span> 일원 ANOVA 수행</h4>
-<div id="23e0c41e" class="cell" data-execution_count="3">
+<div id="ec4d069d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> [</span>
@@ -628,10 +628,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>종에 따른 성별 효과가 달라지는가?</li>
 </ul></li>
 </ul>
-<div id="01696123" class="cell" data-execution_count="4">
+<div id="f1809372" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_two <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"sex"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7259fdcc" class="cell" data-execution_count="5">
+<div id="b6d86ace" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -737,7 +737,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tukey-hsd" class="level3" data-number="16.4.3">
 <h3 data-number="16.4.3" class="anchored" data-anchor-id="tukey-hsd"><span class="header-section-number">16.4.3</span> Tukey HSD</h3>
-<div id="c54b64d5" class="cell" data-execution_count="6">
+<div id="b772455c" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(</span>
@@ -773,7 +773,7 @@ Chinstrap    Gentoo  -1.3289 0.0089 -2.3819 -0.276   True
 </section>
 <section id="시각화와-함께-보기" class="level4" data-number="16.4.3.2">
 <h4 data-number="16.4.3.2" class="anchored" data-anchor-id="시각화와-함께-보기"><span class="header-section-number">16.4.3.2</span> 시각화와 함께 보기</h4>
-<div id="84664ebe" class="cell" data-execution_count="7">
+<div id="57234dfd" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
