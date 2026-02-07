@@ -1,133 +1,489 @@
 # 확률분포와 표본
 
-**통계적 추론의 출발점은 “데이터가 어떤 분포에서 나왔는가?”를 이해하는 것**이다.
+통계적 추론의 출발점은 데이터가 어떤 확률분포에서 생성되었는지를 이해하는 것이다. 확률분포는 데이터의 불확실성을 수학적으로 모델링하며, 이를 통해 데이터의 패턴을 파악하고 미래를 예측할 수 있다. 또한 표본과 모집단의 관계를 이해하면, 제한된 데이터로부터 전체에 대한 결론을 도출할 수 있다. 이 장에서는 대표적인 확률분포와 표본 개념, 그리고 통계적 추론의 핵심인 중심극한정리를 학습한다.
 
-## 확률분포란?
-
-**확률변수(Random Variable)** 가 취할 수 있는 값과 그 값이 나타날 **확률의 구조**
-
-분류
-
-* 이산형 확률분포
-* 연속형 확률분포
-
-## 연속형 확률분포 (Continuous Distributions)
-
-### 대표적인 연속형 분포
-
-| 분포   | 특징             | 사용 예   |
-| ---- | -------------- | ------ |
-| 정규분포 | 종 모양, 평균 중심 대칭 | 신체 측정값 |
-| 지수분포 | 오른쪽 꼬리         | 대기 시간  |
-| 감마분포 | 비대칭 양수         | 생존 시간  |
-| 로그정규 | 로그 후 정규        | 소득, 크기 |
-
-
-### 예제 – 연속형 변수
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
+# 데이터 로드
 df = sns.load_dataset("penguins").dropna()
+
+print("데이터 크기:", df.shape)
+print("\n수치형 변수:")
+print(df.select_dtypes(include=[np.number]).columns.tolist())
 ```
+
+## 확률분포의 개념
+
+확률분포(Probability Distribution)는 확률변수가 취할 수 있는 값과 그 값이 나타날 확률의 구조를 나타낸다. 모든 통계 분석은 데이터가 특정 확률분포를 따른다는 가정에서 출발한다.
+
+**확률분포의 핵심 개념**
+
+| 개념 | 설명 | 예시 |
+|------|------|------|
+| 확률변수 (Random Variable) | 결과가 확률적으로 결정되는 변수 | 주사위 눈, 키, 몸무게 |
+| 확률질량함수 (PMF) | 이산형 변수의 확률 분포 | P(X = k) |
+| 확률밀도함수 (PDF) | 연속형 변수의 확률 밀도 | f(x) |
+| 누적분포함수 (CDF) | 특정 값 이하일 확률 | P(X ≤ x) |
+| 기댓값 (Expected Value) | 평균적으로 기대되는 값 | E[X] = μ |
+| 분산 (Variance) | 값의 퍼짐 정도 | Var[X] = σ² |
+
+**확률분포의 분류**
+
+확률분포는 변수의 유형에 따라 크게 두 가지로 구분된다.
+
+- **이산형 확률분포**: 셀 수 있는 값들의 분포 (예: 0, 1, 2, 3, ...)
+- **연속형 확률분포**: 실수 구간의 모든 값을 가질 수 있는 분포 (예: 키, 몸무게)
+
+## 연속형 확률분포 (Continuous Distributions)
+
+연속형 확률분포는 실수 구간의 모든 값을 가질 수 있는 변수의 분포이다. 특정 점에서의 확률은 0이며, 구간의 확률을 확률밀도함수(PDF)의 적분으로 계산한다.
+
+### 대표적인 연속형 분포
+
+**연속형 분포 비교**
+
+| 분포 | 형태 | 특징 | 파라미터 | 사용 예시 |
+|------|------|------|----------|----------|
+| 정규분포 (Normal) | 종 모양, 대칭 | 중심극한정리, 자연 현상 | μ (평균), σ² (분산) | 신체 측정값, 시험 점수 |
+| 지수분포 (Exponential) | 오른쪽 꼬리 | 무기억성, 대기 시간 | λ (비율) | 고장 시간, 서비스 대기 |
+| 감마분포 (Gamma) | 비대칭, 양수 | 지수분포의 일반화 | α (형태), β (척도) | 생존 시간, 보험 청구액 |
+| 로그정규분포 (Lognormal) | 오른쪽 꼬리 | 로그 변환 시 정규분포 | μ (로그 평균), σ² (로그 분산) | 소득, 주택 가격, 입자 크기 |
+| t-분포 (Student's t) | 정규와 유사, 두꺼운 꼬리 | 작은 표본 추론 | ν (자유도) | 소표본 가설검정 |
+| 카이제곱분포 (Chi-squared) | 오른쪽 치우침 | 정규분포 제곱합 | k (자유도) | 분산 검정, 적합도 검정 |
+
+### 정규분포 (Normal Distribution)
+
+정규분포는 자연 현상에서 가장 흔히 나타나는 분포로, 평균을 중심으로 좌우 대칭인 종 모양을 띤다.
+
+**정규분포 확률밀도함수**
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+$$
+
+여기서 μ는 평균(중심 위치), σ²는 분산(퍼짐 정도)을 나타낸다.
+
+**정규분포의 특성**
+
+- 평균, 중앙값, 최빈값이 모두 같음
+- 68-95-99.7 규칙: μ±σ에 68%, μ±2σ에 95%, μ±3σ에 99.7% 포함
+- 두 정규분포의 합도 정규분포
+- 중심극한정리의 핵심
+
+**예제: 연속형 변수의 분포 시각화**
 
 ```{python}
-sns.histplot(
-    df["body_mass_g"],
-    kde=True
-)
+# 체중 분포 확인
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+# 히스토그램 + KDE
+sns.histplot(df["body_mass_g"], kde=True, ax=axes[0])
+axes[0].set_title("Body Mass Distribution")
+axes[0].set_xlabel("Body Mass (g)")
+axes[0].set_ylabel("Frequency")
+
+# Q-Q 플롯 (정규성 확인)
+from scipy import stats
+stats.probplot(df["body_mass_g"], dist="norm", plot=axes[1])
+axes[1].set_title("Q-Q Plot")
+
+plt.tight_layout()
 plt.show()
+
+# 기술 통계량
+print("\n체중 기술 통계량:")
+print(df["body_mass_g"].describe())
+print(f"\n왜도(Skewness): {df['body_mass_g'].skew():.3f}")
+print(f"첨도(Kurtosis): {df['body_mass_g'].kurtosis():.3f}")
 ```
 
-### 정규분포 수식
+Q-Q 플롯이 직선에 가까우면 정규분포에 가깝다고 판단할 수 있다.
 
-$$
-f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
-$$
+**예제: 정규성 검정**
+
+```{python}
+# Shapiro-Wilk 검정 (정규성 검정)
+statistic, p_value = stats.shapiro(df["body_mass_g"])
+
+print("Shapiro-Wilk 정규성 검정:")
+print(f"검정 통계량: {statistic:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+if p_value > 0.05:
+    print("결론: 정규분포를 따른다고 볼 수 있음 (유의수준 0.05)")
+else:
+    print("결론: 정규분포를 따르지 않음 (유의수준 0.05)")
+```
+
+### 기타 연속형 분포
+
+**예제: 다양한 연속형 분포 시각화**
+
+```{python}
+# 이론적 분포 시각화
+x = np.linspace(0, 10, 1000)
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# 정규분포
+axes[0, 0].plot(x, stats.norm.pdf(x, 5, 1), label='μ=5, σ=1')
+axes[0, 0].plot(x, stats.norm.pdf(x, 5, 2), label='μ=5, σ=2')
+axes[0, 0].set_title("Normal Distribution")
+axes[0, 0].legend()
+
+# 지수분포
+axes[0, 1].plot(x, stats.expon.pdf(x, scale=1), label='λ=1')
+axes[0, 1].plot(x, stats.expon.pdf(x, scale=2), label='λ=0.5')
+axes[0, 1].set_title("Exponential Distribution")
+axes[0, 1].legend()
+
+# 감마분포
+axes[1, 0].plot(x, stats.gamma.pdf(x, a=2, scale=1), label='α=2, β=1')
+axes[1, 0].plot(x, stats.gamma.pdf(x, a=5, scale=1), label='α=5, β=1')
+axes[1, 0].set_title("Gamma Distribution")
+axes[1, 0].legend()
+
+# 로그정규분포
+axes[1, 1].plot(x, stats.lognorm.pdf(x, s=0.5), label='σ=0.5')
+axes[1, 1].plot(x, stats.lognorm.pdf(x, s=1), label='σ=1')
+axes[1, 1].set_title("Lognormal Distribution")
+axes[1, 1].legend()
+
+plt.tight_layout()
+plt.show()
+```
 
 ## 이산형 확률분포 (Discrete Distributions)
 
+이산형 확률분포는 셀 수 있는 값들만 가질 수 있는 변수의 분포이다. 각 값에 대한 확률을 확률질량함수(PMF)로 표현한다.
+
 ### 대표적인 이산형 분포
 
-| 분포   | 특징          | 사용 예  |
-| ---- | ----------- | ----- |
-| 베르누이 | 성공/실패       | 합격 여부 |
-| 이항분포 | n번 시행       | 불량 개수 |
-| 포아송  | 단위 시간 발생 횟수 | 고객 유입 |
+**이산형 분포 비교**
 
-### 예제 – 이산형 변수
+| 분포 | 특징 | 파라미터 | 확률질량함수 | 사용 예시 |
+|------|------|----------|-------------|----------|
+| 베르누이 (Bernoulli) | 성공/실패 1회 시행 | p (성공 확률) | P(X=1)=p, P(X=0)=1-p | 동전 던지기, 합격 여부 |
+| 이항분포 (Binomial) | n번 독립 시행 성공 횟수 | n (시행 횟수), p (성공 확률) | $\binom{n}{k}p^k(1-p)^{n-k}$ | 불량품 개수, 설문 응답 |
+| 포아송분포 (Poisson) | 단위 시간/공간 발생 횟수 | λ (평균 발생률) | $\frac{\lambda^k e^{-\lambda}}{k!}$ | 고객 방문 수, 교통사고 건수 |
+| 기하분포 (Geometric) | 첫 성공까지 시행 횟수 | p (성공 확률) | $(1-p)^{k-1}p$ | 제품 판매까지 시도 횟수 |
+
+### 베르누이 분포와 이항분포
+
+베르누이 분포는 성공(1) 또는 실패(0)의 이진 결과를 가지며, 이항분포는 n번의 독립적인 베르누이 시행에서 성공 횟수의 분포이다.
+
+**이항분포 확률질량함수**
+
+$$
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+$$
+
+여기서 n은 시행 횟수, k는 성공 횟수, p는 각 시행의 성공 확률이다.
+
+**예제: 이산형 변수의 분포**
 
 ```{python}
-df["species"].value_counts()
+# 종별 개체 수 확인
+species_counts = df["species"].value_counts()
+
+print("종별 개체 수:")
+print(species_counts)
+print(f"\n총 개체 수: {len(df)}")
+
+# 시각화
+plt.figure(figsize=(8, 5))
+sns.countplot(x="species", data=df, order=species_counts.index)
+plt.title("Species Distribution")
+plt.xlabel("Species")
+plt.ylabel("Count")
+plt.show()
+
+# 비율 계산
+species_prob = species_counts / len(df)
+print("\n종별 확률 (비율):")
+print(species_prob.round(3))
 ```
 
+**예제: 이항분포 시뮬레이션**
+
 ```{python}
-sns.countplot(
-    x="species",
-    data=df
-)
+# 동전 던지기 100번을 1000회 반복
+n_trials = 100  # 각 실험에서 동전을 던지는 횟수
+p_success = 0.5  # 앞면이 나올 확률
+n_experiments = 1000  # 실험 반복 횟수
+
+# 시뮬레이션
+results = np.random.binomial(n_trials, p_success, n_experiments)
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.hist(results, bins=30, density=True, alpha=0.7, edgecolor='black')
+plt.axvline(n_trials * p_success, color='red', linestyle='--', 
+            label=f'Expected (np={n_trials * p_success})')
+plt.title(f"Binomial Distribution: n={n_trials}, p={p_success}")
+plt.xlabel("Number of Successes")
+plt.ylabel("Probability Density")
+plt.legend()
 plt.show()
+
+print(f"이론적 평균: {n_trials * p_success}")
+print(f"시뮬레이션 평균: {results.mean():.2f}")
+print(f"이론적 표준편차: {np.sqrt(n_trials * p_success * (1 - p_success)):.2f}")
+print(f"시뮬레이션 표준편차: {results.std():.2f}")
 ```
 
 ## 표본과 모집단
 
-* **모집단(Population)**
-  전체 관심 대상
+통계 분석에서 가장 중요한 개념은 표본과 모집단의 구분이다.
 
-* **표본(Sample)**
-  모집단에서 일부 추출한 데이터
+**표본과 모집단의 개념**
 
-> 실제 분석은 거의 항상 **표본 기반**
+| 개념 | 정의 | 특성 | 예시 |
+|------|------|------|------|
+| 모집단 (Population) | 연구 대상 전체 집합 | 파라미터(parameter)로 표현: μ, σ² | 한국의 모든 성인 |
+| 표본 (Sample) | 모집단에서 추출한 일부 | 통계량(statistic)으로 표현: x̄, s² | 1000명의 설문 응답자 |
+
+**표본 추출의 필요성**
+
+- **비용 절감**: 전수 조사는 시간과 비용이 막대함
+- **실용성**: 모집단이 너무 크거나 무한할 수 있음
+- **파괴적 검사**: 제품 수명 테스트처럼 전수 조사가 불가능한 경우
+- **시의성**: 빠른 의사결정이 필요한 경우
+
+> 실무에서는 거의 항상 표본 데이터를 기반으로 분석하며, 표본으로부터 모집단에 대한 결론을 추론한다.
+
+**표본 추출 방법**
+
+| 방법 | 설명 | 장점 | 단점 |
+|------|------|------|------|
+| 단순무작위추출 | 모든 개체가 동일한 선택 확률 | 편향 최소화 | 모집단 전체 접근 필요 |
+| 층화추출 | 그룹별로 나누어 추출 | 그룹별 대표성 확보 | 사전 정보 필요 |
+| 군집추출 | 군집 단위로 추출 | 비용 효율적 | 군집 내 유사성 높으면 정보 손실 |
+| 계통추출 | 일정 간격으로 추출 | 구현 간단 | 주기성 존재 시 편향 |
 
 ## 표본 분포 (Sampling Distribution)
 
-### 개념
+표본 분포는 표본 통계량(평균, 분산, 비율 등)의 확률분포를 의미한다. 이는 데이터 자체의 분포와는 다른 개념이다.
 
-* "표본 통계량(평균, 분산 등)"의 분포
-* **데이터의 분포 ≠ 표본 평균의 분포**
+**중요한 구분**
 
-### 예제 – 표본 평균 분포
+- **데이터의 분포**: 개별 관측값의 분포 (예: 펭귄 체중 분포)
+- **표본 평균의 분포**: 여러 표본에서 계산한 평균들의 분포
+
+**예제: 표본 평균 분포 시뮬레이션**
 
 ```{python}
-import numpy as np
-
+# 원본 데이터 (모집단으로 가정)
 body_mass = df["body_mass_g"].values
-```
 
-```{python}
+print(f"모집단 크기: {len(body_mass)}")
+print(f"모집단 평균: {body_mass.mean():.2f}")
+print(f"모집단 표준편차: {body_mass.std():.2f}")
+
+# 표본 크기와 반복 횟수 설정
+sample_size = 30
+n_samples = 1000
+
+# 표본 평균 수집
 sample_means = []
-
-for _ in range(1000):
-    sample = np.random.choice(body_mass, size=30, replace=True)
+for _ in range(n_samples):
+    sample = np.random.choice(body_mass, size=sample_size, replace=True)
     sample_means.append(sample.mean())
+
+sample_means = np.array(sample_means)
+
+print(f"\n표본 평균의 평균: {sample_means.mean():.2f}")
+print(f"표본 평균의 표준편차(표준오차): {sample_means.std():.2f}")
+print(f"이론적 표준오차: {body_mass.std() / np.sqrt(sample_size):.2f}")
 ```
 
+**예제: 원본 데이터 vs 표본 평균 분포**
+
 ```{python}
-sns.histplot(sample_means, kde=True)
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 원본 데이터 분포
+axes[0].hist(body_mass, bins=30, density=True, alpha=0.7, edgecolor='black')
+axes[0].axvline(body_mass.mean(), color='red', linestyle='--', 
+                label=f'Mean = {body_mass.mean():.2f}')
+axes[0].set_title("Original Data Distribution")
+axes[0].set_xlabel("Body Mass (g)")
+axes[0].set_ylabel("Density")
+axes[0].legend()
+
+# 표본 평균 분포
+axes[1].hist(sample_means, bins=30, density=True, alpha=0.7, edgecolor='black')
+axes[1].axvline(sample_means.mean(), color='red', linestyle='--', 
+                label=f'Mean = {sample_means.mean():.2f}')
+
+# 정규분포 곡선 추가
+x = np.linspace(sample_means.min(), sample_means.max(), 100)
+axes[1].plot(x, stats.norm.pdf(x, sample_means.mean(), sample_means.std()), 
+             'g-', linewidth=2, label='Normal fit')
+axes[1].set_title("Sampling Distribution of the Mean")
+axes[1].set_xlabel("Sample Mean")
+axes[1].set_ylabel("Density")
+axes[1].legend()
+
+plt.tight_layout()
 plt.show()
 ```
 
-* 원 데이터는 비대칭
-* **표본 평균 분포는 정규에 가까워짐**
-> **중심극한정리(CLT)**
+위 그래프에서 확인할 수 있듯이, 원본 데이터는 다소 비대칭적이지만 표본 평균의 분포는 정규분포에 가깝다.
 
-## 중심극한정리 (Central Limit Theorem)
+## 중심극한정리 (Central Limit Theorem, CLT)
 
-> 표본 크기가 충분히 크면
-> **표본 평균의 분포는 원래 분포와 관계없이 정규분포에 수렴**
+중심극한정리는 통계학에서 가장 중요한 정리 중 하나로, 표본 크기가 충분히 크면 표본 평균의 분포가 원래 모집단의 분포와 관계없이 정규분포에 수렴한다는 내용이다.
 
-조건
+**중심극한정리의 내용**
 
-* 표본 크기 ↑
-* 독립성 가정
+모집단의 분포와 무관하게, 표본 크기 n이 충분히 크면 표본 평균 $\bar{X}$는 다음과 같이 근사적으로 정규분포를 따른다.
 
-## 중심극한 정리가 중요한 이유
+$$
+\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)
+$$
 
-* t 검정
-* ANOVA
-* 신뢰구간
-* 회귀 분석
+여기서 μ는 모집단 평균, σ²는 모집단 분산, n은 표본 크기이다.
 
-**모두 “표본 평균 분포” 가정 위에서 동작**
+**중심극한정리의 조건**
+
+- **표본 크기**: 일반적으로 n ≥ 30이면 충분 (분포가 심하게 왜곡되지 않은 경우)
+- **독립성**: 각 관측값이 서로 독립적으로 추출
+- **동일 분포**: 같은 모집단에서 추출 (i.i.d.: independent and identically distributed)
+
+**예제: 표본 크기에 따른 정규성 개선**
+
+```{python}
+# 다양한 표본 크기로 실험
+sample_sizes = [5, 10, 30, 100]
+n_samples = 1000
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+axes = axes.flatten()
+
+for i, sample_size in enumerate(sample_sizes):
+    sample_means = []
+    for _ in range(n_samples):
+        sample = np.random.choice(body_mass, size=sample_size, replace=True)
+        sample_means.append(sample.mean())
+    
+    # 히스토그램
+    axes[i].hist(sample_means, bins=30, density=True, alpha=0.7, edgecolor='black')
+    
+    # 정규분포 곡선
+    x = np.linspace(min(sample_means), max(sample_means), 100)
+    axes[i].plot(x, stats.norm.pdf(x, np.mean(sample_means), np.std(sample_means)), 
+                 'r-', linewidth=2, label='Normal fit')
+    
+    axes[i].set_title(f"Sample Size = {sample_size}")
+    axes[i].set_xlabel("Sample Mean")
+    axes[i].set_ylabel("Density")
+    axes[i].legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+표본 크기가 증가할수록 표본 평균 분포가 정규분포에 더 가까워지는 것을 확인할 수 있다.
+
+## 중심극한정리의 중요성
+
+중심극한정리는 대부분의 통계적 추론 방법의 이론적 기반이다.
+
+**중심극한정리가 적용되는 통계 기법**
+
+| 기법 | 설명 | 중심극한정리의 역할 |
+|------|------|-------------------|
+| t-검정 | 두 그룹 평균 비교 | 표본 평균이 정규분포를 따름 |
+| ANOVA | 여러 그룹 평균 비교 | 그룹별 평균이 정규분포를 따름 |
+| 신뢰구간 | 모수 추정 범위 | 표본 평균의 분포가 정규분포 |
+| 선형 회귀 | 변수 간 관계 모델링 | 잔차의 정규성 가정 |
+| 가설검정 | 통계적 의사결정 | 검정 통계량의 분포 |
+
+**실무적 의미**
+
+- **모집단 분포 불필요**: 모집단이 정규분포가 아니어도 분석 가능
+- **신뢰구간 구성**: 표본으로부터 모수의 범위 추정
+- **가설검정**: p-value 계산의 이론적 근거
+- **예측 구간**: 미래 값의 불확실성 정량화
+
+**예제: 비정규 분포에서의 중심극한정리**
+
+```{python}
+# 극단적으로 왜곡된 분포 (지수분포) 생성
+exponential_data = np.random.exponential(scale=2, size=10000)
+
+# 원본 데이터 분포
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+axes[0].hist(exponential_data, bins=50, density=True, alpha=0.7, edgecolor='black')
+axes[0].set_title("Original Exponential Distribution")
+axes[0].set_xlabel("Value")
+axes[0].set_ylabel("Density")
+
+# 표본 평균 분포 (n=30)
+sample_means_exp = []
+for _ in range(1000):
+    sample = np.random.choice(exponential_data, size=30, replace=True)
+    sample_means_exp.append(sample.mean())
+
+axes[1].hist(sample_means_exp, bins=30, density=True, alpha=0.7, edgecolor='black')
+x = np.linspace(min(sample_means_exp), max(sample_means_exp), 100)
+axes[1].plot(x, stats.norm.pdf(x, np.mean(sample_means_exp), np.std(sample_means_exp)), 
+             'r-', linewidth=2, label='Normal fit')
+axes[1].set_title("Sampling Distribution (n=30)")
+axes[1].set_xlabel("Sample Mean")
+axes[1].set_ylabel("Density")
+axes[1].legend()
+
+plt.tight_layout()
+plt.show()
+
+print(f"원본 데이터 왜도: {stats.skew(exponential_data):.3f}")
+print(f"표본 평균 왜도: {stats.skew(sample_means_exp):.3f}")
+```
+
+원본 데이터는 극도로 왜곡되어 있지만, 표본 평균의 분포는 정규분포에 매우 가깝다는 것을 확인할 수 있다.
+
+## 요약
+
+이 장에서는 확률분포와 표본의 개념, 그리고 통계적 추론의 핵심인 중심극한정리를 학습했다. 주요 내용은 다음과 같다.
+
+**확률분포 요약**
+
+| 구분 | 대표 분포 | 특징 | 주요 사용처 |
+|------|----------|------|------------|
+| 연속형 | 정규분포 | 대칭, 종 모양 | 신체 측정, 자연 현상 |
+| 연속형 | 지수분포, 감마분포 | 양수, 오른쪽 치우침 | 대기 시간, 생존 분석 |
+| 연속형 | 로그정규분포 | 로그 변환 시 정규 | 소득, 가격, 크기 |
+| 이산형 | 이항분포 | 성공 횟수 | 불량품 개수, 설문 응답 |
+| 이산형 | 포아송분포 | 발생 횟수 | 고객 방문, 사고 건수 |
+
+**표본과 모집단**
+
+- **모집단**: 연구 대상 전체 (파라미터: μ, σ²)
+- **표본**: 모집단에서 추출한 일부 (통계량: x̄, s²)
+- **표본 추출의 목적**: 비용 절감, 실용성, 시의성
+
+**중심극한정리 핵심**
+
+1. **내용**: 표본 크기가 충분히 크면 표본 평균은 정규분포에 수렴
+2. **조건**: n ≥ 30 (일반적), 독립성, 동일 분포
+3. **의미**: 모집단 분포와 무관하게 정규분포 기반 추론 가능
+4. **적용**: t-검정, ANOVA, 신뢰구간, 회귀분석 등
+
+**실무 적용**
+
+- 데이터 분포 확인: 히스토그램, Q-Q 플롯, 정규성 검정
+- 표본 설계: 적절한 표본 크기와 추출 방법 선택
+- 통계 분석: 중심극한정리를 바탕으로 가설검정과 신뢰구간 구성
+- 결과 해석: 표본 통계량으로 모집단 파라미터 추정
+
+확률분포와 표본의 개념은 통계학과 데이터 분석의 기초이다. 중심극한정리를 이해하면 제한된 표본으로부터 모집단에 대한 타당한 결론을 도출할 수 있으며, 이는 모든 통계적 추론의 출발점이 된다. 다음 장에서는 이러한 이론을 바탕으로 실제 가설검정과 신뢰구간 추정을 학습할 것이다.
