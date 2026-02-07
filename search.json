@@ -858,84 +858,62 @@
     "href": "part1/10. 피처 엔지니어링.html",
     "title": "10  피처 엔지니어링",
     "section": "",
-    "text": "10.1 피처 엔지니어링",
+    "text": "10.1 피처 엔지니어링의 중요성\n피처 엔지니어링(Feature Engineering)은 기존 데이터를 변형하거나 조합하여 모델이 더 잘 학습할 수 있는 새로운 입력 변수를 만드는 과정이다. 머신러닝에서 “좋은 피처”는 복잡한 알고리즘보다 더 큰 영향을 미치며, 실무 데이터 과학자의 역량이 가장 잘 드러나는 단계이다. 피처 엔지니어링은 도메인 지식과 데이터 탐색을 결합하여 모델이 패턴을 더 쉽게 학습할 수 있도록 돕는다. 이 장에서는 비율 피처, 조합 피처, 변환 피처, 집계 피처 등 다양한 피처 생성 기법과 모델별 전략을 학습한다.\n예제: 데이터 로드\n피처 엔지니어링이 중요한 이유는 다음과 같다.\n피처 엔지니어링의 영향력\n실무 관점",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링",
-    "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링",
+    "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-중요성",
+    "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-중요성",
     "title": "10  피처 엔지니어링",
     "section": "",
-    "text": "10.1.1 정의\n기존 데이터를 변형·조합하여 모델이 더 잘 학습할 수 있는 입력 변수(feature)를 만드는 과정\n\n모델 성능의 상당 부분은 알고리즘이 아니라 피처에서 결정됨",
+    "text": "관점\n설명\n예시\n\n\n\n\n성능 차이의 핵심\n같은 모델도 피처에 따라 성능 천차만별\n기본 피처 80% → 파생 피처 95%\n\n\n단순함의 강력함\n좋은 피처 + 단순 모델 &gt; 나쁜 피처 + 복잡 모델\n선형 회귀 + 좋은 피처 &gt; 복잡한 신경망\n\n\n도메인 지식 반영\n전문가 지식이 모델에 직접 반영되는 단계\n의료: 체질량지수(BMI), 금융: 부채비율\n\n\n해석력 향상\n의미 있는 피처는 모델 설명에 도움\n“연령대”가 “나이 제곱”보다 이해 쉬움\n\n\n차원 축소 효과\n여러 변수의 관계를 하나로 압축\n길이/너비 대신 종횡비 사용\n\n\n\n\n\n캐글 경진대회에서 상위권 진입의 핵심 요소\n프로덕션 환경에서 모델 유지보수성 향상\n컴퓨팅 리소스 절약 (단순 모델 사용 가능)\n비즈니스 이해관계자와의 커뮤니케이션 개선",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#왜-중요한가",
-    "href": "part1/10. 피처 엔지니어링.html#왜-중요한가",
+    "objectID": "part1/10. 피처 엔지니어링.html#파생-변수-생성-기법",
+    "href": "part1/10. 피처 엔지니어링.html#파생-변수-생성-기법",
     "title": "10  피처 엔지니어링",
-    "section": "10.2 왜 중요한가?",
-    "text": "10.2 왜 중요한가?\n\n같은 모델, 다른 성능의 가장 큰 이유\n복잡한 모델보다 좋은 피처 + 단순 모델이 더 강력한 경우 많음\n도메인 지식이 가장 잘 반영되는 단계",
+    "section": "10.2 파생 변수 생성 기법",
+    "text": "10.2 파생 변수 생성 기법\n파생 변수는 기존 변수를 수학적으로 변환하거나 조합하여 새로운 정보를 추출하는 방법이다.\n\n10.2.1 비율(Ratio) 피처\n두 변수의 비율은 각 변수의 절대값보다 더 의미 있는 정보를 담을 수 있다. 특히 크기가 다른 개체를 비교할 때 유용하다.\n예제: 부리 비율 피처 생성\n\n# 부리 길이 대 깊이 비율\ndf[\"bill_ratio\"] = df[\"bill_length_mm\"] / df[\"bill_depth_mm\"]\n\nprint(\"부리 비율 피처:\")\nprint(df[\"bill_ratio\"].describe())\n\n# 종별 비율 비교\nprint(\"\\n종별 평균 부리 비율:\")\nprint(df.groupby(\"species\")[\"bill_ratio\"].mean().sort_values())\n\n부리 비율 피처:\ncount    333.000000\nmean       2.607228\nstd        0.495436\nmin        1.639810\n25%        2.162651\n50%        2.576531\n75%        3.096970\nmax        3.612676\nName: bill_ratio, dtype: float64\n\n종별 평균 부리 비율:\nspecies\nAdelie       2.121478\nChinstrap    2.653756\nGentoo       3.176602\nName: bill_ratio, dtype: float64\n\n\n비율 피처는 다음과 같은 상황에서 효과적이다.\n\n신체 비례나 형태를 나타낼 때 (예: 부리 형태, 체형)\n스케일이 다른 개체를 비교할 때\n효율성이나 밀도를 나타낼 때 (예: 연비, 인구밀도)\n\n추가 예시\n\n# 체중 대 날개 길이 비율 (체중 효율성)\ndf[\"body_flipper_ratio\"] = df[\"body_mass_g\"] / df[\"flipper_length_mm\"]\n\n# 전체 부리 크기 대비 길이 비율\ndf[\"bill_total\"] = df[\"bill_length_mm\"] + df[\"bill_depth_mm\"]\ndf[\"bill_length_proportion\"] = df[\"bill_length_mm\"] / df[\"bill_total\"]\n\nprint(\"\\n생성된 비율 피처:\")\nprint(df[[\"bill_ratio\", \"body_flipper_ratio\", \"bill_length_proportion\"]].head())\n\n\n생성된 비율 피처:\n   bill_ratio  body_flipper_ratio  bill_length_proportion\n0    2.090909           20.718232                0.676471\n1    2.270115           20.430108                0.694200\n2    2.238889           16.666667                0.691252\n4    1.901554           17.875648                0.655357\n5    1.907767           19.210526                0.656093\n\n\n\n\n10.2.2 조합 피처 (곱셈, 덧셈)\n여러 변수를 곱하거나 더하면 변수 간 상호작용이나 전체 크기를 나타낼 수 있다.\n예제: 상호작용 피처 생성\n\n# 체중과 날개 길이의 상호작용 (전체적인 신체 크기)\ndf[\"body_flipper_interaction\"] = df[\"body_mass_g\"] * df[\"flipper_length_mm\"]\n\nprint(\"상호작용 피처:\")\nprint(df[\"body_flipper_interaction\"].describe())\n\n# 종별 상호작용 피처 비교\nprint(\"\\n종별 평균 상호작용:\")\nprint(df.groupby(\"species\")[\"body_flipper_interaction\"].mean())\n\n상호작용 피처:\ncount    3.330000e+02\nmean     8.553021e+05\nstd      2.206116e+05\nmin      5.158500e+05\n25%      6.796500e+05\n50%      8.075000e+05\n75%      1.021250e+06\nmax      1.392300e+06\nName: body_flipper_interaction, dtype: float64\n\n종별 평균 상호작용:\nspecies\nAdelie       7.059329e+05\nChinstrap    7.327592e+05\nGentoo       1.108586e+06\nName: body_flipper_interaction, dtype: float64\n\n\n조합 피처 유형\n\n\n\n연산\n의미\n예시\n\n\n\n\n곱셈 (A × B)\n상호작용, 면적, 부피\n가로 × 세로 = 면적\n\n\n덧셈 (A + B)\n전체 크기, 합계\n총 점수, 총 길이\n\n\n차이 (A - B)\n변화량, 격차\n가격 변동, 수입-지출\n\n\n평균 ((A + B) / 2)\n중심 경향\n평균 성적, 평균 온도\n\n\n\n추가 예시\n\n# 전체 부리 크기 (길이 + 깊이)\ndf[\"bill_total_size\"] = df[\"bill_length_mm\"] + df[\"bill_depth_mm\"]\n\n# 날개와 부리 길이 차이\ndf[\"flipper_bill_diff\"] = df[\"flipper_length_mm\"] - df[\"bill_length_mm\"]\n\nprint(\"\\n조합 피처 샘플:\")\nprint(df[[\"bill_total_size\", \"flipper_bill_diff\"]].head())\n\n\n조합 피처 샘플:\n   bill_total_size  flipper_bill_diff\n0             57.8              141.9\n1             56.9              146.5\n2             58.3              154.7\n4             56.0              156.3\n5             59.9              150.7\n\n\n\n\n10.2.3 다항식 피처\n변수의 제곱이나 고차항은 비선형 관계를 선형 모델에서 포착할 수 있게 한다.\n예제: 제곱 피처 생성\n\n# 체중의 제곱 (비선형 관계 표현)\ndf[\"body_mass_squared\"] = df[\"body_mass_g\"] ** 2\n\n# 부리 길이의 제곱근 (분포 정규화 효과)\ndf[\"bill_length_sqrt\"] = np.sqrt(df[\"bill_length_mm\"])\n\nprint(\"다항식 피처 샘플:\")\nprint(df[[\"body_mass_g\", \"body_mass_squared\", \"bill_length_sqrt\"]].head())\n\n다항식 피처 샘플:\n   body_mass_g  body_mass_squared  bill_length_sqrt\n0       3750.0         14062500.0          6.252999\n1       3800.0         14440000.0          6.284903\n2       3250.0         10562500.0          6.348228\n4       3450.0         11902500.0          6.058052\n5       3650.0         13322500.0          6.268971",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
-    "href": "part1/10. 피처 엔지니어링.html#피처-엔지니어링의-주요-유형",
+    "objectID": "part1/10. 피처 엔지니어링.html#변환-기반-피처",
+    "href": "part1/10. 피처 엔지니어링.html#변환-기반-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.3 피처 엔지니어링의 주요 유형",
-    "text": "10.3 피처 엔지니어링의 주요 유형\n예제 데이터셋 적재\n\nimport seaborn as sns\nimport pandas as pd\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\n사용 컬럼 예시\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nspecies\nsex",
+    "section": "10.3 변환 기반 피처",
+    "text": "10.3 변환 기반 피처\n변환은 분포를 정규화하거나 스케일을 안정화하여 모델 학습을 돕는다.\n\n10.3.1 로그 변환 피처\n로그 변환은 왜곡된 분포를 정규화하고 큰 값의 영향을 줄인다.\n예제: 로그 변환 피처\n\n# 체중의 로그 변환\ndf[\"log_body_mass\"] = np.log(df[\"body_mass_g\"])\n\nprint(\"로그 변환 전후 비교:\")\nprint(\"원본 왜도:\", df[\"body_mass_g\"].skew().round(3))\nprint(\"로그 왜도:\", df[\"log_body_mass\"].skew().round(3))\n\n# 분포 비교\nprint(\"\\n원본 통계:\")\nprint(df[\"body_mass_g\"].describe())\nprint(\"\\n로그 변환 통계:\")\nprint(df[\"log_body_mass\"].describe())\n\n로그 변환 전후 비교:\n원본 왜도: 0.472\n로그 왜도: 0.175\n\n원본 통계:\ncount     333.000000\nmean     4207.057057\nstd       805.215802\nmin      2700.000000\n25%      3550.000000\n50%      4050.000000\n75%      4775.000000\nmax      6300.000000\nName: body_mass_g, dtype: float64\n\n로그 변환 통계:\ncount    333.000000\nmean       8.326667\nstd        0.188465\nmin        7.901007\n25%        8.174703\n50%        8.306472\n75%        8.471149\nmax        8.748305\nName: log_body_mass, dtype: float64\n\n\n변환의 효과\n\n스케일 안정화: 큰 값과 작은 값의 차이 완화\n거리 기반 모델 성능 향상: KNN, SVM 등에서 중요\n선형 관계 강화: 지수적 관계를 선형으로 변환\n이상치 영향 감소: 극단값을 상대적으로 축소\n\n\n\n10.3.2 표준화/정규화 피처\n변수를 일정 범위로 변환하여 스케일을 통일한다.\n예제: 표준화 피처 생성\n\nfrom sklearn.preprocessing import StandardScaler\n\n# 주요 수치형 변수들을 표준화\nnum_cols = [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\"]\n\nscaler = StandardScaler()\ndf_scaled = pd.DataFrame(\n    scaler.fit_transform(df[num_cols]),\n    columns=[f\"{col}_scaled\" for col in num_cols],\n    index=df.index\n)\n\n# 원본 데이터프레임에 추가\ndf = pd.concat([df, df_scaled], axis=1)\n\nprint(\"표준화 피처 샘플:\")\nprint(df[[num_cols[0], f\"{num_cols[0]}_scaled\"]].head())\n\n표준화 피처 샘플:\n   bill_length_mm  bill_length_mm_scaled\n0            39.1              -0.896042\n1            39.5              -0.822788\n2            40.3              -0.676280\n4            36.7              -1.335566\n5            39.3              -0.859415",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#파생-변수-생성",
-    "href": "part1/10. 피처 엔지니어링.html#파생-변수-생성",
+    "objectID": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning",
+    "href": "part1/10. 피처 엔지니어링.html#구간-기반-피처-binning",
     "title": "10  피처 엔지니어링",
-    "section": "10.4 파생 변수 생성",
-    "text": "10.4 파생 변수 생성\n\n10.4.1 (1) 비율(Ratio) 피처\n\ndf[\"bill_ratio\"] = df[\"bill_length_mm\"] / df[\"bill_depth_mm\"]\n\nprint(df[\"bill_ratio\"])\n\n0      2.090909\n1      2.270115\n2      2.238889\n4      1.901554\n5      1.907767\n         ...   \n338    3.445255\n340    3.272727\n341    3.210191\n342    3.054054\n343    3.099379\nName: bill_ratio, Length: 333, dtype: float64\n\n\n\n\n10.4.2 (2) 조합 피처 (곱, 합)\n\ndf[\"body_flipper_interaction\"] = (df[\"body_mass_g\"] * df[\"flipper_length_mm\"])\n\nprint(df[\"body_flipper_interaction\"])\n\n0       678750.0\n1       706800.0\n2       633750.0\n4       665850.0\n5       693500.0\n         ...    \n338    1053950.0\n340    1042750.0\n341    1276500.0\n342    1102400.0\n343    1150200.0\nName: body_flipper_interaction, Length: 333, dtype: float64",
+    "section": "10.4 구간 기반 피처 (Binning)",
+    "text": "10.4 구간 기반 피처 (Binning)\n연속형 변수를 구간으로 나누어 범주화하면 비선형 관계를 포착하고 해석력을 높일 수 있다.\n예제: 체중 구간 피처\n\n# 체중을 3개 구간으로 분류\ndf[\"body_mass_group\"] = pd.cut(\n    df[\"body_mass_g\"],\n    bins=[0, 3500, 4500, 7000],\n    labels=[\"small\", \"medium\", \"large\"]\n)\n\nprint(\"체중 구간 분포:\")\nprint(df[\"body_mass_group\"].value_counts())\n\n# 구간별 평균 날개 길이\nprint(\"\\n구간별 평균 날개 길이:\")\nprint(df.groupby(\"body_mass_group\")[\"flipper_length_mm\"].mean())\n\n체중 구간 분포:\nbody_mass_group\nmedium    146\nlarge     112\nsmall      75\nName: count, dtype: int64\n\n구간별 평균 날개 길이:\nbody_mass_group\nsmall     188.506667\nmedium    195.383562\nlarge     216.589286\nName: flipper_length_mm, dtype: float64\n\n\n구간화의 효과\n\n연속값을 해석 가능한 범주로 변환\n비선형 관계를 단계적으로 표현\n트리 모델에서 분할 힌트 제공\n이상치의 영향 완화\n\n추가 예시: 등빈도 구간화\n\n# 사분위수 기준 구간화\ndf[\"body_mass_quantile\"] = pd.qcut(\n    df[\"body_mass_g\"],\n    q=4,\n    labels=[\"Q1\", \"Q2\", \"Q3\", \"Q4\"]\n)\n\nprint(\"사분위수 구간 분포:\")\nprint(df[\"body_mass_quantile\"].value_counts())\n\n사분위수 구간 분포:\nbody_mass_quantile\nQ1    86\nQ2    86\nQ4    83\nQ3    78\nName: count, dtype: int64",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#로그제곱근-변환-후-파생",
-    "href": "part1/10. 피처 엔지니어링.html#로그제곱근-변환-후-파생",
+    "objectID": "part1/10. 피처 엔지니어링.html#집계-기반-피처-aggregation-features",
+    "href": "part1/10. 피처 엔지니어링.html#집계-기반-피처-aggregation-features",
     "title": "10  피처 엔지니어링",
-    "section": "10.5 로그·제곱근 변환 후 파생",
-    "text": "10.5 로그·제곱근 변환 후 파생\n\nimport numpy as np\n\ndf[\"log_body_mass\"] = np.log(df[\"body_mass_g\"])\n\nprint(df[\"log_body_mass\"])\n\n0      8.229511\n1      8.242756\n2      8.086410\n4      8.146130\n5      8.202482\n         ...   \n338    8.502080\n340    8.486734\n341    8.656955\n342    8.556414\n343    8.594154\nName: log_body_mass, Length: 333, dtype: float64\n\n\n\n스케일 안정화\n거리 기반 모델(KNN, SVM)에 특히 중요",
-    "crumbs": [
-      "Ⅰ. 데이터 전처리 및 변환",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
-    ]
-  },
-  {
-    "objectID": "part1/10. 피처 엔지니어링.html#구간-기반-피처",
-    "href": "part1/10. 피처 엔지니어링.html#구간-기반-피처",
-    "title": "10  피처 엔지니어링",
-    "section": "10.6 구간 기반 피처",
-    "text": "10.6 구간 기반 피처\n\ndf[\"body_mass_group\"] = pd.cut(\n    df[\"body_mass_g\"],\n    bins=[0, 3500, 4500, 7000],\n    labels=[\"small\", \"medium\", \"large\"]\n)\n\nprint(df[\"body_mass_group\"])\n\n0      medium\n1      medium\n2       small\n4       small\n5      medium\n        ...  \n338     large\n340     large\n341     large\n342     large\n343     large\nName: body_mass_group, Length: 333, dtype: category\nCategories (3, str): ['small' &lt; 'medium' &lt; 'large']\n\n\n\n연속값 → 해석 가능한 범주\n트리 모델에서 성능 개선 가능",
-    "crumbs": [
-      "Ⅰ. 데이터 전처리 및 변환",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
-    ]
-  },
-  {
-    "objectID": "part1/10. 피처 엔지니어링.html#집계-기반-피처",
-    "href": "part1/10. 피처 엔지니어링.html#집계-기반-피처",
-    "title": "10  피처 엔지니어링",
-    "section": "10.7 집계 기반 피처",
-    "text": "10.7 집계 기반 피처\n\n10.7.1 species 기준 평균 대비 차이\n\nspecies_mean = df.groupby(\"species\")[\"body_mass_g\"].transform(\"mean\")\n\ndf[\"body_mass_diff_species\"] = (df[\"body_mass_g\"] - species_mean)\n\nprint(df[\"body_mass_diff_species\"])\n\n0       43.835616\n1       93.835616\n2     -456.164384\n4     -256.164384\n5      -56.164384\n          ...    \n338   -167.436975\n340   -242.436975\n341    657.563025\n342    107.563025\n343    307.563025\nName: body_mass_diff_species, Length: 333, dtype: float64",
+    "section": "10.5 집계 기반 피처 (Aggregation Features)",
+    "text": "10.5 집계 기반 피처 (Aggregation Features)\n그룹별 통계량을 계산하여 개체가 그룹 내에서 어떤 위치에 있는지 나타낸다.\n\n10.5.1 그룹 평균 대비 차이\n예제: 종별 평균 대비 편차\n\n# 종별 평균 체중 계산\nspecies_mean = df.groupby(\"species\")[\"body_mass_g\"].transform(\"mean\")\n\n# 개체별 편차 계산\ndf[\"body_mass_diff_species\"] = df[\"body_mass_g\"] - species_mean\n\nprint(\"종별 평균 대비 편차:\")\nprint(df[[\"species\", \"body_mass_g\", \"body_mass_diff_species\"]].head(10))\n\n# 편차의 분포\nprint(\"\\n종별 편차 통계:\")\nprint(df.groupby(\"species\")[\"body_mass_diff_species\"].describe())\n\n종별 평균 대비 편차:\n   species  body_mass_g  body_mass_diff_species\n0   Adelie       3750.0               43.835616\n1   Adelie       3800.0               93.835616\n2   Adelie       3250.0             -456.164384\n4   Adelie       3450.0             -256.164384\n5   Adelie       3650.0              -56.164384\n6   Adelie       3625.0              -81.164384\n7   Adelie       4675.0              968.835616\n12  Adelie       3200.0             -506.164384\n13  Adelie       3800.0               93.835616\n14  Adelie       4400.0              693.835616\n\n종별 편차 통계:\n           count          mean         std          min         25%  \\\nspecies                                                               \nAdelie     146.0  1.183589e-13  458.620135  -856.164384 -343.664384   \nChinstrap   68.0  8.024953e-14  384.335081 -1033.088235 -245.588235   \nGentoo     119.0 -3.821406e-13  501.476154 -1142.436975 -392.436975   \n\n                 50%         75%          max  \nspecies                                        \nAdelie     -6.164384  293.835616  1068.835616  \nChinstrap -33.088235  216.911765  1066.911765  \nGentoo    -42.436975  407.563025  1207.563025  \n\n\n\n\n10.5.2 그룹별 다양한 통계량\n예제: 종별 순위와 백분위수\n\n# 종 내 체중 순위\ndf[\"body_mass_rank_species\"] = df.groupby(\"species\")[\"body_mass_g\"].rank(ascending=False)\n\n# 종 내 체중 백분위수\ndf[\"body_mass_pct_species\"] = df.groupby(\"species\")[\"body_mass_g\"].rank(pct=True)\n\nprint(\"종 내 순위와 백분위수:\")\nprint(df[[\"species\", \"body_mass_g\", \"body_mass_rank_species\", \"body_mass_pct_species\"]].head(10))\n\n종 내 순위와 백분위수:\n   species  body_mass_g  body_mass_rank_species  body_mass_pct_species\n0   Adelie       3750.0                    65.5               0.558219\n1   Adelie       3800.0                    58.5               0.606164\n2   Adelie       3250.0                   121.5               0.174658\n4   Adelie       3450.0                   100.5               0.318493\n5   Adelie       3650.0                    76.5               0.482877\n6   Adelie       3625.0                    78.0               0.472603\n7   Adelie       4675.0                     4.0               0.979452\n12  Adelie       3200.0                   124.5               0.154110\n13  Adelie       3800.0                    58.5               0.606164\n14  Adelie       4400.0                    13.0               0.917808\n\n\n집계 피처의 유형\n\n\n\n통계량\n의미\n활용 예시\n\n\n\n\nmean\n그룹 평균\n평균 대비 큰지 작은지\n\n\nstd\n그룹 분산\n그룹 내 변동성\n\n\nmin, max\n그룹 범위\n극단값과의 거리\n\n\nrank\n그룹 내 순위\n상대적 위치\n\n\ncount\n그룹 크기\n희귀도 판단",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -945,8 +923,8 @@
     "objectID": "part1/10. 피처 엔지니어링.html#통계-요약-피처",
     "href": "part1/10. 피처 엔지니어링.html#통계-요약-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.8 통계 요약 피처",
-    "text": "10.8 통계 요약 피처\n\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\ndf[\"num_mean\"] = df[num_cols].mean(axis=1)\ndf[\"num_std\"] = df[num_cols].std(axis=1)\n\nprint(df[\"num_mean\"])\nprint(df[\"num_std\"])\n\n0       997.200\n1      1010.725\n2       875.825\n4       924.750\n5       974.975\n         ...   \n338    1299.975\n340    1281.525\n341    1509.525\n342    1368.000\n343    1419.750\nName: num_mean, Length: 333, dtype: float64\n0      1836.619008\n1      1861.021127\n2      1584.739239\n4      1685.310864\n5      1784.961610\n          ...     \n338    2418.270493\n340    2380.608776\n341    2828.421689\n342    2556.137065\n343    2654.892212\nName: num_std, Length: 333, dtype: float64\n\n\n\n개체의 전체적인 신체 특성 요약",
+    "section": "10.6 통계 요약 피처",
+    "text": "10.6 통계 요약 피처\n여러 변수의 통계량을 계산하여 개체의 전반적인 특성을 요약한다.\n예제: 행 단위 통계 피처\n\n# 주요 수치형 변수 선택\nnum_cols = [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\"]\n\n# 행 단위 평균 (개체의 전반적인 크기)\ndf[\"num_mean\"] = df[num_cols].mean(axis=1)\n\n# 행 단위 표준편차 (측정값의 변동성)\ndf[\"num_std\"] = df[num_cols].std(axis=1)\n\n# 행 단위 최댓값\ndf[\"num_max\"] = df[num_cols].max(axis=1)\n\n# 행 단위 최솟값\ndf[\"num_min\"] = df[num_cols].min(axis=1)\n\n# 행 단위 범위 (최댓값 - 최솟값)\ndf[\"num_range\"] = df[\"num_max\"] - df[\"num_min\"]\n\nprint(\"통계 요약 피처:\")\nprint(df[[\"num_mean\", \"num_std\", \"num_range\"]].describe())\n\n통계 요약 피처:\n          num_mean      num_std    num_range\ncount   333.000000   333.000000   333.000000\nmean   1117.295420  2061.465442  4189.892192\nstd     204.948885   400.090276   806.147181\nmin     738.875000  1309.655694  2683.400000\n25%     951.400000  1736.198835  3532.500000\n50%    1075.325000  1981.053650  4030.100000\n75%    1258.550000  2345.624922  4756.000000\nmax    1646.350000  3103.740721  6284.800000\n\n\n통계 요약의 효과\n\n개체의 전체적인 특성을 하나의 값으로 압축\n변수 간 일관성 또는 변동성 파악\n차원 축소 효과\n노이즈 감소 (평균화 효과)",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -956,19 +934,19 @@
     "objectID": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
     "href": "part1/10. 피처 엔지니어링.html#범주형-조합-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.9 범주형 조합 피처",
-    "text": "10.9 범주형 조합 피처\n\ndf[\"species_sex\"] = (\n    df[\"species\"] + \"_\" + df[\"sex\"]\n)\n\n\n단일 범주로는 부족할 때 유용\n빈도가 너무 낮은 조합은 주의",
+    "section": "10.7 범주형 조합 피처",
+    "text": "10.7 범주형 조합 피처\n여러 범주형 변수를 결합하여 세분화된 그룹을 만든다.\n예제: 종과 성별 조합\n\n# 종과 성별을 결합한 새로운 범주\ndf[\"species_sex\"] = df[\"species\"].astype(str) + \"_\" + df[\"sex\"].astype(str)\n\nprint(\"종-성별 조합 분포:\")\nprint(df[\"species_sex\"].value_counts())\n\n# 조합별 평균 체중\nprint(\"\\n종-성별 조합별 평균 체중:\")\nprint(df.groupby(\"species_sex\")[\"body_mass_g\"].mean().sort_values())\n\n종-성별 조합 분포:\nspecies_sex\nAdelie_Male         73\nAdelie_Female       73\nGentoo_Male         61\nGentoo_Female       58\nChinstrap_Female    34\nChinstrap_Male      34\nName: count, dtype: int64\n\n종-성별 조합별 평균 체중:\nspecies_sex\nAdelie_Female       3368.835616\nChinstrap_Female    3527.205882\nChinstrap_Male      3938.970588\nAdelie_Male         4043.493151\nGentoo_Female       4679.741379\nGentoo_Male         5484.836066\nName: body_mass_g, dtype: float64\n\n\n조합 피처 사용 시 주의사항\n\n빈도가 너무 낮은 조합은 과적합 위험 (최소 30개 이상 권장)\n조합 수가 너무 많으면 차원이 폭발적으로 증가\n도메인 지식상 의미 있는 조합만 생성\nOne-Hot Encoding 시 컬럼 수 급증 주의\n\n추가 예시: 삼원 조합\n\n# 종, 성별, 체중 구간의 삼원 조합\ndf[\"species_sex_mass\"] = (\n    df[\"species\"].astype(str) + \"_\" + \n    df[\"sex\"].astype(str) + \"_\" + \n    df[\"body_mass_group\"].astype(str)\n)\n\nprint(\"\\n삼원 조합 샘플:\")\nprint(df[\"species_sex_mass\"].value_counts().head(10))\n\n\n삼원 조합 샘플:\nspecies_sex_mass\nAdelie_Male_medium         61\nGentoo_Male_large          61\nAdelie_Female_small        51\nGentoo_Female_large        42\nChinstrap_Male_medium      28\nAdelie_Female_medium       22\nChinstrap_Female_medium    19\nGentoo_Female_medium       16\nChinstrap_Female_small     15\nAdelie_Male_large           7\nName: count, dtype: int64",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#시간순서형-데이터",
-    "href": "part1/10. 피처 엔지니어링.html#시간순서형-데이터",
+    "objectID": "part1/10. 피처 엔지니어링.html#시간-및-순서형-데이터-피처",
+    "href": "part1/10. 피처 엔지니어링.html#시간-및-순서형-데이터-피처",
     "title": "10  피처 엔지니어링",
-    "section": "10.10 시간·순서형 데이터",
-    "text": "10.10 시간·순서형 데이터\n\n날짜 → 연/월/요일\n시간 → 주기(sin, cos)\n누적합, 이동평균",
+    "section": "10.8 시간 및 순서형 데이터 피처",
+    "text": "10.8 시간 및 순서형 데이터 피처\n시계열 데이터나 순서가 있는 데이터에서는 추가적인 피처 생성 기법을 사용한다.\n시간 데이터 피처 예시\n\n# 예시: 날짜 데이터가 있다고 가정\n# df[\"date\"] = pd.to_datetime(df[\"date\"])\n# \n# # 날짜에서 추출\n# df[\"year\"] = df[\"date\"].dt.year\n# df[\"month\"] = df[\"date\"].dt.month\n# df[\"day_of_week\"] = df[\"date\"].dt.dayofweek\n# df[\"quarter\"] = df[\"date\"].dt.quarter\n# df[\"is_weekend\"] = df[\"day_of_week\"].isin([5, 6]).astype(int)\n# \n# # 주기성 표현 (원형 인코딩)\n# df[\"month_sin\"] = np.sin(2 * np.pi * df[\"month\"] / 12)\n# df[\"month_cos\"] = np.cos(2 * np.pi * df[\"month\"] / 12)\n# \n# # 시간 경과\n# df[\"days_since_start\"] = (df[\"date\"] - df[\"date\"].min()).dt.days\n# \n# # 이동 평균 (윈도우 = 7일)\n# df[\"rolling_mean_7d\"] = df[\"value\"].rolling(window=7).mean()\n\n시간 피처 유형\n\n\n\n피처 유형\n예시\n설명\n\n\n\n\n추출\n연, 월, 요일, 시간\n날짜/시간에서 구성 요소 분리\n\n\n주기\nsin/cos 변환\n원형 데이터의 연속성 표현\n\n\n경과\n시작일로부터 일수\n시간의 흐름을 수치로 표현\n\n\n집계\n이동평균, 누적합\n과거 패턴 요약\n\n\n차분\n전일 대비 변화량\n변화율이나 추세",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -978,8 +956,8 @@
     "objectID": "part1/10. 피처 엔지니어링.html#피처-선택과의-연결",
     "href": "part1/10. 피처 엔지니어링.html#피처-선택과의-연결",
     "title": "10  피처 엔지니어링",
-    "section": "10.11 피처 선택과의 연결",
-    "text": "10.11 피처 선택과의 연결\n모든 피처를 쓰는 게 정답은 아님\n\n10.11.1 간단한 상관 확인\n\ndf[num_cols + [\"bill_ratio\"]].corr()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nbill_ratio\n\n\n\n\nbill_length_mm\n1.000000\n-0.228626\n0.653096\n0.589451\n0.779230\n\n\nbill_depth_mm\n-0.228626\n1.000000\n-0.577792\n-0.472016\n-0.781246\n\n\nflipper_length_mm\n0.653096\n-0.577792\n1.000000\n0.872979\n0.801980\n\n\nbody_mass_g\n0.589451\n-0.472016\n0.872979\n1.000000\n0.702179\n\n\nbill_ratio\n0.779230\n-0.781246\n0.801980\n0.702179\n1.000000\n\n\n\n\n\n\n\n\n중복 정보 제거\n다중공선성 완화",
+    "section": "10.9 피처 선택과의 연결",
+    "text": "10.9 피처 선택과의 연결\n모든 피처를 사용하는 것이 정답은 아니다. 중복되거나 불필요한 피처는 모델 성능을 저하시킬 수 있다.\n예제: 상관관계 분석\n\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# 주요 피처들의 상관관계\nfeature_cols = [\n    \"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\",\n    \"bill_ratio\", \"body_flipper_interaction\", \"log_body_mass\"\n]\n\ncorr_matrix = df[feature_cols].corr()\n\n# 히트맵 시각화\nplt.figure(figsize=(10, 8))\nsns.heatmap(corr_matrix, annot=True, cmap=\"coolwarm\", center=0, fmt=\".2f\")\nplt.title(\"Feature Correlation Matrix\")\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n피처 선택 기준\n\n높은 상관관계 (|r| &gt; 0.9): 중복 정보, 하나만 선택\n타겟과의 상관관계: 타겟과 관련 없는 피처 제거\n다중공선성: VIF(Variance Inflation Factor) &gt; 10이면 문제\n피처 중요도: 트리 모델의 feature_importances_ 활용\n\n예제: 중요도 기반 선택\n\nfrom sklearn.ensemble import RandomForestClassifier\n\n# 간단한 모델로 피처 중요도 확인\nX = df[feature_cols].dropna()\ny = df.loc[X.index, \"species\"]\n\nrf = RandomForestClassifier(n_estimators=100, random_state=42)\nrf.fit(X, y)\n\n# 피처 중요도 출력\nimportance_df = pd.DataFrame({\n    \"feature\": feature_cols,\n    \"importance\": rf.feature_importances_\n}).sort_values(\"importance\", ascending=False)\n\nprint(\"피처 중요도:\")\nprint(importance_df)\n\n피처 중요도:\n                    feature  importance\n4                bill_ratio    0.326713\n0            bill_length_mm    0.184320\n2         flipper_length_mm    0.160196\n5  body_flipper_interaction    0.151781\n1             bill_depth_mm    0.112097\n6             log_body_mass    0.037838\n3               body_mass_g    0.027055",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
@@ -989,19 +967,30 @@
     "objectID": "part1/10. 피처 엔지니어링.html#모델별-피처-엔지니어링-전략",
     "href": "part1/10. 피처 엔지니어링.html#모델별-피처-엔지니어링-전략",
     "title": "10  피처 엔지니어링",
-    "section": "10.12 모델별 피처 엔지니어링 전략",
-    "text": "10.12 모델별 피처 엔지니어링 전략\n\n\n\n모델\n전략\n\n\n\n\n선형 모델\n스케일링, 상호작용\n\n\nKNN / SVM\n스케일·분포 중요\n\n\n트리 계열\n비선형 파생, binning\n\n\n딥러닝\n단순 + 양 많게",
+    "section": "10.10 모델별 피처 엔지니어링 전략",
+    "text": "10.10 모델별 피처 엔지니어링 전략\n모델의 특성에 따라 효과적인 피처가 다르다.\n모델별 피처 전략\n\n\n\n\n\n\n\n\n\n모델 유형\n중요 피처\n이유\n권장 기법\n\n\n\n\n선형 모델 (회귀, 로지스틱)\n스케일링, 상호작용\n변수 간 관계를 명시적으로 표현 필요\n표준화, 다항식, 상호작용\n\n\nKNN, SVM\n스케일링, 분포 정규화\n거리 기반이라 스케일에 민감\nMin-Max, 로그 변환\n\n\n트리 계열 (RF, XGBoost)\n비선형 파생, 범주화\n분할 힌트 제공, 비선형 자동 처리\n비율, Binning, 집계\n\n\n신경망\n단순 + 대량 데이터\n자체적으로 복잡한 피처 학습\n정규화, 임베딩\n\n\nNaive Bayes\n독립 피처\n피처 간 독립성 가정\n단순 변환, 중복 제거\n\n\n\n모델별 예시\n\n# 선형 모델용: 상호작용 피처\nfrom sklearn.preprocessing import PolynomialFeatures\n\npoly = PolynomialFeatures(degree=2, include_bias=False)\nX_poly = poly.fit_transform(df[[\"bill_length_mm\", \"bill_depth_mm\"]])\nprint(\"다항식 피처 개수:\", X_poly.shape[1])\n\n# 트리 모델용: 범주화 + 집계\ntree_features = [\"body_mass_group\", \"body_mass_diff_species\", \"bill_ratio\"]\nprint(\"\\n트리 모델 추천 피처:\", tree_features)\n\n다항식 피처 개수: 5\n\n트리 모델 추천 피처: ['body_mass_group', 'body_mass_diff_species', 'bill_ratio']",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
     ]
   },
   {
-    "objectID": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서-위치",
-    "href": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서-위치",
+    "objectID": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서의-위치",
+    "href": "part1/10. 피처 엔지니어링.html#전처리-전체-흐름에서의-위치",
     "title": "10  피처 엔지니어링",
-    "section": "10.13 전처리 전체 흐름에서 위치",
-    "text": "10.13 전처리 전체 흐름에서 위치\n데이터 로드\n → 결측치 처리\n → 이상치 탐지\n → 스케일링\n → 분포 변환\n → 인코딩\n → 불균형 처리\n → 피처 엔지니어링\n → 모델링",
+    "section": "10.11 전처리 전체 흐름에서의 위치",
+    "text": "10.11 전처리 전체 흐름에서의 위치\n피처 엔지니어링은 전처리의 후반부에 위치하며, 정제된 데이터를 바탕으로 수행한다.\n데이터 전처리 전체 흐름\n1. 데이터 로드\n   ↓\n2. 결측치 처리 (제거/대체)\n   ↓\n3. 이상치 탐지 및 처리\n   ↓\n4. 스케일링 (변수 크기 통일)\n   ↓\n5. 분포 변환 (왜도 정규화)\n   ↓\n6. 인코딩 (범주형 → 수치형)\n   ↓\n7. 불균형 데이터 처리\n   ↓\n8. 피처 엔지니어링 ← 현재 장\n   ↓\n9. 피처 선택 (중요 피처 추출)\n   ↓\n10. 모델링\n단계별 피처 생성 시점\n\n결측치 처리 전: X (결측치가 계산을 방해)\n이상치 처리 전: △ (이상치가 비율/평균에 영향)\n스케일링 전: O (원본 값으로 비율 계산 후 스케일링)\n인코딩 후: O (범주형 조합 피처 생성 가능)\n피처 선택 전: O (모든 후보 피처 생성 후 선택)",
+    "crumbs": [
+      "Ⅰ. 데이터 전처리 및 변환",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
+    ]
+  },
+  {
+    "objectID": "part1/10. 피처 엔지니어링.html#요약",
+    "href": "part1/10. 피처 엔지니어링.html#요약",
+    "title": "10  피처 엔지니어링",
+    "section": "10.12 요약",
+    "text": "10.12 요약\n이 장에서는 피처 엔지니어링의 개념과 다양한 기법을 학습했다. 주요 내용은 다음과 같다.\n피처 엔지니어링 기법 정리\n\n\n\n\n\n\n\n\n\n기법\n방법\n효과\n예시\n\n\n\n\n비율\nA / B\n상대적 크기, 형태\n부리 길이/깊이 비율\n\n\n조합\nA × B, A + B\n상호작용, 전체 크기\n체중 × 날개 길이\n\n\n변환\nlog, sqrt, 제곱\n분포 정규화, 비선형 관계\nlog(체중)\n\n\n구간화\ncut, qcut\n비선형 포착, 해석력\n체중 그룹(소/중/대)\n\n\n집계\ngroupby + transform\n그룹 내 상대적 위치\n종별 평균 대비 편차\n\n\n통계 요약\nmean, std, max\n전체 특성 압축\n측정값 평균\n\n\n범주 조합\n문자열 결합\n세분화된 그룹\n종_성별 조합\n\n\n시계열\nlag, rolling, diff\n시간 패턴, 추세\n7일 이동평균\n\n\n\n피처 엔지니어링 모범 사례\n\nEDA 먼저: 데이터 탐색을 통해 패턴 발견 후 피처 생성\n도메인 지식 활용: 전문가 의견이나 논문의 아이디어 반영\n단순하게 시작: 복잡한 피처보다 직관적인 피처부터\n반복적 개선: 모델 성능을 확인하며 점진적으로 추가\n과적합 주의: 학습 데이터로만 통계량 계산, 테스트 누수 방지\n문서화: 피처 생성 논리와 의미를 명확히 기록\n재현성 확보: 파이프라인으로 자동화하여 일관성 유지\n\n피처 엔지니어링 체크리스트\n\nEDA를 통해 변수 간 관계 파악했는가?\n도메인 지식을 반영한 피처를 고려했는가?\n비율, 조합, 변환 등 다양한 기법을 시도했는가?\n생성한 피처의 분포와 타겟과의 관계를 확인했는가?\n중복되거나 불필요한 피처를 제거했는가?\n학습/테스트 데이터 누수를 방지했는가?\n피처 생성 과정을 파이프라인으로 자동화했는가?\n\n피처 엔지니어링은 데이터 과학의 핵심 기술이자 예술이다. 도메인 지식, 창의성, 그리고 반복적인 실험을 통해 모델 성능을 크게 향상시킬 수 있다. 좋은 피처는 복잡한 모델보다 강력하며, 실무에서 데이터 과학자의 역량을 가장 잘 드러내는 단계이다. 다음 단계로는 생성된 피처를 바탕으로 모델을 학습하고 평가하는 과정을 진행할 수 있다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>피처 엔지니어링</span>"
