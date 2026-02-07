@@ -378,30 +378,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#label-encoding" id="toc-label-encoding" class="nav-link active" data-scroll-target="#label-encoding"><span class="header-section-number">7.1</span> Label Encoding</a>
   <ul>
   <li><a href="#예제-코드" id="toc-예제-코드" class="nav-link" data-scroll-target="#예제-코드"><span class="header-section-number">7.1.1</span> 예제 코드</a></li>
-  <li><a href="#사용-시점" id="toc-사용-시점" class="nav-link" data-scroll-target="#사용-시점"><span class="header-section-number">7.1.2</span> 사용 시점</a></li>
   </ul></li>
   <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding"><span class="header-section-number">7.2</span> One-Hot Encoding</a>
   <ul>
   <li><a href="#pandas-방식" id="toc-pandas-방식" class="nav-link" data-scroll-target="#pandas-방식"><span class="header-section-number">7.2.1</span> pandas 방식</a></li>
+  <li><a href="#drop_first-옵션" id="toc-drop_first-옵션" class="nav-link" data-scroll-target="#drop_first-옵션"><span class="header-section-number">7.2.2</span> drop_first 옵션</a></li>
   </ul></li>
   <li><a href="#ordinal-encoding" id="toc-ordinal-encoding" class="nav-link" data-scroll-target="#ordinal-encoding"><span class="header-section-number">7.3</span> Ordinal Encoding</a>
   <ul>
   <li><a href="#예제-코드-1" id="toc-예제-코드-1" class="nav-link" data-scroll-target="#예제-코드-1"><span class="header-section-number">7.3.1</span> 예제 코드</a></li>
   </ul></li>
-  <li><a href="#targetmean-encoding" id="toc-targetmean-encoding" class="nav-link" data-scroll-target="#targetmean-encoding"><span class="header-section-number">7.4</span> Target(Mean) Encoding</a>
+  <li><a href="#target-encoding-mean-encoding" id="toc-target-encoding-mean-encoding" class="nav-link" data-scroll-target="#target-encoding-mean-encoding"><span class="header-section-number">7.4</span> Target Encoding (Mean Encoding)</a>
   <ul>
   <li><a href="#예제-코드-2" id="toc-예제-코드-2" class="nav-link" data-scroll-target="#예제-코드-2"><span class="header-section-number">7.4.1</span> 예제 코드</a></li>
   </ul></li>
-  <li><a href="#빈도frequency-인코딩" id="toc-빈도frequency-인코딩" class="nav-link" data-scroll-target="#빈도frequency-인코딩"><span class="header-section-number">7.5</span> 빈도(Frequency) 인코딩</a>
+  <li><a href="#frequency-encoding-빈도-인코딩" id="toc-frequency-encoding-빈도-인코딩" class="nav-link" data-scroll-target="#frequency-encoding-빈도-인코딩"><span class="header-section-number">7.5</span> Frequency Encoding (빈도 인코딩)</a>
   <ul>
   <li><a href="#예제-코드-3" id="toc-예제-코드-3" class="nav-link" data-scroll-target="#예제-코드-3"><span class="header-section-number">7.5.1</span> 예제 코드</a></li>
   </ul></li>
   <li><a href="#여러-컬럼을-한-번에-인코딩" id="toc-여러-컬럼을-한-번에-인코딩" class="nav-link" data-scroll-target="#여러-컬럼을-한-번에-인코딩"><span class="header-section-number">7.6</span> 여러 컬럼을 한 번에 인코딩</a>
   <ul>
-  <li><a href="#one-hot-pandas" id="toc-one-hot-pandas" class="nav-link" data-scroll-target="#one-hot-pandas"><span class="header-section-number">7.6.1</span> One-Hot (pandas)</a></li>
-  <li><a href="#label-encoding-반복-처리" id="toc-label-encoding-반복-처리" class="nav-link" data-scroll-target="#label-encoding-반복-처리"><span class="header-section-number">7.6.2</span> Label Encoding (반복 처리)</a></li>
+  <li><a href="#one-hot-encoding-여러-컬럼" id="toc-one-hot-encoding-여러-컬럼" class="nav-link" data-scroll-target="#one-hot-encoding-여러-컬럼"><span class="header-section-number">7.6.1</span> One-Hot Encoding (여러 컬럼)</a></li>
+  <li><a href="#label-encoding-여러-컬럼" id="toc-label-encoding-여러-컬럼" class="nav-link" data-scroll-target="#label-encoding-여러-컬럼"><span class="header-section-number">7.6.2</span> Label Encoding (여러 컬럼)</a></li>
+  <li><a href="#sklearn-columntransformer-사용" id="toc-sklearn-columntransformer-사용" class="nav-link" data-scroll-target="#sklearn-columntransformer-사용"><span class="header-section-number">7.6.3</span> sklearn ColumnTransformer 사용</a></li>
   </ul></li>
-  <li><a href="#인코딩-방식-요약" id="toc-인코딩-방식-요약" class="nav-link" data-scroll-target="#인코딩-방식-요약"><span class="header-section-number">7.7</span> 인코딩 방식 요약</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">7.7</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/07. 범주형 데이터 인코딩.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -433,313 +434,679 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>예제 데이터셋 적재</p>
-<div id="44005e3b" class="cell" data-execution_count="1">
+<p>범주형 데이터 인코딩(Categorical Encoding)은 범주형 변수를 머신러닝 모델이 처리할 수 있는 수치형으로 변환하는 과정이다. 대부분의 머신러닝 알고리즘은 수치형 데이터만 입력으로 받을 수 있으므로, 범주형 변수를 적절히 인코딩하는 것은 필수적이다. 인코딩 방법의 선택은 데이터의 특성과 사용할 모델에 따라 달라지며, 잘못된 선택은 모델 성능을 크게 저하시킬 수 있다. 이 장에서는 Label Encoding, One-Hot Encoding, Ordinal Encoding, Target Encoding, Frequency Encoding 등 주요 인코딩 기법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="20211d4f" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주형 변수 확인</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"범주형 변수:"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns.tolist())</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">범주형 변수의 고유값 개수:"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).nunique())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>범주형 변수:
+['species', 'island', 'sex']
+
+범주형 변수의 고유값 개수:
+species    3
+island     3
+sex        2
+dtype: int64</code></pre>
+</div>
 </div>
 <section id="label-encoding" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="label-encoding"><span class="header-section-number">7.1</span> Label Encoding</h2>
-<p>범주를 <strong>정수 값</strong>으로 매핑하는 방식으로 순서가 <strong>없는데 숫자로 바뀌므로 주의 필요</strong></p>
+<p>Label Encoding은 각 범주를 정수 값으로 매핑하는 가장 단순한 인코딩 방법이다. 예를 들어, “Adelie”, “Chinstrap”, “Gentoo”를 0, 1, 2로 변환한다. 구현이 간단하고 컬럼 수가 늘어나지 않는 장점이 있지만, 순서가 없는 범주에 순서를 부여하는 문제가 있다.</p>
+<p><strong>변환 예시</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>원본</th>
+<th>인코딩 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adelie</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Chinstrap</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Gentoo</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
 <section id="예제-코드" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="예제-코드"><span class="header-section-number">7.1.1</span> 예제 코드</h3>
-<div id="d2d1400f" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_label <span class="op">=</span> df.copy()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_label[<span class="st">"species_enc"</span>] <span class="op">=</span> le.fit_transform(df_label[<span class="st">"species"</span>])</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: Label Encoding 적용</strong></p>
+<div id="d547829a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Label Encoder 생성</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 복사</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df_label <span class="op">=</span> df.copy()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># species 컬럼 인코딩</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>df_label[<span class="st">"species_enc"</span>] <span class="op">=</span> le.fit_transform(df_label[<span class="st">"species"</span>])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Label Encoding 결과:"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_label[[<span class="st">"species"</span>, <span class="st">"species_enc"</span>]].head(<span class="dv">10</span>))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 매핑 관계 확인</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">매핑 관계:"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(le.classes_):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss"> → </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
-0    Adelie  Torgersen            39.1           18.7              181.0   
-1    Adelie  Torgersen            39.5           17.4              186.0   
-2    Adelie  Torgersen            40.3           18.0              195.0   
-3    Adelie  Torgersen             NaN            NaN                NaN   
-4    Adelie  Torgersen            36.7           19.3              193.0   
-..      ...        ...             ...            ...                ...   
-339  Gentoo     Biscoe             NaN            NaN                NaN   
-340  Gentoo     Biscoe            46.8           14.3              215.0   
-341  Gentoo     Biscoe            50.4           15.7              222.0   
-342  Gentoo     Biscoe            45.2           14.8              212.0   
-343  Gentoo     Biscoe            49.9           16.1              213.0   
+<pre><code>Label Encoding 결과:
+  species  species_enc
+0  Adelie            0
+1  Adelie            0
+2  Adelie            0
+3  Adelie            0
+4  Adelie            0
+5  Adelie            0
+6  Adelie            0
+7  Adelie            0
+8  Adelie            0
+9  Adelie            0
 
-     body_mass_g     sex  species_enc  
-0         3750.0    Male            0  
-1         3800.0  Female            0  
-2         3250.0  Female            0  
-3            NaN     NaN            0  
-4         3450.0  Female            0  
-..           ...     ...          ...  
-339          NaN     NaN            2  
-340       4850.0  Female            2  
-341       5750.0    Male            2  
-342       5200.0  Female            2  
-343       5400.0    Male            2  
-
-[344 rows x 8 columns]</code></pre>
+매핑 관계:
+Adelie → 0
+Chinstrap → 1
+Gentoo → 2</code></pre>
 </div>
 </div>
-</section>
-<section id="사용-시점" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="사용-시점"><span class="header-section-number">7.1.2</span> 사용 시점</h3>
-<p>트리 기반 모델 (Decision Tree, RandomForest, XGBoost) 사용 시 순서 의미가 없어도 되는 경우</p>
+<p><strong>주의사항</strong></p>
+<p>Label Encoding은 범주 간에 순서 관계가 없음에도 불구하고 숫자로 변환하므로, 모델이 숫자의 크기를 의미 있는 것으로 해석할 수 있다. 예를 들어, 모델이 “Gentoo(2)”가 “Adelie(0)”보다 2배 크다고 잘못 학습할 수 있다.</p>
+<p><strong>사용 시점</strong></p>
+<ul>
+<li>트리 기반 모델(Decision Tree, Random Forest, XGBoost, LightGBM) 사용 시</li>
+<li>컬럼 수를 늘리고 싶지 않을 때</li>
+<li>범주의 개수가 매우 많을 때 (고차원 문제 완화)</li>
+</ul>
+<p>트리 기반 모델은 범주를 분할 기준으로만 사용하므로 숫자의 크기를 의미 있게 해석하지 않는다.</p>
 </section>
 </section>
 <section id="one-hot-encoding" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="one-hot-encoding"><span class="header-section-number">7.2</span> One-Hot Encoding</h2>
-<p>각 범주를 <strong>이진 컬럼</strong>으로 분리, 거리 기반, 선형 모델에서 가장 안전</p>
+<p>One-Hot Encoding은 각 범주를 이진 컬럼으로 분리하는 방법이다. k개의 범주가 있으면 k개의 새로운 컬럼이 생성되며, 각 행은 해당 범주에 해당하는 컬럼에만 1을, 나머지에는 0을 갖는다. 이 방법은 범주 간 순서 관계를 만들지 않으므로 선형 모델과 거리 기반 모델에 가장 안전하다.</p>
+<p><strong>변환 예시</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>원본</th>
+<th>species_Adelie</th>
+<th>species_Chinstrap</th>
+<th>species_Gentoo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adelie</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Chinstrap</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Gentoo</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 <section id="pandas-방식" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="pandas-방식"><span class="header-section-number">7.2.1</span> pandas 방식</h3>
-<div id="cd4cee80" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>, <span class="st">"island"</span>],</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">False</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ohe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>pandas의 <code>get_dummies</code> 함수를 사용하면 간단하게 One-Hot Encoding을 수행할 수 있다.</p>
+<p><strong>예제: One-Hot Encoding 적용</strong></p>
+<div id="978f49fa" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-Hot Encoding (모든 범주 유지)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>, <span class="st">"island"</span>],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">False</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"One-Hot Encoding 결과 (컬럼 목록):"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ohe.columns.tolist())</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">원본 컬럼 수: </span><span class="sc">{</span><span class="bu">len</span>(df.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"인코딩 후 컬럼 수: </span><span class="sc">{</span><span class="bu">len</span>(df_ohe.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 샘플 확인</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">인코딩 결과 (상위 5개):"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ohe.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g     sex  \
-0              39.1           18.7              181.0       3750.0    Male   
-1              39.5           17.4              186.0       3800.0  Female   
-2              40.3           18.0              195.0       3250.0  Female   
-3               NaN            NaN                NaN          NaN     NaN   
-4              36.7           19.3              193.0       3450.0  Female   
-..              ...            ...                ...          ...     ...   
-339             NaN            NaN                NaN          NaN     NaN   
-340            46.8           14.3              215.0       4850.0  Female   
-341            50.4           15.7              222.0       5750.0    Male   
-342            45.2           14.8              212.0       5200.0  Female   
-343            49.9           16.1              213.0       5400.0    Male   
+<pre><code>One-Hot Encoding 결과 (컬럼 목록):
+['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex', 'species_Adelie', 'species_Chinstrap', 'species_Gentoo', 'island_Biscoe', 'island_Dream', 'island_Torgersen']
 
-     species_Adelie  species_Chinstrap  species_Gentoo  island_Biscoe  \
-0              True              False           False          False   
-1              True              False           False          False   
-2              True              False           False          False   
-3              True              False           False          False   
-4              True              False           False          False   
-..              ...                ...             ...            ...   
-339           False              False            True           True   
-340           False              False            True           True   
-341           False              False            True           True   
-342           False              False            True           True   
-343           False              False            True           True   
+원본 컬럼 수: 7
+인코딩 후 컬럼 수: 11
 
-     island_Dream  island_Torgersen  
-0           False              True  
-1           False              True  
-2           False              True  
-3           False              True  
-4           False              True  
-..            ...               ...  
-339         False             False  
-340         False             False  
-341         False             False  
-342         False             False  
-343         False             False  
+인코딩 결과 (상위 5개):
+   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g     sex  \
+0            39.1           18.7              181.0       3750.0    Male   
+1            39.5           17.4              186.0       3800.0  Female   
+2            40.3           18.0              195.0       3250.0  Female   
+3             NaN            NaN                NaN          NaN     NaN   
+4            36.7           19.3              193.0       3450.0  Female   
 
-[344 rows x 11 columns]</code></pre>
+   species_Adelie  species_Chinstrap  species_Gentoo  island_Biscoe  \
+0            True              False           False          False   
+1            True              False           False          False   
+2            True              False           False          False   
+3            True              False           False          False   
+4            True              False           False          False   
+
+   island_Dream  island_Torgersen  
+0         False              True  
+1         False              True  
+2         False              True  
+3         False              True  
+4         False              True  </code></pre>
 </div>
 </div>
-<p>drop_first 옵션으로 첫번째 더미 변수 제거, 다중공선성 방지 (회귀 모델에서 중요)</p>
-<div id="d18d5c2f" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>],</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">True</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ohe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="drop_first-옵션" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="drop_first-옵션"><span class="header-section-number">7.2.2</span> drop_first 옵션</h3>
+<p><code>drop_first=True</code>로 설정하면 첫 번째 더미 변수를 제거하여 다중공선성(multicollinearity)을 방지할 수 있다. 예를 들어, 3개의 종이 있으면 2개의 컬럼만으로도 모든 정보를 표현할 수 있다.</p>
+<p><strong>예제: drop_first 옵션 사용</strong></p>
+<div id="16376c0c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 첫 번째 더미 변수 제거</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_ohe_drop <span class="op">=</span> pd.get_dummies(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"species"</span>],</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">True</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"drop_first=True 결과:"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ohe_drop.<span class="bu">filter</span>(like<span class="op">=</span><span class="st">'species'</span>).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g  \
-0    Torgersen            39.1           18.7              181.0       3750.0   
-1    Torgersen            39.5           17.4              186.0       3800.0   
-2    Torgersen            40.3           18.0              195.0       3250.0   
-3    Torgersen             NaN            NaN                NaN          NaN   
-4    Torgersen            36.7           19.3              193.0       3450.0   
-..         ...             ...            ...                ...          ...   
-339     Biscoe             NaN            NaN                NaN          NaN   
-340     Biscoe            46.8           14.3              215.0       4850.0   
-341     Biscoe            50.4           15.7              222.0       5750.0   
-342     Biscoe            45.2           14.8              212.0       5200.0   
-343     Biscoe            49.9           16.1              213.0       5400.0   
-
-        sex  species_Chinstrap  species_Gentoo  
-0      Male              False           False  
-1    Female              False           False  
-2    Female              False           False  
-3       NaN              False           False  
-4    Female              False           False  
-..      ...                ...             ...  
-339     NaN              False            True  
-340  Female              False            True  
-341    Male              False            True  
-342  Female              False            True  
-343    Male              False            True  
-
-[344 rows x 8 columns]</code></pre>
+<pre><code>drop_first=True 결과:
+['species_Chinstrap', 'species_Gentoo']</code></pre>
 </div>
 </div>
-<p>선형 회귀, 로지스틱 회귀, KNN, SVM, PCA 등의 모델 사용 시 적용</p>
+<p>다중공선성은 독립 변수들 간에 높은 상관관계가 존재하는 상태로, 선형 회귀에서 계수 추정을 불안정하게 만든다. k개의 범주를 모두 포함하면 완벽한 선형 종속 관계가 생기므로, 하나를 제거하여 이를 방지한다.</p>
+<p><strong>사용 시점</strong></p>
+<ul>
+<li>선형 회귀, 로지스틱 회귀 모델 사용 시</li>
+<li>거리 기반 모델(KNN, SVM) 사용 시</li>
+<li>PCA 등 선형 차원 축소 기법 사용 시</li>
+<li>범주의 개수가 적을 때 (일반적으로 10개 이하)</li>
+</ul>
+<p><strong>장단점</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>범주 간 순서 관계를 만들지 않음</td>
+<td>범주가 많으면 컬럼 수가 급격히 증가 (차원의 저주)</td>
+</tr>
+<tr class="even">
+<td>선형 모델과 거리 기반 모델에 적합</td>
+<td>메모리 사용량 증가</td>
+</tr>
+<tr class="odd">
+<td>해석이 명확함</td>
+<td>희소 행렬(sparse matrix) 생성</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="ordinal-encoding" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="ordinal-encoding"><span class="header-section-number">7.3</span> Ordinal Encoding</h2>
-<p><strong>순서가 있는 범주형 변수</strong>에 사용, 사용자가 순서를 직접 정의</p>
+<p>Ordinal Encoding은 순서가 있는 범주형 변수에 사용하는 방법이다. 사용자가 명시적으로 순서를 정의하여 각 범주에 정수를 할당한다. 예를 들어, “small” &lt; “medium” &lt; “large”와 같은 순서가 있는 경우에 적합하다.</p>
+<p><strong>변환 예시</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>원본</th>
+<th>인코딩 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>small</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>medium</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>large</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
 <section id="예제-코드-1" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="예제-코드-1"><span class="header-section-number">7.3.1</span> 예제 코드</h3>
-<div id="cc35442b" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>oe <span class="op">=</span> OrdinalEncoder(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    categories<span class="op">=</span>[[<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>]]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df_ord <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    oe.fit_transform(</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        pd.DataFrame({<span class="st">"size"</span>: [<span class="st">"small"</span>, <span class="st">"large"</span>, <span class="st">"medium"</span>]})</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"size_enc"</span>]</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_ord)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: Ordinal Encoding 적용</strong></p>
+<div id="d7dda926" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 순서 정의 (작은 것부터 큰 것 순서)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>oe <span class="op">=</span> OrdinalEncoder(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    categories<span class="op">=</span>[[<span class="st">"small"</span>, <span class="st">"medium"</span>, <span class="st">"large"</span>]]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 예제 데이터 생성</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>size_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"size"</span>: [<span class="st">"small"</span>, <span class="st">"large"</span>, <span class="st">"medium"</span>, <span class="st">"small"</span>, <span class="st">"large"</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 인코딩 수행</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>size_encoded <span class="op">=</span> oe.fit_transform(size_data)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"원본"</span>: size_data[<span class="st">"size"</span>],</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"인코딩"</span>: size_encoded.flatten()</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Ordinal Encoding 결과:"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   size_enc
-0       0.0
-1       2.0
-2       1.0</code></pre>
+<pre><code>Ordinal Encoding 결과:
+       원본  인코딩
+0   small  0.0
+1   large  2.0
+2  medium  1.0
+3   small  0.0
+4   large  2.0</code></pre>
 </div>
 </div>
-<p>명확한 순서 존재하는 등급, 크기, 단계 표현 등에 적용</p>
+<p><strong>사용 시점</strong></p>
+<ul>
+<li>명확한 순서가 있는 범주형 변수 (예: 학력, 등급, 크기, 만족도)</li>
+<li>순서 정보가 모델 학습에 중요한 경우</li>
+<li>선형 관계를 가정할 수 있는 경우</li>
+</ul>
+<p><strong>주의사항</strong></p>
+<p>순서를 잘못 정의하면 모델 성능이 저하될 수 있으므로, 도메인 지식을 바탕으로 신중하게 순서를 결정해야 한다.</p>
 </section>
 </section>
-<section id="targetmean-encoding" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="targetmean-encoding"><span class="header-section-number">7.4</span> Target(Mean) Encoding</h2>
-<p>범주를 <strong>타깃 변수의 평균값</strong>으로 치환, 정보량은 크지만 <strong>데이터 누수 위험</strong> 존재</p>
+<section id="target-encoding-mean-encoding" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="target-encoding-mean-encoding"><span class="header-section-number">7.4</span> Target Encoding (Mean Encoding)</h2>
+<p>Target Encoding은 각 범주를 타겟 변수의 평균값으로 치환하는 방법이다. 범주와 타겟 간의 관계를 직접적으로 반영하므로 정보량이 크지만, 데이터 누수(data leakage) 위험이 있어 주의가 필요하다.</p>
+<p><strong>변환 예시</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>species</th>
+<th>body_mass_g 평균</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adelie</td>
+<td>3700.66</td>
+</tr>
+<tr class="even">
+<td>Chinstrap</td>
+<td>3733.09</td>
+</tr>
+<tr class="odd">
+<td>Gentoo</td>
+<td>5076.02</td>
+</tr>
+</tbody>
+</table>
 <section id="예제-코드-2" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="예제-코드-2"><span class="header-section-number">7.4.1</span> 예제 코드</h3>
-<div id="11e46d8c" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_te <span class="op">=</span> df.copy()</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> <span class="st">"body_mass_g"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>col <span class="op">=</span> <span class="st">"species"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>mean_map <span class="op">=</span> df_te.groupby(col)[target].mean()</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>df_te[<span class="st">"species_enc"</span>] <span class="op">=</span> df_te[col].<span class="bu">map</span>(mean_map)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_te)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: Target Encoding 적용</strong></p>
+<div id="f51d3189" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 복사</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_te <span class="op">=</span> df.copy()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 타겟 변수 및 인코딩할 컬럼 지정</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>target <span class="op">=</span> <span class="st">"body_mass_g"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>col <span class="op">=</span> <span class="st">"species"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주별 타겟 평균 계산</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>mean_map <span class="op">=</span> df_te.groupby(col)[target].mean()</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"범주별 타겟 평균:"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_map)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주를 평균값으로 치환</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>df_te[<span class="st">"species_enc"</span>] <span class="op">=</span> df_te[col].<span class="bu">map</span>(mean_map)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Target Encoding 결과:"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_te[[col, target, <span class="st">"species_enc"</span>]].head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
-0    Adelie  Torgersen            39.1           18.7              181.0   
-1    Adelie  Torgersen            39.5           17.4              186.0   
-2    Adelie  Torgersen            40.3           18.0              195.0   
-3    Adelie  Torgersen             NaN            NaN                NaN   
-4    Adelie  Torgersen            36.7           19.3              193.0   
-..      ...        ...             ...            ...                ...   
-339  Gentoo     Biscoe             NaN            NaN                NaN   
-340  Gentoo     Biscoe            46.8           14.3              215.0   
-341  Gentoo     Biscoe            50.4           15.7              222.0   
-342  Gentoo     Biscoe            45.2           14.8              212.0   
-343  Gentoo     Biscoe            49.9           16.1              213.0   
+<pre><code>범주별 타겟 평균:
+species
+Adelie       3700.662252
+Chinstrap    3733.088235
+Gentoo       5076.016260
+Name: body_mass_g, dtype: float64
 
-     body_mass_g     sex  species_enc  
-0         3750.0    Male  3700.662252  
-1         3800.0  Female  3700.662252  
-2         3250.0  Female  3700.662252  
-3            NaN     NaN  3700.662252  
-4         3450.0  Female  3700.662252  
-..           ...     ...          ...  
-339          NaN     NaN  5076.016260  
-340       4850.0  Female  5076.016260  
-341       5750.0    Male  5076.016260  
-342       5200.0  Female  5076.016260  
-343       5400.0    Male  5076.016260  
-
-[344 rows x 8 columns]</code></pre>
+Target Encoding 결과:
+  species  body_mass_g  species_enc
+0  Adelie       3750.0  3700.662252
+1  Adelie       3800.0  3700.662252
+2  Adelie       3250.0  3700.662252
+3  Adelie          NaN  3700.662252
+4  Adelie       3450.0  3700.662252
+5  Adelie       3650.0  3700.662252
+6  Adelie       3625.0  3700.662252
+7  Adelie       4675.0  3700.662252
+8  Adelie       3475.0  3700.662252
+9  Adelie       4250.0  3700.662252</code></pre>
 </div>
 </div>
-<p>반드시 <strong>train 데이터 기준으로만 계산</strong>, CV 기반 smoothing 권장</p>
+<p><strong>데이터 누수 방지</strong></p>
+<p>Target Encoding을 사용할 때는 반드시 다음 규칙을 지켜야 한다.</p>
+<ol type="1">
+<li><strong>학습 데이터만 사용</strong>: 평균 계산 시 학습 데이터만 사용하고, 테스트 데이터는 절대 포함하지 않음</li>
+<li><strong>교차 검증</strong>: 학습 데이터 내에서도 fold별로 다른 fold의 평균을 사용 (out-of-fold encoding)</li>
+<li><strong>스무딩(Smoothing)</strong>: 샘플 수가 적은 범주는 전체 평균에 가깝게 조정</li>
+</ol>
+<p><strong>예제: 안전한 Target Encoding (학습/테스트 분리)</strong></p>
+<div id="c1643457" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 분리</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df.dropna(subset<span class="op">=</span>[target, col])</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>train_df, test_df <span class="op">=</span> train_test_split(df_clean, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습 데이터로만 평균 계산</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>train_mean_map <span class="op">=</span> train_df.groupby(col)[target].mean()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 데이터에 적용</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>train_encoded <span class="op">=</span> train_df[col].<span class="bu">map</span>(train_mean_map)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>test_encoded <span class="op">=</span> test_df[col].<span class="bu">map</span>(train_mean_map)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"학습 데이터 인코딩 결과:"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train_encoded.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>학습 데이터 인코딩 결과:
+115    3689.224138
+8      3689.224138
+138    3689.224138
+333    5071.039604
+305    5071.039604
+Name: species, dtype: float64</code></pre>
+</div>
+</div>
+<p><strong>사용 시점</strong></p>
+<ul>
+<li>고급 트리 기반 모델(XGBoost, LightGBM, CatBoost) 사용 시</li>
+<li>범주와 타겟 간 강한 관계가 있을 때</li>
+<li>범주의 개수가 매우 많아 One-Hot Encoding이 비효율적일 때</li>
+</ul>
+<p><strong>장단점</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>타겟과의 관계를 직접 반영하여 정보량이 큼</td>
+<td>데이터 누수 위험 (올바른 방법 필수)</td>
+</tr>
+<tr class="even">
+<td>고차원 범주형 변수에 효과적</td>
+<td>과적합 위험 (스무딩 필요)</td>
+</tr>
+<tr class="odd">
+<td>컬럼 수 증가 없음</td>
+<td>구현이 복잡함</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
-<section id="빈도frequency-인코딩" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="빈도frequency-인코딩"><span class="header-section-number">7.5</span> 빈도(Frequency) 인코딩</h2>
-<p>범주의 <strong>출현 빈도</strong>로 인코딩, 희귀 범주 처리에 유용</p>
+<section id="frequency-encoding-빈도-인코딩" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="frequency-encoding-빈도-인코딩"><span class="header-section-number">7.5</span> Frequency Encoding (빈도 인코딩)</h2>
+<p>Frequency Encoding은 각 범주를 해당 범주의 출현 빈도로 치환하는 방법이다. 희귀한 범주와 자주 나타나는 범주를 구분할 수 있어, 희귀 범주가 많은 경우 유용하다.</p>
+<p><strong>변환 예시</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>island</th>
+<th>빈도 (비율)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Biscoe</td>
+<td>0.488</td>
+</tr>
+<tr class="even">
+<td>Dream</td>
+<td>0.360</td>
+</tr>
+<tr class="odd">
+<td>Torgersen</td>
+<td>0.151</td>
+</tr>
+</tbody>
+</table>
 <section id="예제-코드-3" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="예제-코드-3"><span class="header-section-number">7.5.1</span> 예제 코드</h3>
-<div id="5ac0ec86" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> df[<span class="st">"island"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df_freq <span class="op">=</span> df.copy()</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_freq[<span class="st">"island_enc"</span>] <span class="op">=</span> df_freq[<span class="st">"island"</span>].<span class="bu">map</span>(freq_map)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_freq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: Frequency Encoding 적용</strong></p>
+<div id="befd1270" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주별 빈도 계산 (비율로 정규화)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> df[<span class="st">"island"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"범주별 빈도:"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(freq_map)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 빈도로 치환</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>df_freq <span class="op">=</span> df.copy()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>df_freq[<span class="st">"island_enc"</span>] <span class="op">=</span> df_freq[<span class="st">"island"</span>].<span class="bu">map</span>(freq_map)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Frequency Encoding 결과:"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_freq[[<span class="st">"island"</span>, <span class="st">"island_enc"</span>]].head(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
-0    Adelie  Torgersen            39.1           18.7              181.0   
-1    Adelie  Torgersen            39.5           17.4              186.0   
-2    Adelie  Torgersen            40.3           18.0              195.0   
-3    Adelie  Torgersen             NaN            NaN                NaN   
-4    Adelie  Torgersen            36.7           19.3              193.0   
-..      ...        ...             ...            ...                ...   
-339  Gentoo     Biscoe             NaN            NaN                NaN   
-340  Gentoo     Biscoe            46.8           14.3              215.0   
-341  Gentoo     Biscoe            50.4           15.7              222.0   
-342  Gentoo     Biscoe            45.2           14.8              212.0   
-343  Gentoo     Biscoe            49.9           16.1              213.0   
+<pre><code>범주별 빈도:
+island
+Biscoe       0.488372
+Dream        0.360465
+Torgersen    0.151163
+Name: proportion, dtype: float64
 
-     body_mass_g     sex  island_enc  
-0         3750.0    Male    0.151163  
-1         3800.0  Female    0.151163  
-2         3250.0  Female    0.151163  
-3            NaN     NaN    0.151163  
-4         3450.0  Female    0.151163  
-..           ...     ...         ...  
-339          NaN     NaN    0.488372  
-340       4850.0  Female    0.488372  
-341       5750.0    Male    0.488372  
-342       5200.0  Female    0.488372  
-343       5400.0    Male    0.488372  
-
-[344 rows x 8 columns]</code></pre>
+Frequency Encoding 결과:
+      island  island_enc
+0  Torgersen    0.151163
+1  Torgersen    0.151163
+2  Torgersen    0.151163
+3  Torgersen    0.151163
+4  Torgersen    0.151163
+5  Torgersen    0.151163
+6  Torgersen    0.151163
+7  Torgersen    0.151163
+8  Torgersen    0.151163
+9  Torgersen    0.151163</code></pre>
 </div>
 </div>
+<p><strong>사용 시점</strong></p>
+<ul>
+<li>희귀 범주가 많을 때</li>
+<li>범주의 빈도가 타겟과 관련이 있을 때</li>
+<li>고차원 범주형 변수를 간단히 처리하고 싶을 때</li>
+</ul>
+<p><strong>장단점</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>구현이 간단함</td>
+<td>서로 다른 범주가 같은 빈도를 가질 수 있음</td>
+</tr>
+<tr class="even">
+<td>희귀 범주를 효과적으로 표현</td>
+<td>빈도가 타겟과 관련 없으면 효과 제한적</td>
+</tr>
+<tr class="odd">
+<td>컬럼 수 증가 없음</td>
+<td>정보 손실 가능</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="여러-컬럼을-한-번에-인코딩" class="level2" data-number="7.6">
 <h2 data-number="7.6" class="anchored" data-anchor-id="여러-컬럼을-한-번에-인코딩"><span class="header-section-number">7.6</span> 여러 컬럼을 한 번에 인코딩</h2>
-<section id="one-hot-pandas" class="level3" data-number="7.6.1">
-<h3 data-number="7.6.1" class="anchored" data-anchor-id="one-hot-pandas"><span class="header-section-number">7.6.1</span> One-Hot (pandas)</h3>
-<div id="88a3a570" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(df, columns<span class="op">=</span>cat_cols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>실무에서는 여러 범주형 컬럼을 동시에 처리해야 하는 경우가 많다. 각 인코딩 방법을 여러 컬럼에 적용하는 방법을 살펴본다.</p>
+<section id="one-hot-encoding-여러-컬럼" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="one-hot-encoding-여러-컬럼"><span class="header-section-number">7.6.1</span> One-Hot Encoding (여러 컬럼)</h3>
+<p><strong>예제: 여러 컬럼 One-Hot Encoding</strong></p>
+<div id="3f6398d8" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 인코딩할 범주형 컬럼 목록</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 여러 컬럼에 One-Hot Encoding 적용</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>df_ohe_multi <span class="op">=</span> pd.get_dummies(</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    df, </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>cat_cols,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    drop_first<span class="op">=</span><span class="va">True</span>  <span class="co"># 다중공선성 방지</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"인코딩된 컬럼 목록:"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([col <span class="cf">for</span> col <span class="kw">in</span> df_ohe_multi.columns <span class="cf">if</span> <span class="bu">any</span>(cat <span class="kw">in</span> col <span class="cf">for</span> cat <span class="kw">in</span> cat_cols)])</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">원본 컬럼 수: </span><span class="sc">{</span><span class="bu">len</span>(df.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"인코딩 후 컬럼 수: </span><span class="sc">{</span><span class="bu">len</span>(df_ohe_multi.columns)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>인코딩된 컬럼 목록:
+['species_Chinstrap', 'species_Gentoo', 'island_Dream', 'island_Torgersen', 'sex_Male']
+
+원본 컬럼 수: 7
+인코딩 후 컬럼 수: 9</code></pre>
+</div>
 </div>
 </section>
-<section id="label-encoding-반복-처리" class="level3" data-number="7.6.2">
-<h3 data-number="7.6.2" class="anchored" data-anchor-id="label-encoding-반복-처리"><span class="header-section-number">7.6.2</span> Label Encoding (반복 처리)</h3>
-<div id="bde85ee0" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_label <span class="op">=</span> df.copy()</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    le <span class="op">=</span> LabelEncoder()</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    df_label[col] <span class="op">=</span> le.fit_transform(df_label[col].astype(<span class="bu">str</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="label-encoding-여러-컬럼" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="label-encoding-여러-컬럼"><span class="header-section-number">7.6.2</span> Label Encoding (여러 컬럼)</h3>
+<p><strong>예제: 여러 컬럼 Label Encoding</strong></p>
+<div id="2402686d" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 복사</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>df_label_multi <span class="op">=</span> df.copy()</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주형 컬럼 목록</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>]</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 컬럼에 Label Encoding 적용</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 결측치를 문자열로 변환하여 처리</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    df_label_multi[col] <span class="op">=</span> le.fit_transform(df_label_multi[col].astype(<span class="bu">str</span>))</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Label Encoding 결과:"</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_label_multi[cat_cols].head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Label Encoding 결과:
+   species  island  sex
+0        0       2    1
+1        0       2    0
+2        0       2    0
+3        0       2    2
+4        0       2    0</code></pre>
+</div>
+</div>
+</section>
+<section id="sklearn-columntransformer-사용" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="sklearn-columntransformer-사용"><span class="header-section-number">7.6.3</span> sklearn ColumnTransformer 사용</h3>
+<p>여러 인코딩 방법을 조합하여 사용하는 경우 <code>ColumnTransformer</code>를 사용하면 깔끔하게 처리할 수 있다.</p>
+<p><strong>예제: ColumnTransformer로 여러 인코딩 조합</strong></p>
+<div id="201663d6" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, LabelEncoder</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 인코딩 파이프라인 구성</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> ColumnTransformer(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    transformers<span class="op">=</span>[</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"ohe"</span>, OneHotEncoder(drop<span class="op">=</span><span class="st">'first'</span>, sparse_output<span class="op">=</span><span class="va">False</span>), [<span class="st">"species"</span>, <span class="st">"island"</span>]),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># LabelEncoder는 ColumnTransformer와 직접 사용 불가</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    remainder<span class="op">=</span><span class="st">'passthrough'</span>  <span class="co"># 나머지 컬럼은 그대로 유지</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 수치형 컬럼 선택</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>df_transformed <span class="op">=</span> ct.fit_transform(df[[<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>] <span class="op">+</span> num_cols].dropna())</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ColumnTransformer 변환 결과 shape:"</span>)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_transformed.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ColumnTransformer 변환 결과 shape:
+(333, 9)</code></pre>
+</div>
 </div>
 </section>
 </section>
-<section id="인코딩-방식-요약" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="인코딩-방식-요약"><span class="header-section-number">7.7</span> 인코딩 방식 요약</h2>
+<section id="요약" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="요약"><span class="header-section-number">7.7</span> 요약</h2>
+<p>이 장에서는 범주형 데이터를 수치형으로 변환하는 다양한 인코딩 기법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>인코딩 방법 비교</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 24%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 18%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>인코딩</th>
 <th>순서 필요</th>
 <th>컬럼 수 증가</th>
+<th>장점</th>
+<th>단점</th>
 <th>추천 모델</th>
 </tr>
 </thead>
@@ -748,34 +1115,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Label</td>
 <td>X</td>
 <td>X</td>
-<td>트리 모델</td>
+<td>간단, 효율적</td>
+<td>순서 관계 생성</td>
+<td>트리 기반 모델</td>
 </tr>
 <tr class="even">
 <td>One-Hot</td>
 <td>X</td>
 <td>O</td>
-<td>선형, 거리 기반</td>
+<td>순서 없음, 안전</td>
+<td>고차원 문제</td>
+<td>선형, 거리 기반 모델</td>
 </tr>
 <tr class="odd">
 <td>Ordinal</td>
 <td>O</td>
 <td>X</td>
+<td>순서 정보 반영</td>
+<td>순서 정의 필요</td>
 <td>순서형 데이터</td>
 </tr>
 <tr class="even">
 <td>Target</td>
 <td>X</td>
 <td>X</td>
-<td>고급 모델</td>
+<td>정보량 큼</td>
+<td>데이터 누수 위험</td>
+<td>고급 트리 모델 (주의 필요)</td>
 </tr>
 <tr class="odd">
 <td>Frequency</td>
 <td>X</td>
 <td>X</td>
-<td>희귀 범주 많을 때</td>
+<td>희귀 범주 처리</td>
+<td>정보 손실 가능</td>
+<td>희귀 범주가 많을 때</td>
 </tr>
 </tbody>
 </table>
+<p><strong>인코딩 방법 선택 가이드</strong></p>
+<ol type="1">
+<li><strong>트리 기반 모델</strong>: Label Encoding (간단하고 효율적)</li>
+<li><strong>선형/거리 기반 모델</strong>: One-Hot Encoding (가장 안전)</li>
+<li><strong>순서가 있는 범주</strong>: Ordinal Encoding (순서 정보 활용)</li>
+<li><strong>고차원 범주</strong>: Target Encoding 또는 Frequency Encoding (차원 증가 방지)</li>
+<li><strong>희귀 범주 많음</strong>: Frequency Encoding (희귀도 반영)</li>
+</ol>
+<p><strong>주의사항</strong></p>
+<ul>
+<li><strong>데이터 누수 방지</strong>: Target Encoding 사용 시 학습/테스트 분리 철저히 지킬 것</li>
+<li><strong>다중공선성</strong>: One-Hot Encoding에서 선형 모델 사용 시 <code>drop_first=True</code> 권장</li>
+<li><strong>결측치 처리</strong>: 인코딩 전 결측치를 별도 범주로 처리하거나 제거할 것</li>
+<li><strong>새로운 범주</strong>: 테스트 데이터에 학습 시 없던 범주가 나타나면 처리 전략 필요</li>
+</ul>
+<p><strong>실무 인코딩 순서</strong></p>
+<ol type="1">
+<li>범주형 변수 식별 및 순서 여부 확인</li>
+<li>모델 유형에 따른 인코딩 방법 선택</li>
+<li>학습/테스트 데이터 분리 (데이터 누수 방지)</li>
+<li>학습 데이터로 인코더 학습(<code>fit</code>)</li>
+<li>학습/테스트 데이터에 동일한 인코더 적용(<code>transform</code>)</li>
+</ol>
+<p>범주형 데이터 인코딩은 전처리의 마지막 단계로, 적절한 방법을 선택하면 모델 성능을 크게 향상시킬 수 있다. 데이터의 특성, 모델의 요구사항, 범주의 개수와 순서 관계를 종합적으로 고려하여 최적의 인코딩 방법을 선택하는 것이 중요하다. 이제 데이터 전처리의 전 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.</p>
 
 
 </section>
