@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,58 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#특성-선택" id="toc-특성-선택" class="nav-link active" data-scroll-target="#특성-선택"><span class="header-section-number">20.1</span> 특성 선택</a>
+  <ul>
+  <li><a href="#특성-선택이란" id="toc-특성-선택이란" class="nav-link" data-scroll-target="#특성-선택이란"><span class="header-section-number">20.1.1</span> 특성 선택이란?</a>
+  <ul class="collapse">
+  <li><a href="#특성-선택의-목적" id="toc-특성-선택의-목적" class="nav-link" data-scroll-target="#특성-선택의-목적"><span class="header-section-number">20.1.1.1</span> 특성 선택의 목적</a></li>
+  </ul></li>
+  <li><a href="#특성-선택-vs-특성-추출" id="toc-특성-선택-vs-특성-추출" class="nav-link" data-scroll-target="#특성-선택-vs-특성-추출"><span class="header-section-number">20.1.2</span> 특성 선택 vs 특성 추출</a></li>
+  </ul></li>
+  <li><a href="#필터filter-방법" id="toc-필터filter-방법" class="nav-link" data-scroll-target="#필터filter-방법"><span class="header-section-number">20.2</span> 필터(Filter) 방법</a>
+  <ul>
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">20.2.1</span> 개념</a></li>
+  <li><a href="#주요-특징" id="toc-주요-특징" class="nav-link" data-scroll-target="#주요-특징"><span class="header-section-number">20.2.2</span> 주요 특징</a></li>
+  <li><a href="#대표적인-필터-방법" id="toc-대표적인-필터-방법" class="nav-link" data-scroll-target="#대표적인-필터-방법"><span class="header-section-number">20.2.3</span> 대표적인 필터 방법</a>
+  <ul class="collapse">
+  <li><a href="#분산-기반-선택" id="toc-분산-기반-선택" class="nav-link" data-scroll-target="#분산-기반-선택"><span class="header-section-number">20.2.3.1</span> (1) 분산 기반 선택</a></li>
+  <li><a href="#상관계수-기반-선택" id="toc-상관계수-기반-선택" class="nav-link" data-scroll-target="#상관계수-기반-선택"><span class="header-section-number">20.2.3.2</span> (2) 상관계수 기반 선택</a></li>
+  <li><a href="#통계적-검정" id="toc-통계적-검정" class="nav-link" data-scroll-target="#통계적-검정"><span class="header-section-number">20.2.3.3</span> (3) 통계적 검정</a></li>
+  </ul></li>
+  <li><a href="#필터-방법-예제" id="toc-필터-방법-예제" class="nav-link" data-scroll-target="#필터-방법-예제"><span class="header-section-number">20.2.4</span> 필터 방법 예제</a></li>
+  </ul></li>
+  <li><a href="#래퍼wrapper-방법" id="toc-래퍼wrapper-방법" class="nav-link" data-scroll-target="#래퍼wrapper-방법"><span class="header-section-number">20.3</span> 래퍼(Wrapper) 방법</a>
+  <ul>
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">20.3.1</span> 개념</a></li>
+  <li><a href="#주요-특징-1" id="toc-주요-특징-1" class="nav-link" data-scroll-target="#주요-특징-1"><span class="header-section-number">20.3.2</span> 주요 특징</a></li>
+  <li><a href="#대표적인-래퍼-방법" id="toc-대표적인-래퍼-방법" class="nav-link" data-scroll-target="#대표적인-래퍼-방법"><span class="header-section-number">20.3.3</span> 대표적인 래퍼 방법</a>
+  <ul class="collapse">
+  <li><a href="#전진-선택-forward-selection" id="toc-전진-선택-forward-selection" class="nav-link" data-scroll-target="#전진-선택-forward-selection"><span class="header-section-number">20.3.3.1</span> (1) 전진 선택 (Forward Selection)</a></li>
+  <li><a href="#후진-제거-backward-elimination" id="toc-후진-제거-backward-elimination" class="nav-link" data-scroll-target="#후진-제거-backward-elimination"><span class="header-section-number">20.3.3.2</span> (2) 후진 제거 (Backward Elimination)</a></li>
+  <li><a href="#재귀적-특성-제거-rfe" id="toc-재귀적-특성-제거-rfe" class="nav-link" data-scroll-target="#재귀적-특성-제거-rfe"><span class="header-section-number">20.3.3.3</span> (3) 재귀적 특성 제거 (RFE)</a></li>
+  </ul></li>
+  <li><a href="#래퍼-방법-예제" id="toc-래퍼-방법-예제" class="nav-link" data-scroll-target="#래퍼-방법-예제"><span class="header-section-number">20.3.4</span> 래퍼 방법 예제</a></li>
+  </ul></li>
+  <li><a href="#임베디드embedded-방법" id="toc-임베디드embedded-방법" class="nav-link" data-scroll-target="#임베디드embedded-방법"><span class="header-section-number">20.4</span> 3.2.5 임베디드(Embedded) 방법</a>
+  <ul>
+  <li><a href="#개념-2" id="toc-개념-2" class="nav-link" data-scroll-target="#개념-2"><span class="header-section-number">20.4.1</span> 개념</a></li>
+  <li><a href="#주요-특징-2" id="toc-주요-특징-2" class="nav-link" data-scroll-target="#주요-특징-2"><span class="header-section-number">20.4.2</span> 주요 특징</a></li>
+  <li><a href="#대표적인-임베디드-방법" id="toc-대표적인-임베디드-방법" class="nav-link" data-scroll-target="#대표적인-임베디드-방법"><span class="header-section-number">20.4.3</span> 대표적인 임베디드 방법</a>
+  <ul class="collapse">
+  <li><a href="#정규화-기반-방법" id="toc-정규화-기반-방법" class="nav-link" data-scroll-target="#정규화-기반-방법"><span class="header-section-number">20.4.3.1</span> (1) 정규화 기반 방법</a></li>
+  <li><a href="#트리-기반-모델" id="toc-트리-기반-모델" class="nav-link" data-scroll-target="#트리-기반-모델"><span class="header-section-number">20.4.3.2</span> (2) 트리 기반 모델</a></li>
+  </ul></li>
+  <li><a href="#임베디드-방법-예제" id="toc-임베디드-방법-예제" class="nav-link" data-scroll-target="#임베디드-방법-예제"><span class="header-section-number">20.4.4</span> 임베디드 방법 예제</a></li>
+  </ul></li>
+  <li><a href="#방법별-비교-정리" id="toc-방법별-비교-정리" class="nav-link" data-scroll-target="#방법별-비교-정리"><span class="header-section-number">20.5</span> 방법별 비교 정리</a></li>
+  <li><a href="#활용-전략" id="toc-활용-전략" class="nav-link" data-scroll-target="#활용-전략"><span class="header-section-number">20.6</span> 활용 전략</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/02. 특성 선택.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +451,230 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="특성-선택" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="특성-선택"><span class="header-section-number">20.1</span> 특성 선택</h2>
+<section id="특성-선택이란" class="level3" data-number="20.1.1">
+<h3 data-number="20.1.1" class="anchored" data-anchor-id="특성-선택이란"><span class="header-section-number">20.1.1</span> 특성 선택이란?</h3>
+<p><strong>특성 선택(feature selection)</strong>이란 모델 학습에 사용되는 여러 입력 변수(특성) 중에서 <strong>중요한 특성만 선별</strong>하는 과정이다.</p>
+<ul>
+<li>모든 변수를 사용하는 것이 항상 좋은 것은 아님</li>
+<li>불필요하거나 중복된 특성은 오히려 성능을 저하시킬 수 있음</li>
+</ul>
+<section id="특성-선택의-목적" class="level4" data-number="20.1.1.1">
+<h4 data-number="20.1.1.1" class="anchored" data-anchor-id="특성-선택의-목적"><span class="header-section-number">20.1.1.1</span> 특성 선택의 목적</h4>
+<ul>
+<li>모델 성능 향상 (과적합 감소)</li>
+<li>학습 시간 단축</li>
+<li>모델 해석력 향상</li>
+<li>데이터 수집 및 관리 비용 감소</li>
+</ul>
+</section>
+</section>
+<section id="특성-선택-vs-특성-추출" class="level3" data-number="20.1.2">
+<h3 data-number="20.1.2" class="anchored" data-anchor-id="특성-선택-vs-특성-추출"><span class="header-section-number">20.1.2</span> 특성 선택 vs 특성 추출</h3>
+<p>혼동하기 쉬운 개념이므로 먼저 구분한다.</p>
+<ul>
+<li><p><strong>특성 선택</strong></p>
+<ul>
+<li>기존 변수 중 일부를 선택</li>
+<li>변수의 의미가 유지됨</li>
+</ul></li>
+<li><p><strong>특성 추출</strong></p>
+<ul>
+<li>기존 변수를 변환하여 새로운 변수 생성</li>
+<li>예: PCA</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="필터filter-방법" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="필터filter-방법"><span class="header-section-number">20.2</span> 필터(Filter) 방법</h2>
+<section id="개념" class="level3" data-number="20.2.1">
+<h3 data-number="20.2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">20.2.1</span> 개념</h3>
+<p><strong>모델을 사용하지 않고</strong> 데이터의 통계적 특성만으로 특성을 평가하는 방법이다. 각 특성을 <strong>독립적으로</strong> 평가한다.</p>
+</section>
+<section id="주요-특징" class="level3" data-number="20.2.2">
+<h3 data-number="20.2.2" class="anchored" data-anchor-id="주요-특징"><span class="header-section-number">20.2.2</span> 주요 특징</h3>
+<ul>
+<li>계산 속도가 빠름</li>
+<li>모델과 무관</li>
+<li>변수 간 상호작용은 고려하지 못함</li>
+</ul>
+</section>
+<section id="대표적인-필터-방법" class="level3" data-number="20.2.3">
+<h3 data-number="20.2.3" class="anchored" data-anchor-id="대표적인-필터-방법"><span class="header-section-number">20.2.3</span> 대표적인 필터 방법</h3>
+<section id="분산-기반-선택" class="level4" data-number="20.2.3.1">
+<h4 data-number="20.2.3.1" class="anchored" data-anchor-id="분산-기반-선택"><span class="header-section-number">20.2.3.1</span> (1) 분산 기반 선택</h4>
+<ul>
+<li>분산이 거의 없는 변수는 정보량이 적음</li>
+<li>예: 대부분 값이 동일한 변수 제거</li>
+</ul>
+</section>
+<section id="상관계수-기반-선택" class="level4" data-number="20.2.3.2">
+<h4 data-number="20.2.3.2" class="anchored" data-anchor-id="상관계수-기반-선택"><span class="header-section-number">20.2.3.2</span> (2) 상관계수 기반 선택</h4>
+<ul>
+<li>입력 변수와 타깃 변수 간 상관관계 측정</li>
+<li>Pearson, Spearman, Kendall 등 활용 가능</li>
+<li>절댓값이 큰 변수일수록 중요</li>
+</ul>
+</section>
+<section id="통계적-검정" class="level4" data-number="20.2.3.3">
+<h4 data-number="20.2.3.3" class="anchored" data-anchor-id="통계적-검정"><span class="header-section-number">20.2.3.3</span> (3) 통계적 검정</h4>
+<ul>
+<li><p>분류 문제</p>
+<ul>
+<li>카이제곱 검정</li>
+</ul></li>
+<li><p>회귀 문제</p>
+<ul>
+<li>F-test</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="필터-방법-예제" class="level3" data-number="20.2.4">
+<h3 data-number="20.2.4" class="anchored" data-anchor-id="필터-방법-예제"><span class="header-section-number">20.2.4</span> 필터 방법 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>f_classif, k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> selector.fit_transform(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="래퍼wrapper-방법" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="래퍼wrapper-방법"><span class="header-section-number">20.3</span> 래퍼(Wrapper) 방법</h2>
+<section id="개념-1" class="level3" data-number="20.3.1">
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">20.3.1</span> 개념</h3>
+<p><strong>모델의 성능을 기준</strong>으로 특성 조합을 평가하는 방법으로 특정 모델에 최적화된 특성 선택이 가능하다.</p>
+</section>
+<section id="주요-특징-1" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="주요-특징-1"><span class="header-section-number">20.3.2</span> 주요 특징</h3>
+<ul>
+<li>성능은 좋지만 계산 비용이 큼</li>
+<li>모델에 종속적</li>
+</ul>
+</section>
+<section id="대표적인-래퍼-방법" class="level3" data-number="20.3.3">
+<h3 data-number="20.3.3" class="anchored" data-anchor-id="대표적인-래퍼-방법"><span class="header-section-number">20.3.3</span> 대표적인 래퍼 방법</h3>
+<section id="전진-선택-forward-selection" class="level4" data-number="20.3.3.1">
+<h4 data-number="20.3.3.1" class="anchored" data-anchor-id="전진-선택-forward-selection"><span class="header-section-number">20.3.3.1</span> (1) 전진 선택 (Forward Selection)</h4>
+<ul>
+<li>특성이 없는 상태에서 시작</li>
+<li>하나씩 추가하면서 성능 개선 여부 평가</li>
+</ul>
+</section>
+<section id="후진-제거-backward-elimination" class="level4" data-number="20.3.3.2">
+<h4 data-number="20.3.3.2" class="anchored" data-anchor-id="후진-제거-backward-elimination"><span class="header-section-number">20.3.3.2</span> (2) 후진 제거 (Backward Elimination)</h4>
+<ul>
+<li>모든 특성으로 시작</li>
+<li>하나씩 제거하면서 성능 변화 확인</li>
+</ul>
+</section>
+<section id="재귀적-특성-제거-rfe" class="level4" data-number="20.3.3.3">
+<h4 data-number="20.3.3.3" class="anchored" data-anchor-id="재귀적-특성-제거-rfe"><span class="header-section-number">20.3.3.3</span> (3) 재귀적 특성 제거 (RFE)</h4>
+<ul>
+<li>모델 학습 → 중요도 낮은 특성 제거 반복</li>
+</ul>
+</section>
+</section>
+<section id="래퍼-방법-예제" class="level3" data-number="20.3.4">
+<h3 data-number="20.3.4" class="anchored" data-anchor-id="래퍼-방법-예제"><span class="header-section-number">20.3.4</span> 래퍼 방법 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(model, n_features_to_select<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> rfe.fit_transform(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="임베디드embedded-방법" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="임베디드embedded-방법"><span class="header-section-number">20.4</span> 3.2.5 임베디드(Embedded) 방법</h2>
+<section id="개념-2" class="level3" data-number="20.4.1">
+<h3 data-number="20.4.1" class="anchored" data-anchor-id="개념-2"><span class="header-section-number">20.4.1</span> 개념</h3>
+<p><strong>모델 학습 과정 자체에</strong> 특성 선택이 포함된 방법이다. 필터와 래퍼의 중간 성격을 가진다.</p>
+</section>
+<section id="주요-특징-2" class="level3" data-number="20.4.2">
+<h3 data-number="20.4.2" class="anchored" data-anchor-id="주요-특징-2"><span class="header-section-number">20.4.2</span> 주요 특징</h3>
+<ul>
+<li>계산 효율과 성능의 균형</li>
+<li>특정 모델에 내장된 방식</li>
+</ul>
+</section>
+<section id="대표적인-임베디드-방법" class="level3" data-number="20.4.3">
+<h3 data-number="20.4.3" class="anchored" data-anchor-id="대표적인-임베디드-방법"><span class="header-section-number">20.4.3</span> 대표적인 임베디드 방법</h3>
+<section id="정규화-기반-방법" class="level4" data-number="20.4.3.1">
+<h4 data-number="20.4.3.1" class="anchored" data-anchor-id="정규화-기반-방법"><span class="header-section-number">20.4.3.1</span> (1) 정규화 기반 방법</h4>
+<ul>
+<li><p>L1 정규화 (Lasso)</p>
+<ul>
+<li>중요하지 않은 특성의 계수를 0으로 만듦</li>
+</ul></li>
+<li><p>L2 정규화 (Ridge)</p>
+<ul>
+<li>계수 크기를 줄이지만 제거하지는 않음</li>
+</ul></li>
+</ul>
+</section>
+<section id="트리-기반-모델" class="level4" data-number="20.4.3.2">
+<h4 data-number="20.4.3.2" class="anchored" data-anchor-id="트리-기반-모델"><span class="header-section-number">20.4.3.2</span> (2) 트리 기반 모델</h4>
+<ul>
+<li>결정트리</li>
+<li>랜덤 포레스트</li>
+<li>Gradient Boosting</li>
+</ul>
+<p>→ 특성 중요도(feature importance) 제공</p>
+</section>
+</section>
+<section id="임베디드-방법-예제" class="level3" data-number="20.4.4">
+<h3 data-number="20.4.4" class="anchored" data-anchor-id="임베디드-방법-예제"><span class="header-section-number">20.4.4</span> 임베디드 방법 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> RandomForestClassifier()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> model.feature_importances_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="방법별-비교-정리" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="방법별-비교-정리"><span class="header-section-number">20.5</span> 방법별 비교 정리</h2>
+<ul>
+<li><p><strong>필터 방법</strong></p>
+<ul>
+<li>빠름</li>
+<li>모델 독립적</li>
+<li>상호작용 고려 어려움</li>
+</ul></li>
+<li><p><strong>래퍼 방법</strong></p>
+<ul>
+<li>성능 우수</li>
+<li>계산 비용 큼</li>
+<li>모델 의존적</li>
+</ul></li>
+<li><p><strong>임베디드 방법</strong></p>
+<ul>
+<li>효율과 성능의 균형</li>
+<li>특정 알고리즘에 종속</li>
+</ul></li>
+</ul>
+</section>
+<section id="활용-전략" class="level2" data-number="20.6">
+<h2 data-number="20.6" class="anchored" data-anchor-id="활용-전략"><span class="header-section-number">20.6</span> 활용 전략</h2>
+<ul>
+<li><p>데이터가 크고 특성이 많을 때</p>
+<ul>
+<li>필터 → 임베디드 순서</li>
+</ul></li>
+<li><p>모델 성능이 중요한 경우</p>
+<ul>
+<li>래퍼 또는 임베디드</li>
+</ul></li>
+<li><p>해석이 중요한 경우</p>
+<ul>
+<li>필터 또는 Lasso 기반 접근</li>
+</ul></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1097,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/02. 특성 선택.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/02. 특성 선택.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

@@ -497,7 +497,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>species 분류</li>
 <li>수치형 변수를 사용한 기본 모델링</li>
 </ul>
-<div id="e34f5aa6" class="cell" data-execution_count="1">
+<div id="92dac00f" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -513,7 +513,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="학습-테스트-분할" class="level3" data-number="19.3.4">
 <h3 data-number="19.3.4" class="anchored" data-anchor-id="학습-테스트-분할"><span class="header-section-number">19.3.4</span> 학습 / 테스트 분할</h3>
-<div id="1491f4e2" class="cell" data-execution_count="2">
+<div id="33a84f66" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    X, y,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
@@ -531,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="학습-검증-분할" class="level3" data-number="19.3.5">
 <h3 data-number="19.3.5" class="anchored" data-anchor-id="학습-검증-분할"><span class="header-section-number">19.3.5</span> 학습 / 검증 분할</h3>
-<div id="940aa1d8" class="cell" data-execution_count="3">
+<div id="63f01eb2" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    X_train, y_train,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,  <span class="co"># 전체 기준 0.2</span></span>
@@ -573,7 +573,7 @@ Fold K | T T T ... T V</code></pre>
 </section>
 <section id="기본-k-fold-예제" class="level3" data-number="19.5.3">
 <h3 data-number="19.5.3" class="anchored" data-anchor-id="기본-k-fold-예제"><span class="header-section-number">19.5.3</span> 기본 K-Fold 예제</h3>
-<div id="7adc4dbd" class="cell" data-execution_count="4">
+<div id="3b9d3701" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, cross_val_score</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -613,7 +613,7 @@ Fold K | T T T ... T V</code></pre>
 </section>
 <section id="예제-1" class="level3" data-number="19.6.2">
 <h3 data-number="19.6.2" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">19.6.2</span> 예제</h3>
-<div id="8793afbd" class="cell" data-execution_count="5">
+<div id="d85b5de3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>skf <span class="op">=</span> StratifiedKFold(</span>
@@ -676,7 +676,7 @@ Fold K | T T T ... T V</code></pre>
 <li>미래 데이터를 학습에 사용하면 안 됨</li>
 <li>반드시 시간 순서 유지</li>
 </ul>
-<div id="e9e3514c" class="cell" data-execution_count="6">
+<div id="bd072318" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TimeSeriesSplit</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tscv <span class="op">=</span> TimeSeriesSplit(n_splits<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

@@ -1875,5 +1875,82 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
     ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html",
+    "href": "part3/02. 특성 선택.html",
+    "title": "20  특성 선택",
+    "section": "",
+    "text": "20.1 특성 선택",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#특성-선택",
+    "href": "part3/02. 특성 선택.html#특성-선택",
+    "title": "20  특성 선택",
+    "section": "",
+    "text": "20.1.1 특성 선택이란?\n특성 선택(feature selection)이란 모델 학습에 사용되는 여러 입력 변수(특성) 중에서 중요한 특성만 선별하는 과정이다.\n\n모든 변수를 사용하는 것이 항상 좋은 것은 아님\n불필요하거나 중복된 특성은 오히려 성능을 저하시킬 수 있음\n\n\n20.1.1.1 특성 선택의 목적\n\n모델 성능 향상 (과적합 감소)\n학습 시간 단축\n모델 해석력 향상\n데이터 수집 및 관리 비용 감소\n\n\n\n\n20.1.2 특성 선택 vs 특성 추출\n혼동하기 쉬운 개념이므로 먼저 구분한다.\n\n특성 선택\n\n기존 변수 중 일부를 선택\n변수의 의미가 유지됨\n\n특성 추출\n\n기존 변수를 변환하여 새로운 변수 생성\n예: PCA",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#필터filter-방법",
+    "href": "part3/02. 특성 선택.html#필터filter-방법",
+    "title": "20  특성 선택",
+    "section": "20.2 필터(Filter) 방법",
+    "text": "20.2 필터(Filter) 방법\n\n20.2.1 개념\n모델을 사용하지 않고 데이터의 통계적 특성만으로 특성을 평가하는 방법이다. 각 특성을 독립적으로 평가한다.\n\n\n20.2.2 주요 특징\n\n계산 속도가 빠름\n모델과 무관\n변수 간 상호작용은 고려하지 못함\n\n\n\n20.2.3 대표적인 필터 방법\n\n20.2.3.1 (1) 분산 기반 선택\n\n분산이 거의 없는 변수는 정보량이 적음\n예: 대부분 값이 동일한 변수 제거\n\n\n\n20.2.3.2 (2) 상관계수 기반 선택\n\n입력 변수와 타깃 변수 간 상관관계 측정\nPearson, Spearman, Kendall 등 활용 가능\n절댓값이 큰 변수일수록 중요\n\n\n\n20.2.3.3 (3) 통계적 검정\n\n분류 문제\n\n카이제곱 검정\n\n회귀 문제\n\nF-test\n\n\n\n\n\n20.2.4 필터 방법 예제\nfrom sklearn.feature_selection import SelectKBest, f_classif\n\nselector = SelectKBest(score_func=f_classif, k=3)\nX_selected = selector.fit_transform(X, y)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#래퍼wrapper-방법",
+    "href": "part3/02. 특성 선택.html#래퍼wrapper-방법",
+    "title": "20  특성 선택",
+    "section": "20.3 래퍼(Wrapper) 방법",
+    "text": "20.3 래퍼(Wrapper) 방법\n\n20.3.1 개념\n모델의 성능을 기준으로 특성 조합을 평가하는 방법으로 특정 모델에 최적화된 특성 선택이 가능하다.\n\n\n20.3.2 주요 특징\n\n성능은 좋지만 계산 비용이 큼\n모델에 종속적\n\n\n\n20.3.3 대표적인 래퍼 방법\n\n20.3.3.1 (1) 전진 선택 (Forward Selection)\n\n특성이 없는 상태에서 시작\n하나씩 추가하면서 성능 개선 여부 평가\n\n\n\n20.3.3.2 (2) 후진 제거 (Backward Elimination)\n\n모든 특성으로 시작\n하나씩 제거하면서 성능 변화 확인\n\n\n\n20.3.3.3 (3) 재귀적 특성 제거 (RFE)\n\n모델 학습 → 중요도 낮은 특성 제거 반복\n\n\n\n\n20.3.4 래퍼 방법 예제\nfrom sklearn.feature_selection import RFE\nfrom sklearn.linear_model import LogisticRegression\n\nmodel = LogisticRegression()\nrfe = RFE(model, n_features_to_select=3)\nX_selected = rfe.fit_transform(X, y)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#임베디드embedded-방법",
+    "href": "part3/02. 특성 선택.html#임베디드embedded-방법",
+    "title": "20  특성 선택",
+    "section": "20.4 3.2.5 임베디드(Embedded) 방법",
+    "text": "20.4 3.2.5 임베디드(Embedded) 방법\n\n20.4.1 개념\n모델 학습 과정 자체에 특성 선택이 포함된 방법이다. 필터와 래퍼의 중간 성격을 가진다.\n\n\n20.4.2 주요 특징\n\n계산 효율과 성능의 균형\n특정 모델에 내장된 방식\n\n\n\n20.4.3 대표적인 임베디드 방법\n\n20.4.3.1 (1) 정규화 기반 방법\n\nL1 정규화 (Lasso)\n\n중요하지 않은 특성의 계수를 0으로 만듦\n\nL2 정규화 (Ridge)\n\n계수 크기를 줄이지만 제거하지는 않음\n\n\n\n\n20.4.3.2 (2) 트리 기반 모델\n\n결정트리\n랜덤 포레스트\nGradient Boosting\n\n→ 특성 중요도(feature importance) 제공\n\n\n\n20.4.4 임베디드 방법 예제\nfrom sklearn.ensemble import RandomForestClassifier\n\nmodel = RandomForestClassifier()\nmodel.fit(X, y)\n\nimportances = model.feature_importances_",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#방법별-비교-정리",
+    "href": "part3/02. 특성 선택.html#방법별-비교-정리",
+    "title": "20  특성 선택",
+    "section": "20.5 방법별 비교 정리",
+    "text": "20.5 방법별 비교 정리\n\n필터 방법\n\n빠름\n모델 독립적\n상호작용 고려 어려움\n\n래퍼 방법\n\n성능 우수\n계산 비용 큼\n모델 의존적\n\n임베디드 방법\n\n효율과 성능의 균형\n특정 알고리즘에 종속",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
+  },
+  {
+    "objectID": "part3/02. 특성 선택.html#활용-전략",
+    "href": "part3/02. 특성 선택.html#활용-전략",
+    "title": "20  특성 선택",
+    "section": "20.6 활용 전략",
+    "text": "20.6 활용 전략\n\n데이터가 크고 특성이 많을 때\n\n필터 → 임베디드 순서\n\n모델 성능이 중요한 경우\n\n래퍼 또는 임베디드\n\n해석이 중요한 경우\n\n필터 또는 Lasso 기반 접근",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>특성 선택</span>"
+    ]
   }
 ]

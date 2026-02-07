@@ -464,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="9.2" class="anchored" data-anchor-id="불균형-여부-진단"><span class="header-section-number">9.2</span> 불균형 여부 진단</h2>
 <section id="클래스-분포-확인" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</h3>
-<div id="f9678aab" class="cell" data-execution_count="1">
+<div id="cca2e7fe" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna(subset<span class="op">=</span>[<span class="st">"species"</span>])</span>
@@ -481,7 +481,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="비율로-확인" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</h3>
-<div id="e600cfb5" class="cell" data-execution_count="2">
+<div id="e04699ea" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>species
@@ -494,7 +494,7 @@ Name: proportion, dtype: float64</code></pre>
 </section>
 <section id="시각화" class="level3" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="시각화"><span class="header-section-number">9.2.3</span> 시각화</h3>
-<div id="400c16bc" class="cell" data-execution_count="3">
+<div id="f69a0cee" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">"bar"</span>)</span>
@@ -533,7 +533,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="개념" class="level4" data-number="9.4.1.1">
 <h4 data-number="9.4.1.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">9.4.1.1</span> 개념</h4>
 <p>다수 클래스 일부 제거</p>
-<div id="43413d8c" class="cell" data-execution_count="4">
+<div id="40656418" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
@@ -573,7 +573,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="오버샘플링-over-sampling"><span class="header-section-number">9.4.2</span> 오버샘플링 (Over-sampling)</h3>
 <section id="단순-복제" class="level4" data-number="9.4.2.1">
 <h4 data-number="9.4.2.1" class="anchored" data-anchor-id="단순-복제"><span class="header-section-number">9.4.2.1</span> 단순 복제</h4>
-<div id="bb8cab4a" class="cell" data-execution_count="5">
+<div id="861edf85" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
@@ -599,7 +599,7 @@ Name: count, dtype: int64</code></pre>
 <section id="개념-1" class="level4" data-number="9.4.3.1">
 <h4 data-number="9.4.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">9.4.3.1</span> 개념</h4>
 <p>소수 클래스 사이에 <strong>가상 샘플 생성</strong></p>
-<div id="1902166c" class="cell" data-execution_count="6">
+<div id="874ad09f" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
@@ -646,7 +646,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="9.5" class="anchored" data-anchor-id="모델-수준-처리-방법"><span class="header-section-number">9.5</span> 모델 수준 처리 방법</h2>
 <section id="클래스-가중치-조정" class="level3" data-number="9.5.1">
 <h3 data-number="9.5.1" class="anchored" data-anchor-id="클래스-가중치-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 조정</h3>
-<div id="fd45fa5a" class="cell" data-execution_count="7">
+<div id="a2ba30ed" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(</span>
@@ -656,7 +656,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="수동-가중치-설정" class="level3" data-number="9.5.2">
 <h3 data-number="9.5.2" class="anchored" data-anchor-id="수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</h3>
-<div id="0c0053a4" class="cell" data-execution_count="8">
+<div id="38bafd85" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adelie"</span>: <span class="dv">1</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gentoo"</span>: <span class="dv">2</span>,</span>
@@ -675,7 +675,7 @@ Name: count, dtype: int64</code></pre>
 <li>Balanced Random Forest</li>
 <li>EasyEnsemble</li>
 </ul>
-<div id="c4e88a15" class="cell" data-execution_count="9">
+<div id="d774b286" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> BalancedRandomForestClassifier</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BalancedRandomForestClassifier(</span>
@@ -688,7 +688,7 @@ Name: count, dtype: int64</code></pre>
 <section id="pipeline으로-안전하게-적용" class="level2" data-number="9.7">
 <h2 data-number="9.7" class="anchored" data-anchor-id="pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</h2>
 <p><strong>샘플링은 반드시 학습 데이터에만!</strong></p>
-<div id="7131af6a" class="cell" data-execution_count="10">
+<div id="a18f9066" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
