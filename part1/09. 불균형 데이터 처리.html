@@ -109,6 +109,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -375,48 +404,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#불균형-데이터의-문제점" id="toc-불균형-데이터의-문제점" class="nav-link active" data-scroll-target="#불균형-데이터의-문제점"><span class="header-section-number">9.1</span> 불균형 데이터의 문제점</a>
-  <ul>
-  <li><a href="#예시" id="toc-예시" class="nav-link" data-scroll-target="#예시"><span class="header-section-number">9.1.1</span> 예시</a></li>
-  </ul></li>
+  <li><a href="#불균형-데이터의-문제점" id="toc-불균형-데이터의-문제점" class="nav-link active" data-scroll-target="#불균형-데이터의-문제점"><span class="header-section-number">9.1</span> 불균형 데이터의 문제점</a></li>
   <li><a href="#불균형-여부-진단" id="toc-불균형-여부-진단" class="nav-link" data-scroll-target="#불균형-여부-진단"><span class="header-section-number">9.2</span> 불균형 여부 진단</a>
   <ul>
   <li><a href="#클래스-분포-확인" id="toc-클래스-분포-확인" class="nav-link" data-scroll-target="#클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</a></li>
   <li><a href="#비율로-확인" id="toc-비율로-확인" class="nav-link" data-scroll-target="#비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</a></li>
   <li><a href="#시각화" id="toc-시각화" class="nav-link" data-scroll-target="#시각화"><span class="header-section-number">9.2.3</span> 시각화</a></li>
   </ul></li>
-  <li><a href="#평가-지표-변경" id="toc-평가-지표-변경" class="nav-link" data-scroll-target="#평가-지표-변경"><span class="header-section-number">9.3</span> 평가 지표 변경</a>
-  <ul>
-  <li><a href="#대안-지표" id="toc-대안-지표" class="nav-link" data-scroll-target="#대안-지표"><span class="header-section-number">9.3.1</span> 대안 지표</a></li>
-  </ul></li>
+  <li><a href="#평가-지표-변경" id="toc-평가-지표-변경" class="nav-link" data-scroll-target="#평가-지표-변경"><span class="header-section-number">9.3</span> 평가 지표 변경</a></li>
   <li><a href="#데이터-수준-처리-방법" id="toc-데이터-수준-처리-방법" class="nav-link" data-scroll-target="#데이터-수준-처리-방법"><span class="header-section-number">9.4</span> 데이터 수준 처리 방법</a>
   <ul>
-  <li><a href="#언더샘플링-under-sampling" id="toc-언더샘플링-under-sampling" class="nav-link" data-scroll-target="#언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</a>
-  <ul class="collapse">
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">9.4.1.1</span> 개념</a></li>
-  </ul></li>
+  <li><a href="#언더샘플링-under-sampling" id="toc-언더샘플링-under-sampling" class="nav-link" data-scroll-target="#언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</a></li>
   <li><a href="#오버샘플링-over-sampling" id="toc-오버샘플링-over-sampling" class="nav-link" data-scroll-target="#오버샘플링-over-sampling"><span class="header-section-number">9.4.2</span> 오버샘플링 (Over-sampling)</a>
   <ul class="collapse">
-  <li><a href="#단순-복제" id="toc-단순-복제" class="nav-link" data-scroll-target="#단순-복제"><span class="header-section-number">9.4.2.1</span> 단순 복제</a></li>
-  <li><a href="#문제점" id="toc-문제점" class="nav-link" data-scroll-target="#문제점"><span class="header-section-number">9.4.2.2</span> 문제점</a></li>
+  <li><a href="#단순-복제-random-over-sampling" id="toc-단순-복제-random-over-sampling" class="nav-link" data-scroll-target="#단순-복제-random-over-sampling"><span class="header-section-number">9.4.2.1</span> 단순 복제 (Random Over-sampling)</a></li>
   </ul></li>
-  <li><a href="#smote-synthetic-minority-over-sampling" id="toc-smote-synthetic-minority-over-sampling" class="nav-link" data-scroll-target="#smote-synthetic-minority-over-sampling"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling)</a>
-  <ul class="collapse">
-  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">9.4.3.1</span> 개념</a></li>
-  </ul></li>
-  <li><a href="#smote-변형" id="toc-smote-변형" class="nav-link" data-scroll-target="#smote-변형"><span class="header-section-number">9.4.4</span> SMOTE 변형</a></li>
+  <li><a href="#smote-synthetic-minority-over-sampling-technique" id="toc-smote-synthetic-minority-over-sampling-technique" class="nav-link" data-scroll-target="#smote-synthetic-minority-over-sampling-technique"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling Technique)</a></li>
+  <li><a href="#smote-변형-기법" id="toc-smote-변형-기법" class="nav-link" data-scroll-target="#smote-변형-기법"><span class="header-section-number">9.4.4</span> SMOTE 변형 기법</a></li>
   </ul></li>
   <li><a href="#모델-수준-처리-방법" id="toc-모델-수준-처리-방법" class="nav-link" data-scroll-target="#모델-수준-처리-방법"><span class="header-section-number">9.5</span> 모델 수준 처리 방법</a>
   <ul>
-  <li><a href="#클래스-가중치-조정" id="toc-클래스-가중치-조정" class="nav-link" data-scroll-target="#클래스-가중치-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 조정</a></li>
+  <li><a href="#클래스-가중치-자동-조정" id="toc-클래스-가중치-자동-조정" class="nav-link" data-scroll-target="#클래스-가중치-자동-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 자동 조정</a></li>
   <li><a href="#수동-가중치-설정" id="toc-수동-가중치-설정" class="nav-link" data-scroll-target="#수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</a></li>
   </ul></li>
   <li><a href="#앙상블-불균형-대응" id="toc-앙상블-불균형-대응" class="nav-link" data-scroll-target="#앙상블-불균형-대응"><span class="header-section-number">9.6</span> 앙상블 + 불균형 대응</a>
   <ul>
-  <li><a href="#대표-기법" id="toc-대표-기법" class="nav-link" data-scroll-target="#대표-기법"><span class="header-section-number">9.6.1</span> 대표 기법</a></li>
+  <li><a href="#balanced-random-forest" id="toc-balanced-random-forest" class="nav-link" data-scroll-target="#balanced-random-forest"><span class="header-section-number">9.6.1</span> Balanced Random Forest</a></li>
+  <li><a href="#easyensemble" id="toc-easyensemble" class="nav-link" data-scroll-target="#easyensemble"><span class="header-section-number">9.6.2</span> EasyEnsemble</a></li>
   </ul></li>
   <li><a href="#pipeline으로-안전하게-적용" id="toc-pipeline으로-안전하게-적용" class="nav-link" data-scroll-target="#pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</a></li>
-  <li><a href="#권장-상황" id="toc-권장-상황" class="nav-link" data-scroll-target="#권장-상황"><span class="header-section-number">9.8</span> 권장 상황</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">9.8</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part1/09. 불균형 데이터 처리.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -448,61 +465,174 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p><strong>타깃 클래스 간 샘플 수 차이가 큰 경우</strong>, 다수 클래스에 치우친 모델이 생성됨 → 정확도는 높아 보이지만 실제 성능은 나쁨</p>
+<p>불균형 데이터(Imbalanced Data)는 타겟 클래스 간 샘플 수의 차이가 큰 데이터셋을 의미한다. 예를 들어, 사기 거래 탐지 문제에서 정상 거래가 99%, 사기 거래가 1%인 경우가 대표적이다. 불균형 데이터로 학습된 모델은 다수 클래스에 편향되어 소수 클래스를 제대로 예측하지 못하는 문제가 발생한다. 이 장에서는 불균형 데이터의 문제점을 진단하고, 데이터 수준 처리(언더샘플링, 오버샘플링, SMOTE)와 모델 수준 처리(클래스 가중치 조정) 방법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="9bca1bbf" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna(subset<span class="op">=</span>[<span class="st">"species"</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">클래스 정보:"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"species"</span>].unique())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (344, 7)
+
+클래스 정보:
+&lt;StringArray&gt;
+['Adelie', 'Chinstrap', 'Gentoo']
+Length: 3, dtype: str</code></pre>
+</div>
+</div>
 <section id="불균형-데이터의-문제점" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="불균형-데이터의-문제점"><span class="header-section-number">9.1</span> 불균형 데이터의 문제점</h2>
-<section id="예시" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="예시"><span class="header-section-number">9.1.1</span> 예시</h3>
+<p>불균형 데이터로 학습된 모델은 다수 클래스만 예측하는 경향이 있다. 이 경우 전체 정확도(Accuracy)는 높아 보이지만, 실제로 중요한 소수 클래스는 거의 예측하지 못한다.</p>
+<p><strong>문제 상황 예시</strong></p>
+<p>의료 진단 모델에서 질병이 있는 경우가 5%, 없는 경우가 95%라고 가정하자.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>값</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>전체 정확도</td>
+<td>95%</td>
+<td>모든 환자를 “질병 없음”으로 예측해도 달성</td>
+</tr>
+<tr class="even">
+<td>질병 재현율</td>
+<td>10%</td>
+<td>실제 질병 환자 중 10%만 탐지</td>
+</tr>
+<tr class="odd">
+<td>결과</td>
+<td>잘못된 모델</td>
+<td>높은 정확도에도 불구하고 실제로는 쓸모없음</td>
+</tr>
+</tbody>
+</table>
+<p>이는 “잘 맞춘 것처럼 보이지만 중요한 건 다 틀림” 상황으로, 정확도만으로는 모델의 실제 성능을 평가할 수 없음을 보여준다.</p>
+<p><strong>불균형으로 인한 문제점</strong></p>
 <ul>
-<li>전체 정확도 95%</li>
-<li>소수 클래스 재현율 10%</li>
+<li>다수 클래스에 편향된 학습</li>
+<li>소수 클래스의 패턴을 학습하지 못함</li>
+<li>정확도 지표가 실제 성능을 반영하지 못함</li>
+<li>비용이 큰 오분류(예: 질병 미탐지) 발생</li>
 </ul>
-<p>“잘 맞춘 것처럼 보이지만 중요한 건 다 틀림”</p>
-</section>
 </section>
 <section id="불균형-여부-진단" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="불균형-여부-진단"><span class="header-section-number">9.2</span> 불균형 여부 진단</h2>
+<p>모델 학습 전에 타겟 변수의 클래스 분포를 확인하여 불균형 정도를 파악해야 한다.</p>
 <section id="클래스-분포-확인" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</h3>
-<div id="059382d3" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna(subset<span class="op">=</span>[<span class="st">"species"</span>])</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>species
+<p><strong>예제: 클래스별 샘플 수 확인</strong></p>
+<div id="87dc64c3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스별 샘플 수</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>class_counts <span class="op">=</span> df[<span class="st">"species"</span>].value_counts()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"클래스별 샘플 수:"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(class_counts)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>클래스별 샘플 수:
+species
 Adelie       152
 Gentoo       124
 Chinstrap     68
-Name: count, dtype: int64</code></pre>
+Name: count, dtype: int64
+
+총 샘플 수: 344</code></pre>
 </div>
 </div>
 </section>
 <section id="비율로-확인" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</h3>
-<div id="88768426" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>species
-Adelie       0.441860
-Gentoo       0.360465
-Chinstrap    0.197674
-Name: proportion, dtype: float64</code></pre>
+<p>절대 개수보다 비율로 확인하면 불균형 정도를 더 명확히 파악할 수 있다.</p>
+<p><strong>예제: 클래스별 비율 확인</strong></p>
+<div id="70832b07" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스별 비율</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>class_ratios <span class="op">=</span> df[<span class="st">"species"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"클래스별 비율:"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(class_ratios.<span class="bu">round</span>(<span class="dv">3</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 불균형 비율 계산</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>max_ratio <span class="op">=</span> class_ratios.<span class="bu">max</span>()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>min_ratio <span class="op">=</span> class_ratios.<span class="bu">min</span>()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>imbalance_ratio <span class="op">=</span> max_ratio <span class="op">/</span> min_ratio</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">불균형 비율: </span><span class="sc">{</span>imbalance_ratio<span class="sc">:.2f}</span><span class="ss">:1"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"(가장 많은 클래스가 가장 적은 클래스의 </span><span class="sc">{</span>imbalance_ratio<span class="sc">:.2f}</span><span class="ss">배)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>클래스별 비율:
+species
+Adelie       0.442
+Gentoo       0.360
+Chinstrap    0.198
+Name: proportion, dtype: float64
+
+불균형 비율: 2.24:1
+(가장 많은 클래스가 가장 적은 클래스의 2.24배)</code></pre>
 </div>
 </div>
+<p><strong>불균형 정도 기준</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>비율</th>
+<th>불균형 정도</th>
+<th>조치</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1:1 ~ 3:1</td>
+<td>균형</td>
+<td>특별한 조치 불필요</td>
+</tr>
+<tr class="even">
+<td>3:1 ~ 10:1</td>
+<td>경미한 불균형</td>
+<td>클래스 가중치 고려</td>
+</tr>
+<tr class="odd">
+<td>10:1 ~ 100:1</td>
+<td>심각한 불균형</td>
+<td>샘플링 기법 필수</td>
+</tr>
+<tr class="even">
+<td>100:1 이상</td>
+<td>극심한 불균형</td>
+<td>복합적 접근 필요</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="시각화" class="level3" data-number="9.2.3">
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="시각화"><span class="header-section-number">9.2.3</span> 시각화</h3>
-<div id="ac8eba28" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">"bar"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>시각적으로 불균형을 확인하면 직관적으로 파악할 수 있다.</p>
+<p><strong>예제: 클래스 분포 시각화</strong></p>
+<div id="bd804093" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 막대 그래프</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts().plot(kind<span class="op">=</span><span class="st">"bar"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Class Distribution"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="09. 불균형 데이터 처리_files/figure-html/cell-4-output-1.png" width="575" height="480" class="figure-img"></p>
+<p><img src="09. 불균형 데이터 처리_files/figure-html/cell-5-output-1.png" width="758" height="470" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -511,226 +641,744 @@ Name: proportion, dtype: float64</code></pre>
 </section>
 <section id="평가-지표-변경" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="평가-지표-변경"><span class="header-section-number">9.3</span> 평가 지표 변경</h2>
-<p>불균형 데이터에서는 <strong>Accuracy 사용 금물</strong></p>
-<section id="대안-지표" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="대안-지표"><span class="header-section-number">9.3.1</span> 대안 지표</h3>
-<ul>
-<li>Precision</li>
-<li>Recall</li>
-<li>F1-score</li>
-<li>ROC-AUC</li>
-<li>PR-AUC</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_true, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
+<p>불균형 데이터에서는 정확도(Accuracy)가 모델 성능을 제대로 반영하지 못하므로, 다른 평가 지표를 사용해야 한다.</p>
+<p><strong>적절한 평가 지표</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 31%">
+<col style="width: 18%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>계산 방식</th>
+<th>의미</th>
+<th>사용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Precision</td>
+<td>TP / (TP + FP)</td>
+<td>양성 예측 중 실제 양성 비율</td>
+<td>거짓 양성(FP) 비용이 클 때</td>
+</tr>
+<tr class="even">
+<td>Recall</td>
+<td>TP / (TP + FN)</td>
+<td>실제 양성 중 예측한 비율</td>
+<td>거짓 음성(FN) 비용이 클 때</td>
+</tr>
+<tr class="odd">
+<td>F1-score</td>
+<td>2 × (Precision × Recall) / (Precision + Recall)</td>
+<td>Precision과 Recall의 조화평균</td>
+<td>균형 잡힌 평가 필요</td>
+</tr>
+<tr class="even">
+<td>ROC-AUC</td>
+<td>곡선 아래 면적</td>
+<td>클래스 구분 능력</td>
+<td>이진 분류, 확률 출력 가능</td>
+</tr>
+<tr class="odd">
+<td>PR-AUC</td>
+<td>Precision-Recall 곡선 아래 면적</td>
+<td>불균형 데이터에 강건</td>
+<td>극심한 불균형</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 다양한 평가 지표 사용</strong></p>
+<div id="a8881511" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, confusion_matrix</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 준비</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df_clean <span class="op">=</span> df[[<span class="st">'species'</span>] <span class="op">+</span> num_cols].dropna()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_clean[num_cols]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_clean[<span class="st">"species"</span>]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 분리</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 간단한 모델 학습</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가 지표 출력</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"분류 보고서:"</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">혼동 행렬:"</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(confusion_matrix(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>분류 보고서:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        30
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           1.00        69
+   macro avg       1.00      1.00      1.00        69
+weighted avg       1.00      1.00      1.00        69
+
+
+혼동 행렬:
+[[30  0  0]
+ [ 0 14  0]
+ [ 0  0 25]]</code></pre>
+</div>
+</div>
+<p>불균형 데이터에서는 특히 소수 클래스의 Recall(재현율)을 주의 깊게 확인해야 한다.</p>
 </section>
 <section id="데이터-수준-처리-방법" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="데이터-수준-처리-방법"><span class="header-section-number">9.4</span> 데이터 수준 처리 방법</h2>
+<p>데이터 수준 처리는 학습 데이터의 클래스 분포를 직접 조정하는 방법이다. 크게 언더샘플링과 오버샘플링으로 나뉜다.</p>
 <section id="언더샘플링-under-sampling" class="level3" data-number="9.4.1">
 <h3 data-number="9.4.1" class="anchored" data-anchor-id="언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</h3>
-<section id="개념" class="level4" data-number="9.4.1.1">
-<h4 data-number="9.4.1.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">9.4.1.1</span> 개념</h4>
-<p>다수 클래스 일부 제거</p>
-<div id="b16d47e8" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_depth_mm"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"flipper_length_mm"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"body_mass_g"</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>df_dropna <span class="op">=</span> df[[<span class="st">'species'</span>]<span class="op">+</span>num_cols].dropna()</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_dropna.drop(<span class="st">"species"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_dropna[<span class="st">"species"</span>]</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>rus <span class="op">=</span> RandomUnderSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>X_under, y_under <span class="op">=</span> rus.fit_resample(X, y)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Before</span><span class="ch">\n</span><span class="st">"</span>, y.value_counts())</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"After</span><span class="ch">\n</span><span class="st">"</span>, y_under.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>언더샘플링은 다수 클래스의 샘플 일부를 제거하여 클래스 균형을 맞추는 방법이다. 구현이 간단하고 빠르지만, 정보 손실이 발생한다.</p>
+<p><strong>예제: 랜덤 언더샘플링</strong></p>
+<div id="9faf5eb8" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 준비</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>df_dropna <span class="op">=</span> df[[<span class="st">'species'</span>] <span class="op">+</span> num_cols].dropna()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_dropna[num_cols]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_dropna[<span class="st">"species"</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 언더샘플링 적용</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>rus <span class="op">=</span> RandomUnderSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>X_under, y_under <span class="op">=</span> rus.fit_resample(X, y)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"언더샘플링 전:"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.value_counts())</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">언더샘플링 후:"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_under.value_counts())</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y_under)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"제거된 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y) <span class="op">-</span> <span class="bu">len</span>(y_under)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Before
- species
+<pre><code>언더샘플링 전:
+species
 Adelie       151
 Gentoo       123
 Chinstrap     68
 Name: count, dtype: int64
-After
- species
+총 샘플 수: 342
+
+언더샘플링 후:
+species
 Adelie       68
 Chinstrap    68
 Gentoo       68
-Name: count, dtype: int64</code></pre>
+Name: count, dtype: int64
+총 샘플 수: 204
+제거된 샘플 수: 138</code></pre>
 </div>
 </div>
-<p>빠르다는 장점이 있으나 정보가 손신된다는 단점 존재</p>
-</section>
+<p><strong>장단점</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>구현이 간단하고 빠름</td>
+<td>정보 손실 (유용한 샘플도 제거)</td>
+</tr>
+<tr class="even">
+<td>학습 속도 향상 (데이터 감소)</td>
+<td>데이터가 적으면 성능 저하</td>
+</tr>
+<tr class="odd">
+<td>과적합 위험 감소</td>
+<td>다수 클래스의 패턴을 놓칠 수 있음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적용 상황</strong></p>
+<ul>
+<li>데이터가 충분히 많을 때 (수만 개 이상)</li>
+<li>학습 속도가 중요할 때</li>
+<li>노이즈가 많아 일부 제거가 유익할 때</li>
+</ul>
 </section>
 <section id="오버샘플링-over-sampling" class="level3" data-number="9.4.2">
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="오버샘플링-over-sampling"><span class="header-section-number">9.4.2</span> 오버샘플링 (Over-sampling)</h3>
-<section id="단순-복제" class="level4" data-number="9.4.2.1">
-<h4 data-number="9.4.2.1" class="anchored" data-anchor-id="단순-복제"><span class="header-section-number">9.4.2.1</span> 단순 복제</h4>
-<div id="5a8c5108" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>X_over, y_over <span class="op">=</span> ros.fit_resample(X, y)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_over.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>오버샘플링은 소수 클래스의 샘플을 복제하거나 생성하여 클래스 균형을 맞추는 방법이다.</p>
+<section id="단순-복제-random-over-sampling" class="level4" data-number="9.4.2.1">
+<h4 data-number="9.4.2.1" class="anchored" data-anchor-id="단순-복제-random-over-sampling"><span class="header-section-number">9.4.2.1</span> 단순 복제 (Random Over-sampling)</h4>
+<p><strong>예제: 랜덤 오버샘플링</strong></p>
+<div id="9a0d9e29" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 오버샘플링 적용</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ros <span class="op">=</span> RandomOverSampler(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>X_over, y_over <span class="op">=</span> ros.fit_resample(X, y)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"오버샘플링 전:"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.value_counts())</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">오버샘플링 후:"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_over.value_counts())</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y_over)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"생성된 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y_over) <span class="op">-</span> <span class="bu">len</span>(y)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>species
+<pre><code>오버샘플링 전:
+species
+Adelie       151
+Gentoo       123
+Chinstrap     68
+Name: count, dtype: int64
+총 샘플 수: 342
+
+오버샘플링 후:
+species
 Adelie       151
 Chinstrap    151
 Gentoo       151
-Name: count, dtype: int64</code></pre>
+Name: count, dtype: int64
+총 샘플 수: 453
+생성된 샘플 수: 111</code></pre>
 </div>
 </div>
-</section>
-<section id="문제점" class="level4" data-number="9.4.2.2">
-<h4 data-number="9.4.2.2" class="anchored" data-anchor-id="문제점"><span class="header-section-number">9.4.2.2</span> 문제점</h4>
-<p>과적합 위험</p>
+<p><strong>문제점</strong></p>
+<p>단순 복제는 동일한 샘플을 여러 번 학습하므로 과적합(overfitting) 위험이 크다. 모델이 복제된 샘플을 암기하게 되어 일반화 성능이 저하될 수 있다.</p>
 </section>
 </section>
-<section id="smote-synthetic-minority-over-sampling" class="level3" data-number="9.4.3">
-<h3 data-number="9.4.3" class="anchored" data-anchor-id="smote-synthetic-minority-over-sampling"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling)</h3>
-<section id="개념-1" class="level4" data-number="9.4.3.1">
-<h4 data-number="9.4.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">9.4.3.1</span> 개념</h4>
-<p>소수 클래스 사이에 <strong>가상 샘플 생성</strong></p>
-<div id="dfd04752" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X_smote, y_smote <span class="op">=</span> smote.fit_resample(X, y)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_smote.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="smote-synthetic-minority-over-sampling-technique" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="smote-synthetic-minority-over-sampling-technique"><span class="header-section-number">9.4.3</span> SMOTE (Synthetic Minority Over-sampling Technique)</h3>
+<p>SMOTE는 소수 클래스의 기존 샘플 사이에 가상의 샘플을 생성하는 방법이다. 단순 복제보다 과적합 위험이 적고, 소수 클래스의 특성 공간을 확장한다.</p>
+<p><strong>SMOTE 작동 원리</strong></p>
+<ol type="1">
+<li>소수 클래스의 각 샘플에 대해 k개의 최근접 이웃(KNN) 찾기</li>
+<li>이웃 중 하나를 무작위로 선택</li>
+<li>선택된 샘플과의 사이에 새로운 샘플 생성 (보간)</li>
+</ol>
+<p><strong>예제: SMOTE 적용</strong></p>
+<div id="8bedb3f6" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SMOTE 적용</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>smote <span class="op">=</span> SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>X_smote, y_smote <span class="op">=</span> smote.fit_resample(X, y)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"SMOTE 전:"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.value_counts())</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">SMOTE 후:"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_smote.value_counts())</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"총 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y_smote)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"생성된 합성 샘플 수: </span><span class="sc">{</span><span class="bu">len</span>(y_smote) <span class="op">-</span> <span class="bu">len</span>(y)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>species
+<pre><code>SMOTE 전:
+species
+Adelie       151
+Gentoo       123
+Chinstrap     68
+Name: count, dtype: int64
+총 샘플 수: 342
+
+SMOTE 후:
+species
 Adelie       151
 Chinstrap    151
 Gentoo       151
-Name: count, dtype: int64</code></pre>
+Name: count, dtype: int64
+총 샘플 수: 453
+생성된 합성 샘플 수: 111</code></pre>
 </div>
 </div>
-</section>
-</section>
-<section id="smote-변형" class="level3" data-number="9.4.4">
-<h3 data-number="9.4.4" class="anchored" data-anchor-id="smote-변형"><span class="header-section-number">9.4.4</span> SMOTE 변형</h3>
+<p><strong>장단점</strong></p>
 <table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정보 손실 없음 (새로운 샘플 생성)</td>
+<td>노이즈가 있으면 노이즈도 증폭</td>
+</tr>
+<tr class="even">
+<td>과적합 위험 낮음 (단순 복제보다)</td>
+<td>계산 비용이 높음 (KNN 사용)</td>
+</tr>
+<tr class="odd">
+<td>특성 공간 확장</td>
+<td>범주형 변수 처리 어려움</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적용 상황</strong></p>
+<ul>
+<li>데이터가 적을 때</li>
+<li>정보 손실을 최소화하고 싶을 때</li>
+<li>연속형 변수가 많을 때</li>
+</ul>
+</section>
+<section id="smote-변형-기법" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="smote-변형-기법"><span class="header-section-number">9.4.4</span> SMOTE 변형 기법</h3>
+<p>SMOTE의 한계를 보완한 다양한 변형 기법이 존재한다.</p>
+<p><strong>SMOTE 변형 기법 비교</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 35%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>기법</th>
 <th>특징</th>
+<th>장점</th>
+<th>적용 상황</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Borderline-SMOTE</td>
-<td>경계 근처만 증강</td>
+<td>경계 근처 샘플만 증강</td>
+<td>분류 경계 강화</td>
+<td>클래스 간 겹침이 많을 때</td>
 </tr>
 <tr class="even">
 <td>SMOTE-NC</td>
-<td>수치 + 범주 혼합</td>
+<td>수치형 + 범주형 혼합</td>
+<td>범주형 변수 처리 가능</td>
+<td>범주형 변수 포함 데이터</td>
 </tr>
 <tr class="odd">
 <td>ADASYN</td>
-<td>학습 어려운 영역 집중</td>
+<td>학습이 어려운 영역 집중</td>
+<td>어려운 샘플에 집중</td>
+<td>클래스 내 분포 복잡</td>
+</tr>
+<tr class="even">
+<td>SMOTE-ENN</td>
+<td>SMOTE + 노이즈 제거</td>
+<td>경계 정리</td>
+<td>노이즈가 많을 때</td>
 </tr>
 </tbody>
 </table>
+<p><strong>예제: Borderline-SMOTE</strong></p>
+<div id="0feacc01" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> BorderlineSMOTE</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Borderline-SMOTE 적용</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>bsmote <span class="op">=</span> BorderlineSMOTE(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>X_bsmote, y_bsmote <span class="op">=</span> bsmote.fit_resample(X, y)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Borderline-SMOTE 결과:"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_bsmote.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Borderline-SMOTE 결과:
+species
+Adelie       151
+Chinstrap    151
+Gentoo       151
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p><strong>예제: SMOTE-NC (범주형 포함)</strong></p>
+<div id="23c86af0" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTENC</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주형 변수가 포함된 경우 (예시)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># categorical_features 파라미터에 범주형 변수의 인덱스 지정</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># smotenc = SMOTENC(categorical_features=[0, 1], random_state=42)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># X_smotenc, y_smotenc = smotenc.fit_resample(X_mixed, y)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 </section>
 <section id="모델-수준-처리-방법" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="모델-수준-처리-방법"><span class="header-section-number">9.5</span> 모델 수준 처리 방법</h2>
-<section id="클래스-가중치-조정" class="level3" data-number="9.5.1">
-<h3 data-number="9.5.1" class="anchored" data-anchor-id="클래스-가중치-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 조정</h3>
-<div id="aaebeecf" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    class_weight<span class="op">=</span><span class="st">"balanced"</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>모델 수준 처리는 데이터를 변경하지 않고 모델의 학습 과정에서 클래스 가중치를 조정하는 방법이다.</p>
+<section id="클래스-가중치-자동-조정" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="클래스-가중치-자동-조정"><span class="header-section-number">9.5.1</span> 클래스 가중치 자동 조정</h3>
+<p>많은 머신러닝 알고리즘은 <code>class_weight</code> 파라미터를 제공한다. <code>class_weight='balanced'</code>로 설정하면 클래스 비율의 역수로 가중치를 자동 계산한다.</p>
+<p><strong>가중치 계산 공식</strong></p>
+<p><span class="math display">\[
+w_i = \frac{n_{\text{samples}}}{n_{\text{classes}} \times n_{\text{samples}_i}}
+\]</span></p>
+<p><strong>예제: 자동 클래스 가중치</strong></p>
+<div id="9b59bf97" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스 가중치 자동 조정</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>model_balanced <span class="op">=</span> LogisticRegression(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    class_weight<span class="op">=</span><span class="st">"balanced"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    max_iter<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>model_balanced.fit(X_train, y_train)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>y_pred_balanced <span class="op">=</span> model_balanced.predict(X_test)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"가중치 조정 모델 평가:"</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_balanced))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>가중치 조정 모델 평가:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        30
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           1.00        69
+   macro avg       1.00      1.00      1.00        69
+weighted avg       1.00      1.00      1.00        69
+</code></pre>
+</div>
 </div>
 </section>
 <section id="수동-가중치-설정" class="level3" data-number="9.5.2">
 <h3 data-number="9.5.2" class="anchored" data-anchor-id="수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</h3>
-<div id="40b90eac" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adelie"</span>: <span class="dv">1</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gentoo"</span>: <span class="dv">2</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chinstrap"</span>: <span class="dv">3</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(class_weight<span class="op">=</span>weights)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>도메인 지식에 따라 클래스별 가중치를 수동으로 설정할 수 있다. 특정 클래스의 오분류 비용이 클 때 유용하다.</p>
+<p><strong>예제: 수동 클래스 가중치</strong></p>
+<div id="7cd0bc74" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수동 가중치 설정 (중요한 클래스에 더 높은 가중치)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adelie"</span>: <span class="fl">1.0</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gentoo"</span>: <span class="fl">1.5</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chinstrap"</span>: <span class="fl">2.0</span>  <span class="co"># 가장 희귀한 클래스에 높은 가중치</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>model_weighted <span class="op">=</span> LogisticRegression(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    class_weight<span class="op">=</span>weights,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    max_iter<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>model_weighted.fit(X_train, y_train)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>y_pred_weighted <span class="op">=</span> model_weighted.predict(X_test)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"수동 가중치 모델 평가:"</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_weighted))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>수동 가중치 모델 평가:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        30
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           1.00        69
+   macro avg       1.00      1.00      1.00        69
+weighted avg       1.00      1.00      1.00        69
+</code></pre>
 </div>
-</section>
-</section>
-<section id="앙상블-불균형-대응" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="앙상블-불균형-대응"><span class="header-section-number">9.6</span> 앙상블 + 불균형 대응</h2>
-<section id="대표-기법" class="level3" data-number="9.6.1">
-<h3 data-number="9.6.1" class="anchored" data-anchor-id="대표-기법"><span class="header-section-number">9.6.1</span> 대표 기법</h3>
-<ul>
-<li>Balanced Random Forest</li>
-<li>EasyEnsemble</li>
-</ul>
-<div id="70ce15eb" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> BalancedRandomForestClassifier</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BalancedRandomForestClassifier(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-</section>
-<section id="pipeline으로-안전하게-적용" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</h2>
-<p><strong>샘플링은 반드시 학습 데이터에만!</strong></p>
-<div id="22ecb890" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"smote"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression())</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="권장-상황" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="권장-상황"><span class="header-section-number">9.8</span> 권장 상황</h2>
+<p><strong>장단점</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>상황</th>
-<th>권장</th>
+<th>장점</th>
+<th>단점</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>데이터 작음</td>
-<td>SMOTE</td>
+<td>데이터 변경 없음 (원본 유지)</td>
+<td>모든 알고리즘이 지원하지 않음</td>
 </tr>
 <tr class="even">
-<td>데이터 큼</td>
+<td>구현이 간단함</td>
+<td>최적 가중치 찾기 어려움</td>
+</tr>
+<tr class="odd">
+<td>학습 시간 증가 없음</td>
+<td>극심한 불균형에는 한계 있음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적용 상황</strong></p>
+<ul>
+<li>데이터가 충분히 많을 때</li>
+<li>샘플링으로 인한 정보 손실을 피하고 싶을 때</li>
+<li>트리 기반 모델 사용 시</li>
+</ul>
+</section>
+</section>
+<section id="앙상블-불균형-대응" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="앙상블-불균형-대응"><span class="header-section-number">9.6</span> 앙상블 + 불균형 대응</h2>
+<p>앙상블 기법과 불균형 처리를 결합한 방법이다. 여러 모델을 조합하여 성능을 향상시킨다.</p>
+<section id="balanced-random-forest" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="balanced-random-forest"><span class="header-section-number">9.6.1</span> Balanced Random Forest</h3>
+<p>각 트리를 학습할 때 다수 클래스를 언더샘플링하여 균형을 맞춘다.</p>
+<p><strong>예제: Balanced Random Forest</strong></p>
+<div id="81ea499d" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> BalancedRandomForestClassifier</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanced Random Forest 모델 생성</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>brf <span class="op">=</span> BalancedRandomForestClassifier(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습 및 예측</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>brf.fit(X_train, y_train)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>y_pred_brf <span class="op">=</span> brf.predict(X_test)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Balanced Random Forest 평가:"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_brf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Balanced Random Forest 평가:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        30
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           1.00        69
+   macro avg       1.00      1.00      1.00        69
+weighted avg       1.00      1.00      1.00        69
+</code></pre>
+</div>
+</div>
+</section>
+<section id="easyensemble" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="easyensemble"><span class="header-section-number">9.6.2</span> EasyEnsemble</h3>
+<p>여러 번 언더샘플링하여 다양한 서브셋을 만들고, 각각에 대해 모델을 학습한 후 앙상블한다.</p>
+<p><strong>예제: EasyEnsemble</strong></p>
+<div id="a9a981f6" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> EasyEnsembleClassifier</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># EasyEnsemble 모델 생성</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>eec <span class="op">=</span> EasyEnsembleClassifier(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>eec.fit(X_train, y_train)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>y_pred_eec <span class="op">=</span> eec.predict(X_test)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"EasyEnsemble 평가:"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_eec))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EasyEnsemble 평가:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      0.90      0.95        30
+   Chinstrap       0.82      1.00      0.90        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           0.96        69
+   macro avg       0.94      0.97      0.95        69
+weighted avg       0.96      0.96      0.96        69
+</code></pre>
+</div>
+</div>
+<p><strong>앙상블 기법 장점</strong></p>
+<ul>
+<li>여러 모델의 강점을 결합하여 강건성 향상</li>
+<li>언더샘플링의 정보 손실을 앙상블로 보완</li>
+<li>과적합 위험 감소</li>
+</ul>
+</section>
+</section>
+<section id="pipeline으로-안전하게-적용" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</h2>
+<p>샘플링 기법을 적용할 때 가장 중요한 원칙은 <strong>학습 데이터에만 적용</strong>하는 것이다. 테스트 데이터에 샘플링을 적용하면 데이터 누수(data leakage)가 발생하여 성능이 과대평가된다.</p>
+<p><strong>예제: Pipeline을 사용한 안전한 샘플링</strong></p>
+<div id="66a8383c" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline 구성 (SMOTE는 학습 데이터에만 적용됨)</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> ImbPipeline([</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"smote"</span>, SMOTE(random_state<span class="op">=</span><span class="dv">42</span>)),</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>))</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습 (SMOTE는 fit 시에만 적용)</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>pipeline.fit(X_train, y_train)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 (SMOTE는 적용되지 않음)</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>y_pred_pipeline <span class="op">=</span> pipeline.predict(X_test)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Pipeline 모델 평가:"</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_pipeline))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Pipeline 모델 평가:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        30
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        25
+
+    accuracy                           1.00        69
+   macro avg       1.00      1.00      1.00        69
+weighted avg       1.00      1.00      1.00        69
+</code></pre>
+</div>
+</div>
+<p>Pipeline을 사용하면 다음과 같은 장점이 있다.</p>
+<ul>
+<li>데이터 누수 방지 (샘플링은 학습에만 적용)</li>
+<li>교차 검증 시 자동으로 안전하게 처리</li>
+<li>코드 간결성 및 재사용성 향상</li>
+</ul>
+</section>
+<section id="요약" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">9.8</span> 요약</h2>
+<p>이 장에서는 불균형 데이터의 문제점과 다양한 처리 방법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>불균형 데이터 처리 방법 비교</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>원리</th>
+<th>장점</th>
+<th>단점</th>
+<th>적용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>언더샘플링</td>
+<td>다수 클래스 제거</td>
+<td>빠름, 과적합 감소</td>
+<td>정보 손실</td>
+<td>데이터 충분, 노이즈 많음</td>
+</tr>
+<tr class="even">
+<td>오버샘플링</td>
+<td>소수 클래스 복제</td>
+<td>정보 손실 없음</td>
+<td>과적합 위험</td>
+<td>데이터 적음</td>
+</tr>
+<tr class="odd">
+<td>SMOTE</td>
+<td>합성 샘플 생성</td>
+<td>과적합 감소, 공간 확장</td>
+<td>노이즈 증폭</td>
+<td>데이터 적음, 연속형 변수</td>
+</tr>
+<tr class="even">
 <td>클래스 가중치</td>
+<td>모델 학습 조정</td>
+<td>데이터 변경 없음</td>
+<td>극심한 불균형 한계</td>
+<td>데이터 충분, 원본 유지</td>
+</tr>
+<tr class="odd">
+<td>앙상블</td>
+<td>여러 모델 결합</td>
+<td>강건성 높음</td>
+<td>계산 비용 높음</td>
+<td>성능 중요, 트리 모델</td>
+</tr>
+</tbody>
+</table>
+<p><strong>권장 처리 전략</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 31%">
+<col style="width: 31%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>1순위 권장</th>
+<th>2순위 권장</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>데이터 적음 (수천 개 이하)</td>
+<td>SMOTE</td>
+<td>오버샘플링</td>
+<td>정보 손실 최소화</td>
+</tr>
+<tr class="even">
+<td>데이터 많음 (수만 개 이상)</td>
+<td>클래스 가중치</td>
+<td>언더샘플링</td>
+<td>원본 보존, 학습 속도</td>
 </tr>
 <tr class="odd">
 <td>노이즈 많음</td>
 <td>언더샘플링</td>
+<td>Borderline-SMOTE</td>
+<td>노이즈 제거 효과</td>
 </tr>
 <tr class="even">
-<td>범주형 포함</td>
+<td>범주형 변수 포함</td>
 <td>SMOTE-NC</td>
+<td>클래스 가중치</td>
+<td>범주형 처리 가능</td>
 </tr>
 <tr class="odd">
-<td>트리 모델</td>
-<td>가중치 or Balanced RF</td>
+<td>트리 기반 모델</td>
+<td>클래스 가중치</td>
+<td>Balanced RF</td>
+<td>가중치 기본 지원</td>
+</tr>
+<tr class="even">
+<td>극심한 불균형 (100:1 이상)</td>
+<td>SMOTE + 가중치</td>
+<td>앙상블</td>
+<td>복합적 접근</td>
 </tr>
 </tbody>
 </table>
+<p><strong>불균형 데이터 처리 프로세스</strong></p>
+<ol type="1">
+<li><strong>불균형 진단</strong>: 클래스 분포 확인 및 비율 계산</li>
+<li><strong>평가 지표 설정</strong>: Precision, Recall, F1-score, ROC-AUC 등 선택</li>
+<li><strong>처리 방법 선택</strong>: 데이터 크기, 특성, 모델에 따라 결정</li>
+<li><strong>Pipeline 구성</strong>: 데이터 누수 방지를 위한 안전한 적용</li>
+<li><strong>교차 검증</strong>: Stratified K-Fold로 성능 평가</li>
+<li><strong>하이퍼파라미터 튜닝</strong>: 처리 방법별 최적 파라미터 찾기</li>
+</ol>
+<p><strong>주의사항</strong></p>
+<ul>
+<li><strong>데이터 누수 방지</strong>: 샘플링은 반드시 학습 데이터에만 적용</li>
+<li><strong>평가 지표</strong>: 정확도 대신 Recall, F1-score 등 사용</li>
+<li><strong>Stratified Split</strong>: 학습/테스트 분리 시 클래스 비율 유지</li>
+<li><strong>과적합 모니터링</strong>: 학습/검증 성능 차이 확인</li>
+</ul>
+<p>불균형 데이터 처리는 실무에서 매우 흔하게 마주치는 문제이다. 데이터의 특성과 비즈니스 목표를 고려하여 적절한 방법을 선택하고, Pipeline을 사용하여 안전하게 적용하는 것이 중요하다. 이제 전처리의 모든 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.</p>
 
 
 </section>
