@@ -1,2 +1,171 @@
 # 비모수 검정
 
+## 비모수 검정 
+
+비모수 검정(Non-parametric Tests)은
+
+* 정규성 가정이 만족되지 않거나
+* 표본 수가 작거나
+* 이상치의 영향이 큰 경우
+
+**순위(rank)** 정보를 이용해 집단 간 차이를 검정한다.
+
+## 비모수 검정이 필요한 상황
+
+* 정규성 검정에서 귀무가설 기각
+* 박스플롯에서 극단값 다수 존재
+* 평균보다 중앙값 비교가 더 적절
+* 측정 단위가 순서형(ordinal)
+
+**데이터 분포에 덜 민감하지만 해석은 평균이 아닌 “분포의 위치 차이”**
+
+## Mann–Whitney U 검정
+
+### 개념
+
+* 두 **독립 집단** 비교
+* t-test의 비모수 대안
+* 두 집단의 분포 위치가 같은지 검정
+
+### 가설 설정
+
+* H₀: 두 집단의 분포는 동일하다
+* H₁: 두 집단의 분포는 다르다
+
+#### 분석 목표
+
+* Adelie vs Gentoo
+* 부리 길이(bill_length_mm) 차이가 있는가?
+
+```{python}
+import seaborn as sns
+from scipy.stats import mannwhitneyu
+
+df = sns.load_dataset("penguins")
+
+g1 = df[df["species"] == "Adelie"]["bill_length_mm"].dropna()
+g2 = df[df["species"] == "Gentoo"]["bill_length_mm"].dropna()
+```
+
+```{python}
+u_stat, p_value = mannwhitneyu(g1, g2, alternative="two-sided")
+u_stat, p_value
+```
+
+* p-value < 0.05
+
+  * 두 종의 부리 길이 분포는 다르다
+
+## Wilcoxon 순위합 검정 (Wilcoxon Signed-Rank Test)
+
+### 개념
+
+* **대응 표본** 비교
+* paired t-test의 비모수 대안
+* 동일 대상의 전·후 비교에 사용
+
+### 가설 설정
+
+* H₀: 차이의 중앙값은 0이다
+* H₁: 차이의 중앙값은 0이 아니다
+
+### 예제 (가상 전·후 데이터)
+
+* palmerpenguins에는 자연스러운 전후 데이터가 없으므로 예제용으로 생성
+
+```{python}
+import numpy as np
+from scipy.stats import wilcoxon
+
+np.random.seed(0)
+
+before = df[df["species"] == "Adelie"]["bill_length_mm"].dropna().sample(30)
+after = before + np.random.normal(0.5, 1.0, size=len(before))
+```
+
+```{python}
+w_stat, p_value = wilcoxon(before, after)
+w_stat, p_value
+```
+
+* p-value < 0.05
+
+  * 전·후 차이가 유의하다
+
+## Kruskal–Wallis 검정
+
+### 개념
+
+* **세 개 이상 독립 집단**
+* 일원 ANOVA의 비모수 대안
+* 집단 간 분포 차이 검정
+
+### 가설 설정
+
+* H₀: 모든 집단의 분포는 동일하다
+* H₁: 적어도 하나의 집단 분포가 다르다
+
+
+```{python}
+from scipy.stats import kruskal
+
+groups = [
+    df[df["species"] == sp]["bill_length_mm"].dropna()
+    for sp in df["species"].unique()
+]
+
+h_stat, p_value = kruskal(*groups)
+h_stat, p_value
+```
+
+* p-value < 0.05
+
+  * 종 간 부리 길이 분포에 차이가 있다
+
+**어느 집단 간 차이인지는 추가 검정 필요** → 사후 검정
+
+## Friedman 검정
+
+### 개념
+
+* **세 개 이상 대응 집단**
+* 반복 측정 ANOVA의 비모수 대안
+* 동일 대상에 대해 여러 조건 비교
+
+### 예제 (가상 반복 측정 데이터)
+
+```{python}
+from scipy.stats import friedmanchisquare
+
+np.random.seed(1)
+
+cond1 = before
+cond2 = before + np.random.normal(0.3, 1.0, size=len(before))
+cond3 = before + np.random.normal(0.8, 1.0, size=len(before))
+```
+
+```{python}
+f_stat, p_value = friedmanchisquare(cond1, cond2, cond3)
+f_stat, p_value
+```
+
+### 해석
+
+* p-value < 0.05
+
+  * 조건 간 분포 차이가 존재
+
+## 모수 vs 비모수 검정 정리
+
+| 상황      | 모수 검정         | 비모수 검정         |
+| ------- | ------------- | -------------- |
+| 두 독립 집단 | t-test        | Mann–Whitney U |
+| 두 대응 집단 | paired t-test | Wilcoxon       |
+| 세 집단 이상 | ANOVA         | Kruskal–Wallis |
+| 반복 측정   | RM ANOVA      | Friedman       |
+
+* 비모수 검정은
+
+  * 평균 비교가 아니라 **순위 기반 분포 비교**
+* 가정이 깨졌을 때의 **안전한 대안**
+* 시각화 → 정규성/등분산 검정 → 비모수 여부 판단
