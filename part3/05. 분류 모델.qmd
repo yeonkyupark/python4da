@@ -1,2 +1,231 @@
 # 분류 모델
 
+## 분류 모델 개요
+
+**분류 모델**(Classification Models)은 입력 변수(X)를 기반으로 **범주형 타깃 변수(y)** 를 예측하는 모델이다.
+
+* 출력: 이산적인 클래스
+* 예: 펭귄 종(species) 분류
+
+penguins 데이터셋에서는 다음이 대표적인 분류 문제다.
+
+* 타깃 변수: `species`
+* 입력 변수: 부리 길이, 부리 깊이, 날개 길이, 체중 등
+
+```{python}
+import seaborn as sns
+import pandas as pd
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+df = sns.load_dataset("penguins").dropna()
+
+X = df[[
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]]
+
+y = df["species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+```
+
+`stratify=y`
+
+* 클래스 비율 유지 (분류 문제에서 매우 중요)
+
+## 선형 분류 모델
+
+### 로지스틱 회귀 
+
+로지스틱 회귀(Logistic Regression)의 이름은 회귀지만 **분류 모델**이다.
+
+* 선형 결정 경계
+* 확률 기반 예측
+* 이진 분류, 다중 분류 모두 가능
+
+### 개념 요약
+
+* 선형 결합 결과 → 시그모이드 함수
+* 출력값을 확률로 해석
+* 가장 확률이 높은 클래스를 예측값으로 선택
+
+### 로지스틱 회귀 예제
+
+```python
+from sklearn.linear_model import LogisticRegression
+
+pipe_lr = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression(max_iter=1000))
+])
+
+pipe_lr.fit(X_train, y_train)
+
+pipe_lr.score(X_test, y_test)
+```
+
+### 특징
+
+* 해석 가능성 높음
+* 고차원 데이터에 강함
+* 비선형 경계 표현에는 한계
+
+## 거리 기반 모델
+
+### k-최근접 이웃 (k-NN)
+
+가장 직관적인 분류 모델로 새로운 데이터 주변의 **k개 이웃**을 기준으로 분류한다. 거리 기반으로 클래스를 판단한다.
+
+### 개념 요약
+
+* 학습 과정 없음
+* 거리 계산이 핵심
+* 스케일에 매우 민감
+
+### k-NN 예제
+
+```python
+from sklearn.neighbors import KNeighborsClassifier
+
+pipe_knn = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", KNeighborsClassifier(n_neighbors=5))
+])
+
+pipe_knn.fit(X_train, y_train)
+
+pipe_knn.score(X_test, y_test)
+```
+
+### k 값의 영향
+
+* k가 작음 → 과적합
+* k가 큼 → 과소적합
+
+교차 검증으로 선택하는 것이 일반적
+
+### 거리 기반 모델의 한계
+
+* 데이터 수 증가 시 예측 속도 저하
+* 고차원 공간에서 거리 의미 약화
+
+## 트리 기반 모델
+
+### 결정 트리 (Decision Tree)
+
+질문을 반복하며 분기하며, 사람이 이해하기 쉬운 구조를 갖는다.
+
+### 개념 요약
+
+* 불순도 감소 기준으로 분기
+* 비선형 경계 표현 가능
+* 스케일링 불필요
+
+### 결정 트리 예제
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+
+tree = DecisionTreeClassifier(
+    max_depth=4,
+    random_state=42
+)
+
+tree.fit(X_train, y_train)
+
+tree.score(X_test, y_test)
+```
+
+### 단점
+
+* 과적합에 매우 취약
+* 데이터 변화에 민감
+
+이를 보완한 것이 **앙상블 모델**
+
+## 3.5.5 앙상블 모델
+
+### 랜덤 포레스트 (Random Forest)
+
+여러 결정 트리를 결합한 형태로 배깅(Bagging) 기반 모델이다.
+
+### 특징
+
+* 과적합 감소
+* 안정적인 성능
+* 변수 중요도 제공
+
+### 랜덤 포레스트 예제
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=200,
+    random_state=42
+)
+
+rf.fit(X_train, y_train)
+
+rf.score(X_test, y_test)
+```
+
+### 변수 중요도 확인
+
+```python
+pd.Series(
+    rf.feature_importances_,
+    index=X.columns
+).sort_values(ascending=False)
+```
+
+### 그래디언트 부스팅 계열
+
+* 이전 모델의 오류를 보완하며 학습
+* 성능은 좋지만 해석과 튜닝 난이도 ↑
+
+
+## 모델 비교 요약
+
+* **로지스틱 회귀**
+
+  * 기준 모델
+  * 해석 용이
+* **k-NN**
+
+  * 직관적
+  * 스케일 중요
+* **결정 트리**
+
+  * 비선형
+  * 과적합 주의
+* **랜덤 포레스트**
+
+  * 안정적
+  * 실무 활용도 높음
+
+## 선택 가이드
+
+* 빠른 기준선
+
+  * 로지스틱 회귀
+* 데이터 구조 탐색
+
+  * 결정 트리
+* 성능 우선
+
+  * 랜덤 포레스트
+* 데이터 수 적음
+
+  * k-NN (튜닝 필수)
+
