@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,11 +107,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -378,35 +404,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#분산분석" id="toc-분산분석" class="nav-link active" data-scroll-target="#분산분석"><span class="header-section-number">16.1</span> 분산분석</a></li>
-  <li><a href="#일원-분산-분석-one-way-anova" id="toc-일원-분산-분석-one-way-anova" class="nav-link" data-scroll-target="#일원-분산-분석-one-way-anova"><span class="header-section-number">16.2</span> 일원 분산 분석 (One-way ANOVA)</a>
-  <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">16.2.1</span> 개념</a></li>
-  <li><a href="#가설-설정" id="toc-가설-설정" class="nav-link" data-scroll-target="#가설-설정"><span class="header-section-number">16.2.2</span> 가설 설정</a></li>
-  <li><a href="#분산분석의-핵심-아이디어" id="toc-분산분석의-핵심-아이디어" class="nav-link" data-scroll-target="#분산분석의-핵심-아이디어"><span class="header-section-number">16.2.3</span> 분산분석의 핵심 아이디어</a>
-  <ul class="collapse">
-  <li><a href="#일원-anova-수행" id="toc-일원-anova-수행" class="nav-link" data-scroll-target="#일원-anova-수행"><span class="header-section-number">16.2.3.1</span> 일원 ANOVA 수행</a></li>
-  </ul></li>
-  <li><a href="#결과-해석" id="toc-결과-해석" class="nav-link" data-scroll-target="#결과-해석"><span class="header-section-number">16.2.4</span> 결과 해석</a></li>
-  </ul></li>
-  <li><a href="#이원-분산-분석-two-way-anova" id="toc-이원-분산-분석-two-way-anova" class="nav-link" data-scroll-target="#이원-분산-분석-two-way-anova"><span class="header-section-number">16.3</span> 이원 분산 분석 (Two-way ANOVA)</a>
-  <ul>
-  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">16.3.1</span> 개념</a></li>
-  <li><a href="#예시" id="toc-예시" class="nav-link" data-scroll-target="#예시"><span class="header-section-number">16.3.2</span> 예시</a></li>
-  <li><a href="#가설-구조" id="toc-가설-구조" class="nav-link" data-scroll-target="#가설-구조"><span class="header-section-number">16.3.3</span> 가설 구조</a></li>
-  <li><a href="#결과-해석-포인트" id="toc-결과-해석-포인트" class="nav-link" data-scroll-target="#결과-해석-포인트"><span class="header-section-number">16.3.4</span> 결과 해석 포인트</a></li>
-  </ul></li>
-  <li><a href="#사후-검정-post-hoc-test" id="toc-사후-검정-post-hoc-test" class="nav-link" data-scroll-target="#사후-검정-post-hoc-test"><span class="header-section-number">16.4</span> 사후 검정 (Post-hoc Test)</a>
-  <ul>
-  <li><a href="#사후-검정-필요-이유" id="toc-사후-검정-필요-이유" class="nav-link" data-scroll-target="#사후-검정-필요-이유"><span class="header-section-number">16.4.1</span> 사후 검정 필요 이유</a></li>
-  <li><a href="#대표적인-사후검정-방법" id="toc-대표적인-사후검정-방법" class="nav-link" data-scroll-target="#대표적인-사후검정-방법"><span class="header-section-number">16.4.2</span> 대표적인 사후검정 방법</a></li>
-  <li><a href="#tukey-hsd" id="toc-tukey-hsd" class="nav-link" data-scroll-target="#tukey-hsd"><span class="header-section-number">16.4.3</span> Tukey HSD</a>
-  <ul class="collapse">
-  <li><a href="#결과-해석-1" id="toc-결과-해석-1" class="nav-link" data-scroll-target="#결과-해석-1"><span class="header-section-number">16.4.3.1</span> 결과 해석</a></li>
-  <li><a href="#시각화와-함께-보기" id="toc-시각화와-함께-보기" class="nav-link" data-scroll-target="#시각화와-함께-보기"><span class="header-section-number">16.4.3.2</span> 시각화와 함께 보기</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#분산분석-사용-시-주의사항" id="toc-분산분석-사용-시-주의사항" class="nav-link" data-scroll-target="#분산분석-사용-시-주의사항"><span class="header-section-number">16.5</span> 분산분석 사용 시 주의사항</a></li>
+  <li><a href="#분산분석의-기본-개념" id="toc-분산분석의-기본-개념" class="nav-link active" data-scroll-target="#분산분석의-기본-개념"><span class="header-section-number">16.1</span> 분산분석의 기본 개념</a></li>
+  <li><a href="#일원분산분석-one-way-anova" id="toc-일원분산분석-one-way-anova" class="nav-link" data-scroll-target="#일원분산분석-one-way-anova"><span class="header-section-number">16.2</span> 일원분산분석 (One-way ANOVA)</a></li>
+  <li><a href="#이원분산분석-two-way-anova" id="toc-이원분산분석-two-way-anova" class="nav-link" data-scroll-target="#이원분산분석-two-way-anova"><span class="header-section-number">16.3</span> 이원분산분석 (Two-way ANOVA)</a></li>
+  <li><a href="#사후검정-post-hoc-test" id="toc-사후검정-post-hoc-test" class="nav-link" data-scroll-target="#사후검정-post-hoc-test"><span class="header-section-number">16.4</span> 사후검정 (Post-hoc Test)</a></li>
+  <li><a href="#가정-위배-시-대응" id="toc-가정-위배-시-대응" class="nav-link" data-scroll-target="#가정-위배-시-대응"><span class="header-section-number">16.5</span> 가정 위배 시 대응</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">16.6</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/06. 분산 분석.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -438,317 +441,140 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="분산분석" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="분산분석"><span class="header-section-number">16.1</span> 분산분석</h2>
-<p>분산분석(ANOVA: Analysis of Variance)은 <strong>세 개 이상 집단의 평균을 동시에 비교</strong>하기 위한 통계적 방법이다. 이름은 분산분석이지만, <strong>관심의 대상은 평균 차이</strong>다.</p>
-</section>
-<section id="일원-분산-분석-one-way-anova" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="일원-분산-분석-one-way-anova"><span class="header-section-number">16.2</span> 일원 분산 분석 (One-way ANOVA)</h2>
-<section id="개념" class="level3" data-number="16.2.1">
-<h3 data-number="16.2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">16.2.1</span> 개념</h3>
-<ul>
-<li>하나의 범주형 독립변수(요인)</li>
-<li>하나의 연속형 종속변수</li>
-<li>집단 간 평균 차이가 존재하는지 검정</li>
-</ul>
-<p>예시</p>
-<ul>
-<li>종(species)에 따라 부리 길이(bill_length_mm)의 평균이 다른가?</li>
-</ul>
-</section>
-<section id="가설-설정" class="level3" data-number="16.2.2">
-<h3 data-number="16.2.2" class="anchored" data-anchor-id="가설-설정"><span class="header-section-number">16.2.2</span> 가설 설정</h3>
-<ul>
-<li><p>귀무가설(H₀)</p>
-<ul>
-<li>모든 집단의 평균은 같다</li>
-</ul></li>
-<li><p>대립가설(H₁)</p>
-<ul>
-<li>적어도 하나의 집단 평균은 다르다</li>
-</ul></li>
-</ul>
-</section>
-<section id="분산분석의-핵심-아이디어" class="level3" data-number="16.2.3">
-<h3 data-number="16.2.3" class="anchored" data-anchor-id="분산분석의-핵심-아이디어"><span class="header-section-number">16.2.3</span> 분산분석의 핵심 아이디어</h3>
-<ul>
-<li><p>전체 변동 = 집단 간 변동 + 집단 내 변동</p></li>
-<li><p>집단 간 변동이 충분히 크다면</p>
-<ul>
-<li>평균 차이가 있다고 판단</li>
-</ul></li>
-</ul>
-<div id="54bc4bd2" class="cell" data-execution_count="1">
+<p>분산분석(ANOVA: Analysis of Variance)은 세 개 이상 집단의 평균을 동시에 비교하는 통계적 방법이다. 이름은 분산분석이지만 실제 관심 대상은 집단 간 평균 차이이며, 분산을 이용하여 평균 차이를 검정한다는 점에서 이러한 명칭이 붙었다. ANOVA는 t-검정을 여러 번 반복하는 대신 전체 유의수준을 유지하면서 다집단을 비교할 수 있어 실무에서 매우 중요하다. 이 장에서는 일원분산분석, 이원분산분석, 그리고 사후검정을 상세히 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="b29ae939" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df_anova <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="470546ab" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_anova.groupby(<span class="st">"species"</span>)[<span class="st">"bill_length_mm"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">count</th>
-<th data-quarto-table-cell-role="th">mean</th>
-<th data-quarto-table-cell-role="th">std</th>
-<th data-quarto-table-cell-role="th">min</th>
-<th data-quarto-table-cell-role="th">25%</th>
-<th data-quarto-table-cell-role="th">50%</th>
-<th data-quarto-table-cell-role="th">75%</th>
-<th data-quarto-table-cell-role="th">max</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">species</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Adelie</th>
-<td>151.0</td>
-<td>38.791391</td>
-<td>2.663405</td>
-<td>32.1</td>
-<td>36.75</td>
-<td>38.80</td>
-<td>40.750</td>
-<td>46.0</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Chinstrap</th>
-<td>68.0</td>
-<td>48.833824</td>
-<td>3.339256</td>
-<td>40.9</td>
-<td>46.35</td>
-<td>49.55</td>
-<td>51.075</td>
-<td>58.0</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">Gentoo</th>
-<td>123.0</td>
-<td>47.504878</td>
-<td>3.081857</td>
-<td>40.9</td>
-<td>45.30</td>
-<td>47.30</td>
-<td>49.550</td>
-<td>59.6</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<section id="일원-anova-수행" class="level4" data-number="16.2.3.1">
-<h4 data-number="16.2.3.1" class="anchored" data-anchor-id="일원-anova-수행"><span class="header-section-number">16.2.3.1</span> 일원 ANOVA 수행</h4>
-<div id="881455bd" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> [</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    df_anova[df_anova[<span class="st">"species"</span>] <span class="op">==</span> sp][<span class="st">"bill_length_mm"</span>]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sp <span class="kw">in</span> df_anova[<span class="st">"species"</span>].unique()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> f_oneway(<span class="op">*</span>groups)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>f_stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>(np.float64(410.6002550405077), np.float64(2.6946137388895495e-91))</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="결과-해석" class="level3" data-number="16.2.4">
-<h3 data-number="16.2.4" class="anchored" data-anchor-id="결과-해석"><span class="header-section-number">16.2.4</span> 결과 해석</h3>
-<ul>
-<li><p>p-value &lt; 유의수준(0.05)</p>
-<ul>
-<li>종에 따라 평균 부리 길이에 차이가 있다</li>
-</ul></li>
-<li><p>p-value ≥ 유의수준</p>
-<ul>
-<li>평균 차이가 있다고 보기 어렵다</li>
-</ul></li>
-</ul>
-<p>중요: <strong>어느 종 간 차이인지는 아직 모른다</strong></p>
-</section>
-</section>
-<section id="이원-분산-분석-two-way-anova" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="이원-분산-분석-two-way-anova"><span class="header-section-number">16.3</span> 이원 분산 분석 (Two-way ANOVA)</h2>
-<section id="개념-1" class="level3" data-number="16.3.1">
-<h3 data-number="16.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">16.3.1</span> 개념</h3>
-<ul>
-<li><p>두 개의 범주형 독립변수</p></li>
-<li><p>하나의 연속형 종속변수</p></li>
-<li><p>세 가지 효과를 동시에 검정</p>
-<ul>
-<li>요인 A의 주효과</li>
-<li>요인 B의 주효과</li>
-<li>A × B 상호작용 효과</li>
-</ul></li>
-</ul>
-</section>
-<section id="예시" class="level3" data-number="16.3.2">
-<h3 data-number="16.3.2" class="anchored" data-anchor-id="예시"><span class="header-section-number">16.3.2</span> 예시</h3>
-<ul>
-<li>species(종)</li>
-<li>sex(성별)</li>
-<li>→ 부리 길이에 어떤 영향을 주는가?</li>
-</ul>
-</section>
-<section id="가설-구조" class="level3" data-number="16.3.3">
-<h3 data-number="16.3.3" class="anchored" data-anchor-id="가설-구조"><span class="header-section-number">16.3.3</span> 가설 구조</h3>
-<ul>
-<li><p>species 효과</p>
-<ul>
-<li>종에 따른 평균 차이가 있는가?</li>
-</ul></li>
-<li><p>sex 효과</p>
-<ul>
-<li>성별에 따른 평균 차이가 있는가?</li>
-</ul></li>
-<li><p>상호작용 효과</p>
-<ul>
-<li>종에 따른 성별 효과가 달라지는가?</li>
-</ul></li>
-</ul>
-<div id="07598524" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_two <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"sex"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="d259a1f5" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm ~ C(species) + C(sex) + C(species):C(sex)"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_two</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>).fit()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> sm.stats.anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>anova_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">sum_sq</th>
-<th data-quarto-table-cell-role="th">df</th>
-<th data-quarto-table-cell-role="th">F</th>
-<th data-quarto-table-cell-role="th">PR(&gt;F)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">C(species)</th>
-<td>6975.591607</td>
-<td>2.0</td>
-<td>650.478579</td>
-<td>1.059087e-114</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">C(sex)</th>
-<td>1135.683888</td>
-<td>1.0</td>
-<td>211.806563</td>
-<td>2.422971e-37</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">C(species):C(sex)</th>
-<td>24.494427</td>
-<td>2.0</td>
-<td>2.284122</td>
-<td>1.034865e-01</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">Residual</th>
-<td>1753.338642</td>
-<td>327.0</td>
-<td>NaN</td>
-<td>NaN</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="결과-해석-포인트" class="level3" data-number="16.3.4">
-<h3 data-number="16.3.4" class="anchored" data-anchor-id="결과-해석-포인트"><span class="header-section-number">16.3.4</span> 결과 해석 포인트</h3>
-<ul>
-<li><p>C(species)</p>
-<ul>
-<li>종의 주효과</li>
-</ul></li>
-<li><p>C(sex)</p>
-<ul>
-<li>성별의 주효과</li>
-</ul></li>
-<li><p>C(species):C(sex)</p>
-<ul>
-<li>상호작용 효과</li>
-</ul></li>
-</ul>
-<p>상호작용이 유의하면 → “성별 차이가 종마다 다르게 나타난다”</p>
-</section>
-</section>
-<section id="사후-검정-post-hoc-test" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="사후-검정-post-hoc-test"><span class="header-section-number">16.4</span> 사후 검정 (Post-hoc Test)</h2>
-<section id="사후-검정-필요-이유" class="level3" data-number="16.4.1">
-<h3 data-number="16.4.1" class="anchored" data-anchor-id="사후-검정-필요-이유"><span class="header-section-number">16.4.1</span> 사후 검정 필요 이유</h3>
-<ul>
-<li><p>ANOVA 결과</p>
-<ul>
-<li>평균 차이가 존재함은 알 수 있음</li>
-</ul></li>
-<li><p>하지만</p>
-<ul>
-<li><strong>어느 집단 간 차이인지 알 수 없음</strong></li>
-</ul></li>
-</ul>
-</section>
-<section id="대표적인-사후검정-방법" class="level3" data-number="16.4.2">
-<h3 data-number="16.4.2" class="anchored" data-anchor-id="대표적인-사후검정-방법"><span class="header-section-number">16.4.2</span> 대표적인 사후검정 방법</h3>
-<ul>
-<li>Tukey HSD (가장 일반적)</li>
-<li>Bonferroni</li>
-<li>Scheffé</li>
-<li>Games-Howell (등분산 가정이 약할 때)</li>
-</ul>
-</section>
-<section id="tukey-hsd" class="level3" data-number="16.4.3">
-<h3 data-number="16.4.3" class="anchored" data-anchor-id="tukey-hsd"><span class="header-section-number">16.4.3</span> Tukey HSD</h3>
-<div id="582fc794" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    endog<span class="op">=</span>df_anova[<span class="st">"bill_length_mm"</span>],</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>df_anova[<span class="st">"species"</span>],</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">범주형 변수:"</span>, df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns.tolist())</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"연속형 변수:"</span>, df.select_dtypes(include<span class="op">=</span>[np.number]).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Multiple Comparison of Means - Tukey HSD, FWER=0.05   
+<pre><code>데이터 크기: (344, 7)
+
+범주형 변수: ['species', 'island', 'sex']
+연속형 변수: ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']</code></pre>
+</div>
+</div>
+<section id="분산분석의-기본-개념" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="분산분석의-기본-개념"><span class="header-section-number">16.1</span> 분산분석의 기본 개념</h2>
+<p>분산분석은 전체 변동을 집단 간 변동과 집단 내 변동으로 분해하고, 집단 간 변동이 집단 내 변동에 비해 충분히 큰지를 검정한다.</p>
+<p><strong>분산분석의 핵심 원리</strong></p>
+<p><span class="math display">\[
+\text{총 변동} = \text{집단 간 변동} + \text{집단 내 변동}
+\]</span></p>
+<p><span class="math display">\[
+SST = SSB + SSW
+\]</span></p>
+<p><strong>F-통계량</strong></p>
+<p><span class="math display">\[
+F = \frac{MSB}{MSW} = \frac{SSB/(k-1)}{SSW/(N-k)}
+\]</span></p>
+<p>F 값이 클수록 집단 간 차이가 집단 내 변동에 비해 크다는 의미이다.</p>
+</section>
+<section id="일원분산분석-one-way-anova" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="일원분산분석-one-way-anova"><span class="header-section-number">16.2</span> 일원분산분석 (One-way ANOVA)</h2>
+<p>일원분산분석은 하나의 범주형 독립변수(요인)가 연속형 종속변수에 미치는 영향을 검정한다.</p>
+<p><strong>가설 설정</strong></p>
+<ul>
+<li>H₀: μ₁ = μ₂ = μ₃ = ⋯ = μₖ</li>
+<li>H₁: 적어도 하나의 모평균이 다르다</li>
+</ul>
+<p><strong>예제: 데이터 준비</strong></p>
+<div id="2972804f" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_anova <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 집단별 기술 통계량 ==="</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_anova.groupby(<span class="st">"species"</span>)[<span class="st">"bill_length_mm"</span>].describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 집단별 기술 통계량 ===
+           count       mean       std   min    25%    50%     75%   max
+species                                                                
+Adelie     151.0  38.791391  2.663405  32.1  36.75  38.80  40.750  46.0
+Chinstrap   68.0  48.833824  3.339256  40.9  46.35  49.55  51.075  58.0
+Gentoo     123.0  47.504878  3.081857  40.9  45.30  47.30  49.550  59.6</code></pre>
+</div>
+</div>
+<p><strong>예제: 일원 ANOVA</strong></p>
+<div id="f3877dfa" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> [</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    df_anova[df_anova[<span class="st">"species"</span>] <span class="op">==</span> sp][<span class="st">"bill_length_mm"</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sp <span class="kw">in</span> df_anova[<span class="st">"species"</span>].unique()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> f_oneway(<span class="op">*</span>groups)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 일원분산분석 ==="</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F-통계량: </span><span class="sc">{</span>f_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"✓ 종에 따른 부리 길이 차이가 유의함 → 사후검정 필요"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 일원분산분석 ===
+F-통계량: 410.6003
+p-value: 0.0000
+✓ 종에 따른 부리 길이 차이가 유의함 → 사후검정 필요</code></pre>
+</div>
+</div>
+</section>
+<section id="이원분산분석-two-way-anova" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="이원분산분석-two-way-anova"><span class="header-section-number">16.3</span> 이원분산분석 (Two-way ANOVA)</h2>
+<p>이원분산분석은 두 개의 범주형 독립변수와 그들의 상호작용 효과를 동시에 검정한다.</p>
+<p><strong>예제: 이원 ANOVA</strong></p>
+<div id="bde7778a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_two <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"sex"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm ~ C(species) + C(sex) + C(species):C(sex)"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_two</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>).fit()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> sm.stats.anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 이원분산분석 ==="</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_table)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 이원분산분석 ===
+                        sum_sq     df           F         PR(&gt;F)
+C(species)         6975.591607    2.0  650.478579  1.059087e-114
+C(sex)             1135.683888    1.0  211.806563   2.422971e-37
+C(species):C(sex)    24.494427    2.0    2.284122   1.034865e-01
+Residual           1753.338642  327.0         NaN            NaN</code></pre>
+</div>
+</div>
+</section>
+<section id="사후검정-post-hoc-test" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="사후검정-post-hoc-test"><span class="header-section-number">16.4</span> 사후검정 (Post-hoc Test)</h2>
+<p><strong>예제: Tukey HSD</strong></p>
+<div id="441654ac" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    endog<span class="op">=</span>df_anova[<span class="st">"bill_length_mm"</span>],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>df_anova[<span class="st">"species"</span>],</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Tukey HSD 사후검정 ==="</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Tukey HSD 사후검정 ===
+   Multiple Comparison of Means - Tukey HSD, FWER=0.05   
 =========================================================
   group1    group2  meandiff p-adj   lower  upper  reject
 ---------------------------------------------------------
@@ -758,56 +584,48 @@ Chinstrap    Gentoo  -1.3289 0.0089 -2.3819 -0.276   True
 ---------------------------------------------------------</code></pre>
 </div>
 </div>
-<section id="결과-해석-1" class="level4" data-number="16.4.3.1">
-<h4 data-number="16.4.3.1" class="anchored" data-anchor-id="결과-해석-1"><span class="header-section-number">16.4.3.1</span> 결과 해석</h4>
-<ul>
-<li><p>reject = True</p>
-<ul>
-<li>두 집단 간 평균 차이가 유의함</li>
-</ul></li>
-<li><p>reject = False</p>
-<ul>
-<li>평균 차이가 통계적으로 유의하지 않음</li>
-</ul></li>
-</ul>
-</section>
-<section id="시각화와-함께-보기" class="level4" data-number="16.4.3.2">
-<h4 data-number="16.4.3.2" class="anchored" data-anchor-id="시각화와-함께-보기"><span class="header-section-number">16.4.3.2</span> 시각화와 함께 보기</h4>
-<div id="e25ba4af" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sns.boxplot(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_anova,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"species"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"bill_length_mm"</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Bill Length by Species"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: 시각화</strong></p>
+<div id="5eb86ddf" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.boxplot(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_anova,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"species"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"bill_length_mm"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Bill Length by Species"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06. 분산 분석_files/figure-html/cell-8-output-1.png" width="585" height="449" class="figure-img"></p>
+<p><img src="06. 분산 분석_files/figure-html/cell-7-output-1.png" width="585" height="449" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-</section>
-</section>
-<section id="분산분석-사용-시-주의사항" class="level2" data-number="16.5">
-<h2 data-number="16.5" class="anchored" data-anchor-id="분산분석-사용-시-주의사항"><span class="header-section-number">16.5</span> 분산분석 사용 시 주의사항</h2>
+<section id="가정-위배-시-대응" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="가정-위배-시-대응"><span class="header-section-number">16.5</span> 가정 위배 시 대응</h2>
 <ul>
-<li><p>독립성 가정</p></li>
-<li><p>정규성 가정</p></li>
-<li><p>등분산성 가정</p></li>
-<li><p>가정이 깨질 경우</p>
-<ul>
-<li>비모수 방법(Kruskal–Wallis)</li>
-<li>또는 변환(log, Box-Cox 등) 고려</li>
-</ul></li>
+<li>정규성 위배 → Kruskal-Wallis 검정</li>
+<li>등분산성 위배 → Welch ANOVA</li>
+<li>독립성 위배 → 반복측정 ANOVA</li>
 </ul>
+<p><strong>예제: Kruskal-Wallis (비모수)</strong></p>
+<div id="531a41ea" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kruskal</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>h_stat, p_kw <span class="op">=</span> kruskal(<span class="op">*</span>groups)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== Kruskal-Wallis ==="</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"H = </span><span class="sc">{</span>h_stat<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>p_kw<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Kruskal-Wallis ===
+H = 244.1367, p = 0.0000</code></pre>
+</div>
+</div>
+</section>
+<section id="요약" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="요약"><span class="header-section-number">16.6</span> 요약</h2>
+<p>분산분석은 다집단의 평균을 동시에 비교하는 강력한 도구이다. 가정을 확인하고 사후검정을 통해 구체적인 차이를 파악하는 것이 중요하다.</p>
 
 
 </section>
