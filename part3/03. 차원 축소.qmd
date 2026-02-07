@@ -1,2 +1,174 @@
 # 차원 축소
 
+## 차원 축소 
+
+### 차원 축소란
+
+**차원 축소**(Dimensionality Reduction)란 여러 개의 입력 변수(차원)를 **더 적은 수의 변수로 변환**하는 과정이다. 원본 특성을 그대로 쓰지 않고
+* **새로운 특성(축)**을 만들어 데이터를 표현하는 방법이다. 참고로 **특성 추출(feature extraction)**을 포함하는 개념이다.
+
+### 차원 축소가 필요한 이유
+
+* 고차원 데이터의 시각화 어려움
+* 차원의 저주(curse of dimensionality)
+* 모델 학습 시간 증가
+* 잡음(noise) 포함 가능성 증가
+
+#### 기대 효과
+
+* 데이터 구조 단순화
+* 학습 속도 향상
+* 일반화 성능 개선
+* 시각화 가능 (2D, 3D)
+
+### 특성 선택 vs 특성 추출
+
+* **특성 선택**
+
+  * 기존 변수 중 일부 선택
+  * 변수 의미 유지
+* **특성 추출**
+
+  * 기존 변수를 조합하여 새로운 변수 생성
+  * 변수 의미는 직관적으로 해석하기 어려움
+
+**차원 축소 = 특성 추출의 대표적인 방법**
+
+## 선형 차원 축소
+
+### PCA 
+PCA(Principal Component Analysis)는 대표적인 선형 차원 축소 방법이다. 
+
+#### 기본 개념
+
+* 데이터의 **분산을 가장 잘 설명하는 방향**을 찾음
+* 기존 변수의 **선형 결합**으로 새로운 축 생성
+* 새 축을 **주성분(Principal Component)**이라 부름
+
+### PCA의 직관적 이해
+
+* 데이터가 가장 길게 퍼져 있는 방향이 1번 주성분
+* 그 다음으로 퍼진 방향이 2번 주성분
+* 서로 직교(독립)
+
+### PCA의 특징
+
+* 선형 변환
+* 변수 간 상관관계 제거
+* 스케일에 민감 → 표준화 필요
+
+### PCA 주요 용어
+
+* **설명 분산 비율 (explained variance ratio)**
+
+  * 각 주성분이 설명하는 정보량 비율
+* 누적 설명 분산을 기준으로 차원 수 결정
+
+### PCA 예제
+
+```python
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+pca.explained_variance_ratio_
+```
+
+## 비선형 차원 축소
+
+선형 변환으로는 **복잡한 데이터 구조**를 표현하기 어려운 경우 사용한다
+
+* 데이터의 **국소 구조(local structure)** 보존
+* 주로 시각화 목적
+
+### t-SNE 
+대표적인 비선형 차원 축소 방법이 t-SNE(t-Distributed Stochastic Neighbor Embedding)이다.
+
+#### 개념
+
+* 데이터 간 **이웃 관계**를 확률적으로 모델링
+* 가까운 데이터는 가깝게, 먼 데이터는 멀게 배치
+
+#### 특징
+
+* 비선형
+* 시각화(2D, 3D)에 특화
+* 계산 비용 큼
+* 결과가 매번 달라질 수 있음
+
+### t-SNE 예제
+
+```python
+from sklearn.manifold import TSNE
+
+tsne = TSNE(n_components=2, random_state=42)
+X_tsne = tsne.fit_transform(X_scaled)
+```
+
+### UMAP 
+또다른 비선형 차원 축소방법으로 UMAP(Uniform Manifold Approximation and Projection)이 있다.
+
+#### 개념
+
+* 데이터가 저차원 다양체(manifold)에 놓여 있다고 가정
+* 전역 구조와 국소 구조를 동시에 보존하려는 접근
+
+### UMAP의 특징
+
+* t-SNE보다 빠름
+* 대규모 데이터에 적합
+* 결과 재현성 비교적 좋음
+* 시각화 + 전처리 용도로 활용 가능
+
+### UMAP 예제
+
+```python
+import umap
+
+umap_model = umap.UMAP(n_components=2, random_state=42)
+X_umap = umap_model.fit_transform(X_scaled)
+```
+
+## PCA vs t-SNE vs UMAP 비교
+
+* **PCA**
+
+  * 선형
+  * 빠름
+  * 해석 가능
+  * 전처리 및 모델 입력으로 사용 가능
+
+* **t-SNE**
+
+  * 비선형
+  * 시각화 특화
+  * 모델 입력용으로는 부적합
+
+* **UMAP**
+
+  * 비선형
+  * 빠름
+  * 시각화 + 전처리 가능
+
+## 3.3.7 실무 활용 가이드
+
+* 모델 학습 전 차원 축소
+
+  * PCA
+* 데이터 탐색 및 시각화
+
+  * t-SNE, UMAP
+* 대용량 데이터 시각화
+
+  * UMAP 우선 고려
+
+## 주의 사항
+
+* 차원 축소 후 변수 해석이 어려워질 수 있음
+* 지도 학습에서는 타깃 정보가 반영되지 않음
+* 과도한 차원 축소는 정보 손실 초래
