@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,51 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#차원-축소" id="toc-차원-축소" class="nav-link active" data-scroll-target="#차원-축소"><span class="header-section-number">21.1</span> 차원 축소</a>
+  <ul>
+  <li><a href="#차원-축소란" id="toc-차원-축소란" class="nav-link" data-scroll-target="#차원-축소란"><span class="header-section-number">21.1.1</span> 차원 축소란</a></li>
+  <li><a href="#차원-축소가-필요한-이유" id="toc-차원-축소가-필요한-이유" class="nav-link" data-scroll-target="#차원-축소가-필요한-이유"><span class="header-section-number">21.1.2</span> 차원 축소가 필요한 이유</a>
+  <ul class="collapse">
+  <li><a href="#기대-효과" id="toc-기대-효과" class="nav-link" data-scroll-target="#기대-효과"><span class="header-section-number">21.1.2.1</span> 기대 효과</a></li>
+  </ul></li>
+  <li><a href="#특성-선택-vs-특성-추출" id="toc-특성-선택-vs-특성-추출" class="nav-link" data-scroll-target="#특성-선택-vs-특성-추출"><span class="header-section-number">21.1.3</span> 특성 선택 vs 특성 추출</a></li>
+  </ul></li>
+  <li><a href="#선형-차원-축소" id="toc-선형-차원-축소" class="nav-link" data-scroll-target="#선형-차원-축소"><span class="header-section-number">21.2</span> 선형 차원 축소</a>
+  <ul>
+  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca"><span class="header-section-number">21.2.1</span> PCA</a>
+  <ul class="collapse">
+  <li><a href="#기본-개념" id="toc-기본-개념" class="nav-link" data-scroll-target="#기본-개념"><span class="header-section-number">21.2.1.1</span> 기본 개념</a></li>
+  </ul></li>
+  <li><a href="#pca의-직관적-이해" id="toc-pca의-직관적-이해" class="nav-link" data-scroll-target="#pca의-직관적-이해"><span class="header-section-number">21.2.2</span> PCA의 직관적 이해</a></li>
+  <li><a href="#pca의-특징" id="toc-pca의-특징" class="nav-link" data-scroll-target="#pca의-특징"><span class="header-section-number">21.2.3</span> PCA의 특징</a></li>
+  <li><a href="#pca-주요-용어" id="toc-pca-주요-용어" class="nav-link" data-scroll-target="#pca-주요-용어"><span class="header-section-number">21.2.4</span> PCA 주요 용어</a></li>
+  <li><a href="#pca-예제" id="toc-pca-예제" class="nav-link" data-scroll-target="#pca-예제"><span class="header-section-number">21.2.5</span> PCA 예제</a></li>
+  </ul></li>
+  <li><a href="#비선형-차원-축소" id="toc-비선형-차원-축소" class="nav-link" data-scroll-target="#비선형-차원-축소"><span class="header-section-number">21.3</span> 비선형 차원 축소</a>
+  <ul>
+  <li><a href="#t-sne" id="toc-t-sne" class="nav-link" data-scroll-target="#t-sne"><span class="header-section-number">21.3.1</span> t-SNE</a>
+  <ul class="collapse">
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">21.3.1.1</span> 개념</a></li>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">21.3.1.2</span> 특징</a></li>
+  </ul></li>
+  <li><a href="#t-sne-예제" id="toc-t-sne-예제" class="nav-link" data-scroll-target="#t-sne-예제"><span class="header-section-number">21.3.2</span> t-SNE 예제</a></li>
+  <li><a href="#umap" id="toc-umap" class="nav-link" data-scroll-target="#umap"><span class="header-section-number">21.3.3</span> UMAP</a>
+  <ul class="collapse">
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">21.3.3.1</span> 개념</a></li>
+  </ul></li>
+  <li><a href="#umap의-특징" id="toc-umap의-특징" class="nav-link" data-scroll-target="#umap의-특징"><span class="header-section-number">21.3.4</span> UMAP의 특징</a></li>
+  <li><a href="#umap-예제" id="toc-umap-예제" class="nav-link" data-scroll-target="#umap-예제"><span class="header-section-number">21.3.5</span> UMAP 예제</a></li>
+  </ul></li>
+  <li><a href="#pca-vs-t-sne-vs-umap-비교" id="toc-pca-vs-t-sne-vs-umap-비교" class="nav-link" data-scroll-target="#pca-vs-t-sne-vs-umap-비교"><span class="header-section-number">21.4</span> PCA vs t-SNE vs UMAP 비교</a></li>
+  <li><a href="#실무-활용-가이드" id="toc-실무-활용-가이드" class="nav-link" data-scroll-target="#실무-활용-가이드"><span class="header-section-number">21.5</span> 3.3.7 실무 활용 가이드</a></li>
+  <li><a href="#주의-사항" id="toc-주의-사항" class="nav-link" data-scroll-target="#주의-사항"><span class="header-section-number">21.6</span> 주의 사항</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/03. 차원 축소.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +444,214 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="차원-축소" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="차원-축소"><span class="header-section-number">21.1</span> 차원 축소</h2>
+<section id="차원-축소란" class="level3" data-number="21.1.1">
+<h3 data-number="21.1.1" class="anchored" data-anchor-id="차원-축소란"><span class="header-section-number">21.1.1</span> 차원 축소란</h3>
+<p><strong>차원 축소</strong>(Dimensionality Reduction)란 여러 개의 입력 변수(차원)를 <strong>더 적은 수의 변수로 변환</strong>하는 과정이다. 원본 특성을 그대로 쓰지 않고 * <strong>새로운 특성(축)</strong>을 만들어 데이터를 표현하는 방법이다. 참고로 <strong>특성 추출(feature extraction)</strong>을 포함하는 개념이다.</p>
+</section>
+<section id="차원-축소가-필요한-이유" class="level3" data-number="21.1.2">
+<h3 data-number="21.1.2" class="anchored" data-anchor-id="차원-축소가-필요한-이유"><span class="header-section-number">21.1.2</span> 차원 축소가 필요한 이유</h3>
+<ul>
+<li>고차원 데이터의 시각화 어려움</li>
+<li>차원의 저주(curse of dimensionality)</li>
+<li>모델 학습 시간 증가</li>
+<li>잡음(noise) 포함 가능성 증가</li>
+</ul>
+<section id="기대-효과" class="level4" data-number="21.1.2.1">
+<h4 data-number="21.1.2.1" class="anchored" data-anchor-id="기대-효과"><span class="header-section-number">21.1.2.1</span> 기대 효과</h4>
+<ul>
+<li>데이터 구조 단순화</li>
+<li>학습 속도 향상</li>
+<li>일반화 성능 개선</li>
+<li>시각화 가능 (2D, 3D)</li>
+</ul>
+</section>
+</section>
+<section id="특성-선택-vs-특성-추출" class="level3" data-number="21.1.3">
+<h3 data-number="21.1.3" class="anchored" data-anchor-id="특성-선택-vs-특성-추출"><span class="header-section-number">21.1.3</span> 특성 선택 vs 특성 추출</h3>
+<ul>
+<li><p><strong>특성 선택</strong></p>
+<ul>
+<li>기존 변수 중 일부 선택</li>
+<li>변수 의미 유지</li>
+</ul></li>
+<li><p><strong>특성 추출</strong></p>
+<ul>
+<li>기존 변수를 조합하여 새로운 변수 생성</li>
+<li>변수 의미는 직관적으로 해석하기 어려움</li>
+</ul></li>
+</ul>
+<p><strong>차원 축소 = 특성 추출의 대표적인 방법</strong></p>
+</section>
+</section>
+<section id="선형-차원-축소" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="선형-차원-축소"><span class="header-section-number">21.2</span> 선형 차원 축소</h2>
+<section id="pca" class="level3" data-number="21.2.1">
+<h3 data-number="21.2.1" class="anchored" data-anchor-id="pca"><span class="header-section-number">21.2.1</span> PCA</h3>
+<p>PCA(Principal Component Analysis)는 대표적인 선형 차원 축소 방법이다.</p>
+<section id="기본-개념" class="level4" data-number="21.2.1.1">
+<h4 data-number="21.2.1.1" class="anchored" data-anchor-id="기본-개념"><span class="header-section-number">21.2.1.1</span> 기본 개념</h4>
+<ul>
+<li>데이터의 <strong>분산을 가장 잘 설명하는 방향</strong>을 찾음</li>
+<li>기존 변수의 <strong>선형 결합</strong>으로 새로운 축 생성</li>
+<li>새 축을 <strong>주성분(Principal Component)</strong>이라 부름</li>
+</ul>
+</section>
+</section>
+<section id="pca의-직관적-이해" class="level3" data-number="21.2.2">
+<h3 data-number="21.2.2" class="anchored" data-anchor-id="pca의-직관적-이해"><span class="header-section-number">21.2.2</span> PCA의 직관적 이해</h3>
+<ul>
+<li>데이터가 가장 길게 퍼져 있는 방향이 1번 주성분</li>
+<li>그 다음으로 퍼진 방향이 2번 주성분</li>
+<li>서로 직교(독립)</li>
+</ul>
+</section>
+<section id="pca의-특징" class="level3" data-number="21.2.3">
+<h3 data-number="21.2.3" class="anchored" data-anchor-id="pca의-특징"><span class="header-section-number">21.2.3</span> PCA의 특징</h3>
+<ul>
+<li>선형 변환</li>
+<li>변수 간 상관관계 제거</li>
+<li>스케일에 민감 → 표준화 필요</li>
+</ul>
+</section>
+<section id="pca-주요-용어" class="level3" data-number="21.2.4">
+<h3 data-number="21.2.4" class="anchored" data-anchor-id="pca-주요-용어"><span class="header-section-number">21.2.4</span> PCA 주요 용어</h3>
+<ul>
+<li><p><strong>설명 분산 비율 (explained variance ratio)</strong></p>
+<ul>
+<li>각 주성분이 설명하는 정보량 비율</li>
+</ul></li>
+<li><p>누적 설명 분산을 기준으로 차원 수 결정</p></li>
+</ul>
+</section>
+<section id="pca-예제" class="level3" data-number="21.2.5">
+<h3 data-number="21.2.5" class="anchored" data-anchor-id="pca-예제"><span class="header-section-number">21.2.5</span> PCA 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.fit_transform(X_scaled)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pca.explained_variance_ratio_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="비선형-차원-축소" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="비선형-차원-축소"><span class="header-section-number">21.3</span> 비선형 차원 축소</h2>
+<p>선형 변환으로는 <strong>복잡한 데이터 구조</strong>를 표현하기 어려운 경우 사용한다</p>
+<ul>
+<li>데이터의 <strong>국소 구조(local structure)</strong> 보존</li>
+<li>주로 시각화 목적</li>
+</ul>
+<section id="t-sne" class="level3" data-number="21.3.1">
+<h3 data-number="21.3.1" class="anchored" data-anchor-id="t-sne"><span class="header-section-number">21.3.1</span> t-SNE</h3>
+<p>대표적인 비선형 차원 축소 방법이 t-SNE(t-Distributed Stochastic Neighbor Embedding)이다.</p>
+<section id="개념" class="level4" data-number="21.3.1.1">
+<h4 data-number="21.3.1.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">21.3.1.1</span> 개념</h4>
+<ul>
+<li>데이터 간 <strong>이웃 관계</strong>를 확률적으로 모델링</li>
+<li>가까운 데이터는 가깝게, 먼 데이터는 멀게 배치</li>
+</ul>
+</section>
+<section id="특징" class="level4" data-number="21.3.1.2">
+<h4 data-number="21.3.1.2" class="anchored" data-anchor-id="특징"><span class="header-section-number">21.3.1.2</span> 특징</h4>
+<ul>
+<li>비선형</li>
+<li>시각화(2D, 3D)에 특화</li>
+<li>계산 비용 큼</li>
+<li>결과가 매번 달라질 수 있음</li>
+</ul>
+</section>
+</section>
+<section id="t-sne-예제" class="level3" data-number="21.3.2">
+<h3 data-number="21.3.2" class="anchored" data-anchor-id="t-sne-예제"><span class="header-section-number">21.3.2</span> t-SNE 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>tsne <span class="op">=</span> TSNE(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X_tsne <span class="op">=</span> tsne.fit_transform(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="umap" class="level3" data-number="21.3.3">
+<h3 data-number="21.3.3" class="anchored" data-anchor-id="umap"><span class="header-section-number">21.3.3</span> UMAP</h3>
+<p>또다른 비선형 차원 축소방법으로 UMAP(Uniform Manifold Approximation and Projection)이 있다.</p>
+<section id="개념-1" class="level4" data-number="21.3.3.1">
+<h4 data-number="21.3.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">21.3.3.1</span> 개념</h4>
+<ul>
+<li>데이터가 저차원 다양체(manifold)에 놓여 있다고 가정</li>
+<li>전역 구조와 국소 구조를 동시에 보존하려는 접근</li>
+</ul>
+</section>
+</section>
+<section id="umap의-특징" class="level3" data-number="21.3.4">
+<h3 data-number="21.3.4" class="anchored" data-anchor-id="umap의-특징"><span class="header-section-number">21.3.4</span> UMAP의 특징</h3>
+<ul>
+<li>t-SNE보다 빠름</li>
+<li>대규모 데이터에 적합</li>
+<li>결과 재현성 비교적 좋음</li>
+<li>시각화 + 전처리 용도로 활용 가능</li>
+</ul>
+</section>
+<section id="umap-예제" class="level3" data-number="21.3.5">
+<h3 data-number="21.3.5" class="anchored" data-anchor-id="umap-예제"><span class="header-section-number">21.3.5</span> UMAP 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> umap</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>umap_model <span class="op">=</span> umap.UMAP(n_components<span class="op">=</span><span class="dv">2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>X_umap <span class="op">=</span> umap_model.fit_transform(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="pca-vs-t-sne-vs-umap-비교" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="pca-vs-t-sne-vs-umap-비교"><span class="header-section-number">21.4</span> PCA vs t-SNE vs UMAP 비교</h2>
+<ul>
+<li><p><strong>PCA</strong></p>
+<ul>
+<li>선형</li>
+<li>빠름</li>
+<li>해석 가능</li>
+<li>전처리 및 모델 입력으로 사용 가능</li>
+</ul></li>
+<li><p><strong>t-SNE</strong></p>
+<ul>
+<li>비선형</li>
+<li>시각화 특화</li>
+<li>모델 입력용으로는 부적합</li>
+</ul></li>
+<li><p><strong>UMAP</strong></p>
+<ul>
+<li>비선형</li>
+<li>빠름</li>
+<li>시각화 + 전처리 가능</li>
+</ul></li>
+</ul>
+</section>
+<section id="실무-활용-가이드" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="실무-활용-가이드"><span class="header-section-number">21.5</span> 3.3.7 실무 활용 가이드</h2>
+<ul>
+<li><p>모델 학습 전 차원 축소</p>
+<ul>
+<li>PCA</li>
+</ul></li>
+<li><p>데이터 탐색 및 시각화</p>
+<ul>
+<li>t-SNE, UMAP</li>
+</ul></li>
+<li><p>대용량 데이터 시각화</p>
+<ul>
+<li>UMAP 우선 고려</li>
+</ul></li>
+</ul>
+</section>
+<section id="주의-사항" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="주의-사항"><span class="header-section-number">21.6</span> 주의 사항</h2>
+<ul>
+<li>차원 축소 후 변수 해석이 어려워질 수 있음</li>
+<li>지도 학습에서는 타깃 정보가 반영되지 않음</li>
+<li>과도한 차원 축소는 정보 손실 초래</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1074,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/03. 차원 축소.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/03. 차원 축소.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
