@@ -1,2 +1,222 @@
 # 모델 성능 평가
 
+# 모델 성능 평가 
+
+## 모델 성능 평가의 목적
+
+모델 성능 평가(Model Evaluation)는 단순히 “정확한가?”를 묻는 과정이 아니다.
+
+핵심 질문은 다음과 같다.
+
+* 학습 데이터가 아닌 **새 데이터에서도 잘 작동하는가?**
+* 어떤 오류를 더 중요하게 봐야 하는가?
+* 모델 간 **공정한 비교**가 가능한가?
+
+문제 유형에 따라 평가 지표는 달라져야 한다.
+
+## 회귀 성능 평가
+
+회귀 문제에서는
+
+> “예측값이 실제값과 얼마나 다른가?”
+
+를 측정한다.
+
+### 주요 지표
+
+#### MAE (Mean Absolute Error)
+
+* 오차의 절댓값 평균
+* 직관적 해석 가능
+
+```python
+from sklearn.metrics import mean_absolute_error
+
+mean_absolute_error(y_test, y_pred)
+```
+
+#### MSE (Mean Squared Error)
+
+* 오차 제곱 평균
+* 큰 오차에 더 큰 패널티
+
+```python
+from sklearn.metrics import mean_squared_error
+
+mean_squared_error(y_test, y_pred)
+```
+
+#### RMSE (Root MSE)
+
+* MSE의 제곱근
+* 원래 단위로 해석 가능
+
+```python
+mean_squared_error(y_test, y_pred, squared=False)
+```
+#### R² (결정계수)
+
+* 모델이 분산을 얼마나 설명하는가
+* 상대적 지표
+
+```python
+from sklearn.metrics import r2_score
+
+r2_score(y_test, y_pred)
+```
+
+### 회귀 지표 선택 가이드
+
+| 상황        | 추천 지표 |
+| --------- | ----- |
+| 직관적 오차 크기 | MAE   |
+| 큰 오차 중요   | RMSE  |
+| 모델 비교     | R²    |
+
+## 분류 성능 평가
+
+분류 문제에서는
+
+> “얼마나 정확히 구분했는가?”
+> 보다
+> “어떤 실수를 했는가?”
+
+가 더 중요할 수 있다.
+
+### 혼동 행렬 (Confusion Matrix)
+
+```python
+from sklearn.metrics import confusion_matrix
+
+confusion_matrix(y_test, y_pred)
+```
+
+| 실제 \ 예측  | Positive | Negative |
+| -------- | -------- | -------- |
+| Positive | TP       | FN       |
+| Negative | FP       | TN       |
+
+### 주요 지표
+
+#### Accuracy
+
+* 전체 중 맞춘 비율
+* 클래스 불균형에 취약
+
+```python
+from sklearn.metrics import accuracy_score
+
+accuracy_score(y_test, y_pred)
+```
+
+#### Precision
+
+* Positive로 예측한 것 중 실제 Positive
+* 오탐(False Positive) 최소화
+
+```python
+from sklearn.metrics import precision_score
+```
+
+#### Recall
+
+* 실제 Positive 중 맞춘 비율
+* 미탐(False Negative) 최소화
+
+```python
+from sklearn.metrics import recall_score
+```
+
+#### F1-score
+
+* Precision과 Recall의 조화 평균
+* 불균형 데이터에 적합
+
+```python
+from sklearn.metrics import f1_score
+```
+
+### ROC-AUC
+
+* 분류 임계값 변화에 따른 성능
+* 확률 기반 평가
+
+```python
+from sklearn.metrics import roc_auc_score
+```
+
+### 분류 예제 
+
+* species 분류 문제
+* 클래스 균형이 비교적 양호
+* Accuracy + F1 병행 권장
+
+## 다중 클래스 분류 평가 
+
+* macro 평균
+* micro 평균
+* weighted 평균
+
+```python
+from sklearn.metrics import classification_report
+
+print(classification_report(y_test, y_pred))
+```
+
+클래스 수가 늘어나면 **accuracy 단독 사용 금지**
+
+## 군집 성능 평가
+
+군집은 **정답 라벨이 없는 경우**가 많다. 따라서 평가 방식도 다르다.
+
+### 내부 평가 지표 (라벨 없음)
+
+#### Silhouette Score
+
+* 군집 내 응집도 vs 군집 간 분리도
+* -1 ~ 1
+
+```python
+from sklearn.metrics import silhouette_score
+
+silhouette_score(X_scaled, labels)
+```
+
+#### Davies–Bouldin Index
+
+* 군집 간 유사도
+* 작을수록 좋음
+
+```python
+from sklearn.metrics import davies_bouldin_score
+```
+
+### 외부 평가 지표 (라벨 존재 시)
+
+penguins처럼 실제 종을 알고 있는 경우
+
+#### Adjusted Rand Index (ARI)
+
+```python
+from sklearn.metrics import adjusted_rand_score
+
+adjusted_rand_score(true_labels, cluster_labels)
+```
+
+## 평가 지표 선택 요약
+
+| 문제 유형 | 주요 지표                          |
+| ----- | ------------------------------ |
+| 회귀    | MAE, RMSE, R²                  |
+| 이진 분류 | Precision, Recall, F1, ROC-AUC |
+| 다중 분류 | F1 (macro/weighted)            |
+| 군집    | Silhouette, ARI                |
+
+## 평가 시 중요한 원칙
+
+* 하나의 지표로 결론 내리지 않는다
+* 문제 맥락에 맞는 지표 선택
+* 항상 **테스트 데이터 기준 평가**
+
+모델 성능 평가는 숫자보다 **판단의 근거**다.
+
