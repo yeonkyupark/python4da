@@ -375,27 +375,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#정규성-검정" id="toc-정규성-검정" class="nav-link active" data-scroll-target="#정규성-검정"><span class="header-section-number">12.1</span> 정규성 검정</a></li>
-  <li><a href="#정규성을-검사-필요-여부" id="toc-정규성을-검사-필요-여부" class="nav-link" data-scroll-target="#정규성을-검사-필요-여부"><span class="header-section-number">12.2</span> 정규성을 검사 필요 여부</a></li>
-  <li><a href="#시각적-정규성-검정" id="toc-시각적-정규성-검정" class="nav-link" data-scroll-target="#시각적-정규성-검정"><span class="header-section-number">12.3</span> 시각적 정규성 검정</a>
+  <li><a href="#정규성-검정의-필요성" id="toc-정규성-검정의-필요성" class="nav-link active" data-scroll-target="#정규성-검정의-필요성"><span class="header-section-number">12.1</span> 정규성 검정의 필요성</a></li>
+  <li><a href="#시각적-정규성-검정" id="toc-시각적-정규성-검정" class="nav-link" data-scroll-target="#시각적-정규성-검정"><span class="header-section-number">12.2</span> 시각적 정규성 검정</a>
   <ul>
-  <li><a href="#히스토그램-kde" id="toc-히스토그램-kde" class="nav-link" data-scroll-target="#히스토그램-kde"><span class="header-section-number">12.3.1</span> (1) 히스토그램 + KDE</a></li>
-  <li><a href="#qq-plot" id="toc-qq-plot" class="nav-link" data-scroll-target="#qq-plot"><span class="header-section-number">12.3.2</span> (2) Q–Q Plot</a></li>
+  <li><a href="#히스토그램과-kde-kernel-density-estimation" id="toc-히스토그램과-kde-kernel-density-estimation" class="nav-link" data-scroll-target="#히스토그램과-kde-kernel-density-estimation"><span class="header-section-number">12.2.1</span> 히스토그램과 KDE (Kernel Density Estimation)</a></li>
+  <li><a href="#q-q-plot-quantile-quantile-plot" id="toc-q-q-plot-quantile-quantile-plot" class="nav-link" data-scroll-target="#q-q-plot-quantile-quantile-plot"><span class="header-section-number">12.2.2</span> Q-Q Plot (Quantile-Quantile Plot)</a></li>
+  <li><a href="#박스플롯" id="toc-박스플롯" class="nav-link" data-scroll-target="#박스플롯"><span class="header-section-number">12.2.3</span> 박스플롯</a></li>
   </ul></li>
-  <li><a href="#통계적-정규성-검정" id="toc-통계적-정규성-검정" class="nav-link" data-scroll-target="#통계적-정규성-검정"><span class="header-section-number">12.4</span> 통계적 정규성 검정</a>
+  <li><a href="#통계적-정규성-검정" id="toc-통계적-정규성-검정" class="nav-link" data-scroll-target="#통계적-정규성-검정"><span class="header-section-number">12.3</span> 통계적 정규성 검정</a>
   <ul>
-  <li><a href="#대표적인-정규성-검정-방법" id="toc-대표적인-정규성-검정-방법" class="nav-link" data-scroll-target="#대표적인-정규성-검정-방법"><span class="header-section-number">12.4.1</span> 대표적인 정규성 검정 방법</a></li>
-  <li><a href="#shapirowilk-검정" id="toc-shapirowilk-검정" class="nav-link" data-scroll-target="#shapirowilk-검정"><span class="header-section-number">12.4.2</span> (1) Shapiro–Wilk 검정</a></li>
-  <li><a href="#andersondarling-검정" id="toc-andersondarling-검정" class="nav-link" data-scroll-target="#andersondarling-검정"><span class="header-section-number">12.4.3</span> (2) Anderson–Darling 검정</a></li>
+  <li><a href="#주요-정규성-검정-비교" id="toc-주요-정규성-검정-비교" class="nav-link" data-scroll-target="#주요-정규성-검정-비교"><span class="header-section-number">12.3.1</span> 주요 정규성 검정 비교</a></li>
+  <li><a href="#shapiro-wilk-검정" id="toc-shapiro-wilk-검정" class="nav-link" data-scroll-target="#shapiro-wilk-검정"><span class="header-section-number">12.3.2</span> Shapiro-Wilk 검정</a></li>
+  <li><a href="#kolmogorov-smirnov-검정" id="toc-kolmogorov-smirnov-검정" class="nav-link" data-scroll-target="#kolmogorov-smirnov-검정"><span class="header-section-number">12.3.3</span> Kolmogorov-Smirnov 검정</a></li>
+  <li><a href="#anderson-darling-검정" id="toc-anderson-darling-검정" class="nav-link" data-scroll-target="#anderson-darling-검정"><span class="header-section-number">12.3.4</span> Anderson-Darling 검정</a></li>
+  <li><a href="#dagostino-pearson-검정" id="toc-dagostino-pearson-검정" class="nav-link" data-scroll-target="#dagostino-pearson-검정"><span class="header-section-number">12.3.5</span> D’Agostino-Pearson 검정</a></li>
   </ul></li>
-  <li><a href="#표본-크기와-p-value의-함정" id="toc-표본-크기와-p-value의-함정" class="nav-link" data-scroll-target="#표본-크기와-p-value의-함정"><span class="header-section-number">12.5</span> 표본 크기와 p-value의 함정</a></li>
-  <li><a href="#정규성이-깨졌을-때의-대응-전략" id="toc-정규성이-깨졌을-때의-대응-전략" class="nav-link" data-scroll-target="#정규성이-깨졌을-때의-대응-전략"><span class="header-section-number">12.6</span> 정규성이 깨졌을 때의 대응 전략</a>
+  <li><a href="#표본-크기와-p-value의-함정" id="toc-표본-크기와-p-value의-함정" class="nav-link" data-scroll-target="#표본-크기와-p-value의-함정"><span class="header-section-number">12.4</span> 표본 크기와 p-value의 함정</a></li>
+  <li><a href="#정규성이-위배될-때의-대응-전략" id="toc-정규성이-위배될-때의-대응-전략" class="nav-link" data-scroll-target="#정규성이-위배될-때의-대응-전략"><span class="header-section-number">12.5</span> 정규성이 위배될 때의 대응 전략</a>
   <ul>
-  <li><a href="#분포-변환" id="toc-분포-변환" class="nav-link" data-scroll-target="#분포-변환"><span class="header-section-number">12.6.1</span> 분포 변환</a></li>
-  <li><a href="#비모수-검정-사용" id="toc-비모수-검정-사용" class="nav-link" data-scroll-target="#비모수-검정-사용"><span class="header-section-number">12.6.2</span> 비모수 검정 사용</a></li>
-  <li><a href="#표본-평균-활용-clt" id="toc-표본-평균-활용-clt" class="nav-link" data-scroll-target="#표본-평균-활용-clt"><span class="header-section-number">12.6.3</span> 표본 평균 활용 (CLT)</a></li>
+  <li><a href="#전략-1-분포-변환" id="toc-전략-1-분포-변환" class="nav-link" data-scroll-target="#전략-1-분포-변환"><span class="header-section-number">12.5.1</span> 전략 1: 분포 변환</a></li>
+  <li><a href="#전략-2-비모수-검정-사용" id="toc-전략-2-비모수-검정-사용" class="nav-link" data-scroll-target="#전략-2-비모수-검정-사용"><span class="header-section-number">12.5.2</span> 전략 2: 비모수 검정 사용</a></li>
+  <li><a href="#전략-3-중심극한정리-활용" id="toc-전략-3-중심극한정리-활용" class="nav-link" data-scroll-target="#전략-3-중심극한정리-활용"><span class="header-section-number">12.5.3</span> 전략 3: 중심극한정리 활용</a></li>
   </ul></li>
-  <li><a href="#정규성-검정-유의사항" id="toc-정규성-검정-유의사항" class="nav-link" data-scroll-target="#정규성-검정-유의사항"><span class="header-section-number">12.7</span> 정규성 검정 유의사항</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">12.6</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/02. 정규성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -427,256 +429,898 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="정규성-검정" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="정규성-검정"><span class="header-section-number">12.1</span> 정규성 검정</h2>
-<p>많은 통계 기법은 다음을 가정한다.</p>
-<ul>
-<li>표본이 정규분포를 따른다</li>
-<li>또는 표본 평균이 정규분포를 따른다</li>
-</ul>
-<p>적용 대상</p>
-<ul>
-<li>t 검정</li>
-<li>ANOVA</li>
-<li>선형회귀 (잔차)</li>
-</ul>
-<p>정규성 검정(Normality Test)은 <strong>“데이터가 정규인가?”</strong> 가 아니라 <strong>“정규 가정을 써도 되는가?”</strong> 를 판단하는 과정</p>
-</section>
-<section id="정규성을-검사-필요-여부" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="정규성을-검사-필요-여부"><span class="header-section-number">12.2</span> 정규성을 검사 필요 여부</h2>
+<p>정규성 검정(Normality Test)은 데이터가 정규분포를 따르는지 확인하는 과정이다. 많은 통계 기법이 정규성을 가정하므로, 분석 전에 이 가정이 타당한지 검증해야 한다. 다만, 정규성 검정의 목적은 “데이터가 완벽히 정규분포인가?”를 판단하는 것이 아니라 “정규분포 가정을 사용해도 분석 결과가 타당한가?”를 확인하는 것이다. 이 장에서는 시각적 방법과 통계적 검정을 통해 정규성을 평가하고, 정규성 가정이 위배될 때의 대응 전략을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="e1ad7dac" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">분석 대상 변수:"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.select_dtypes(include<span class="op">=</span>[np.number]).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
+
+분석 대상 변수:
+['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']</code></pre>
+</div>
+</div>
+<section id="정규성-검정의-필요성" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="정규성-검정의-필요성"><span class="header-section-number">12.1</span> 정규성 검정의 필요성</h2>
+<p>많은 통계 기법이 정규성 가정에 의존한다. 이 가정이 심각하게 위배되면 분석 결과가 부정확해질 수 있다.</p>
+<p><strong>정규성 가정이 필요한 통계 기법</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 44%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>상황</th>
-<th>정규성 필요 여부</th>
+<th>기법</th>
+<th>정규성 가정 대상</th>
+<th>중요도</th>
+<th>이유</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>원 데이터</td>
-<td>경우에 따라</td>
+<td>t-검정</td>
+<td>각 그룹의 데이터 또는 표본 평균</td>
+<td>높음</td>
+<td>검정 통계량이 t-분포를 따름</td>
 </tr>
 <tr class="even">
-<td>표본 평균</td>
-<td>CLT로 완화</td>
+<td>ANOVA</td>
+<td>각 그룹의 잔차</td>
+<td>높음</td>
+<td>F-통계량의 분포 가정</td>
 </tr>
 <tr class="odd">
-<td>소표본 (n &lt; 30)</td>
-<td>매우 중요</td>
+<td>선형 회귀</td>
+<td>잔차(residuals)</td>
+<td>매우 높음</td>
+<td>추론과 예측 구간의 정확도</td>
 </tr>
 <tr class="even">
-<td>잔차(residual)</td>
-<td>중요</td>
+<td>상관 분석</td>
+<td>Pearson 상관계수</td>
+<td>중간</td>
+<td>검정 통계량의 분포</td>
+</tr>
+<tr class="odd">
+<td>주성분 분석(PCA)</td>
+<td>데이터</td>
+<td>낮음</td>
+<td>정규성 불필요하지만 해석 도움</td>
+</tr>
+</tbody>
+</table>
+<p><strong>정규성 검사가 필요한 상황</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 57%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>정규성 필요 여부</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>원 데이터 (대표본, n ≥ 30)</td>
+<td>낮음</td>
+<td>중심극한정리로 표본 평균이 정규분포 수렴</td>
+</tr>
+<tr class="even">
+<td>원 데이터 (소표본, n &lt; 30)</td>
+<td>매우 높음</td>
+<td>중심극한정리 효과 미약</td>
+</tr>
+<tr class="odd">
+<td>잔차(residuals)</td>
+<td>매우 높음</td>
+<td>회귀분석의 핵심 가정</td>
+</tr>
+<tr class="even">
+<td>비모수 검정 사용 시</td>
+<td>불필요</td>
+<td>분포 가정 없음</td>
+</tr>
+</tbody>
+</table>
+<p>정규성 검정의 핵심은 “정규 가정을 사용해도 되는가?”를 판단하는 것이지, “데이터가 완벽히 정규분포인가?”를 확인하는 것이 아니다.</p>
+</section>
+<section id="시각적-정규성-검정" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="시각적-정규성-검정"><span class="header-section-number">12.2</span> 시각적 정규성 검정</h2>
+<p>통계적 검정 전에 시각적 방법으로 데이터의 분포를 확인하는 것이 중요하다. 시각적 방법은 직관적이고 분포의 특성(왜도, 첨도, 이상치)을 파악하기 쉽다.</p>
+<section id="히스토그램과-kde-kernel-density-estimation" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="히스토그램과-kde-kernel-density-estimation"><span class="header-section-number">12.2.1</span> 히스토그램과 KDE (Kernel Density Estimation)</h3>
+<p>히스토그램은 데이터의 분포 형태를 가장 간단하게 확인할 수 있는 방법이다. KDE 곡선을 함께 표시하면 연속적인 분포 형태를 더 잘 파악할 수 있다.</p>
+<p><strong>예제: 히스토그램 + KDE</strong></p>
+<div id="bb0a273c" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 분포 시각화</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"body_mass_g"</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(df[<span class="st">"body_mass_g"</span>].mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Mean = </span><span class="sc">{</span>df[<span class="st">"body_mass_g"</span>]<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss">'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.axvline(df[<span class="st">"body_mass_g"</span>].median(), color<span class="op">=</span><span class="st">'green'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Median = </span><span class="sc">{</span>df[<span class="st">"body_mass_g"</span>]<span class="sc">.</span>median()<span class="sc">:.1f}</span><span class="ss">'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Body Mass Distribution with KDE"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 기술 통계량</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"기술 통계량:"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_mass_g"</span>].describe())</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">왜도(Skewness): </span><span class="sc">{</span>df[<span class="st">'body_mass_g'</span>]<span class="sc">.</span>skew()<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"첨도(Kurtosis): </span><span class="sc">{</span>df[<span class="st">'body_mass_g'</span>]<span class="sc">.</span>kurtosis()<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-3-output-1.png" width="808" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>기술 통계량:
+count     333.000000
+mean     4207.057057
+std       805.215802
+min      2700.000000
+25%      3550.000000
+50%      4050.000000
+75%      4775.000000
+max      6300.000000
+Name: body_mass_g, dtype: float64
+
+왜도(Skewness): 0.472
+첨도(Kurtosis): -0.733</code></pre>
+</div>
+</div>
+<p><strong>정규성 판단 기준</strong></p>
+<ul>
+<li><strong>종 모양</strong>: 중앙이 높고 양 끝으로 갈수록 낮아지는 형태</li>
+<li><strong>대칭성</strong>: 평균과 중앙값이 유사하고 좌우 대칭</li>
+<li><strong>왜도</strong>: 0에 가까울수록 대칭 (|skewness| &lt; 0.5 권장)</li>
+<li><strong>첨도</strong>: 3에 가까울수록 정규분포 (정규분포의 첨도 = 3)</li>
+<li><strong>꼬리</strong>: 양쪽 꼬리가 너무 두껍거나 얇지 않음</li>
+</ul>
+</section>
+<section id="q-q-plot-quantile-quantile-plot" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="q-q-plot-quantile-quantile-plot"><span class="header-section-number">12.2.2</span> Q-Q Plot (Quantile-Quantile Plot)</h3>
+<p>Q-Q 플롯은 데이터의 분위수를 이론적 정규분포의 분위수와 비교하는 그래프이다. 가장 신뢰할 수 있는 시각적 정규성 검정 방법이다.</p>
+<p><strong>예제: Q-Q Plot</strong></p>
+<div id="d2ab6c0c" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q 플롯 생성</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 Q-Q 플롯</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Q-Q Plot: Body Mass"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 부리 길이 Q-Q 플롯</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"bill_length_mm"</span>], dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Q-Q Plot: Bill Length"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-4-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Q-Q Plot 해석 가이드</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>패턴</th>
+<th>의미</th>
+<th>조치</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>점들이 직선에 근접</td>
+<td>정규분포에 가까움</td>
+<td>정규성 가정 사용 가능</td>
+</tr>
+<tr class="even">
+<td>왼쪽 끝이 위로 이탈</td>
+<td>왼쪽 꼬리가 두꺼움 (음의 왜도)</td>
+<td>로그 변환 고려</td>
+</tr>
+<tr class="odd">
+<td>오른쪽 끝이 위로 이탈</td>
+<td>오른쪽 꼬리가 두꺼움 (양의 왜도)</td>
+<td>로그 또는 제곱근 변환</td>
+</tr>
+<tr class="even">
+<td>S자 곡선</td>
+<td>왜도가 있음</td>
+<td>변환 또는 비모수 검정</td>
+</tr>
+<tr class="odd">
+<td>양쪽 끝이 벗어남</td>
+<td>첨도 문제 (꼬리가 얇거나 두꺼움)</td>
+<td>이상치 확인</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="시각적-정규성-검정" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="시각적-정규성-검정"><span class="header-section-number">12.3</span> 시각적 정규성 검정</h2>
-<section id="히스토그램-kde" class="level3" data-number="12.3.1">
-<h3 data-number="12.3.1" class="anchored" data-anchor-id="히스토그램-kde"><span class="header-section-number">12.3.1</span> (1) 히스토그램 + KDE</h3>
-<div id="445e1e30" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="51423600" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    kde<span class="op">=</span><span class="va">True</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="박스플롯" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="박스플롯"><span class="header-section-number">12.2.3</span> 박스플롯</h3>
+<p>박스플롯은 이상치와 분포의 대칭성을 한눈에 확인할 수 있다.</p>
+<p><strong>예제: 박스플롯으로 대칭성 확인</strong></p>
+<div id="14d41d65" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 박스플롯</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].boxplot(df[<span class="st">"body_mass_g"</span>], vert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Body Mass Boxplot"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].boxplot(df[<span class="st">"bill_length_mm"</span>], vert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Bill Length Boxplot"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="02. 정규성 검정_files/figure-html/cell-3-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="02. 정규성 검정_files/figure-html/cell-5-output-1.png" width="1142" height="470" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>정규성 판단을 위한 점검 사항</p>
-<ul>
-<li>종 모양 여부</li>
-<li>대칭성</li>
-<li>꼬리 방향</li>
-</ul>
-</section>
-<section id="qq-plot" class="level3" data-number="12.3.2">
-<h3 data-number="12.3.2" class="anchored" data-anchor-id="qq-plot"><span class="header-section-number">12.3.2</span> (2) Q–Q Plot</h3>
-<div id="ce564401" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"body_mass_g"</span>], plot<span class="op">=</span>plt)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="02. 정규성 검정_files/figure-html/cell-4-output-1.png" width="601" height="449" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>해석</p>
-<ul>
-<li>점들이 직선에 가까울수록 정규성 만족</li>
-<li>양끝 이탈 → 꼬리 문제</li>
-</ul>
+<p>박스가 중앙선을 중심으로 대칭이고 수염(whisker)의 길이가 비슷하면 정규분포에 가깝다.</p>
 </section>
 </section>
-<section id="통계적-정규성-검정" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="통계적-정규성-검정"><span class="header-section-number">12.4</span> 통계적 정규성 검정</h2>
-<section id="대표적인-정규성-검정-방법" class="level3" data-number="12.4.1">
-<h3 data-number="12.4.1" class="anchored" data-anchor-id="대표적인-정규성-검정-방법"><span class="header-section-number">12.4.1</span> 대표적인 정규성 검정 방법</h3>
+<section id="통계적-정규성-검정" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="통계적-정규성-검정"><span class="header-section-number">12.3</span> 통계적 정규성 검정</h2>
+<p>시각적 방법은 주관적일 수 있으므로, 통계적 검정으로 객관적인 판단을 보완한다.</p>
+<section id="주요-정규성-검정-비교" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="주요-정규성-검정-비교"><span class="header-section-number">12.3.1</span> 주요 정규성 검정 비교</h3>
+<p><strong>정규성 검정 방법 비교</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 23%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>검정</th>
+<th>귀무가설</th>
 <th>특징</th>
+<th>장점</th>
+<th>단점</th>
 <th>권장 상황</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Shapiro–Wilk</td>
-<td>가장 보편적</td>
-<td>n ≤ 5000</td>
+<td>Shapiro-Wilk</td>
+<td>정규분포를 따름</td>
+<td>가장 널리 사용</td>
+<td>강력한 검정력</td>
+<td>n &gt; 5000에서 느림</td>
+<td>일반적 상황 (n ≤ 5000)</td>
 </tr>
 <tr class="even">
-<td>Kolmogorov–Smirnov</td>
-<td>기준 분포 필요</td>
-<td>이론 검증</td>
+<td>Kolmogorov-Smirnov</td>
+<td>두 분포가 같음</td>
+<td>일반 분포 검정</td>
+<td>다양한 분포 비교 가능</td>
+<td>검정력 낮음</td>
+<td>이론 분포와 비교</td>
 </tr>
 <tr class="odd">
-<td>Anderson–Darling</td>
-<td>꼬리 민감</td>
-<td>분포 비교</td>
+<td>Anderson-Darling</td>
+<td>정규분포를 따름</td>
+<td>꼬리에 민감</td>
+<td>꼬리 이상 탐지</td>
+<td>해석 복잡</td>
+<td>꼬리가 중요한 경우</td>
 </tr>
 <tr class="even">
-<td>D’Agostino</td>
-<td>왜도·첨도</td>
-<td>중대형 표본</td>
+<td>D’Agostino-Pearson</td>
+<td>정규분포를 따름</td>
+<td>왜도·첨도 기반</td>
+<td>중대형 표본에 적합</td>
+<td>소표본에서 불안정</td>
+<td>n ≥ 50</td>
+</tr>
+<tr class="odd">
+<td>Jarque-Bera</td>
+<td>정규분포를 따름</td>
+<td>시계열 데이터용</td>
+<td>계산 간단</td>
+<td>대표본에서만 유효</td>
+<td>시계열 분석</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="shapirowilk-검정" class="level3" data-number="12.4.2">
-<h3 data-number="12.4.2" class="anchored" data-anchor-id="shapirowilk-검정"><span class="header-section-number">12.4.2</span> (1) Shapiro–Wilk 검정</h3>
-<div id="256b4c01" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> shapiro(df[<span class="st">"body_mass_g"</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>(np.float64(0.9580123688127105), np.float64(3.567711408268874e-08))</code></pre>
-</div>
-</div>
-<p>판단</p>
+<section id="shapiro-wilk-검정" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="shapiro-wilk-검정"><span class="header-section-number">12.3.2</span> Shapiro-Wilk 검정</h3>
+<p>Shapiro-Wilk 검정은 가장 널리 사용되는 정규성 검정으로, 소표본부터 중표본까지 우수한 검정력을 보인다.</p>
+<p><strong>가설 설정</strong></p>
 <ul>
-<li>p ≥ 0.05 → 정규성 가정 가능</li>
-<li>p &lt; 0.05 → 정규성 위반</li>
+<li>H₀ (귀무가설): 데이터가 정규분포를 따른다</li>
+<li>H₁ (대립가설): 데이터가 정규분포를 따르지 않는다</li>
 </ul>
-</section>
-<section id="andersondarling-검정" class="level3" data-number="12.4.3">
-<h3 data-number="12.4.3" class="anchored" data-anchor-id="andersondarling-검정"><span class="header-section-number">12.4.3</span> (2) Anderson–Darling 검정</h3>
-<div id="5ee46faa" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> anderson</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> anderson(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>AndersonResult(statistic=np.float64(4.614584474585229), critical_values=array([0.56 , 0.63 , 0.75 , 0.871, 1.033]), significance_level=array([15. , 10. ,  5. ,  2.5,  1. ]), fit_result=  params: FitParams(loc=np.float64(4207.057057057057), scale=np.float64(805.2158019428965))
- success: True
- message: '`anderson` successfully fit the distribution to the data.')</code></pre>
+<p><strong>예제: Shapiro-Wilk 검정</strong></p>
+<div id="f4630dc2" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중에 대한 정규성 검정</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> shapiro(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shapiro-Wilk Test: Body Mass"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"검정 통계량(W): </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따른다고 볼 수 있음 (H₀ 채택)"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따르지 않음 (H₀ 기각)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shapiro-Wilk Test: Body Mass
+검정 통계량(W): 0.9580
+p-value: 0.0000
+유의수준 0.05 기준: 정규분포를 따르지 않음 (H₀ 기각)</code></pre>
 </div>
 </div>
-<p>해석</p>
-<ul>
-<li>statistic &lt; critical value → 정규성 만족</li>
-<li>유의수준별 임계값 제공</li>
-</ul>
-</section>
-</section>
-<section id="표본-크기와-p-value의-함정" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="표본-크기와-p-value의-함정"><span class="header-section-number">12.5</span> 표본 크기와 p-value의 함정</h2>
-<blockquote class="blockquote">
-<p><strong>표본 수가 크면 거의 항상 p &lt; 0.05</strong></p>
-</blockquote>
-<div id="c3af1b80" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>large_sample <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].sample(<span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shapiro(large_sample)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>ShapiroResult(statistic=np.float64(0.95918974304124), pvalue=np.float64(1.9213489184341196e-07))</code></pre>
-</div>
-</div>
-<p>의미</p>
-<ul>
-<li>통계적으로는 비정규</li>
-<li>실무적으로는 문제 없음</li>
-</ul>
-<p><strong>시각적 판단 + 목적 기반 판단이 중요</strong></p>
-</section>
-<section id="정규성이-깨졌을-때의-대응-전략" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="정규성이-깨졌을-때의-대응-전략"><span class="header-section-number">12.6</span> 정규성이 깨졌을 때의 대응 전략</h2>
-<section id="분포-변환" class="level3" data-number="12.6.1">
-<h3 data-number="12.6.1" class="anchored" data-anchor-id="분포-변환"><span class="header-section-number">12.6.1</span> 분포 변환</h3>
-<ul>
-<li>로그 변환</li>
-<li>제곱근 변환</li>
-<li>Box–Cox</li>
-<li>Yeo–Johnson</li>
-</ul>
-<div id="7cd285be" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>log_mass <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>shapiro(log_mass)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>ShapiroResult(statistic=np.float64(0.9755498857335912), pvalue=np.float64(1.9605691846856507e-05))</code></pre>
+<p><strong>여러 변수에 대한 검정</strong></p>
+<div id="ebcc3d55" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 여러 변수 검정</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 정규성 검정 결과 요약 ==="</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> numeric_cols:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    stat, p_value <span class="op">=</span> shapiro(df[col])</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    results.append({</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Variable"</span>: col,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"W-statistic"</span>: <span class="bu">round</span>(stat, <span class="dv">4</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"p-value"</span>: <span class="bu">round</span>(p_value, <span class="dv">4</span>),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Normal?"</span>: <span class="st">"Yes"</span> <span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">"No"</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(results)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 정규성 검정 결과 요약 ===
+         Variable  W-statistic  p-value Normal?
+   bill_length_mm       0.9743      0.0      No
+    bill_depth_mm       0.9733      0.0      No
+flipper_length_mm       0.9517      0.0      No
+      body_mass_g       0.9580      0.0      No</code></pre>
 </div>
 </div>
 </section>
-<section id="비모수-검정-사용" class="level3" data-number="12.6.2">
-<h3 data-number="12.6.2" class="anchored" data-anchor-id="비모수-검정-사용"><span class="header-section-number">12.6.2</span> 비모수 검정 사용</h3>
+<section id="kolmogorov-smirnov-검정" class="level3" data-number="12.3.3">
+<h3 data-number="12.3.3" class="anchored" data-anchor-id="kolmogorov-smirnov-검정"><span class="header-section-number">12.3.3</span> Kolmogorov-Smirnov 검정</h3>
+<p>Kolmogorov-Smirnov (K-S) 검정은 데이터의 누적분포함수(CDF)를 이론적 분포와 비교한다.</p>
+<p><strong>예제: Kolmogorov-Smirnov 검정</strong></p>
+<div id="ff8414dd" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kstest</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포와 비교 (표준화 필요)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>data_standardized <span class="op">=</span> (df[<span class="st">"body_mass_g"</span>] <span class="op">-</span> df[<span class="st">"body_mass_g"</span>].mean()) <span class="op">/</span> df[<span class="st">"body_mass_g"</span>].std()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> kstest(data_standardized, <span class="st">'norm'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Kolmogorov-Smirnov Test: Body Mass"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"검정 통계량(D): </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따른다고 볼 수 있음"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따르지 않음"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Kolmogorov-Smirnov Test: Body Mass
+검정 통계량(D): 0.1057
+p-value: 0.0011
+유의수준 0.05 기준: 정규분포를 따르지 않음</code></pre>
+</div>
+</div>
+</section>
+<section id="anderson-darling-검정" class="level3" data-number="12.3.4">
+<h3 data-number="12.3.4" class="anchored" data-anchor-id="anderson-darling-검정"><span class="header-section-number">12.3.4</span> Anderson-Darling 검정</h3>
+<p>Anderson-Darling 검정은 분포의 꼬리 부분에 더 많은 가중치를 두어 극단값의 정규성을 엄격히 평가한다.</p>
+<p><strong>예제: Anderson-Darling 검정</strong></p>
+<div id="b3010d34" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> anderson</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Anderson-Darling 검정</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> anderson(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Anderson-Darling Test: Body Mass"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"검정 통계량: </span><span class="sc">{</span>result<span class="sc">.</span>statistic<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">유의수준별 임계값:"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (sig_level, crit_val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(result.significance_level, result.critical_values)):</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>sig_level<span class="sc">}</span><span class="ss">%: </span><span class="sc">{</span>crit_val<span class="sc">:.4f}</span><span class="ss"> "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result.statistic <span class="op">&lt;</span> crit_val:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"(정규분포 가정 가능)"</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"(정규분포 기각)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anderson-Darling Test: Body Mass
+검정 통계량: 4.6146
+
+유의수준별 임계값:
+  15.0%: 0.5600 (정규분포 기각)
+  10.0%: 0.6300 (정규분포 기각)
+  5.0%: 0.7500 (정규분포 기각)
+  2.5%: 0.8710 (정규분포 기각)
+  1.0%: 1.0330 (정규분포 기각)</code></pre>
+</div>
+</div>
+<p>Anderson-Darling 검정은 p-value 대신 임계값과 비교한다. 검정 통계량이 임계값보다 작으면 정규성을 가정할 수 있다.</p>
+</section>
+<section id="dagostino-pearson-검정" class="level3" data-number="12.3.5">
+<h3 data-number="12.3.5" class="anchored" data-anchor-id="dagostino-pearson-검정"><span class="header-section-number">12.3.5</span> D’Agostino-Pearson 검정</h3>
+<p>D’Agostino-Pearson 검정은 왜도와 첨도를 동시에 고려하여 정규성을 평가한다.</p>
+<p><strong>예제: D’Agostino-Pearson 검정</strong></p>
+<div id="3eef84ea" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> normaltest</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># D'Agostino-Pearson 검정</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> normaltest(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"D'Agostino-Pearson Test: Body Mass"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"검정 통계량(K²): </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따른다고 볼 수 있음"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"정규분포를 따르지 않음"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>D'Agostino-Pearson Test: Body Mass
+검정 통계량(K²): 30.4642
+p-value: 0.0000
+유의수준 0.05 기준: 정규분포를 따르지 않음</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="표본-크기와-p-value의-함정" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="표본-크기와-p-value의-함정"><span class="header-section-number">12.4</span> 표본 크기와 p-value의 함정</h2>
+<p>표본 크기가 커지면 정규성 검정이 작은 편차에도 민감하게 반응하여 거의 항상 귀무가설을 기각한다. 이는 통계적으로 유의하지만 실무적으로는 무의미한 결과일 수 있다.</p>
+<p><strong>예제: 표본 크기 효과</strong></p>
+<div id="64e70e00" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 표본 크기로 검정</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">300</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 표본 크기에 따른 Shapiro-Wilk 검정 ===</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> sample_sizes:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].sample(n, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    stat, p_value <span class="op">=</span> shapiro(sample)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"n = </span><span class="sc">{</span>n<span class="sc">:3d}</span><span class="ss">: W = </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">, p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss"> "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"→ 정규"</span> <span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">"→ 비정규"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 표본 크기에 따른 Shapiro-Wilk 검정 ===
+
+n =  30: W = 0.9579, p-value = 0.2734 → 정규
+n = 100: W = 0.9458, p-value = 0.0004 → 비정규
+n = 300: W = 0.9592, p-value = 0.0000 → 비정규</code></pre>
+</div>
+</div>
+<p><strong>큰 표본에서의 대응</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>상황</th>
-<th>대안</th>
+<th>표본 크기</th>
+<th>p-value 해석</th>
+<th>권장 조치</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>평균 비교</td>
-<td>Mann–Whitney</td>
+<td>n &lt; 30</td>
+<td>p-value 중요</td>
+<td>통계적 검정 결과 우선</td>
 </tr>
 <tr class="even">
-<td>다집단</td>
-<td>Kruskal–Wallis</td>
+<td>30 ≤ n &lt; 100</td>
+<td>p-value + 시각화</td>
+<td>둘 다 고려</td>
 </tr>
 <tr class="odd">
-<td>상관</td>
-<td>Spearman</td>
+<td>n ≥ 100</td>
+<td>시각화 중요</td>
+<td>실무적 판단 우선</td>
+</tr>
+<tr class="even">
+<td>n ≥ 300</td>
+<td>거의 항상 기각</td>
+<td>중심극한정리 의존</td>
 </tr>
 </tbody>
 </table>
+<blockquote class="blockquote">
+<p><strong>핵심</strong>: 큰 표본에서는 통계적으로 비정규라도 중심극한정리에 의해 표본 평균이 정규분포에 수렴하므로 실무적으로 문제없는 경우가 많다.</p>
+</blockquote>
+<p><strong>예제: 시각적 vs 통계적 판단</strong></p>
+<div id="c16424c0" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 큰 표본에서의 시각적 검정</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>large_sample <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].sample(<span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 히스토그램</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>sns.histplot(large_sample, kde<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="ss">f"Histogram (n=</span><span class="sc">{</span><span class="bu">len</span>(large_sample)<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q Plot</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>stats.probplot(large_sample, dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="ss">f"Q-Q Plot (n=</span><span class="sc">{</span><span class="bu">len</span>(large_sample)<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 통계적 검정</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> shapiro(large_sample)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Shapiro-Wilk: p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"→ 통계적으로는 비정규이지만 시각적으로는 정규에 가까움"</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"→ 실무적 판단: 정규성 가정 사용 가능"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-12-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Shapiro-Wilk: p-value = 0.0000
+→ 통계적으로는 비정규이지만 시각적으로는 정규에 가까움
+→ 실무적 판단: 정규성 가정 사용 가능</code></pre>
+</div>
+</div>
 </section>
-<section id="표본-평균-활용-clt" class="level3" data-number="12.6.3">
-<h3 data-number="12.6.3" class="anchored" data-anchor-id="표본-평균-활용-clt"><span class="header-section-number">12.6.3</span> 표본 평균 활용 (CLT)</h3>
+<section id="정규성이-위배될-때의-대응-전략" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="정규성이-위배될-때의-대응-전략"><span class="header-section-number">12.5</span> 정규성이 위배될 때의 대응 전략</h2>
+<p>정규성 검정 결과가 유의하게 비정규라면, 다음 전략 중 하나를 선택한다.</p>
+<section id="전략-1-분포-변환" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="전략-1-분포-변환"><span class="header-section-number">12.5.1</span> 전략 1: 분포 변환</h3>
+<p>데이터를 변환하여 정규분포에 가깝게 만든다. 이는 5장(분포 변환)에서 학습한 내용이다.</p>
+<p><strong>예제: 로그 변환 후 정규성 검정</strong></p>
+<div id="8ad009c0" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 변환</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>log_mass <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환 전후 비교</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본: 히스토그램</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"body_mass_g"</span>], kde<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">"Original: Histogram"</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본: Q-Q Plot</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_title(<span class="st">"Original: Q-Q Plot"</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 변환: 히스토그램</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>sns.histplot(log_mass, kde<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">"Log Transformed: Histogram"</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 변환: Q-Q Plot</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>stats.probplot(log_mass, dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_title(<span class="st">"Log Transformed: Q-Q Plot"</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 검정 비교</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 변환 전후 Shapiro-Wilk 검정 ==="</span>)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"원본 데이터: W = </span><span class="sc">{</span>shapiro(df[<span class="st">'body_mass_g'</span>])[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>shapiro(df[<span class="st">'body_mass_g'</span>])[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"로그 변환: W = </span><span class="sc">{</span>shapiro(log_mass)[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>shapiro(log_mass)[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-13-output-1.png" width="1334" height="950" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 변환 전후 Shapiro-Wilk 검정 ===
+원본 데이터: W = 0.9580, p = 0.0000
+로그 변환: W = 0.9755, p = 0.0000</code></pre>
+</div>
+</div>
+<p><strong>주요 변환 방법</strong></p>
 <ul>
-<li>충분한 표본 크기</li>
+<li><strong>로그 변환</strong>: 양의 왜도를 줄임 (가장 흔히 사용)</li>
+<li><strong>제곱근 변환</strong>: 로그보다 약한 변환</li>
+<li><strong>Box-Cox 변환</strong>: 최적의 λ 자동 추정</li>
+<li><strong>Yeo-Johnson 변환</strong>: 0과 음수 포함 데이터 가능</li>
+</ul>
+</section>
+<section id="전략-2-비모수-검정-사용" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="전략-2-비모수-검정-사용"><span class="header-section-number">12.5.2</span> 전략 2: 비모수 검정 사용</h3>
+<p>정규성을 가정하지 않는 비모수 검정을 사용한다.</p>
+<p><strong>모수 검정 vs 비모수 검정</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>모수 검정 (정규성 가정)</th>
+<th>비모수 검정 (분포 자유)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>두 그룹 평균 비교</td>
+<td>Independent t-test</td>
+<td>Mann-Whitney U test</td>
+</tr>
+<tr class="even">
+<td>대응 표본 비교</td>
+<td>Paired t-test</td>
+<td>Wilcoxon signed-rank test</td>
+</tr>
+<tr class="odd">
+<td>다집단 비교</td>
+<td>One-way ANOVA</td>
+<td>Kruskal-Wallis test</td>
+</tr>
+<tr class="even">
+<td>상관 분석</td>
+<td>Pearson correlation</td>
+<td>Spearman correlation</td>
+</tr>
+<tr class="odd">
+<td>회귀 분석</td>
+<td>Linear regression</td>
+<td>Quantile regression</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: t-test vs Mann-Whitney U test</strong></p>
+<div id="cc3977a0" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind, mannwhitneyu</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 종의 체중 비교 (Adelie vs Gentoo)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 모수 검정 (t-test)</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>t_stat, t_pval <span class="op">=</span> ttest_ind(adelie, gentoo)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 비모수 검정 (Mann-Whitney U)</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>u_stat, u_pval <span class="op">=</span> mannwhitneyu(adelie, gentoo)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 두 그룹 비교: Adelie vs Gentoo ==="</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">t-test (모수):          t = </span><span class="sc">{</span>t_stat<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>t_pval<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mann-Whitney (비모수): U = </span><span class="sc">{</span>u_stat<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>u_pval<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">→ 두 검정 모두 유의한 차이 발견"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 두 그룹 비교: Adelie vs Gentoo ===
+
+t-test (모수):          t = -23.4668, p = 0.0000
+Mann-Whitney (비모수): U = 358.5000, p = 0.0000
+
+→ 두 검정 모두 유의한 차이 발견</code></pre>
+</div>
+</div>
+<p>비모수 검정은 검정력이 약간 낮지만, 정규성 가정을 위배해도 안전하게 사용할 수 있다.</p>
+</section>
+<section id="전략-3-중심극한정리-활용" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="전략-3-중심극한정리-활용"><span class="header-section-number">12.5.3</span> 전략 3: 중심극한정리 활용</h3>
+<p>표본 크기가 충분히 크면(일반적으로 n ≥ 30), 원 데이터가 비정규라도 표본 평균은 정규분포에 수렴한다.</p>
+<p><strong>중심극한정리 적용 조건</strong></p>
+<ul>
+<li>표본 크기 n ≥ 30 (분포가 심하게 왜곡되지 않은 경우)</li>
 <li>독립성 만족</li>
+<li>극단적인 이상치 없음</li>
 </ul>
+<p><strong>예제: 표본 평균의 정규성</strong></p>
+<div id="bdf50c37" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 비정규 데이터 생성 (지수분포)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>non_normal_data <span class="op">=</span> np.random.exponential(scale<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터 정규성 검정</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 원본 데이터 (지수분포) ==="</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shapiro-Wilk: p = </span><span class="sc">{</span>shapiro(non_normal_data[:<span class="dv">300</span>])[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss"> (비정규)"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 평균 분포 생성</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>sample_means <span class="op">=</span> [np.random.choice(non_normal_data, size<span class="op">=</span><span class="dv">30</span>).mean() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)]</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 평균 정규성 검정</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== 표본 평균 분포 (n=30, 1000회 반복) ==="</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shapiro-Wilk: p = </span><span class="sc">{</span>shapiro(sample_means)[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss"> (정규에 가까움)"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(non_normal_data[:<span class="dv">300</span>], bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Original Data (Exponential)"</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(sample_means, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Sampling Distribution of Mean"</span>)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 원본 데이터 (지수분포) ===
+Shapiro-Wilk: p = 0.0000 (비정규)
+
+=== 표본 평균 분포 (n=30, 1000회 반복) ===
+Shapiro-Wilk: p = 0.0000 (정규에 가까움)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 정규성 검정_files/figure-html/cell-15-output-2.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="정규성-검정-유의사항" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="정규성-검정-유의사항"><span class="header-section-number">12.7</span> 정규성 검정 유의사항</h2>
+<section id="요약" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="요약"><span class="header-section-number">12.6</span> 요약</h2>
+<p>이 장에서는 정규성 검정의 개념, 방법, 그리고 정규성 위배 시 대응 전략을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>정규성 검정 방법 요약</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>유형</th>
+<th>장점</th>
+<th>단점</th>
+<th>권장 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>히스토그램 + KDE</td>
+<td>시각적</td>
+<td>직관적, 분포 형태 파악</td>
+<td>주관적</td>
+<td>초기 탐색</td>
+</tr>
+<tr class="even">
+<td>Q-Q Plot</td>
+<td>시각적</td>
+<td>정규성 판단에 가장 유용</td>
+<td>해석 연습 필요</td>
+<td>모든 상황 (필수)</td>
+</tr>
+<tr class="odd">
+<td>Shapiro-Wilk</td>
+<td>통계적</td>
+<td>검정력 우수</td>
+<td>대표본에서 민감</td>
+<td>n ≤ 5000</td>
+</tr>
+<tr class="even">
+<td>Anderson-Darling</td>
+<td>통계적</td>
+<td>꼬리 민감</td>
+<td>해석 복잡</td>
+<td>꼬리 중요 시</td>
+</tr>
+<tr class="odd">
+<td>K-S</td>
+<td>통계적</td>
+<td>다양한 분포 비교</td>
+<td>검정력 낮음</td>
+<td>이론 분포 비교</td>
+</tr>
+</tbody>
+</table>
+<p><strong>정규성 위배 시 대응 전략</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>전략</th>
+<th>방법</th>
+<th>장점</th>
+<th>단점</th>
+<th>적용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>분포 변환</td>
+<td>로그, Box-Cox 등</td>
+<td>정규성 개선</td>
+<td>해석 복잡해짐</td>
+<td>왜도가 심한 경우</td>
+</tr>
+<tr class="even">
+<td>비모수 검정</td>
+<td>Mann-Whitney, Kruskal-Wallis</td>
+<td>분포 가정 불필요</td>
+<td>검정력 낮음</td>
+<td>소표본, 비정규</td>
+</tr>
+<tr class="odd">
+<td>중심극한정리</td>
+<td>대표본 활용</td>
+<td>추가 조치 불필요</td>
+<td>n ≥ 30 필요</td>
+<td>충분한 표본</td>
+</tr>
+<tr class="even">
+<td>부트스트랩</td>
+<td>재표본추출</td>
+<td>분포 가정 불필요</td>
+<td>계산 비용 높음</td>
+<td>복잡한 통계량</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실무 판단 프로세스</strong></p>
+<ol type="1">
+<li><strong>시각적 확인</strong>: 히스토그램, Q-Q Plot으로 분포 확인</li>
+<li><strong>통계적 검정</strong>: Shapiro-Wilk 등으로 객관적 평가</li>
+<li><strong>표본 크기 고려</strong>:
 <ul>
-<li>정규성 ≠ 절대 조건</li>
-<li>p-value 하나로 결정</li>
-<li>시각 + 표본 크기 + 분석 목적 종합 판단</li>
+<li>소표본 (n &lt; 30): 정규성 매우 중요</li>
+<li>중표본 (30 ≤ n &lt; 100): 시각적 + 통계적 판단</li>
+<li>대표본 (n ≥ 100): 중심극한정리 의존 가능</li>
+</ul></li>
+<li><strong>분석 목적 고려</strong>: 회귀의 잔차는 엄격, 평균 비교는 유연</li>
+<li><strong>대응 전략 선택</strong>: 변환, 비모수 검정, 또는 진행</li>
+</ol>
+<p><strong>주요 주의사항</strong></p>
+<ul>
+<li>정규성은 절대 조건이 아니며, 실무적 판단이 중요함</li>
+<li>p-value 하나로 결정하지 말고 시각화와 함께 종합 판단</li>
+<li>큰 표본에서는 p-value가 과민하게 반응함을 인지</li>
+<li>정규성 검정은 수단이지 목적이 아님</li>
 </ul>
+<p>정규성 검정은 통계 분석의 가정을 검증하는 중요한 단계이다. 시각적 방법과 통계적 검정을 종합적으로 활용하고, 표본 크기와 분석 목적을 고려하여 적절한 대응 전략을 선택하는 것이 중요하다. 다음 장에서는 정규성 가정을 바탕으로 한 가설검정과 신뢰구간 추정을 학습할 것이다.</p>
 
 
 </section>
