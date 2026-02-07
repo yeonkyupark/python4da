@@ -1,6 +1,6 @@
-# 분산 분석
+# 비모수 검정
 
-분산분석(ANOVA: Analysis of Variance)은 세 개 이상 집단의 평균을 동시에 비교하는 통계적 방법이다. 이름은 분산분석이지만 실제 관심 대상은 집단 간 평균 차이이며, 분산을 이용하여 평균 차이를 검정한다는 점에서 이러한 명칭이 붙었다. ANOVA는 t-검정을 여러 번 반복하는 대신 전체 유의수준을 유지하면서 다집단을 비교할 수 있어 실무에서 매우 중요하다. 이 장에서는 일원분산분석, 이원분산분석, 그리고 사후검정을 상세히 학습한다.
+비모수 검정(Non-parametric Tests)은 모집단의 분포에 대한 가정 없이 데이터를 분석하는 통계적 방법이다. 정규성이나 등분산성 같은 모수 검정의 엄격한 가정을 만족하지 못할 때, 또는 데이터가 순서형이거나 이상치가 많을 때 사용한다. 비모수 검정은 원 데이터 값 대신 순위(rank)를 사용하여 집단 간 차이를 검정하므로 분포에 덜 민감하고 강건하다. 이 장에서는 주요 비모수 검정 방법과 그 적용 상황을 학습한다.
 
 **예제: 데이터 로드**
 
@@ -19,133 +19,531 @@ print("\n범주형 변수:", df.select_dtypes(include=['object', 'category']).co
 print("연속형 변수:", df.select_dtypes(include=[np.number]).columns.tolist())
 ```
 
-## 분산분석의 기본 개념
+## 비모수 검정의 개념과 필요성
 
-분산분석은 전체 변동을 집단 간 변동과 집단 내 변동으로 분해하고, 집단 간 변동이 집단 내 변동에 비해 충분히 큰지를 검정한다.
+비모수 검정은 모집단의 분포 형태를 가정하지 않고, 데이터의 순위 정보만을 사용하여 검정한다.
 
-**분산분석의 핵심 원리**
+**모수 검정 vs 비모수 검정**
 
-$$
-\text{총 변동} = \text{집단 간 변동} + \text{집단 내 변동}
-$$
+| 구분 | 모수 검정 | 비모수 검정 |
+|------|----------|-----------|
+| 가정 | 정규분포, 등분산성 | 가정 최소 (분포 자유) |
+| 사용 정보 | 원 데이터 값 | 순위(rank) |
+| 검정 대상 | 평균 | 중앙값 또는 분포 위치 |
+| 검정력 | 가정 만족 시 높음 | 가정 미만족 시 높음 |
+| 이상치 민감도 | 높음 | 낮음 (강건함) |
+| 해석 | 평균 차이 | 분포 위치 차이 |
 
-$$
-SST = SSB + SSW
-$$
+### 비모수 검정이 필요한 상황
 
-**F-통계량**
+**비모수 검정 적용 시점**
 
-$$
-F = \frac{MSB}{MSW} = \frac{SSB/(k-1)}{SSW/(N-k)}
-$$
+| 상황 | 설명 | 확인 방법 |
+|------|------|----------|
+| 정규성 위배 | 데이터가 정규분포를 따르지 않음 | Shapiro-Wilk 검정, Q-Q plot |
+| 소표본 | 표본 크기가 작아 중심극한정리 적용 불가 | n < 30 (특히 n < 15) |
+| 이상치 다수 | 극단값이 많아 평균이 왜곡됨 | 박스플롯, IQR 분석 |
+| 순서형 데이터 | 측정 단위가 순서 척도 | 설문 리커트 척도 등 |
+| 불균형 표본 | 집단 간 표본 크기 차이가 큼 | 표본 크기 비교 |
 
-F 값이 클수록 집단 간 차이가 집단 내 변동에 비해 크다는 의미이다.
+**예제: 정규성 확인**
 
-## 일원분산분석 (One-way ANOVA)
+```{python}
+# 정규성 검정
+adelie = df[df["species"] == "Adelie"]["bill_length_mm"].dropna()
+gentoo = df[df["species"] == "Gentoo"]["bill_length_mm"].dropna()
 
-일원분산분석은 하나의 범주형 독립변수(요인)가 연속형 종속변수에 미치는 영향을 검정한다.
+print("=== 정규성 검정 (Shapiro-Wilk) ===")
+_, p_adelie = stats.shapiro(adelie)
+_, p_gentoo = stats.shapiro(gentoo)
+
+print(f"Adelie: p = {p_adelie:.4f} {'(정규)' if p_adelie > 0.05 else '(비정규)'}")
+print(f"Gentoo: p = {p_gentoo:.4f} {'(정규)' if p_gentoo > 0.05 else '(비정규)'}")
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+stats.probplot(adelie, dist="norm", plot=axes[0])
+axes[0].set_title("Q-Q Plot: Adelie")
+
+stats.probplot(gentoo, dist="norm", plot=axes[1])
+axes[1].set_title("Q-Q Plot: Gentoo")
+
+plt.tight_layout()
+plt.show()
+```
+
+## Mann-Whitney U 검정 (Wilcoxon Rank-Sum Test)
+
+Mann-Whitney U 검정은 두 독립 집단의 분포 위치를 비교하는 비모수 검정으로, 독립표본 t-검정의 대안이다.
+
+**특징**
+
+- **대상**: 두 독립 집단
+- **대안 검정**: 독립표본 t-검정
+- **검정 대상**: 두 집단의 분포가 같은지 (중앙값 또는 순위 합)
+- **가정**: 두 집단의 분포 형태가 유사 (위치만 다를 수 있음)
 
 **가설 설정**
 
-- H₀: μ₁ = μ₂ = μ₃ = ⋯ = μₖ
-- H₁: 적어도 하나의 모평균이 다르다
+- H₀ (귀무가설): 두 집단의 분포가 동일하다 (중앙값이 같다)
+- H₁ (대립가설): 두 집단의 분포가 다르다 (중앙값이 다르다)
+
+**검정 원리**
+
+1. 두 집단의 데이터를 합쳐서 순위 매김
+2. 각 집단의 순위 합 계산
+3. U 통계량 계산 (작은 집단의 순위 합이 작을수록 차이가 큼)
+
+### 예제: Adelie vs Gentoo 부리 길이 비교
 
 **예제: 데이터 준비**
 
 ```{python}
-df_anova = df[["species", "bill_length_mm"]].dropna()
+from scipy.stats import mannwhitneyu
 
-print("=== 집단별 기술 통계량 ===")
-print(df_anova.groupby("species")["bill_length_mm"].describe())
+# 두 종 선택
+g1 = df[df["species"] == "Adelie"]["bill_length_mm"].dropna()
+g2 = df[df["species"] == "Gentoo"]["bill_length_mm"].dropna()
+
+print("=== 집단 정보 ===")
+print(f"Adelie: n = {len(g1)}, 중앙값 = {g1.median():.2f}mm")
+print(f"Gentoo: n = {len(g2)}, 중앙값 = {g2.median():.2f}mm")
+
+# 기술 통계량
+print("\n=== 기술 통계량 ===")
+print("Adelie:")
+print(g1.describe())
+print("\nGentoo:")
+print(g2.describe())
 ```
 
-**예제: 일원 ANOVA**
+**예제: Mann-Whitney U 검정**
 
 ```{python}
-from scipy.stats import f_oneway
+# Mann-Whitney U 검정
+u_stat, p_value = mannwhitneyu(g1, g2, alternative="two-sided")
 
-groups = [
-    df_anova[df_anova["species"] == sp]["bill_length_mm"]
-    for sp in df_anova["species"].unique()
-]
-
-f_stat, p_value = f_oneway(*groups)
-
-print("\n=== 일원분산분석 ===")
-print(f"F-통계량: {f_stat:.4f}")
+print("\n=== Mann-Whitney U 검정 ===")
+print(f"U-통계량: {u_stat:.4f}")
 print(f"p-value: {p_value:.4f}")
 
-if p_value < 0.05:
-    print("✓ 종에 따른 부리 길이 차이가 유의함 → 사후검정 필요")
-```
-
-## 이원분산분석 (Two-way ANOVA)
-
-이원분산분석은 두 개의 범주형 독립변수와 그들의 상호작용 효과를 동시에 검정한다.
-
-**예제: 이원 ANOVA**
-
-```{python}
-df_two = df[["species", "sex", "bill_length_mm"]].dropna()
-
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
-
-model = ols(
-    "bill_length_mm ~ C(species) + C(sex) + C(species):C(sex)",
-    data=df_two
-).fit()
-
-anova_table = sm.stats.anova_lm(model, typ=2)
-print("\n=== 이원분산분석 ===")
-print(anova_table)
-```
-
-## 사후검정 (Post-hoc Test)
-
-**예제: Tukey HSD**
-
-```{python}
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
-
-tukey = pairwise_tukeyhsd(
-    endog=df_anova["bill_length_mm"],
-    groups=df_anova["species"],
-    alpha=0.05
-)
-
-print("\n=== Tukey HSD 사후검정 ===")
-print(tukey)
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print("✓ 귀무가설 기각: 두 종의 부리 길이 분포가 유의하게 다름")
+    print(f"  중앙값 차이: {g2.median() - g1.median():.2f}mm")
+else:
+    print("✗ 귀무가설 채택: 두 종의 부리 길이 분포가 유의하게 다르지 않음")
 ```
 
 **예제: 시각화**
 
 ```{python}
-sns.boxplot(
-    data=df_anova,
-    x="species",
-    y="bill_length_mm"
-)
-plt.title("Bill Length by Species")
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 박스플롯
+data_combined = pd.DataFrame({
+    'Bill Length': pd.concat([g1, g2]),
+    'Species': ['Adelie']*len(g1) + ['Gentoo']*len(g2)
+})
+sns.boxplot(x='Species', y='Bill Length', data=data_combined, ax=axes[0])
+axes[0].set_title("Bill Length: Adelie vs Gentoo")
+axes[0].set_ylabel("Bill Length (mm)")
+
+# 히스토그램
+axes[1].hist(g1, alpha=0.5, label='Adelie', bins=15, edgecolor='black')
+axes[1].hist(g2, alpha=0.5, label='Gentoo', bins=15, edgecolor='black')
+axes[1].axvline(g1.median(), color='blue', linestyle='--', linewidth=2, label=f'Adelie median')
+axes[1].axvline(g2.median(), color='orange', linestyle='--', linewidth=2, label=f'Gentoo median')
+axes[1].set_title("Distribution of Bill Length")
+axes[1].set_xlabel("Bill Length (mm)")
+axes[1].set_ylabel("Frequency")
+axes[1].legend()
+
+plt.tight_layout()
 plt.show()
 ```
 
-## 가정 위배 시 대응
+**예제: t-검정과 비교**
 
-- 정규성 위배 → Kruskal-Wallis 검정
-- 등분산성 위배 → Welch ANOVA
-- 독립성 위배 → 반복측정 ANOVA
+```{python}
+# 독립표본 t-검정과 비교
+from scipy.stats import ttest_ind
 
-**예제: Kruskal-Wallis (비모수)**
+t_stat, p_t = ttest_ind(g1, g2)
+
+print("\n=== 모수 vs 비모수 비교 ===")
+print(f"t-검정 (모수):        t = {t_stat:.4f}, p = {p_t:.4f}")
+print(f"Mann-Whitney (비모수): U = {u_stat:.4f}, p = {p_value:.4f}")
+print("\n→ 두 검정 모두 유사한 결론")
+```
+
+## Wilcoxon Signed-Rank Test
+
+Wilcoxon 부호순위 검정은 동일 대상의 전후 변화를 비교하는 비모수 검정으로, 대응표본 t-검정의 대안이다.
+
+**특징**
+
+- **대상**: 동일 대상의 두 측정값 (대응 표본)
+- **대안 검정**: 대응표본 t-검정
+- **검정 대상**: 차이의 중앙값이 0인지
+- **가정**: 차이의 분포가 대칭
+
+**가설 설정**
+
+- H₀ (귀무가설): 차이의 중앙값이 0이다 (전후 차이 없음)
+- H₁ (대립가설): 차이의 중앙값이 0이 아니다 (전후 차이 있음)
+
+**검정 원리**
+
+1. 각 쌍의 차이 계산
+2. 차이의 절댓값에 순위 매김
+3. 양수 차이와 음수 차이의 순위 합 비교
+
+### 예제: 가상 전후 데이터
+
+penguins 데이터셋에는 자연스러운 전후 데이터가 없으므로, 예제를 위해 가상 데이터를 생성한다.
+
+**예제: 가상 데이터 생성**
+
+```{python}
+from scipy.stats import wilcoxon
+
+# 시드 설정
+np.random.seed(42)
+
+# 전후 데이터 생성 (예: 처치 전후 부리 길이)
+before = df[df["species"] == "Adelie"]["bill_length_mm"].dropna().sample(30, random_state=42)
+after = before + np.random.normal(0.5, 1.0, size=len(before))
+
+print("=== 전후 데이터 ===")
+print(f"처치 전 중앙값: {before.median():.2f}mm")
+print(f"처치 후 중앙값: {after.median():.2f}mm")
+print(f"차이 중앙값: {(after - before).median():.2f}mm")
+```
+
+**예제: Wilcoxon Signed-Rank 검정**
+
+```{python}
+# Wilcoxon 부호순위 검정
+w_stat, p_value = wilcoxon(before, after)
+
+print("\n=== Wilcoxon Signed-Rank 검정 ===")
+print(f"W-통계량: {w_stat:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print("✓ 귀무가설 기각: 처치 전후 유의한 차이 있음")
+else:
+    print("✗ 귀무가설 채택: 처치 전후 유의한 차이 없음")
+```
+
+**예제: 시각화**
+
+```{python}
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 전후 비교 박스플롯
+data_paired = pd.DataFrame({
+    'Value': pd.concat([before, after]),
+    'Time': ['Before']*len(before) + ['After']*len(after)
+})
+sns.boxplot(x='Time', y='Value', data=data_paired, ax=axes[0])
+axes[0].set_title("Before vs After Treatment")
+axes[0].set_ylabel("Bill Length (mm)")
+
+# 차이 분포
+diff = after.values - before.values
+axes[1].hist(diff, bins=15, edgecolor='black', alpha=0.7)
+axes[1].axvline(0, color='red', linestyle='--', linewidth=2, label='No difference')
+axes[1].axvline(np.median(diff), color='green', linestyle='--', linewidth=2, label=f'Median diff = {np.median(diff):.2f}')
+axes[1].set_title("Distribution of Differences (After - Before)")
+axes[1].set_xlabel("Difference (mm)")
+axes[1].set_ylabel("Frequency")
+axes[1].legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+**예제: 대응표본 t-검정과 비교**
+
+```{python}
+# 대응표본 t-검정과 비교
+from scipy.stats import ttest_rel
+
+t_stat, p_t = ttest_rel(before, after)
+
+print("\n=== 모수 vs 비모수 비교 ===")
+print(f"Paired t-test (모수):  t = {t_stat:.4f}, p = {p_t:.4f}")
+print(f"Wilcoxon (비모수):     W = {w_stat:.4f}, p = {p_value:.4f}")
+```
+
+## Kruskal-Wallis Test
+
+Kruskal-Wallis 검정은 세 개 이상 독립 집단의 분포를 비교하는 비모수 검정으로, 일원분산분석(ANOVA)의 대안이다.
+
+**특징**
+
+- **대상**: 세 개 이상 독립 집단
+- **대안 검정**: 일원분산분석 (One-way ANOVA)
+- **검정 대상**: 모든 집단의 분포가 같은지
+- **가정**: 독립성 (분포 형태 가정 불필요)
+
+**가설 설정**
+
+- H₀ (귀무가설): 모든 집단의 분포가 동일하다
+- H₁ (대립가설): 적어도 하나의 집단 분포가 다르다
+
+**검정 원리**
+
+1. 모든 데이터를 합쳐서 순위 매김
+2. 각 집단의 순위 평균 계산
+3. H 통계량 계산 (카이제곱 분포에 근사)
+
+### 예제: 세 종의 부리 길이 비교
+
+**예제: 데이터 준비**
 
 ```{python}
 from scipy.stats import kruskal
 
-h_stat, p_kw = kruskal(*groups)
-print(f"\n=== Kruskal-Wallis ===")
-print(f"H = {h_stat:.4f}, p = {p_kw:.4f}")
+# 세 종의 부리 길이
+groups = [
+    df[df["species"] == sp]["bill_length_mm"].dropna()
+    for sp in df["species"].unique()
+]
+
+print("=== 집단 정보 ===")
+for species, group in zip(df["species"].unique(), groups):
+    print(f"{species:12s}: n = {len(group):3d}, 중앙값 = {group.median():.2f}mm")
 ```
+
+**예제: Kruskal-Wallis 검정**
+
+```{python}
+# Kruskal-Wallis 검정
+h_stat, p_value = kruskal(*groups)
+
+print("\n=== Kruskal-Wallis 검정 ===")
+print(f"H-통계량: {h_stat:.4f}")
+print(f"자유도: {len(groups) - 1}")
+print(f"p-value: {p_value:.4f}")
+
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print("✓ 귀무가설 기각: 종 간 부리 길이 분포가 유의하게 다름")
+    print("  → 어느 종 간 차이인지 확인하려면 사후검정 필요")
+else:
+    print("✗ 귀무가설 채택: 종 간 부리 길이 분포가 유의하게 다르지 않음")
+```
+
+**예제: ANOVA와 비교**
+
+```{python}
+# 일원분산분석과 비교
+from scipy.stats import f_oneway
+
+f_stat, p_anova = f_oneway(*groups)
+
+print("\n=== 모수 vs 비모수 비교 ===")
+print(f"ANOVA (모수):          F = {f_stat:.4f}, p = {p_anova:.4f}")
+print(f"Kruskal-Wallis (비모수): H = {h_stat:.4f}, p = {p_value:.4f}")
+print("\n→ 두 검정 모두 유사한 결론")
+```
+
+**예제: 시각화**
+
+```{python}
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 박스플롯
+df_clean = df[["species", "bill_length_mm"]].dropna()
+sns.boxplot(x="species", y="bill_length_mm", data=df_clean, ax=axes[0])
+axes[0].set_title("Bill Length by Species")
+axes[0].set_ylabel("Bill Length (mm)")
+
+# 바이올린 플롯
+sns.violinplot(x="species", y="bill_length_mm", data=df_clean, ax=axes[1])
+axes[1].set_title("Distribution of Bill Length")
+axes[1].set_ylabel("Bill Length (mm)")
+
+plt.tight_layout()
+plt.show()
+```
+
+### 사후검정 (Post-hoc Test)
+
+Kruskal-Wallis 검정이 유의하면 쌍별 비교를 수행한다.
+
+**예제: Dunn's Test (사후검정)**
+
+```{python}
+# Dunn's test는 scikit-posthocs 패키지 사용
+# import scikit_posthocs as sp
+# dunn_results = sp.posthoc_dunn(df_clean, val_col='bill_length_mm', group_col='species')
+# print(dunn_results)
+
+# 대안: 쌍별 Mann-Whitney U 검정 (Bonferroni 보정)
+from itertools import combinations
+
+species_list = df["species"].unique()
+n_comparisons = len(list(combinations(species_list, 2)))
+alpha_bonf = 0.05 / n_comparisons
+
+print(f"\n=== 쌍별 Mann-Whitney U (Bonferroni 보정) ===")
+print(f"비교 횟수: {n_comparisons}")
+print(f"보정된 유의수준: {alpha_bonf:.4f}\n")
+
+for sp1, sp2 in combinations(species_list, 2):
+    g1 = df[df["species"] == sp1]["bill_length_mm"].dropna()
+    g2 = df[df["species"] == sp2]["bill_length_mm"].dropna()
+    
+    u, p = mannwhitneyu(g1, g2)
+    
+    print(f"{sp1:12s} vs {sp2:12s}: U = {u:.4f}, p = {p:.4f} ", end="")
+    print("→ 유의" if p < alpha_bonf else "→ 비유의")
+```
+
+## Friedman Test
+
+Friedman 검정은 세 개 이상의 대응 집단(동일 대상의 반복 측정)을 비교하는 비모수 검정으로, 반복측정 ANOVA의 대안이다.
+
+**특징**
+
+- **대상**: 세 개 이상 대응 집단 (동일 대상의 반복 측정)
+- **대안 검정**: 반복측정 ANOVA
+- **검정 대상**: 모든 조건의 분포가 같은지
+- **가정**: 각 블록(대상) 내에서 순위 매김 가능
+
+**가설 설정**
+
+- H₀ (귀무가설): 모든 조건의 분포가 동일하다
+- H₁ (대립가설): 적어도 하나의 조건 분포가 다르다
+
+### 예제: 가상 반복 측정 데이터
+
+**예제: 가상 데이터 생성**
+
+```{python}
+from scipy.stats import friedmanchisquare
+
+# 가상 반복 측정 데이터 (예: 3가지 처치 조건)
+np.random.seed(123)
+
+n = 30
+cond1 = before.values
+cond2 = before.values + np.random.normal(0.3, 0.8, size=len(before))
+cond3 = before.values + np.random.normal(0.8, 0.8, size=len(before))
+
+print("=== 조건별 중앙값 ===")
+print(f"조건 1: {np.median(cond1):.2f}mm")
+print(f"조건 2: {np.median(cond2):.2f}mm")
+print(f"조건 3: {np.median(cond3):.2f}mm")
+```
+
+**예제: Friedman 검정**
+
+```{python}
+# Friedman 검정
+f_stat, p_value = friedmanchisquare(cond1, cond2, cond3)
+
+print("\n=== Friedman 검정 ===")
+print(f"χ²-통계량: {f_stat:.4f}")
+print(f"자유도: {3 - 1}")
+print(f"p-value: {p_value:.4f}")
+
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print("✓ 귀무가설 기각: 조건 간 분포가 유의하게 다름")
+else:
+    print("✗ 귀무가설 채택: 조건 간 분포가 유의하게 다르지 않음")
+```
+
+**예제: 시각화**
+
+```{python}
+# 시각화
+data_repeated = pd.DataFrame({
+    'Value': np.concatenate([cond1, cond2, cond3]),
+    'Condition': ['Cond1']*len(cond1) + ['Cond2']*len(cond2) + ['Cond3']*len(cond3),
+    'Subject': list(range(len(cond1))) * 3
+})
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='Condition', y='Value', data=data_repeated)
+plt.title("Repeated Measures: Three Conditions")
+plt.ylabel("Bill Length (mm)")
+plt.show()
+```
+
+## 모수 검정 vs 비모수 검정 종합
+
+**검정 방법 대응표**
+
+| 상황 | 모수 검정 | 비모수 검정 | 검정 대상 |
+|------|----------|-----------|----------|
+| 두 독립 집단 | 독립표본 t-검정 | Mann-Whitney U | 평균 vs 분포 위치 |
+| 두 대응 집단 | 대응표본 t-검정 | Wilcoxon Signed-Rank | 평균 차이 vs 중앙값 차이 |
+| 세 집단 이상 (독립) | 일원분산분석 (ANOVA) | Kruskal-Wallis | 평균 vs 분포 |
+| 세 집단 이상 (대응) | 반복측정 ANOVA | Friedman | 평균 vs 분포 |
+
+**선택 기준**
+
+| 조건 | 권장 검정 |
+|------|----------|
+| 정규성 만족 + 등분산 + n ≥ 30 | 모수 검정 (높은 검정력) |
+| 정규성 의심 또는 이상치 많음 | 비모수 검정 (강건함) |
+| 소표본 (n < 30) + 정규성 불확실 | 비모수 검정 (안전) |
+| 순서형 데이터 | 비모수 검정 (유일한 선택) |
 
 ## 요약
 
-분산분석은 다집단의 평균을 동시에 비교하는 강력한 도구이다. 가정을 확인하고 사후검정을 통해 구체적인 차이를 파악하는 것이 중요하다.
+이 장에서는 분포 가정이 필요 없는 비모수 검정을 학습했다. 주요 내용은 다음과 같다.
+
+**비모수 검정 핵심 요약**
+
+| 검정 | 용도 | 장점 | 단점 |
+|------|------|------|------|
+| Mann-Whitney U | 두 독립 집단 | 정규성 불필요, 이상치 강건 | 검정력 약간 낮음 |
+| Wilcoxon Signed-Rank | 두 대응 집단 | 정규성 불필요, 대칭성만 가정 | 검정력 약간 낮음 |
+| Kruskal-Wallis | 다집단 독립 | 분포 가정 불필요 | 어느 집단이 다른지 모름 |
+| Friedman | 다집단 대응 | 반복측정 가능 | 사후검정 제한적 |
+
+**비모수 검정 사용 원칙**
+
+1. **가정 확인**: 정규성, 등분산성 검정으로 모수 검정 가능 여부 확인
+2. **표본 크기**: n < 30이고 정규성 불확실하면 비모수 선택
+3. **이상치**: 이상치가 많으면 비모수 검정이 더 안전
+4. **해석**: 비모수는 중앙값/분포 위치 비교, 모수는 평균 비교
+5. **검정력**: 가정 만족 시 모수 검정이 검정력 높음
+
+**실무 의사결정 흐름**
+
+```
+데이터 확보
+  ↓
+정규성 검정
+  ├─ 정규 → 등분산성 검정
+  │          ├─ 등분산 → 모수 검정 (t-test, ANOVA)
+  │          └─ 이분산 → Welch 검정 또는 비모수
+  └─ 비정규 → 비모수 검정 (Mann-Whitney, Kruskal-Wallis)
+```
+
+**주의사항**
+
+- 비모수 검정은 평균이 아닌 중앙값 또는 분포 위치 비교
+- 검정력이 모수 검정보다 약간 낮음 (가정 만족 시)
+- 사후검정이 모수 검정만큼 체계적이지 않음
+- 효과 크기 측정이 제한적
+- 해석 시 "분포의 위치 차이"로 표현
+
+비모수 검정은 가정을 만족하지 못할 때 안전하고 강건한 대안이다. 데이터의 특성과 분석 목적을 고려하여 모수 검정과 비모수 검정을 적절히 선택하는 것이 중요하다. 다음으로는 변수 간 관계를 분석하는 상관분석과 회귀분석을 학습할 수 있다.
