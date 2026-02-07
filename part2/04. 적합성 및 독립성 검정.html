@@ -500,14 +500,14 @@ window.Quarto = {
 <section id="예제" class="level3" data-number="14.3.3">
 <h3 data-number="14.3.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">14.3.3</span> 예제</h3>
 <p>species 분포가 <strong>균등 분포</strong>라고 볼 수 있을까?</p>
-<div id="538aa99e" class="cell" data-execution_count="1">
+<div id="5701daf0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="8bfa6990" class="cell" data-execution_count="2">
+<div id="0819e567" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>observed <span class="op">=</span> df[<span class="st">"species"</span>].value_counts().sort_index()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>observed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -519,10 +519,10 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>기대 빈도 (균등 가정)</p>
-<div id="d02b6c43" class="cell" data-execution_count="3">
+<div id="de4f6327" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> [observed.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(observed)] <span class="op">*</span> <span class="bu">len</span>(observed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="4faa63dd" class="cell" data-execution_count="4">
+<div id="472feff5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -568,7 +568,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="교차표-생성" class="level3" data-number="14.4.4">
 <h3 data-number="14.4.4" class="anchored" data-anchor-id="교차표-생성"><span class="header-section-number">14.4.4</span> 교차표 생성</h3>
-<div id="4aa6b907" class="cell" data-execution_count="5">
+<div id="2d355017" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
@@ -617,7 +617,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="카이제곱-독립성-검정" class="level3" data-number="14.4.5">
 <h3 data-number="14.4.5" class="anchored" data-anchor-id="카이제곱-독립성-검정"><span class="header-section-number">14.4.5</span> 카이제곱 독립성 검정</h3>
-<div id="4cd879af" class="cell" data-execution_count="6">
+<div id="3ce786c5" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>chi2, p_value, dof, expected <span class="op">=</span> chi2_contingency(contingency_table)</span>
@@ -634,7 +634,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="기대-빈도-확인" class="level3" data-number="14.4.6">
 <h3 data-number="14.4.6" class="anchored" data-anchor-id="기대-빈도-확인"><span class="header-section-number">14.4.6</span> 기대 빈도 확인</h3>
-<div id="e1cefcb4" class="cell" data-execution_count="7">
+<div id="ec04711d" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expected</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([[72.34234234, 73.65765766],
@@ -663,7 +663,7 @@ F = \frac{s_1^2}{s_2^2}
 </section>
 <section id="예제-2" class="level3" data-number="14.5.2">
 <h3 data-number="14.5.2" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">14.5.2</span> 예제</h3>
-<div id="03532139" class="cell" data-execution_count="8">
+<div id="70fec144" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>]</span>
@@ -676,7 +676,7 @@ F = \frac{s_1^2}{s_2^2}
 </div>
 </div>
 <p>p-value 계산</p>
-<div id="a4cd2be7" class="cell" data-execution_count="9">
+<div id="8008336f" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="bu">len</span>(group1) <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> <span class="bu">len</span>(group2) <span class="op">-</span> <span class="dv">1</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>

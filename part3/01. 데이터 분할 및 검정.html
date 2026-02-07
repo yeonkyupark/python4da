@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,48 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#데이터-분할-및-검증" id="toc-데이터-분할-및-검증" class="nav-link active" data-scroll-target="#데이터-분할-및-검증"><span class="header-section-number">19.1</span> 데이터 분할 및 검증</a></li>
+  <li><a href="#왜-데이터-분할이-필요한가" id="toc-왜-데이터-분할이-필요한가" class="nav-link" data-scroll-target="#왜-데이터-분할이-필요한가"><span class="header-section-number">19.2</span> 왜 데이터 분할이 필요한가?</a></li>
+  <li><a href="#학습-검증-테스트-분할" id="toc-학습-검증-테스트-분할" class="nav-link" data-scroll-target="#학습-검증-테스트-분할"><span class="header-section-number">19.3</span> 학습 · 검증 · 테스트 분할</a>
+  <ul>
+  <li><a href="#기본-개념" id="toc-기본-개념" class="nav-link" data-scroll-target="#기본-개념"><span class="header-section-number">19.3.1</span> 기본 개념</a></li>
+  <li><a href="#일반적인-분할-비율" id="toc-일반적인-분할-비율" class="nav-link" data-scroll-target="#일반적인-분할-비율"><span class="header-section-number">19.3.2</span> 일반적인 분할 비율</a></li>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">19.3.3</span> 예제</a>
+  <ul class="collapse">
+  <li><a href="#분석-목표" id="toc-분석-목표" class="nav-link" data-scroll-target="#분석-목표"><span class="header-section-number">19.3.3.1</span> 분석 목표</a></li>
+  </ul></li>
+  <li><a href="#학습-테스트-분할" id="toc-학습-테스트-분할" class="nav-link" data-scroll-target="#학습-테스트-분할"><span class="header-section-number">19.3.4</span> 학습 / 테스트 분할</a></li>
+  <li><a href="#학습-검증-분할" id="toc-학습-검증-분할" class="nav-link" data-scroll-target="#학습-검증-분할"><span class="header-section-number">19.3.5</span> 학습 / 검증 분할</a></li>
+  </ul></li>
+  <li><a href="#교차-검증-cross-validation" id="toc-교차-검증-cross-validation" class="nav-link" data-scroll-target="#교차-검증-cross-validation"><span class="header-section-number">19.4</span> 교차 검증 (Cross-Validation)</a>
+  <ul>
+  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">19.4.1</span> 개념</a></li>
+  </ul></li>
+  <li><a href="#k-fold-교차-검증" id="toc-k-fold-교차-검증" class="nav-link" data-scroll-target="#k-fold-교차-검증"><span class="header-section-number">19.5</span> K-Fold 교차 검증</a>
+  <ul>
+  <li><a href="#원리" id="toc-원리" class="nav-link" data-scroll-target="#원리"><span class="header-section-number">19.5.1</span> 원리</a></li>
+  <li><a href="#시각적-개념" id="toc-시각적-개념" class="nav-link" data-scroll-target="#시각적-개념"><span class="header-section-number">19.5.2</span> 시각적 개념</a></li>
+  <li><a href="#기본-k-fold-예제" id="toc-기본-k-fold-예제" class="nav-link" data-scroll-target="#기본-k-fold-예제"><span class="header-section-number">19.5.3</span> 기본 K-Fold 예제</a></li>
+  </ul></li>
+  <li><a href="#stratified-k-fold" id="toc-stratified-k-fold" class="nav-link" data-scroll-target="#stratified-k-fold"><span class="header-section-number">19.6</span> Stratified K-Fold</a>
+  <ul>
+  <li><a href="#왜-필요한가" id="toc-왜-필요한가" class="nav-link" data-scroll-target="#왜-필요한가"><span class="header-section-number">19.6.1</span> 왜 필요한가?</a></li>
+  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">19.6.2</span> 예제</a></li>
+  </ul></li>
+  <li><a href="#교차-검증-vs-홀드아웃-검증" id="toc-교차-검증-vs-홀드아웃-검증" class="nav-link" data-scroll-target="#교차-검증-vs-홀드아웃-검증"><span class="header-section-number">19.7</span> 교차 검증 vs 홀드아웃 검증</a></li>
+  <li><a href="#시계열-데이터의-주의점" id="toc-시계열-데이터의-주의점" class="nav-link" data-scroll-target="#시계열-데이터의-주의점"><span class="header-section-number">19.8</span> 시계열 데이터의 주의점</a></li>
+  <li><a href="#nested-cross-validation" id="toc-nested-cross-validation" class="nav-link" data-scroll-target="#nested-cross-validation"><span class="header-section-number">19.9</span> Nested Cross-Validation</a>
+  <ul>
+  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">19.9.1</span> 개념</a></li>
+  </ul></li>
+  <li><a href="#체크리스트" id="toc-체크리스트" class="nav-link" data-scroll-target="#체크리스트"><span class="header-section-number">19.10</span> 체크리스트</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/01. 데이터 분할 및 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +441,280 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="데이터-분할-및-검증" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="데이터-분할-및-검증"><span class="header-section-number">19.1</span> 데이터 분할 및 검증</h2>
+<p>머신러닝 모델의 성능은 모델 자체보다 <strong>데이터를 어떻게 나누고 검증했는지</strong>에 더 크게 좌우된다.</p>
+</section>
+<section id="왜-데이터-분할이-필요한가" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="왜-데이터-분할이-필요한가"><span class="header-section-number">19.2</span> 왜 데이터 분할이 필요한가?</h2>
+<p>모델은 학습 데이터에 최적화된다. 따라서 동일 데이터를 평가에 사용하면</p>
+<ul>
+<li>성능이 과대평가(overfitting)</li>
+<li>보지 않은 데이터에서의 성능을 추정해야 한다</li>
+</ul>
+<p>즉, <strong>일반화 성능(generalization performance)</strong> 평가가 목적이다.</p>
+</section>
+<section id="학습-검증-테스트-분할" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="학습-검증-테스트-분할"><span class="header-section-number">19.3</span> 학습 · 검증 · 테스트 분할</h2>
+<section id="기본-개념" class="level3" data-number="19.3.1">
+<h3 data-number="19.3.1" class="anchored" data-anchor-id="기본-개념"><span class="header-section-number">19.3.1</span> 기본 개념</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>학습(train)</td>
+<td>모델 학습</td>
+</tr>
+<tr class="even">
+<td>검증(validation)</td>
+<td>하이퍼파라미터 튜닝</td>
+</tr>
+<tr class="odd">
+<td>테스트(test)</td>
+<td>최종 성능 평가</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="일반적인-분할-비율" class="level3" data-number="19.3.2">
+<h3 data-number="19.3.2" class="anchored" data-anchor-id="일반적인-분할-비율"><span class="header-section-number">19.3.2</span> 일반적인 분할 비율</h3>
+<ul>
+<li>60 / 20 / 20</li>
+<li>70 / 15 / 15</li>
+<li>80 / 20 (검증을 교차 검증으로 대체하는 경우)</li>
+</ul>
+</section>
+<section id="예제" class="level3" data-number="19.3.3">
+<h3 data-number="19.3.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">19.3.3</span> 예제</h3>
+<section id="분석-목표" class="level4" data-number="19.3.3.1">
+<h4 data-number="19.3.3.1" class="anchored" data-anchor-id="분석-목표"><span class="header-section-number">19.3.3.1</span> 분석 목표</h4>
+<ul>
+<li>species 분류</li>
+<li>수치형 변수를 사용한 기본 모델링</li>
+</ul>
+<div id="e34f5aa6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df_ml <span class="op">=</span> df.dropna()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_ml[</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_ml[<span class="st">"species"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="학습-테스트-분할" class="level3" data-number="19.3.4">
+<h3 data-number="19.3.4" class="anchored" data-anchor-id="학습-테스트-분할"><span class="header-section-number">19.3.4</span> 학습 / 테스트 분할</h3>
+<div id="1491f4e2" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    X, y,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>y</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>stratify</p>
+<ul>
+<li>클래스 비율 유지</li>
+<li>분류 문제에서 매우 중요</li>
+</ul></li>
+</ul>
+</section>
+<section id="학습-검증-분할" class="level3" data-number="19.3.5">
+<h3 data-number="19.3.5" class="anchored" data-anchor-id="학습-검증-분할"><span class="header-section-number">19.3.5</span> 학습 / 검증 분할</h3>
+<div id="940aa1d8" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    X_train, y_train,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.25</span>,  <span class="co"># 전체 기준 0.2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>y_train</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="교차-검증-cross-validation" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="교차-검증-cross-validation"><span class="header-section-number">19.4</span> 교차 검증 (Cross-Validation)</h2>
+<section id="개념" class="level3" data-number="19.4.1">
+<h3 data-number="19.4.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">19.4.1</span> 개념</h3>
+<ul>
+<li>데이터를 여러 번 나누어</li>
+<li>학습과 검증을 반복</li>
+<li>성능의 평균과 분산을 함께 평가</li>
+</ul>
+<p><strong>단일 분할의 운(luck)에 의존하지 않음</strong></p>
+</section>
+</section>
+<section id="k-fold-교차-검증" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="k-fold-교차-검증"><span class="header-section-number">19.5</span> K-Fold 교차 검증</h2>
+<section id="원리" class="level3" data-number="19.5.1">
+<h3 data-number="19.5.1" class="anchored" data-anchor-id="원리"><span class="header-section-number">19.5.1</span> 원리</h3>
+<ul>
+<li>데이터를 K개 폴드로 분할</li>
+<li>K-1개로 학습, 1개로 검증</li>
+<li>K번 반복</li>
+</ul>
+</section>
+<section id="시각적-개념" class="level3" data-number="19.5.2">
+<h3 data-number="19.5.2" class="anchored" data-anchor-id="시각적-개념"><span class="header-section-number">19.5.2</span> 시각적 개념</h3>
+<pre><code>Fold 1 | V T T ... T T
+Fold 2 | T V T ... T T
+Fold 3 | T T V ... T T
+...
+Fold K | T T T ... T V</code></pre>
+</section>
+<section id="기본-k-fold-예제" class="level3" data-number="19.5.3">
+<h3 data-number="19.5.3" class="anchored" data-anchor-id="기본-k-fold-예제"><span class="header-section-number">19.5.3</span> 기본 K-Fold 예제</h3>
+<div id="7adc4dbd" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, cross_val_score</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>kf <span class="op">=</span> KFold(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    n_splits<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> cross_val_score(</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    model, X, y,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>kf,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">"accuracy"</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>scores, scores.mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(array([0.98507463, 0.97014925, 0.98507463, 1.        , 0.98484848]),
+ np.float64(0.9850293984622344))</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="stratified-k-fold" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="stratified-k-fold"><span class="header-section-number">19.6</span> Stratified K-Fold</h2>
+<section id="왜-필요한가" class="level3" data-number="19.6.1">
+<h3 data-number="19.6.1" class="anchored" data-anchor-id="왜-필요한가"><span class="header-section-number">19.6.1</span> 왜 필요한가?</h3>
+<ul>
+<li><p>분류 문제에서 클래스 불균형이 있으면</p>
+<ul>
+<li>폴드마다 클래스 비율이 달라질 수 있음</li>
+</ul></li>
+</ul>
+<p>각 폴드에 <strong>클래스 비율을 유지</strong></p>
+</section>
+<section id="예제-1" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">19.6.2</span> 예제</h3>
+<div id="8793afbd" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>skf <span class="op">=</span> StratifiedKFold(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    n_splits<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> cross_val_score(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    model, X, y,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>skf,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">"accuracy"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>scores, scores.mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>(array([0.97014925, 0.98507463, 0.98507463, 1.        , 0.98484848]),
+ np.float64(0.9850293984622344))</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="교차-검증-vs-홀드아웃-검증" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="교차-검증-vs-홀드아웃-검증"><span class="header-section-number">19.7</span> 교차 검증 vs 홀드아웃 검증</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>홀드아웃</th>
+<th>교차 검증</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>계산 비용</td>
+<td>낮음</td>
+<td>높음</td>
+</tr>
+<tr class="even">
+<td>안정성</td>
+<td>낮음</td>
+<td>높음</td>
+</tr>
+<tr class="odd">
+<td>데이터 소량</td>
+<td>부적합</td>
+<td>적합</td>
+</tr>
+<tr class="even">
+<td>실무 사용</td>
+<td>빠른 실험</td>
+<td>최종 평가</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="시계열-데이터의-주의점" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="시계열-데이터의-주의점"><span class="header-section-number">19.8</span> 시계열 데이터의 주의점</h2>
+<ul>
+<li>미래 데이터를 학습에 사용하면 안 됨</li>
+<li>반드시 시간 순서 유지</li>
+</ul>
+<div id="e9e3514c" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TimeSeriesSplit</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tscv <span class="op">=</span> TimeSeriesSplit(n_splits<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>일반 K-Fold 사용 금지</strong></p>
+</section>
+<section id="nested-cross-validation" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="nested-cross-validation"><span class="header-section-number">19.9</span> Nested Cross-Validation</h2>
+<section id="개념-1" class="level3" data-number="19.9.1">
+<h3 data-number="19.9.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">19.9.1</span> 개념</h3>
+<ul>
+<li>하이퍼파라미터 튜닝과 모델 평가를 분리 및 성능 과대평가 방지</li>
+</ul>
+</section>
+</section>
+<section id="체크리스트" class="level2" data-number="19.10">
+<h2 data-number="19.10" class="anchored" data-anchor-id="체크리스트"><span class="header-section-number">19.10</span> 체크리스트</h2>
+<ul>
+<li><p>분류 문제인가?</p>
+<ul>
+<li>stratify 사용</li>
+</ul></li>
+<li><p>데이터가 적은가?</p>
+<ul>
+<li>교차 검증</li>
+</ul></li>
+<li><p>하이퍼파라미터 튜닝 중인가?</p>
+<ul>
+<li>검증 데이터 분리</li>
+</ul></li>
+<li><p>최종 성능 보고인가?</p>
+<ul>
+<li>테스트 데이터는 마지막까지 보존</li>
+</ul></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1137,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/01. 데이터 분할 및 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/01. 데이터 분할 및 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
