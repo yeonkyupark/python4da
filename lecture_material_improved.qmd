@@ -1,432 +1,407 @@
-# 범주형 데이터 인코딩
+# 연속형 데이터 범주화
 
-범주형 데이터 인코딩(Categorical Encoding)은 범주형 변수를 머신러닝 모델이 처리할 수 있는 수치형으로 변환하는 과정이다. 대부분의 머신러닝 알고리즘은 수치형 데이터만 입력으로 받을 수 있으므로, 범주형 변수를 적절히 인코딩하는 것은 필수적이다. 인코딩 방법의 선택은 데이터의 특성과 사용할 모델에 따라 달라지며, 잘못된 선택은 모델 성능을 크게 저하시킬 수 있다. 이 장에서는 Label Encoding, One-Hot Encoding, Ordinal Encoding, Target Encoding, Frequency Encoding 등 주요 인코딩 기법을 학습한다.
+연속형 데이터 범주화(Discretization 또는 Binning)는 연속형 변수를 구간별로 나누어 범주형 변수로 변환하는 과정이다. 이 과정은 정보 손실을 수반하지만, 모델의 해석력을 높이고 비선형 관계를 단순화하며 노이즈를 감소시키는 효과가 있다. 특히 도메인 전문가와의 커뮤니케이션이나 규칙 기반 의사결정 시스템에서 유용하다. 이 장에서는 등간격 구간화, 등빈도 구간화, 사용자 정의 구간화, k-means 기반 구간화, Decision Tree 기반 구간화 등 다양한 범주화 기법을 학습한다.
 
 **예제: 데이터 로드**
 
 ```{python}
-import seaborn as sns
 import pandas as pd
+import seaborn as sns
 import numpy as np
 
 # 데이터 로드
 df = sns.load_dataset("penguins")
 
-# 범주형 변수 확인
-print("범주형 변수:")
-print(df.select_dtypes(include='object').columns.tolist())
-print("\n범주형 변수의 고유값 개수:")
-print(df.select_dtypes(include='object').nunique())
+# 연속형 변수 확인
+print("연속형 변수 기초 통계:")
+print(df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]].describe())
 ```
 
-## Label Encoding
+## 범주화의 필요성과 효과
 
-Label Encoding은 각 범주를 정수 값으로 매핑하는 가장 단순한 인코딩 방법이다. 예를 들어, "Adelie", "Chinstrap", "Gentoo"를 0, 1, 2로 변환한다. 구현이 간단하고 컬럼 수가 늘어나지 않는 장점이 있지만, 순서가 없는 범주에 순서를 부여하는 문제가 있다.
+연속형 데이터를 범주화하면 다음과 같은 효과를 얻을 수 있다.
 
-**변환 예시**
+**범주화의 주요 효과**
 
-| 원본 | 인코딩 결과 |
-|------|-----------|
-| Adelie | 0 |
-| Chinstrap | 1 |
-| Gentoo | 2 |
+| 효과 | 설명 | 예시 |
+|------|------|------|
+| 해석력 증가 | 숫자 대신 의미 있는 구간명 사용 | "40.5mm" → "보통 길이" |
+| 노이즈 감소 | 작은 변동을 무시하고 큰 패턴에 집중 | 측정 오차 완화 |
+| 비선형 관계 단순화 | 복잡한 관계를 구간별 규칙으로 표현 | 나이-위험도 관계 |
+| 이상치 영향 완화 | 극단값을 구간 경계로 제한 | 최상위 구간으로 포함 |
+| 규칙 추출 용이 | 의사결정 규칙 명확화 | "A구간이면 승인" |
 
-### 예제 코드
+다만, 정보 손실이 불가피하므로 데이터가 충분히 많고 모델의 예측 성능보다 해석력이 중요한 경우에 사용하는 것이 적절하다.
 
-**예제: Label Encoding 적용**
+## 등간격 구간화 (Equal-width Binning)
+
+등간격 구간화는 전체 값의 범위를 동일한 간격으로 k개의 구간으로 나누는 방법이다. 구현이 간단하고 직관적이지만, 데이터의 분포를 고려하지 않으므로 일부 구간에 데이터가 몰리거나 거의 없을 수 있다.
+
+**구간 너비 계산 공식**
+
+$$
+\text{bin width} = \frac{\max(x) - \min(x)}{k}
+$$
+
+여기서 k는 구간의 개수이다.
+
+**예제: 등간격 구간화**
 
 ```{python}
-from sklearn.preprocessing import LabelEncoder
+# 4개의 등간격 구간으로 분할
+df["bill_length_bin"] = pd.cut(df["bill_length_mm"], bins=4)
 
-# Label Encoder 생성
-le = LabelEncoder()
-
-# 데이터 복사
-df_label = df.copy()
-
-# species 컬럼 인코딩
-df_label["species_enc"] = le.fit_transform(df_label["species"])
-
-# 결과 확인
-print("Label Encoding 결과:")
-print(df_label[["species", "species_enc"]].head(10))
-
-# 매핑 관계 확인
-print("\n매핑 관계:")
-for i, label in enumerate(le.classes_):
-    print(f"{label} → {i}")
+print("등간격 구간화 결과:")
+print(df["bill_length_bin"].value_counts().sort_index())
+print("\n구간 정보:")
+print(df["bill_length_bin"].unique())
 ```
 
-**주의사항**
+### 범주 이름 지정
 
-Label Encoding은 범주 간에 순서 관계가 없음에도 불구하고 숫자로 변환하므로, 모델이 숫자의 크기를 의미 있는 것으로 해석할 수 있다. 예를 들어, 모델이 "Gentoo(2)"가 "Adelie(0)"보다 2배 크다고 잘못 학습할 수 있다.
+숫자 구간 대신 의미 있는 이름을 부여하면 해석력이 더욱 향상된다.
 
-**사용 시점**
-
-- 트리 기반 모델(Decision Tree, Random Forest, XGBoost, LightGBM) 사용 시
-- 컬럼 수를 늘리고 싶지 않을 때
-- 범주의 개수가 매우 많을 때 (고차원 문제 완화)
-
-트리 기반 모델은 범주를 분할 기준으로만 사용하므로 숫자의 크기를 의미 있게 해석하지 않는다.
-
-## One-Hot Encoding
-
-One-Hot Encoding은 각 범주를 이진 컬럼으로 분리하는 방법이다. k개의 범주가 있으면 k개의 새로운 컬럼이 생성되며, 각 행은 해당 범주에 해당하는 컬럼에만 1을, 나머지에는 0을 갖는다. 이 방법은 범주 간 순서 관계를 만들지 않으므로 선형 모델과 거리 기반 모델에 가장 안전하다.
-
-**변환 예시**
-
-| 원본 | species_Adelie | species_Chinstrap | species_Gentoo |
-|------|----------------|-------------------|----------------|
-| Adelie | 1 | 0 | 0 |
-| Chinstrap | 0 | 1 | 0 |
-| Gentoo | 0 | 0 | 1 |
-
-### pandas 방식
-
-pandas의 `get_dummies` 함수를 사용하면 간단하게 One-Hot Encoding을 수행할 수 있다.
-
-**예제: One-Hot Encoding 적용**
+**예제: 구간에 라벨 지정**
 
 ```{python}
-# One-Hot Encoding (모든 범주 유지)
-df_ohe = pd.get_dummies(
-    df,
-    columns=["species", "island"],
-    drop_first=False
+# 구간에 의미 있는 이름 부여
+df["bill_length_bin"] = pd.cut(
+    df["bill_length_mm"],
+    bins=4,
+    labels=["짧음", "보통", "김", "매우 김"]
 )
 
-print("One-Hot Encoding 결과 (컬럼 목록):")
-print(df_ohe.columns.tolist())
-print(f"\n원본 컬럼 수: {len(df.columns)}")
-print(f"인코딩 후 컬럼 수: {len(df_ohe.columns)}")
-
-# 결과 샘플 확인
-print("\n인코딩 결과 (상위 5개):")
-print(df_ohe.head())
+print("라벨이 지정된 구간화 결과:")
+print(df["bill_length_bin"].value_counts())
 ```
-
-### drop_first 옵션
-
-`drop_first=True`로 설정하면 첫 번째 더미 변수를 제거하여 다중공선성(multicollinearity)을 방지할 수 있다. 예를 들어, 3개의 종이 있으면 2개의 컬럼만으로도 모든 정보를 표현할 수 있다.
-
-**예제: drop_first 옵션 사용**
-
-```{python}
-# 첫 번째 더미 변수 제거
-df_ohe_drop = pd.get_dummies(
-    df,
-    columns=["species"],
-    drop_first=True
-)
-
-print("drop_first=True 결과:")
-print(df_ohe_drop.filter(like='species').columns.tolist())
-```
-
-다중공선성은 독립 변수들 간에 높은 상관관계가 존재하는 상태로, 선형 회귀에서 계수 추정을 불안정하게 만든다. k개의 범주를 모두 포함하면 완벽한 선형 종속 관계가 생기므로, 하나를 제거하여 이를 방지한다.
-
-**사용 시점**
-
-- 선형 회귀, 로지스틱 회귀 모델 사용 시
-- 거리 기반 모델(KNN, SVM) 사용 시
-- PCA 등 선형 차원 축소 기법 사용 시
-- 범주의 개수가 적을 때 (일반적으로 10개 이하)
 
 **장단점**
 
 | 장점 | 단점 |
 |------|------|
-| 범주 간 순서 관계를 만들지 않음 | 범주가 많으면 컬럼 수가 급격히 증가 (차원의 저주) |
-| 선형 모델과 거리 기반 모델에 적합 | 메모리 사용량 증가 |
-| 해석이 명확함 | 희소 행렬(sparse matrix) 생성 |
+| 구현이 간단하고 직관적 | 이상치에 민감 (범위가 크게 늘어남) |
+| 구간 너비가 일정하여 해석 용이 | 데이터 밀도 불균형 발생 가능 |
+| 계산 속도가 빠름 | 데이터 분포를 고려하지 않음 |
 
-## Ordinal Encoding
+**적용 상황**
 
-Ordinal Encoding은 순서가 있는 범주형 변수에 사용하는 방법이다. 사용자가 명시적으로 순서를 정의하여 각 범주에 정수를 할당한다. 예를 들어, "small" < "medium" < "large"와 같은 순서가 있는 경우에 적합하다.
+- 데이터가 비교적 균등하게 분포된 경우
+- 구간 너비가 도메인상 의미가 있는 경우 (예: 10년 단위 연령 구간)
+- 빠른 프로토타이핑이 필요한 경우
 
-**변환 예시**
+## 등빈도 구간화 (Equal-frequency Binning, Quantile Binning)
 
-| 원본 | 인코딩 결과 |
-|------|-----------|
-| small | 0 |
-| medium | 1 |
-| large | 2 |
+등빈도 구간화는 각 구간에 동일한 개수의 데이터가 포함되도록 분할하는 방법이다. 데이터의 분포를 고려하여 구간을 나누므로, 등간격 구간화의 불균형 문제를 해결할 수 있다.
 
-### 예제 코드
-
-**예제: Ordinal Encoding 적용**
+**예제: 등빈도 구간화**
 
 ```{python}
-from sklearn.preprocessing import OrdinalEncoder
-
-# 순서 정의 (작은 것부터 큰 것 순서)
-oe = OrdinalEncoder(
-    categories=[["small", "medium", "large"]]
+# 4개의 등빈도 구간으로 분할 (사분위수)
+df["bill_length_qbin"] = pd.qcut(
+    df["bill_length_mm"],
+    q=4
 )
 
-# 예제 데이터 생성
-size_data = pd.DataFrame({
-    "size": ["small", "large", "medium", "small", "large"]
-})
-
-# 인코딩 수행
-size_encoded = oe.fit_transform(size_data)
-
-# 결과 확인
-result = pd.DataFrame({
-    "원본": size_data["size"],
-    "인코딩": size_encoded.flatten()
-})
-
-print("Ordinal Encoding 결과:")
-print(result)
+print("등빈도 구간화 결과:")
+print(df["bill_length_qbin"].value_counts().sort_index())
+print("\n각 구간의 데이터 개수:")
+for bin_range in df["bill_length_qbin"].unique():
+    count = (df["bill_length_qbin"] == bin_range).sum()
+    print(f"{bin_range}: {count}개")
 ```
 
-**사용 시점**
+### 라벨 지정
 
-- 명확한 순서가 있는 범주형 변수 (예: 학력, 등급, 크기, 만족도)
-- 순서 정보가 모델 학습에 중요한 경우
-- 선형 관계를 가정할 수 있는 경우
+사분위수 구간에 Q1, Q2, Q3, Q4와 같은 표준 라벨을 부여할 수 있다.
+
+**예제: 사분위수 라벨 지정**
+
+```{python}
+# 사분위수 라벨 지정
+df["bill_length_qbin"] = pd.qcut(
+    df["bill_length_mm"],
+    q=4,
+    labels=["Q1", "Q2", "Q3", "Q4"]
+)
+
+print("사분위수 구간 분포:")
+print(df["bill_length_qbin"].value_counts())
+```
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 데이터 불균형 문제 해결 | 동일한 값이 많으면 에러 발생 가능 |
+| 분포를 자동으로 반영 | 구간 너비가 일정하지 않아 해석이 복잡할 수 있음 |
+| 이상치의 영향이 적음 | 도메인 지식과 무관하게 분할됨 |
+
+**적용 상황**
+
+- 데이터가 편향되어 있는 경우
+- 각 구간에 충분한 샘플이 필요한 경우
+- 순위 기반 분석이 중요한 경우
 
 **주의사항**
 
-순서를 잘못 정의하면 모델 성능이 저하될 수 있으므로, 도메인 지식을 바탕으로 신중하게 순서를 결정해야 한다.
-
-## Target Encoding (Mean Encoding)
-
-Target Encoding은 각 범주를 타겟 변수의 평균값으로 치환하는 방법이다. 범주와 타겟 간의 관계를 직접적으로 반영하므로 정보량이 크지만, 데이터 누수(data leakage) 위험이 있어 주의가 필요하다.
-
-**변환 예시**
-
-| species | body_mass_g 평균 |
-|---------|-----------------|
-| Adelie | 3700.66 |
-| Chinstrap | 3733.09 |
-| Gentoo | 5076.02 |
-
-### 예제 코드
-
-**예제: Target Encoding 적용**
+동일한 값이 많이 나타나면 `qcut`이 정확히 같은 개수로 나누지 못해 오류가 발생할 수 있다. 이 경우 `duplicates='drop'` 옵션을 사용하거나 구간 개수를 줄인다.
 
 ```{python}
-# 데이터 복사
-df_te = df.copy()
-
-# 타겟 변수 및 인코딩할 컬럼 지정
-target = "body_mass_g"
-col = "species"
-
-# 범주별 타겟 평균 계산
-mean_map = df_te.groupby(col)[target].mean()
-
-print("범주별 타겟 평균:")
-print(mean_map)
-
-# 범주를 평균값으로 치환
-df_te["species_enc"] = df_te[col].map(mean_map)
-
-# 결과 확인
-print("\nTarget Encoding 결과:")
-print(df_te[[col, target, "species_enc"]].head(10))
+# 중복값이 많을 때 처리
+try:
+    df["bill_length_qbin_safe"] = pd.qcut(
+        df["bill_length_mm"],
+        q=10,
+        duplicates='drop'
+    )
+except Exception as e:
+    print(f"오류 발생: {e}")
 ```
 
-**데이터 누수 방지**
+## 사용자 정의 구간화
 
-Target Encoding을 사용할 때는 반드시 다음 규칙을 지켜야 한다.
+사용자 정의 구간화는 도메인 지식이나 비즈니스 규칙에 따라 직접 구간 경계를 설정하는 방법이다. 가장 해석력이 높지만, 주관이 개입되므로 기준에 대한 명확한 설명이 필요하다.
 
-1. **학습 데이터만 사용**: 평균 계산 시 학습 데이터만 사용하고, 테스트 데이터는 절대 포함하지 않음
-2. **교차 검증**: 학습 데이터 내에서도 fold별로 다른 fold의 평균을 사용 (out-of-fold encoding)
-3. **스무딩(Smoothing)**: 샘플 수가 적은 범주는 전체 평균에 가깝게 조정
+**예제: 도메인 지식 기반 구간화**
 
-**예제: 안전한 Target Encoding (학습/테스트 분리)**
+```{python}
+# 도메인 전문가가 정의한 구간 경계
+bins = [30, 40, 45, 50, 60]
+labels = ["매우 짧음", "짧음", "보통", "김"]
+
+df["bill_length_custom"] = pd.cut(
+    df["bill_length_mm"],
+    bins=bins,
+    labels=labels
+)
+
+print("사용자 정의 구간화 결과:")
+print(df["bill_length_custom"].value_counts())
+
+# 구간 통계
+print("\n구간별 평균 체중:")
+print(df.groupby("bill_length_custom")["body_mass_g"].mean())
+```
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 해석력이 가장 높음 | 주관이 개입될 수 있음 |
+| 도메인 지식을 직접 반영 | 데이터 분포를 무시할 수 있음 |
+| 비즈니스 규칙과 일치 | 구간 설정 근거 설명 필요 |
+
+**적용 상황**
+
+- 명확한 도메인 기준이 있는 경우 (예: 의학적 기준, 법적 기준)
+- 비즈니스 규칙이 정해진 경우 (예: 신용등급, 고객 등급)
+- 기존 시스템과의 호환성이 필요한 경우
+
+## k-means 기반 구간화
+
+k-means 기반 구간화는 값의 분포를 고려하여 군집 중심을 기준으로 구간을 나누는 방법이다. 비선형적인 데이터 구조를 반영할 수 있어 복잡한 분포에서도 효과적이다.
+
+**예제: k-means 기반 구간화**
+
+```{python}
+from sklearn.cluster import KMeans
+
+# 결측치 제거
+x = df[["bill_length_mm"]].dropna()
+
+# k-means 군집화 (3개 구간)
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+clusters = kmeans.fit_predict(x)
+
+# 원본 데이터프레임에 결과 저장
+df.loc[x.index, "bill_length_kbin"] = clusters
+
+print("k-means 기반 구간화 결과:")
+print(df["bill_length_kbin"].value_counts().sort_index())
+
+# 각 군집의 중심값
+print("\n군집 중심값:")
+for i, center in enumerate(kmeans.cluster_centers_):
+    print(f"군집 {i}: {center[0]:.2f}mm")
+
+# 군집별 통계
+print("\n군집별 범위:")
+for i in range(3):
+    cluster_data = x[clusters == i]
+    print(f"군집 {i}: {cluster_data['bill_length_mm'].min():.2f} ~ {cluster_data['bill_length_mm'].max():.2f}mm")
+```
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 데이터 분포를 자동으로 반영 | 해석이 상대적으로 어려움 |
+| 비선형 구조를 포착 가능 | 랜덤 초기화로 인한 변동성 |
+| 이상치 영향 완화 | 구간 개수 결정 필요 |
+
+**적용 상황**
+
+- 데이터의 자연스러운 군집이 예상되는 경우
+- 분포가 복잡하거나 다봉형(multi-modal)인 경우
+- 데이터 기반 자동화가 필요한 경우
+
+## Decision Tree 기반 구간화
+
+Decision Tree 기반 구간화는 타겟 변수를 기준으로 정보이득을 최대화하는 구간을 찾는 지도학습 방법이다. 타겟과의 관계를 직접 반영하므로 예측 모델에 효과적이지만, 데이터 누수에 주의해야 한다.
+
+**예제: 타겟 기반 구간화**
+
+```{python}
+from sklearn.tree import DecisionTreeRegressor
+
+# 결측치 제거
+x = df[["bill_length_mm"]].dropna()
+y = df.loc[x.index, "body_mass_g"]
+
+# Decision Tree로 최적 구간 찾기
+tree = DecisionTreeRegressor(
+    max_leaf_nodes=4,  # 4개 구간
+    random_state=42
+)
+tree.fit(x, y)
+
+# 리프 노드 ID를 구간으로 사용
+df.loc[x.index, "bill_length_treebin"] = tree.apply(x)
+
+print("Decision Tree 기반 구간화 결과:")
+print(df["bill_length_treebin"].value_counts().sort_index())
+
+# 각 구간의 타겟 평균
+print("\n구간별 평균 체중:")
+print(df.groupby("bill_length_treebin")["body_mass_g"].mean().sort_index())
+
+# 구간 경계 확인 (트리 분할 지점)
+print("\n트리 분할 정보:")
+print(f"사용된 특성: {tree.feature_importances_}")
+```
+
+**데이터 누수 주의**
+
+Decision Tree 기반 구간화는 타겟 정보를 사용하므로, 반드시 학습 데이터로만 구간을 결정하고 테스트 데이터에 적용해야 한다.
+
+**예제: 데이터 누수 방지**
 
 ```{python}
 from sklearn.model_selection import train_test_split
 
 # 학습/테스트 분리
-df_clean = df.dropna(subset=[target, col])
-train_df, test_df = train_test_split(df_clean, test_size=0.2, random_state=42)
+df_clean = df[["bill_length_mm", "body_mass_g"]].dropna()
+X_train, X_test, y_train, y_test = train_test_split(
+    df_clean[["bill_length_mm"]],
+    df_clean["body_mass_g"],
+    test_size=0.2,
+    random_state=42
+)
 
-# 학습 데이터로만 평균 계산
-train_mean_map = train_df.groupby(col)[target].mean()
+# 학습 데이터로만 트리 학습
+tree_safe = DecisionTreeRegressor(max_leaf_nodes=4, random_state=42)
+tree_safe.fit(X_train, y_train)
 
-# 학습/테스트 데이터에 적용
-train_encoded = train_df[col].map(train_mean_map)
-test_encoded = test_df[col].map(train_mean_map)
+# 학습/테스트 데이터에 동일한 구간 적용
+train_bins = tree_safe.apply(X_train)
+test_bins = tree_safe.apply(X_test)
 
-print("학습 데이터 인코딩 결과:")
-print(train_encoded.head())
+print("학습 데이터 구간 분포:")
+print(pd.Series(train_bins).value_counts().sort_index())
+print("\n테스트 데이터 구간 분포:")
+print(pd.Series(test_bins).value_counts().sort_index())
 ```
-
-**사용 시점**
-
-- 고급 트리 기반 모델(XGBoost, LightGBM, CatBoost) 사용 시
-- 범주와 타겟 간 강한 관계가 있을 때
-- 범주의 개수가 매우 많아 One-Hot Encoding이 비효율적일 때
 
 **장단점**
 
 | 장점 | 단점 |
 |------|------|
-| 타겟과의 관계를 직접 반영하여 정보량이 큼 | 데이터 누수 위험 (올바른 방법 필수) |
-| 고차원 범주형 변수에 효과적 | 과적합 위험 (스무딩 필요) |
-| 컬럼 수 증가 없음 | 구현이 복잡함 |
+| 타겟 정보를 직접 반영 | 데이터 누수 위험 (주의 필요) |
+| 예측 성능 향상 가능 | 과적합 위험 |
+| 비선형 관계 포착 | 해석이 복잡할 수 있음 |
 
-## Frequency Encoding (빈도 인코딩)
+**적용 상황**
 
-Frequency Encoding은 각 범주를 해당 범주의 출현 빈도로 치환하는 방법이다. 희귀한 범주와 자주 나타나는 범주를 구분할 수 있어, 희귀 범주가 많은 경우 유용하다.
+- 예측 모델의 성능이 중요한 경우
+- 타겟과의 비선형 관계가 예상되는 경우
+- 특성 공학(feature engineering)의 일환으로 사용
 
-**변환 예시**
+## 범주화 후 인코딩 연결
 
-| island | 빈도 (비율) |
-|--------|-----------|
-| Biscoe | 0.488 |
-| Dream | 0.360 |
-| Torgersen | 0.151 |
+범주화된 변수는 여전히 범주형이므로, 모델 학습을 위해 인코딩이 필요하다.
 
-### 예제 코드
-
-**예제: Frequency Encoding 적용**
+**예제: 범주화 후 One-Hot Encoding**
 
 ```{python}
-# 범주별 빈도 계산 (비율로 정규화)
-freq_map = df["island"].value_counts(normalize=True)
-
-print("범주별 빈도:")
-print(freq_map)
-
-# 빈도로 치환
-df_freq = df.copy()
-df_freq["island_enc"] = df_freq["island"].map(freq_map)
-
-# 결과 확인
-print("\nFrequency Encoding 결과:")
-print(df_freq[["island", "island_enc"]].head(10))
-```
-
-**사용 시점**
-
-- 희귀 범주가 많을 때
-- 범주의 빈도가 타겟과 관련이 있을 때
-- 고차원 범주형 변수를 간단히 처리하고 싶을 때
-
-**장단점**
-
-| 장점 | 단점 |
-|------|------|
-| 구현이 간단함 | 서로 다른 범주가 같은 빈도를 가질 수 있음 |
-| 희귀 범주를 효과적으로 표현 | 빈도가 타겟과 관련 없으면 효과 제한적 |
-| 컬럼 수 증가 없음 | 정보 손실 가능 |
-
-## 여러 컬럼을 한 번에 인코딩
-
-실무에서는 여러 범주형 컬럼을 동시에 처리해야 하는 경우가 많다. 각 인코딩 방법을 여러 컬럼에 적용하는 방법을 살펴본다.
-
-### One-Hot Encoding (여러 컬럼)
-
-**예제: 여러 컬럼 One-Hot Encoding**
-
-```{python}
-# 인코딩할 범주형 컬럼 목록
-cat_cols = ["species", "island", "sex"]
-
-# 여러 컬럼에 One-Hot Encoding 적용
-df_ohe_multi = pd.get_dummies(
-    df, 
-    columns=cat_cols,
-    drop_first=True  # 다중공선성 방지
+# 범주화된 변수를 One-Hot Encoding
+df_bin_encoded = pd.get_dummies(
+    df,
+    columns=["bill_length_bin"],
+    drop_first=True
 )
 
-print("인코딩된 컬럼 목록:")
-print([col for col in df_ohe_multi.columns if any(cat in col for cat in cat_cols)])
-print(f"\n원본 컬럼 수: {len(df.columns)}")
-print(f"인코딩 후 컬럼 수: {len(df_ohe_multi.columns)}")
+print("인코딩된 컬럼:")
+print([col for col in df_bin_encoded.columns if "bill_length_bin" in col])
+print("\n인코딩 결과 샘플:")
+print(df_bin_encoded.filter(like='bill_length_bin').head())
 ```
 
-### Label Encoding (여러 컬럼)
+범주화와 인코딩을 조합하면 연속형 변수를 비선형적으로 활용하면서도 선형 모델에 적용할 수 있다.
 
-**예제: 여러 컬럼 Label Encoding**
+## 범주화 vs 스케일링
 
-```{python}
-from sklearn.preprocessing import LabelEncoder
+범주화와 스케일링은 서로 다른 목적과 효과를 가진 전처리 방법이다.
 
-# 데이터 복사
-df_label_multi = df.copy()
+**범주화와 스케일링 비교**
 
-# 범주형 컬럼 목록
-cat_cols = ["species", "island", "sex"]
+| 항목 | 스케일링 | 범주화 |
+|------|---------|--------|
+| 목적 | 변수 간 크기 통일 | 연속형을 범주형으로 변환 |
+| 정보 손실 | 없음 (변환만) | 있음 (구간화로 인한 손실) |
+| 해석력 | 낮음 (숫자 그대로) | 높음 (의미 있는 구간명) |
+| 모델 안정성 | 보통 | 높음 (노이즈 감소) |
+| 주 용도 | 거리 기반 모델, 경사하강법 | 규칙 기반 의사결정, 해석 |
+| 적합 모델 | 선형, KNN, SVM, 신경망 | 트리, 규칙 기반 시스템 |
 
-# 각 컬럼에 Label Encoding 적용
-for col in cat_cols:
-    le = LabelEncoder()
-    # 결측치를 문자열로 변환하여 처리
-    df_label_multi[col] = le.fit_transform(df_label_multi[col].astype(str))
+**선택 기준**
 
-print("Label Encoding 결과:")
-print(df_label_multi[cat_cols].head())
-```
-
-### sklearn ColumnTransformer 사용
-
-여러 인코딩 방법을 조합하여 사용하는 경우 `ColumnTransformer`를 사용하면 깔끔하게 처리할 수 있다.
-
-**예제: ColumnTransformer로 여러 인코딩 조합**
-
-```{python}
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-
-# 인코딩 파이프라인 구성
-ct = ColumnTransformer(
-    transformers=[
-        ("ohe", OneHotEncoder(drop='first', sparse_output=False), ["species", "island"]),
-        # LabelEncoder는 ColumnTransformer와 직접 사용 불가
-    ],
-    remainder='passthrough'  # 나머지 컬럼은 그대로 유지
-)
-
-# 변환 수행
-df_transformed = ct.fit_transform(df[["species", "island", "sex"] + num_cols].dropna())
-
-print("ColumnTransformer 변환 결과 shape:")
-print(df_transformed.shape)
-```
+- **예측 성능 우선**: 스케일링 사용 (정보 손실 없음)
+- **해석력 우선**: 범주화 사용 (도메인 전문가 커뮤니케이션)
+- **노이즈가 많은 경우**: 범주화 고려 (노이즈 감소 효과)
+- **데이터 충분**: 스케일링 사용 (범주화는 정보 손실)
+- **규칙 추출 필요**: 범주화 사용 (명확한 의사결정 규칙)
 
 ## 요약
 
-이 장에서는 범주형 데이터를 수치형으로 변환하는 다양한 인코딩 기법을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 연속형 데이터를 범주형으로 변환하는 다양한 범주화 기법을 학습했다. 주요 내용은 다음과 같다.
 
-**인코딩 방법 비교**
+**범주화 방법 비교**
 
-| 인코딩 | 순서 필요 | 컬럼 수 증가 | 장점 | 단점 | 추천 모델 |
-|--------|----------|-------------|------|------|----------|
-| Label | X | X | 간단, 효율적 | 순서 관계 생성 | 트리 기반 모델 |
-| One-Hot | X | O | 순서 없음, 안전 | 고차원 문제 | 선형, 거리 기반 모델 |
-| Ordinal | O | X | 순서 정보 반영 | 순서 정의 필요 | 순서형 데이터 |
-| Target | X | X | 정보량 큼 | 데이터 누수 위험 | 고급 트리 모델 (주의 필요) |
-| Frequency | X | X | 희귀 범주 처리 | 정보 손실 가능 | 희귀 범주가 많을 때 |
+| 방법 | 원리 | 장점 | 단점 | 적용 상황 |
+|------|------|------|------|----------|
+| 등간격 | 동일한 구간 너비 | 간단, 직관적 | 데이터 불균형 | 균등 분포, 도메인 기준 너비 |
+| 등빈도 | 동일한 데이터 개수 | 분포 반영, 균형 | 너비 불균등, 중복값 문제 | 편향 분포, 순위 기반 분석 |
+| 사용자 정의 | 도메인 지식 기반 | 해석력 최고, 비즈니스 반영 | 주관 개입, 근거 필요 | 명확한 기준 존재 |
+| k-means | 군집 중심 기반 | 비선형 구조 반영 | 해석 어려움, 변동성 | 복잡한 분포, 자동화 |
+| Decision Tree | 타겟 정보이득 기반 | 타겟 관계 반영, 성능 향상 | 데이터 누수 위험, 과적합 | 예측 성능 중요, 비선형 관계 |
 
-**인코딩 방법 선택 가이드**
+**범주화 적용 상황**
 
-1. **트리 기반 모델**: Label Encoding (간단하고 효율적)
-2. **선형/거리 기반 모델**: One-Hot Encoding (가장 안전)
-3. **순서가 있는 범주**: Ordinal Encoding (순서 정보 활용)
-4. **고차원 범주**: Target Encoding 또는 Frequency Encoding (차원 증가 방지)
-5. **희귀 범주 많음**: Frequency Encoding (희귀도 반영)
+| 상황 | 범주화 권장 여부 | 이유 |
+|------|----------------|------|
+| 모델 해석이 중요할 때 | ✓ | 의미 있는 구간명으로 설명 가능 |
+| 비선형 관계 단순화 | ✓ | 복잡한 관계를 구간별 규칙으로 표현 |
+| 데이터 노이즈가 큼 | ✓ | 작은 변동 무시, 큰 패턴 포착 |
+| 데이터가 충분히 많음 | ✗ | 정보 손실이 아까움, 스케일링 선호 |
+| 딥러닝 사용 | ✗ | 연속형 그대로 사용이 더 효과적 |
+| 규칙 추출 필요 | ✓ | 명확한 의사결정 규칙 생성 |
 
-**주의사항**
+**범주화 의사결정 프로세스**
 
-- **데이터 누수 방지**: Target Encoding 사용 시 학습/테스트 분리 철저히 지킬 것
-- **다중공선성**: One-Hot Encoding에서 선형 모델 사용 시 `drop_first=True` 권장
-- **결측치 처리**: 인코딩 전 결측치를 별도 범주로 처리하거나 제거할 것
-- **새로운 범주**: 테스트 데이터에 학습 시 없던 범주가 나타나면 처리 전략 필요
+1. **EDA 수행**: 데이터 분포, 타겟과의 관계 파악
+2. **목적 확인**: 예측 성능 vs 해석력 중 무엇이 우선인지 결정
+3. **방법 선택**: 상황에 맞는 범주화 방법 선택
+4. **검증**: 범주화 전후 모델 성능 및 해석력 비교
+5. **문서화**: 구간 설정 근거와 결과 명확히 기록
 
-**실무 인코딩 순서**
-
-1. 범주형 변수 식별 및 순서 여부 확인
-2. 모델 유형에 따른 인코딩 방법 선택
-3. 학습/테스트 데이터 분리 (데이터 누수 방지)
-4. 학습 데이터로 인코더 학습(`fit`)
-5. 학습/테스트 데이터에 동일한 인코더 적용(`transform`)
-
-범주형 데이터 인코딩은 전처리의 마지막 단계로, 적절한 방법을 선택하면 모델 성능을 크게 향상시킬 수 있다. 데이터의 특성, 모델의 요구사항, 범주의 개수와 순서 관계를 종합적으로 고려하여 최적의 인코딩 방법을 선택하는 것이 중요하다. 이제 데이터 전처리의 전 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.
+범주화는 정보 손실을 감수하고 해석력을 얻는 선택이다. EDA 결과를 바탕으로 신중하게 결정해야 하며, 특히 도메인 전문가와의 협업이 중요한 경우 사용자 정의 구간화를 고려해야 한다. 다음 단계로는 범주화된 변수를 인코딩하여 모델에 적용하거나, 스케일링을 통해 연속형 변수를 그대로 활용하는 방법을 선택할 수 있다.
