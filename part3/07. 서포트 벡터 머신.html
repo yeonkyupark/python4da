@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,49 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#svm-개요" id="toc-svm-개요" class="nav-link active" data-scroll-target="#svm-개요"><span class="header-section-number">25.1</span> SVM 개요</a></li>
+  <li><a href="#마진과-서포트-벡터" id="toc-마진과-서포트-벡터" class="nav-link" data-scroll-target="#마진과-서포트-벡터"><span class="header-section-number">25.2</span> 마진과 서포트 벡터</a>
+  <ul>
+  <li><a href="#마진margin" id="toc-마진margin" class="nav-link" data-scroll-target="#마진margin"><span class="header-section-number">25.2.1</span> 마진(Margin)</a></li>
+  <li><a href="#서포트-벡터" id="toc-서포트-벡터" class="nav-link" data-scroll-target="#서포트-벡터"><span class="header-section-number">25.2.2</span> 서포트 벡터</a></li>
+  </ul></li>
+  <li><a href="#하드-마진-vs-소프트-마진" id="toc-하드-마진-vs-소프트-마진" class="nav-link" data-scroll-target="#하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</a>
+  <ul>
+  <li><a href="#하드-마진" id="toc-하드-마진" class="nav-link" data-scroll-target="#하드-마진"><span class="header-section-number">25.3.1</span> 하드 마진</a></li>
+  <li><a href="#소프트-마진" id="toc-소프트-마진" class="nav-link" data-scroll-target="#소프트-마진"><span class="header-section-number">25.3.2</span> 소프트 마진</a></li>
+  <li><a href="#c-파라미터의-의미" id="toc-c-파라미터의-의미" class="nav-link" data-scroll-target="#c-파라미터의-의미"><span class="header-section-number">25.3.3</span> C 파라미터의 의미</a></li>
+  </ul></li>
+  <li><a href="#선형-svm" id="toc-선형-svm" class="nav-link" data-scroll-target="#선형-svm"><span class="header-section-number">25.4</span> 선형 SVM</a>
+  <ul>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">25.4.1</span> 특징</a></li>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">25.4.2</span> 예제</a></li>
+  </ul></li>
+  <li><a href="#비선형-svm과-커널-트릭" id="toc-비선형-svm과-커널-트릭" class="nav-link" data-scroll-target="#비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</a>
+  <ul>
+  <li><a href="#커널-트릭-개념" id="toc-커널-트릭-개념" class="nav-link" data-scroll-target="#커널-트릭-개념"><span class="header-section-number">25.5.1</span> 커널 트릭 개념</a></li>
+  <li><a href="#대표적인-커널" id="toc-대표적인-커널" class="nav-link" data-scroll-target="#대표적인-커널"><span class="header-section-number">25.5.2</span> 대표적인 커널</a></li>
+  </ul></li>
+  <li><a href="#rbf-커널과-γ-gamma" id="toc-rbf-커널과-γ-gamma" class="nav-link" data-scroll-target="#rbf-커널과-γ-gamma"><span class="header-section-number">25.6</span> RBF 커널과 γ (gamma)</a>
+  <ul>
+  <li><a href="#gamma의-의미" id="toc-gamma의-의미" class="nav-link" data-scroll-target="#gamma의-의미"><span class="header-section-number">25.6.1</span> gamma의 의미</a></li>
+  <li><a href="#gamma-값의-영향" id="toc-gamma-값의-영향" class="nav-link" data-scroll-target="#gamma-값의-영향"><span class="header-section-number">25.6.2</span> gamma 값의 영향</a></li>
+  <li><a href="#예제-rbf-svm" id="toc-예제-rbf-svm" class="nav-link" data-scroll-target="#예제-rbf-svm"><span class="header-section-number">25.6.3</span> 예제 (RBF SVM)</a></li>
+  </ul></li>
+  <li><a href="#다중-분류에서의-svm" id="toc-다중-분류에서의-svm" class="nav-link" data-scroll-target="#다중-분류에서의-svm"><span class="header-section-number">25.7</span> 다중 분류에서의 SVM</a></li>
+  <li><a href="#svm의-장단점" id="toc-svm의-장단점" class="nav-link" data-scroll-target="#svm의-장단점"><span class="header-section-number">25.8</span> SVM의 장단점</a>
+  <ul>
+  <li><a href="#장점" id="toc-장점" class="nav-link" data-scroll-target="#장점"><span class="header-section-number">25.8.1</span> 장점</a></li>
+  <li><a href="#단점" id="toc-단점" class="nav-link" data-scroll-target="#단점"><span class="header-section-number">25.8.2</span> 단점</a></li>
+  </ul></li>
+  <li><a href="#로지스틱-회귀-vs-svm" id="toc-로지스틱-회귀-vs-svm" class="nav-link" data-scroll-target="#로지스틱-회귀-vs-svm"><span class="header-section-number">25.9</span> 로지스틱 회귀 vs SVM</a></li>
+  <li><a href="#활용-가이드" id="toc-활용-가이드" class="nav-link" data-scroll-target="#활용-가이드"><span class="header-section-number">25.10</span> 활용 가이드</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/07. 서포트 벡터 머신.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +442,238 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="svm-개요" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="svm-개요"><span class="header-section-number">25.1</span> SVM 개요</h2>
+<p><strong>서포트 벡터 머신(Support Vector Machine, SVM)</strong> 은 클래스를 가장 잘 구분하는 <strong>결정 경계(초평면)</strong> 를 찾는 분류 모델이다.</p>
+<p>핵심 아이디어는 단순하다.</p>
+<ul>
+<li>클래스 간 <strong>마진(margin)</strong> 을 최대화</li>
+<li>경계에 가장 가까운 데이터만 학습에 사용</li>
+</ul>
+<p>이 “경계에 가장 가까운 데이터”를 <strong>서포트 벡터</strong>라고 부른다.</p>
+</section>
+<section id="마진과-서포트-벡터" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="마진과-서포트-벡터"><span class="header-section-number">25.2</span> 마진과 서포트 벡터</h2>
+<section id="마진margin" class="level3" data-number="25.2.1">
+<h3 data-number="25.2.1" class="anchored" data-anchor-id="마진margin"><span class="header-section-number">25.2.1</span> 마진(Margin)</h3>
+<ul>
+<li>결정 경계와 가장 가까운 데이터 사이의 거리</li>
+<li>SVM은 <strong>마진이 최대가 되도록</strong> 경계를 찾는다</li>
+</ul>
+<p>노이즈에 강하고 일반화 성능이 좋음</p>
+</section>
+<section id="서포트-벡터" class="level3" data-number="25.2.2">
+<h3 data-number="25.2.2" class="anchored" data-anchor-id="서포트-벡터"><span class="header-section-number">25.2.2</span> 서포트 벡터</h3>
+<ul>
+<li>결정 경계를 결정하는 핵심 데이터</li>
+<li>전체 데이터 중 <strong>일부만 모델을 결정</strong></li>
+</ul>
+<p>즉, SVM은</p>
+<blockquote class="blockquote">
+<p>“모든 데이터를 쓰지 않는다”</p>
+</blockquote>
+</section>
+</section>
+<section id="하드-마진-vs-소프트-마진" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</h2>
+<section id="하드-마진" class="level3" data-number="25.3.1">
+<h3 data-number="25.3.1" class="anchored" data-anchor-id="하드-마진"><span class="header-section-number">25.3.1</span> 하드 마진</h3>
+<ul>
+<li>모든 데이터를 완벽히 분리</li>
+<li>현실 데이터에서는 거의 불가능</li>
+</ul>
+</section>
+<section id="소프트-마진" class="level3" data-number="25.3.2">
+<h3 data-number="25.3.2" class="anchored" data-anchor-id="소프트-마진"><span class="header-section-number">25.3.2</span> 소프트 마진</h3>
+<ul>
+<li>일부 오분류 허용</li>
+<li><strong>C 파라미터</strong>로 허용 정도 조절</li>
+</ul>
+</section>
+<section id="c-파라미터의-의미" class="level3" data-number="25.3.3">
+<h3 data-number="25.3.3" class="anchored" data-anchor-id="c-파라미터의-의미"><span class="header-section-number">25.3.3</span> C 파라미터의 의미</h3>
+<ul>
+<li><p>C ↑</p>
+<ul>
+<li>오분류 허용 ↓</li>
+<li>과적합 위험 ↑</li>
+</ul></li>
+<li><p>C ↓</p>
+<ul>
+<li>마진 넓어짐</li>
+<li>과소적합 가능성 ↑</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="선형-svm" class="level2" data-number="25.4">
+<h2 data-number="25.4" class="anchored" data-anchor-id="선형-svm"><span class="header-section-number">25.4</span> 선형 SVM</h2>
+<section id="특징" class="level3" data-number="25.4.1">
+<h3 data-number="25.4.1" class="anchored" data-anchor-id="특징"><span class="header-section-number">25.4.1</span> 특징</h3>
+<ul>
+<li>선형 결정 경계</li>
+<li>고차원 데이터에 강함</li>
+<li>로지스틱 회귀와 비교 대상</li>
+</ul>
+</section>
+<section id="예제" class="level3" data-number="25.4.2">
+<h3 data-number="25.4.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">25.4.2</span> 예제</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear <span class="op">=</span> Pipeline([</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span><span class="fl">1.0</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear.fit(X_train, y_train)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>SVM은 <strong>스케일링 필수</strong></p>
+</section>
+</section>
+<section id="비선형-svm과-커널-트릭" class="level2" data-number="25.5">
+<h2 data-number="25.5" class="anchored" data-anchor-id="비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</h2>
+<p>현실 데이터는 선형으로 분리되지 않는 경우가 많다. 이때 사용하는 것이 <strong>커널 함수(kernel)</strong>이다.</p>
+<section id="커널-트릭-개념" class="level3" data-number="25.5.1">
+<h3 data-number="25.5.1" class="anchored" data-anchor-id="커널-트릭-개념"><span class="header-section-number">25.5.1</span> 커널 트릭 개념</h3>
+<ul>
+<li>원래 공간에서는 비선형</li>
+<li>고차원 공간으로 변환하면 선형 분리 가능</li>
+<li>실제로 변환을 계산하지 않고 <strong>내적만 계산</strong></li>
+</ul>
+</section>
+<section id="대표적인-커널" class="level3" data-number="25.5.2">
+<h3 data-number="25.5.2" class="anchored" data-anchor-id="대표적인-커널"><span class="header-section-number">25.5.2</span> 대표적인 커널</h3>
+<ul>
+<li>Linear</li>
+<li>Polynomial</li>
+<li>RBF (Gaussian), 가장 많이 사용</li>
+<li>Sigmoid</li>
+</ul>
+</section>
+</section>
+<section id="rbf-커널과-γ-gamma" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="rbf-커널과-γ-gamma"><span class="header-section-number">25.6</span> RBF 커널과 γ (gamma)</h2>
+<section id="gamma의-의미" class="level3" data-number="25.6.1">
+<h3 data-number="25.6.1" class="anchored" data-anchor-id="gamma의-의미"><span class="header-section-number">25.6.1</span> gamma의 의미</h3>
+<ul>
+<li>하나의 데이터가 미치는 영향 범위</li>
+</ul>
+</section>
+<section id="gamma-값의-영향" class="level3" data-number="25.6.2">
+<h3 data-number="25.6.2" class="anchored" data-anchor-id="gamma-값의-영향"><span class="header-section-number">25.6.2</span> gamma 값의 영향</h3>
+<ul>
+<li><p>gamma ↑</p>
+<ul>
+<li>영향 범위 좁음</li>
+<li>결정 경계 복잡</li>
+<li>과적합 위험 ↑</li>
+</ul></li>
+<li><p>gamma ↓</p>
+<ul>
+<li>영향 범위 넓음</li>
+<li>단순한 경계</li>
+<li>과소적합 가능성 ↑</li>
+</ul></li>
+</ul>
+</section>
+<section id="예제-rbf-svm" class="level3" data-number="25.6.3">
+<h3 data-number="25.6.3" class="anchored" data-anchor-id="예제-rbf-svm"><span class="header-section-number">25.6.3</span> 예제 (RBF SVM)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf <span class="op">=</span> Pipeline([</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, SVC(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        kernel<span class="op">=</span><span class="st">"rbf"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        C<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        gamma<span class="op">=</span><span class="st">"scale"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf.fit(X_train, y_train)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="다중-분류에서의-svm" class="level2" data-number="25.7">
+<h2 data-number="25.7" class="anchored" data-anchor-id="다중-분류에서의-svm"><span class="header-section-number">25.7</span> 다중 분류에서의 SVM</h2>
+<p>SVM은 본래 <strong>이진 분류 모델</strong>이나 다중 클래스에서는 내부적으로 다음 방식을 사용한다.</p>
+<ul>
+<li>One-vs-Rest (OvR)</li>
+<li>One-vs-One (OvO, 기본값)</li>
+</ul>
+<p>scikit-learn에서는 자동 처리된다.</p>
+</section>
+<section id="svm의-장단점" class="level2" data-number="25.8">
+<h2 data-number="25.8" class="anchored" data-anchor-id="svm의-장단점"><span class="header-section-number">25.8</span> SVM의 장단점</h2>
+<section id="장점" class="level3" data-number="25.8.1">
+<h3 data-number="25.8.1" class="anchored" data-anchor-id="장점"><span class="header-section-number">25.8.1</span> 장점</h3>
+<ul>
+<li>일반화 성능 우수</li>
+<li>고차원 데이터에 강함</li>
+<li>커널을 통한 강력한 비선형 표현</li>
+</ul>
+</section>
+<section id="단점" class="level3" data-number="25.8.2">
+<h3 data-number="25.8.2" class="anchored" data-anchor-id="단점"><span class="header-section-number">25.8.2</span> 단점</h3>
+<ul>
+<li>대규모 데이터에서 학습 비용 큼</li>
+<li>파라미터(C, gamma) 튜닝 필요</li>
+<li>모델 해석 어려움</li>
+</ul>
+</section>
+</section>
+<section id="로지스틱-회귀-vs-svm" class="level2" data-number="25.9">
+<h2 data-number="25.9" class="anchored" data-anchor-id="로지스틱-회귀-vs-svm"><span class="header-section-number">25.9</span> 로지스틱 회귀 vs SVM</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>로지스틱 회귀</th>
+<th>SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>결정 기준</td>
+<td>확률 최대화</td>
+<td>마진 최대화</td>
+</tr>
+<tr class="even">
+<td>출력</td>
+<td>확률</td>
+<td>클래스</td>
+</tr>
+<tr class="odd">
+<td>해석</td>
+<td>쉬움</td>
+<td>어려움</td>
+</tr>
+<tr class="even">
+<td>비선형</td>
+<td>제한적</td>
+<td>커널 사용</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="활용-가이드" class="level2" data-number="25.10">
+<h2 data-number="25.10" class="anchored" data-anchor-id="활용-가이드"><span class="header-section-number">25.10</span> 활용 가이드</h2>
+<ul>
+<li>데이터 수가 많지 않음</li>
+<li>특성 차원이 높음</li>
+<li>명확한 결정 경계 필요</li>
+</ul>
+<p>이런 경우 <strong>SVM은 매우 강력한 선택</strong></p>
+<p>반면,</p>
+<ul>
+<li>데이터가 매우 큼</li>
+<li>모델 해석이 중요</li>
+</ul>
+<p>트리 계열 또는 로지스틱 회귀 고려</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1096,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/07. 서포트 벡터 머신.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/07. 서포트 벡터 머신.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,56 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#모델-성능-평가" id="toc-모델-성능-평가" class="nav-link active" data-scroll-target="#모델-성능-평가"><span class="header-section-number">27</span> 모델 성능 평가</a>
+  <ul>
+  <li><a href="#모델-성능-평가의-목적" id="toc-모델-성능-평가의-목적" class="nav-link" data-scroll-target="#모델-성능-평가의-목적"><span class="header-section-number">27.1</span> 모델 성능 평가의 목적</a></li>
+  <li><a href="#회귀-성능-평가" id="toc-회귀-성능-평가" class="nav-link" data-scroll-target="#회귀-성능-평가"><span class="header-section-number">27.2</span> 회귀 성능 평가</a>
+  <ul class="collapse">
+  <li><a href="#주요-지표" id="toc-주요-지표" class="nav-link" data-scroll-target="#주요-지표"><span class="header-section-number">27.2.1</span> 주요 지표</a>
+  <ul class="collapse">
+  <li><a href="#mae-mean-absolute-error" id="toc-mae-mean-absolute-error" class="nav-link" data-scroll-target="#mae-mean-absolute-error"><span class="header-section-number">27.2.1.1</span> MAE (Mean Absolute Error)</a></li>
+  <li><a href="#mse-mean-squared-error" id="toc-mse-mean-squared-error" class="nav-link" data-scroll-target="#mse-mean-squared-error"><span class="header-section-number">27.2.1.2</span> MSE (Mean Squared Error)</a></li>
+  <li><a href="#rmse-root-mse" id="toc-rmse-root-mse" class="nav-link" data-scroll-target="#rmse-root-mse"><span class="header-section-number">27.2.1.3</span> RMSE (Root MSE)</a></li>
+  <li><a href="#r²-결정계수" id="toc-r²-결정계수" class="nav-link" data-scroll-target="#r²-결정계수"><span class="header-section-number">27.2.1.4</span> R² (결정계수)</a></li>
+  </ul></li>
+  <li><a href="#회귀-지표-선택-가이드" id="toc-회귀-지표-선택-가이드" class="nav-link" data-scroll-target="#회귀-지표-선택-가이드"><span class="header-section-number">27.2.2</span> 회귀 지표 선택 가이드</a></li>
+  </ul></li>
+  <li><a href="#분류-성능-평가" id="toc-분류-성능-평가" class="nav-link" data-scroll-target="#분류-성능-평가"><span class="header-section-number">27.3</span> 분류 성능 평가</a>
+  <ul class="collapse">
+  <li><a href="#혼동-행렬-confusion-matrix" id="toc-혼동-행렬-confusion-matrix" class="nav-link" data-scroll-target="#혼동-행렬-confusion-matrix"><span class="header-section-number">27.3.1</span> 혼동 행렬 (Confusion Matrix)</a></li>
+  <li><a href="#주요-지표-1" id="toc-주요-지표-1" class="nav-link" data-scroll-target="#주요-지표-1"><span class="header-section-number">27.3.2</span> 주요 지표</a>
+  <ul class="collapse">
+  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">27.3.2.1</span> Accuracy</a></li>
+  <li><a href="#precision" id="toc-precision" class="nav-link" data-scroll-target="#precision"><span class="header-section-number">27.3.2.2</span> Precision</a></li>
+  <li><a href="#recall" id="toc-recall" class="nav-link" data-scroll-target="#recall"><span class="header-section-number">27.3.2.3</span> Recall</a></li>
+  <li><a href="#f1-score" id="toc-f1-score" class="nav-link" data-scroll-target="#f1-score"><span class="header-section-number">27.3.2.4</span> F1-score</a></li>
+  </ul></li>
+  <li><a href="#roc-auc" id="toc-roc-auc" class="nav-link" data-scroll-target="#roc-auc"><span class="header-section-number">27.3.3</span> ROC-AUC</a></li>
+  <li><a href="#분류-예제" id="toc-분류-예제" class="nav-link" data-scroll-target="#분류-예제"><span class="header-section-number">27.3.4</span> 분류 예제</a></li>
+  </ul></li>
+  <li><a href="#다중-클래스-분류-평가" id="toc-다중-클래스-분류-평가" class="nav-link" data-scroll-target="#다중-클래스-분류-평가"><span class="header-section-number">27.4</span> 다중 클래스 분류 평가</a></li>
+  <li><a href="#군집-성능-평가" id="toc-군집-성능-평가" class="nav-link" data-scroll-target="#군집-성능-평가"><span class="header-section-number">27.5</span> 군집 성능 평가</a>
+  <ul class="collapse">
+  <li><a href="#내부-평가-지표-라벨-없음" id="toc-내부-평가-지표-라벨-없음" class="nav-link" data-scroll-target="#내부-평가-지표-라벨-없음"><span class="header-section-number">27.5.1</span> 내부 평가 지표 (라벨 없음)</a>
+  <ul class="collapse">
+  <li><a href="#silhouette-score" id="toc-silhouette-score" class="nav-link" data-scroll-target="#silhouette-score"><span class="header-section-number">27.5.1.1</span> Silhouette Score</a></li>
+  <li><a href="#daviesbouldin-index" id="toc-daviesbouldin-index" class="nav-link" data-scroll-target="#daviesbouldin-index"><span class="header-section-number">27.5.1.2</span> Davies–Bouldin Index</a></li>
+  </ul></li>
+  <li><a href="#외부-평가-지표-라벨-존재-시" id="toc-외부-평가-지표-라벨-존재-시" class="nav-link" data-scroll-target="#외부-평가-지표-라벨-존재-시"><span class="header-section-number">27.5.2</span> 외부 평가 지표 (라벨 존재 시)</a>
+  <ul class="collapse">
+  <li><a href="#adjusted-rand-index-ari" id="toc-adjusted-rand-index-ari" class="nav-link" data-scroll-target="#adjusted-rand-index-ari"><span class="header-section-number">27.5.2.1</span> Adjusted Rand Index (ARI)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#평가-지표-선택-요약" id="toc-평가-지표-선택-요약" class="nav-link" data-scroll-target="#평가-지표-선택-요약"><span class="header-section-number">27.6</span> 평가 지표 선택 요약</a></li>
+  <li><a href="#평가-시-중요한-원칙" id="toc-평가-시-중요한-원칙" class="nav-link" data-scroll-target="#평가-시-중요한-원칙"><span class="header-section-number">27.7</span> 평가 시 중요한 원칙</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/08. 모델 성능 평가.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +449,269 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="모델-성능-평가" class="level1" data-number="27">
+<h1 data-number="27"><span class="header-section-number">27</span> 모델 성능 평가</h1>
+<section id="모델-성능-평가의-목적" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="모델-성능-평가의-목적"><span class="header-section-number">27.1</span> 모델 성능 평가의 목적</h2>
+<p>모델 성능 평가(Model Evaluation)는 단순히 “정확한가?”를 묻는 과정이 아니다.</p>
+<p>핵심 질문은 다음과 같다.</p>
+<ul>
+<li>학습 데이터가 아닌 <strong>새 데이터에서도 잘 작동하는가?</strong></li>
+<li>어떤 오류를 더 중요하게 봐야 하는가?</li>
+<li>모델 간 <strong>공정한 비교</strong>가 가능한가?</li>
+</ul>
+<p>문제 유형에 따라 평가 지표는 달라져야 한다.</p>
+</section>
+<section id="회귀-성능-평가" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="회귀-성능-평가"><span class="header-section-number">27.2</span> 회귀 성능 평가</h2>
+<p>회귀 문제에서는</p>
+<blockquote class="blockquote">
+<p>“예측값이 실제값과 얼마나 다른가?”</p>
+</blockquote>
+<p>를 측정한다.</p>
+<section id="주요-지표" class="level3" data-number="27.2.1">
+<h3 data-number="27.2.1" class="anchored" data-anchor-id="주요-지표"><span class="header-section-number">27.2.1</span> 주요 지표</h3>
+<section id="mae-mean-absolute-error" class="level4" data-number="27.2.1.1">
+<h4 data-number="27.2.1.1" class="anchored" data-anchor-id="mae-mean-absolute-error"><span class="header-section-number">27.2.1.1</span> MAE (Mean Absolute Error)</h4>
+<ul>
+<li>오차의 절댓값 평균</li>
+<li>직관적 해석 가능</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mean_absolute_error(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="mse-mean-squared-error" class="level4" data-number="27.2.1.2">
+<h4 data-number="27.2.1.2" class="anchored" data-anchor-id="mse-mean-squared-error"><span class="header-section-number">27.2.1.2</span> MSE (Mean Squared Error)</h4>
+<ul>
+<li>오차 제곱 평균</li>
+<li>큰 오차에 더 큰 패널티</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_squared_error(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="rmse-root-mse" class="level4" data-number="27.2.1.3">
+<h4 data-number="27.2.1.3" class="anchored" data-anchor-id="rmse-root-mse"><span class="header-section-number">27.2.1.3</span> RMSE (Root MSE)</h4>
+<ul>
+<li>MSE의 제곱근</li>
+<li>원래 단위로 해석 가능</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_squared_error(y_test, y_pred, squared<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="r²-결정계수" class="level4" data-number="27.2.1.4">
+<h4 data-number="27.2.1.4" class="anchored" data-anchor-id="r²-결정계수"><span class="header-section-number">27.2.1.4</span> R² (결정계수)</h4>
+<ul>
+<li>모델이 분산을 얼마나 설명하는가</li>
+<li>상대적 지표</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>r2_score(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="회귀-지표-선택-가이드" class="level3" data-number="27.2.2">
+<h3 data-number="27.2.2" class="anchored" data-anchor-id="회귀-지표-선택-가이드"><span class="header-section-number">27.2.2</span> 회귀 지표 선택 가이드</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>추천 지표</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>직관적 오차 크기</td>
+<td>MAE</td>
+</tr>
+<tr class="even">
+<td>큰 오차 중요</td>
+<td>RMSE</td>
+</tr>
+<tr class="odd">
+<td>모델 비교</td>
+<td>R²</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="분류-성능-평가" class="level2" data-number="27.3">
+<h2 data-number="27.3" class="anchored" data-anchor-id="분류-성능-평가"><span class="header-section-number">27.3</span> 분류 성능 평가</h2>
+<p>분류 문제에서는</p>
+<blockquote class="blockquote">
+<p>“얼마나 정확히 구분했는가?” 보다 “어떤 실수를 했는가?”</p>
+</blockquote>
+<p>가 더 중요할 수 있다.</p>
+<section id="혼동-행렬-confusion-matrix" class="level3" data-number="27.3.1">
+<h3 data-number="27.3.1" class="anchored" data-anchor-id="혼동-행렬-confusion-matrix"><span class="header-section-number">27.3.1</span> 혼동 행렬 (Confusion Matrix)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>실제 &nbsp;예측</th>
+<th>Positive</th>
+<th>Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive</td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr class="even">
+<td>Negative</td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="주요-지표-1" class="level3" data-number="27.3.2">
+<h3 data-number="27.3.2" class="anchored" data-anchor-id="주요-지표-1"><span class="header-section-number">27.3.2</span> 주요 지표</h3>
+<section id="accuracy" class="level4" data-number="27.3.2.1">
+<h4 data-number="27.3.2.1" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">27.3.2.1</span> Accuracy</h4>
+<ul>
+<li>전체 중 맞춘 비율</li>
+<li>클래스 불균형에 취약</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>accuracy_score(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="precision" class="level4" data-number="27.3.2.2">
+<h4 data-number="27.3.2.2" class="anchored" data-anchor-id="precision"><span class="header-section-number">27.3.2.2</span> Precision</h4>
+<ul>
+<li>Positive로 예측한 것 중 실제 Positive</li>
+<li>오탐(False Positive) 최소화</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> precision_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="recall" class="level4" data-number="27.3.2.3">
+<h4 data-number="27.3.2.3" class="anchored" data-anchor-id="recall"><span class="header-section-number">27.3.2.3</span> Recall</h4>
+<ul>
+<li>실제 Positive 중 맞춘 비율</li>
+<li>미탐(False Negative) 최소화</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> recall_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="f1-score" class="level4" data-number="27.3.2.4">
+<h4 data-number="27.3.2.4" class="anchored" data-anchor-id="f1-score"><span class="header-section-number">27.3.2.4</span> F1-score</h4>
+<ul>
+<li>Precision과 Recall의 조화 평균</li>
+<li>불균형 데이터에 적합</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> f1_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="roc-auc" class="level3" data-number="27.3.3">
+<h3 data-number="27.3.3" class="anchored" data-anchor-id="roc-auc"><span class="header-section-number">27.3.3</span> ROC-AUC</h3>
+<ul>
+<li>분류 임계값 변화에 따른 성능</li>
+<li>확률 기반 평가</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="분류-예제" class="level3" data-number="27.3.4">
+<h3 data-number="27.3.4" class="anchored" data-anchor-id="분류-예제"><span class="header-section-number">27.3.4</span> 분류 예제</h3>
+<ul>
+<li>species 분류 문제</li>
+<li>클래스 균형이 비교적 양호</li>
+<li>Accuracy + F1 병행 권장</li>
+</ul>
+</section>
+</section>
+<section id="다중-클래스-분류-평가" class="level2" data-number="27.4">
+<h2 data-number="27.4" class="anchored" data-anchor-id="다중-클래스-분류-평가"><span class="header-section-number">27.4</span> 다중 클래스 분류 평가</h2>
+<ul>
+<li>macro 평균</li>
+<li>micro 평균</li>
+<li>weighted 평균</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>클래스 수가 늘어나면 <strong>accuracy 단독 사용 금지</strong></p>
+</section>
+<section id="군집-성능-평가" class="level2" data-number="27.5">
+<h2 data-number="27.5" class="anchored" data-anchor-id="군집-성능-평가"><span class="header-section-number">27.5</span> 군집 성능 평가</h2>
+<p>군집은 <strong>정답 라벨이 없는 경우</strong>가 많다. 따라서 평가 방식도 다르다.</p>
+<section id="내부-평가-지표-라벨-없음" class="level3" data-number="27.5.1">
+<h3 data-number="27.5.1" class="anchored" data-anchor-id="내부-평가-지표-라벨-없음"><span class="header-section-number">27.5.1</span> 내부 평가 지표 (라벨 없음)</h3>
+<section id="silhouette-score" class="level4" data-number="27.5.1.1">
+<h4 data-number="27.5.1.1" class="anchored" data-anchor-id="silhouette-score"><span class="header-section-number">27.5.1.1</span> Silhouette Score</h4>
+<ul>
+<li>군집 내 응집도 vs 군집 간 분리도</li>
+<li>-1 ~ 1</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>silhouette_score(X_scaled, labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="daviesbouldin-index" class="level4" data-number="27.5.1.2">
+<h4 data-number="27.5.1.2" class="anchored" data-anchor-id="daviesbouldin-index"><span class="header-section-number">27.5.1.2</span> Davies–Bouldin Index</h4>
+<ul>
+<li>군집 간 유사도</li>
+<li>작을수록 좋음</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> davies_bouldin_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="외부-평가-지표-라벨-존재-시" class="level3" data-number="27.5.2">
+<h3 data-number="27.5.2" class="anchored" data-anchor-id="외부-평가-지표-라벨-존재-시"><span class="header-section-number">27.5.2</span> 외부 평가 지표 (라벨 존재 시)</h3>
+<p>penguins처럼 실제 종을 알고 있는 경우</p>
+<section id="adjusted-rand-index-ari" class="level4" data-number="27.5.2.1">
+<h4 data-number="27.5.2.1" class="anchored" data-anchor-id="adjusted-rand-index-ari"><span class="header-section-number">27.5.2.1</span> Adjusted Rand Index (ARI)</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> adjusted_rand_score</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>adjusted_rand_score(true_labels, cluster_labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+</section>
+<section id="평가-지표-선택-요약" class="level2" data-number="27.6">
+<h2 data-number="27.6" class="anchored" data-anchor-id="평가-지표-선택-요약"><span class="header-section-number">27.6</span> 평가 지표 선택 요약</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>문제 유형</th>
+<th>주요 지표</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>회귀</td>
+<td>MAE, RMSE, R²</td>
+</tr>
+<tr class="even">
+<td>이진 분류</td>
+<td>Precision, Recall, F1, ROC-AUC</td>
+</tr>
+<tr class="odd">
+<td>다중 분류</td>
+<td>F1 (macro/weighted)</td>
+</tr>
+<tr class="even">
+<td>군집</td>
+<td>Silhouette, ARI</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="평가-시-중요한-원칙" class="level2" data-number="27.7">
+<h2 data-number="27.7" class="anchored" data-anchor-id="평가-시-중요한-원칙"><span class="header-section-number">27.7</span> 평가 시 중요한 원칙</h2>
+<ul>
+<li>하나의 지표로 결론 내리지 않는다</li>
+<li>문제 맥락에 맞는 지표 선택</li>
+<li>항상 <strong>테스트 데이터 기준 평가</strong></li>
+</ul>
+<p>모델 성능 평가는 숫자보다 <strong>판단의 근거</strong>다.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1134,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/08. 모델 성능 평가.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/08. 모델 성능 평가.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>

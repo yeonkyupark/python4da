@@ -2326,5 +2326,214 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>24</span>  <span class='chapter-title'>군집 분석</span>"
     ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html",
+    "href": "part3/07. 서포트 벡터 머신.html",
+    "title": "25  서포트 벡터 머신",
+    "section": "",
+    "text": "25.1 SVM 개요\n서포트 벡터 머신(Support Vector Machine, SVM) 은 클래스를 가장 잘 구분하는 결정 경계(초평면) 를 찾는 분류 모델이다.\n핵심 아이디어는 단순하다.\n이 “경계에 가장 가까운 데이터”를 서포트 벡터라고 부른다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#svm-개요",
+    "href": "part3/07. 서포트 벡터 머신.html#svm-개요",
+    "title": "25  서포트 벡터 머신",
+    "section": "",
+    "text": "클래스 간 마진(margin) 을 최대화\n경계에 가장 가까운 데이터만 학습에 사용",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#마진과-서포트-벡터",
+    "href": "part3/07. 서포트 벡터 머신.html#마진과-서포트-벡터",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.2 마진과 서포트 벡터",
+    "text": "25.2 마진과 서포트 벡터\n\n25.2.1 마진(Margin)\n\n결정 경계와 가장 가까운 데이터 사이의 거리\nSVM은 마진이 최대가 되도록 경계를 찾는다\n\n노이즈에 강하고 일반화 성능이 좋음\n\n\n25.2.2 서포트 벡터\n\n결정 경계를 결정하는 핵심 데이터\n전체 데이터 중 일부만 모델을 결정\n\n즉, SVM은\n\n“모든 데이터를 쓰지 않는다”",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#하드-마진-vs-소프트-마진",
+    "href": "part3/07. 서포트 벡터 머신.html#하드-마진-vs-소프트-마진",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.3 하드 마진 vs 소프트 마진",
+    "text": "25.3 하드 마진 vs 소프트 마진\n\n25.3.1 하드 마진\n\n모든 데이터를 완벽히 분리\n현실 데이터에서는 거의 불가능\n\n\n\n25.3.2 소프트 마진\n\n일부 오분류 허용\nC 파라미터로 허용 정도 조절\n\n\n\n25.3.3 C 파라미터의 의미\n\nC ↑\n\n오분류 허용 ↓\n과적합 위험 ↑\n\nC ↓\n\n마진 넓어짐\n과소적합 가능성 ↑",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#선형-svm",
+    "href": "part3/07. 서포트 벡터 머신.html#선형-svm",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.4 선형 SVM",
+    "text": "25.4 선형 SVM\n\n25.4.1 특징\n\n선형 결정 경계\n고차원 데이터에 강함\n로지스틱 회귀와 비교 대상\n\n\n\n25.4.2 예제\nfrom sklearn.svm import SVC\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\n\npipe_svm_linear = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", SVC(kernel=\"linear\", C=1.0))\n])\n\npipe_svm_linear.fit(X_train, y_train)\n\npipe_svm_linear.score(X_test, y_test)\nSVM은 스케일링 필수",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#비선형-svm과-커널-트릭",
+    "href": "part3/07. 서포트 벡터 머신.html#비선형-svm과-커널-트릭",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.5 비선형 SVM과 커널 트릭",
+    "text": "25.5 비선형 SVM과 커널 트릭\n현실 데이터는 선형으로 분리되지 않는 경우가 많다. 이때 사용하는 것이 커널 함수(kernel)이다.\n\n25.5.1 커널 트릭 개념\n\n원래 공간에서는 비선형\n고차원 공간으로 변환하면 선형 분리 가능\n실제로 변환을 계산하지 않고 내적만 계산\n\n\n\n25.5.2 대표적인 커널\n\nLinear\nPolynomial\nRBF (Gaussian), 가장 많이 사용\nSigmoid",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#rbf-커널과-γ-gamma",
+    "href": "part3/07. 서포트 벡터 머신.html#rbf-커널과-γ-gamma",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.6 RBF 커널과 γ (gamma)",
+    "text": "25.6 RBF 커널과 γ (gamma)\n\n25.6.1 gamma의 의미\n\n하나의 데이터가 미치는 영향 범위\n\n\n\n25.6.2 gamma 값의 영향\n\ngamma ↑\n\n영향 범위 좁음\n결정 경계 복잡\n과적합 위험 ↑\n\ngamma ↓\n\n영향 범위 넓음\n단순한 경계\n과소적합 가능성 ↑\n\n\n\n\n25.6.3 예제 (RBF SVM)\npipe_svm_rbf = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", SVC(\n        kernel=\"rbf\",\n        C=1.0,\n        gamma=\"scale\"\n    ))\n])\n\npipe_svm_rbf.fit(X_train, y_train)\n\npipe_svm_rbf.score(X_test, y_test)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#다중-분류에서의-svm",
+    "href": "part3/07. 서포트 벡터 머신.html#다중-분류에서의-svm",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.7 다중 분류에서의 SVM",
+    "text": "25.7 다중 분류에서의 SVM\nSVM은 본래 이진 분류 모델이나 다중 클래스에서는 내부적으로 다음 방식을 사용한다.\n\nOne-vs-Rest (OvR)\nOne-vs-One (OvO, 기본값)\n\nscikit-learn에서는 자동 처리된다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#svm의-장단점",
+    "href": "part3/07. 서포트 벡터 머신.html#svm의-장단점",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.8 SVM의 장단점",
+    "text": "25.8 SVM의 장단점\n\n25.8.1 장점\n\n일반화 성능 우수\n고차원 데이터에 강함\n커널을 통한 강력한 비선형 표현\n\n\n\n25.8.2 단점\n\n대규모 데이터에서 학습 비용 큼\n파라미터(C, gamma) 튜닝 필요\n모델 해석 어려움",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#로지스틱-회귀-vs-svm",
+    "href": "part3/07. 서포트 벡터 머신.html#로지스틱-회귀-vs-svm",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.9 로지스틱 회귀 vs SVM",
+    "text": "25.9 로지스틱 회귀 vs SVM\n\n\n\n구분\n로지스틱 회귀\nSVM\n\n\n\n\n결정 기준\n확률 최대화\n마진 최대화\n\n\n출력\n확률\n클래스\n\n\n해석\n쉬움\n어려움\n\n\n비선형\n제한적\n커널 사용",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/07. 서포트 벡터 머신.html#활용-가이드",
+    "href": "part3/07. 서포트 벡터 머신.html#활용-가이드",
+    "title": "25  서포트 벡터 머신",
+    "section": "25.10 활용 가이드",
+    "text": "25.10 활용 가이드\n\n데이터 수가 많지 않음\n특성 차원이 높음\n명확한 결정 경계 필요\n\n이런 경우 SVM은 매우 강력한 선택\n반면,\n\n데이터가 매우 큼\n모델 해석이 중요\n\n트리 계열 또는 로지스틱 회귀 고려",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>서포트 벡터 머신</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html",
+    "href": "part3/08. 모델 성능 평가.html",
+    "title": "26  모델 성능 평가",
+    "section": "",
+    "text": "27 모델 성능 평가",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#모델-성능-평가의-목적",
+    "href": "part3/08. 모델 성능 평가.html#모델-성능-평가의-목적",
+    "title": "26  모델 성능 평가",
+    "section": "27.1 모델 성능 평가의 목적",
+    "text": "27.1 모델 성능 평가의 목적\n모델 성능 평가(Model Evaluation)는 단순히 “정확한가?”를 묻는 과정이 아니다.\n핵심 질문은 다음과 같다.\n\n학습 데이터가 아닌 새 데이터에서도 잘 작동하는가?\n어떤 오류를 더 중요하게 봐야 하는가?\n모델 간 공정한 비교가 가능한가?\n\n문제 유형에 따라 평가 지표는 달라져야 한다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#회귀-성능-평가",
+    "href": "part3/08. 모델 성능 평가.html#회귀-성능-평가",
+    "title": "26  모델 성능 평가",
+    "section": "27.2 회귀 성능 평가",
+    "text": "27.2 회귀 성능 평가\n회귀 문제에서는\n\n“예측값이 실제값과 얼마나 다른가?”\n\n를 측정한다.\n\n27.2.1 주요 지표\n\n27.2.1.1 MAE (Mean Absolute Error)\n\n오차의 절댓값 평균\n직관적 해석 가능\n\nfrom sklearn.metrics import mean_absolute_error\n\nmean_absolute_error(y_test, y_pred)\n\n\n27.2.1.2 MSE (Mean Squared Error)\n\n오차 제곱 평균\n큰 오차에 더 큰 패널티\n\nfrom sklearn.metrics import mean_squared_error\n\nmean_squared_error(y_test, y_pred)\n\n\n27.2.1.3 RMSE (Root MSE)\n\nMSE의 제곱근\n원래 단위로 해석 가능\n\nmean_squared_error(y_test, y_pred, squared=False)\n\n\n27.2.1.4 R² (결정계수)\n\n모델이 분산을 얼마나 설명하는가\n상대적 지표\n\nfrom sklearn.metrics import r2_score\n\nr2_score(y_test, y_pred)\n\n\n\n27.2.2 회귀 지표 선택 가이드\n\n\n\n상황\n추천 지표\n\n\n\n\n직관적 오차 크기\nMAE\n\n\n큰 오차 중요\nRMSE\n\n\n모델 비교\nR²",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#분류-성능-평가",
+    "href": "part3/08. 모델 성능 평가.html#분류-성능-평가",
+    "title": "26  모델 성능 평가",
+    "section": "27.3 분류 성능 평가",
+    "text": "27.3 분류 성능 평가\n분류 문제에서는\n\n“얼마나 정확히 구분했는가?” 보다 “어떤 실수를 했는가?”\n\n가 더 중요할 수 있다.\n\n27.3.1 혼동 행렬 (Confusion Matrix)\nfrom sklearn.metrics import confusion_matrix\n\nconfusion_matrix(y_test, y_pred)\n\n\n\n실제  예측\nPositive\nNegative\n\n\n\n\nPositive\nTP\nFN\n\n\nNegative\nFP\nTN\n\n\n\n\n\n27.3.2 주요 지표\n\n27.3.2.1 Accuracy\n\n전체 중 맞춘 비율\n클래스 불균형에 취약\n\nfrom sklearn.metrics import accuracy_score\n\naccuracy_score(y_test, y_pred)\n\n\n27.3.2.2 Precision\n\nPositive로 예측한 것 중 실제 Positive\n오탐(False Positive) 최소화\n\nfrom sklearn.metrics import precision_score\n\n\n27.3.2.3 Recall\n\n실제 Positive 중 맞춘 비율\n미탐(False Negative) 최소화\n\nfrom sklearn.metrics import recall_score\n\n\n27.3.2.4 F1-score\n\nPrecision과 Recall의 조화 평균\n불균형 데이터에 적합\n\nfrom sklearn.metrics import f1_score\n\n\n\n27.3.3 ROC-AUC\n\n분류 임계값 변화에 따른 성능\n확률 기반 평가\n\nfrom sklearn.metrics import roc_auc_score\n\n\n27.3.4 분류 예제\n\nspecies 분류 문제\n클래스 균형이 비교적 양호\nAccuracy + F1 병행 권장",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#다중-클래스-분류-평가",
+    "href": "part3/08. 모델 성능 평가.html#다중-클래스-분류-평가",
+    "title": "26  모델 성능 평가",
+    "section": "27.4 다중 클래스 분류 평가",
+    "text": "27.4 다중 클래스 분류 평가\n\nmacro 평균\nmicro 평균\nweighted 평균\n\nfrom sklearn.metrics import classification_report\n\nprint(classification_report(y_test, y_pred))\n클래스 수가 늘어나면 accuracy 단독 사용 금지",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#군집-성능-평가",
+    "href": "part3/08. 모델 성능 평가.html#군집-성능-평가",
+    "title": "26  모델 성능 평가",
+    "section": "27.5 군집 성능 평가",
+    "text": "27.5 군집 성능 평가\n군집은 정답 라벨이 없는 경우가 많다. 따라서 평가 방식도 다르다.\n\n27.5.1 내부 평가 지표 (라벨 없음)\n\n27.5.1.1 Silhouette Score\n\n군집 내 응집도 vs 군집 간 분리도\n-1 ~ 1\n\nfrom sklearn.metrics import silhouette_score\n\nsilhouette_score(X_scaled, labels)\n\n\n27.5.1.2 Davies–Bouldin Index\n\n군집 간 유사도\n작을수록 좋음\n\nfrom sklearn.metrics import davies_bouldin_score\n\n\n\n27.5.2 외부 평가 지표 (라벨 존재 시)\npenguins처럼 실제 종을 알고 있는 경우\n\n27.5.2.1 Adjusted Rand Index (ARI)\nfrom sklearn.metrics import adjusted_rand_score\n\nadjusted_rand_score(true_labels, cluster_labels)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#평가-지표-선택-요약",
+    "href": "part3/08. 모델 성능 평가.html#평가-지표-선택-요약",
+    "title": "26  모델 성능 평가",
+    "section": "27.6 평가 지표 선택 요약",
+    "text": "27.6 평가 지표 선택 요약\n\n\n\n문제 유형\n주요 지표\n\n\n\n\n회귀\nMAE, RMSE, R²\n\n\n이진 분류\nPrecision, Recall, F1, ROC-AUC\n\n\n다중 분류\nF1 (macro/weighted)\n\n\n군집\nSilhouette, ARI",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
+  },
+  {
+    "objectID": "part3/08. 모델 성능 평가.html#평가-시-중요한-원칙",
+    "href": "part3/08. 모델 성능 평가.html#평가-시-중요한-원칙",
+    "title": "26  모델 성능 평가",
+    "section": "27.7 평가 시 중요한 원칙",
+    "text": "27.7 평가 시 중요한 원칙\n\n하나의 지표로 결론 내리지 않는다\n문제 맥락에 맞는 지표 선택\n항상 테스트 데이터 기준 평가\n\n모델 성능 평가는 숫자보다 판단의 근거다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>모델 성능 평가</span>"
+    ]
   }
 ]
