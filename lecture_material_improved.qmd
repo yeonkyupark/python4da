@@ -1,6 +1,6 @@
-# 데이터 분포 변환
+# 범주형 데이터 인코딩
 
-데이터 분포 변환(Distribution Transformation)은 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 과정이다. 많은 통계 모델과 머신러닝 알고리즘은 데이터가 정규분포를 따른다고 가정하므로, 왜곡된 분포는 모델 성능을 저하시킬 수 있다. 분포 변환을 통해 극단값의 영향을 완화하고 모델의 가정을 충족시킬 수 있다. 이 장에서는 로그 변환, 제곱근 변환, Box-Cox 변환, Yeo-Johnson 변환 등 다양한 분포 변환 기법을 학습한다.
+범주형 데이터 인코딩(Categorical Encoding)은 범주형 변수를 머신러닝 모델이 처리할 수 있는 수치형으로 변환하는 과정이다. 대부분의 머신러닝 알고리즘은 수치형 데이터만 입력으로 받을 수 있으므로, 범주형 변수를 적절히 인코딩하는 것은 필수적이다. 인코딩 방법의 선택은 데이터의 특성과 사용할 모델에 따라 달라지며, 잘못된 선택은 모델 성능을 크게 저하시킬 수 있다. 이 장에서는 Label Encoding, One-Hot Encoding, Ordinal Encoding, Target Encoding, Frequency Encoding 등 주요 인코딩 기법을 학습한다.
 
 **예제: 데이터 로드**
 
@@ -8,392 +8,425 @@
 import seaborn as sns
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 # 데이터 로드
 df = sns.load_dataset("penguins")
 
-# 수치형 컬럼 선택
-num_cols = [
-    "bill_length_mm",
-    "bill_depth_mm",
-    "flipper_length_mm",
-    "body_mass_g"
-]
-
-df_num = df[num_cols]
+# 범주형 변수 확인
+print("범주형 변수:")
+print(df.select_dtypes(include='object').columns.tolist())
+print("\n범주형 변수의 고유값 개수:")
+print(df.select_dtypes(include='object').nunique())
 ```
 
-## 분포 변환의 필요성
+## Label Encoding
 
-실제 데이터는 정규분포보다는 왜곡된 분포를 보이는 경우가 많다. 특히 양의 왜도(positive skewness)를 가진 데이터가 일반적이다. 왜도는 분포의 비대칭 정도를 나타내는 지표로, 0에 가까울수록 대칭적이고 절댓값이 클수록 왜곡이 심하다.
+Label Encoding은 각 범주를 정수 값으로 매핑하는 가장 단순한 인코딩 방법이다. 예를 들어, "Adelie", "Chinstrap", "Gentoo"를 0, 1, 2로 변환한다. 구현이 간단하고 컬럼 수가 늘어나지 않는 장점이 있지만, 순서가 없는 범주에 순서를 부여하는 문제가 있다.
 
-**예제: 원본 데이터의 왜도 확인**
+**변환 예시**
+
+| 원본 | 인코딩 결과 |
+|------|-----------|
+| Adelie | 0 |
+| Chinstrap | 1 |
+| Gentoo | 2 |
+
+### 예제 코드
+
+**예제: Label Encoding 적용**
 
 ```{python}
-# 각 변수의 왜도 계산
-skewness = df_num.skew()
+from sklearn.preprocessing import LabelEncoder
 
-print("변수별 왜도:")
-print(skewness)
-print("\n해석:")
-print("- 왜도 > 0.5: 오른쪽으로 치우침 (양의 왜도)")
-print("- -0.5 < 왜도 < 0.5: 대칭에 가까움")
-print("- 왜도 < -0.5: 왼쪽으로 치우침 (음의 왜도)")
+# Label Encoder 생성
+le = LabelEncoder()
+
+# 데이터 복사
+df_label = df.copy()
+
+# species 컬럼 인코딩
+df_label["species_enc"] = le.fit_transform(df_label["species"])
+
+# 결과 확인
+print("Label Encoding 결과:")
+print(df_label[["species", "species_enc"]].head(10))
+
+# 매핑 관계 확인
+print("\n매핑 관계:")
+for i, label in enumerate(le.classes_):
+    print(f"{label} → {i}")
 ```
 
-왜곡된 분포는 다음과 같은 문제를 일으킨다.
+**주의사항**
 
-| 문제점 | 설명 |
-|--------|------|
-| 모델 가정 위배 | 선형 회귀, PCA 등은 정규성을 가정함 |
-| 극단값 영향 | 평균과 분산이 소수 극단값에 의해 왜곡됨 |
-| 예측 성능 저하 | 학습 데이터와 테스트 데이터의 분포 차이 발생 |
-| 해석 어려움 | 비선형 관계로 인한 계수 해석의 복잡성 증가 |
+Label Encoding은 범주 간에 순서 관계가 없음에도 불구하고 숫자로 변환하므로, 모델이 숫자의 크기를 의미 있는 것으로 해석할 수 있다. 예를 들어, 모델이 "Gentoo(2)"가 "Adelie(0)"보다 2배 크다고 잘못 학습할 수 있다.
 
-분포 변환의 목표는 데이터를 대칭에 가깝게 만들어 극단값의 영향을 완화하고 모델의 가정을 충족시키는 것이다.
+**사용 시점**
 
-## 로그 변환 (Log Transform)
+- 트리 기반 모델(Decision Tree, Random Forest, XGBoost, LightGBM) 사용 시
+- 컬럼 수를 늘리고 싶지 않을 때
+- 범주의 개수가 매우 많을 때 (고차원 문제 완화)
 
-로그 변환은 오른쪽 꼬리가 긴 분포(양의 왜도)를 가진 데이터에 가장 효과적인 방법이다. 지수적으로 증가하는 데이터를 선형에 가깝게 만들어준다.
+트리 기반 모델은 범주를 분할 기준으로만 사용하므로 숫자의 크기를 의미 있게 해석하지 않는다.
 
-**변환 공식**
+## One-Hot Encoding
 
-$$
-x' = \log(x)
-$$
+One-Hot Encoding은 각 범주를 이진 컬럼으로 분리하는 방법이다. k개의 범주가 있으면 k개의 새로운 컬럼이 생성되며, 각 행은 해당 범주에 해당하는 컬럼에만 1을, 나머지에는 0을 갖는다. 이 방법은 범주 간 순서 관계를 만들지 않으므로 선형 모델과 거리 기반 모델에 가장 안전하다.
 
-로그 변환은 큰 값의 차이를 압축하고 작은 값의 차이를 확대하여 분포를 대칭에 가깝게 만든다. 다만, 0 이하의 값은 변환할 수 없으므로 보정이 필요하다.
+**변환 예시**
 
-**예제: 기본 로그 변환**
+| 원본 | species_Adelie | species_Chinstrap | species_Gentoo |
+|------|----------------|-------------------|----------------|
+| Adelie | 1 | 0 | 0 |
+| Chinstrap | 0 | 1 | 0 |
+| Gentoo | 0 | 0 | 1 |
 
-```{python}
-# 로그 변환 (자연로그 사용)
-df_log = df_num.copy()
+### pandas 방식
 
-for col in num_cols:
-    df_log[col] = np.log(df_log[col])
+pandas의 `get_dummies` 함수를 사용하면 간단하게 One-Hot Encoding을 수행할 수 있다.
 
-print("로그 변환 결과 (상위 5개):")
-print(df_log.head())
-```
-
-### 0 포함 변수의 안전한 처리
-
-데이터에 0이 포함된 경우 `np.log(0)`는 `-inf`를 반환하므로 문제가 발생한다. 이를 방지하기 위해 `np.log1p(x)`를 사용한다. 이 함수는 $\log(1 + x)$를 계산하므로 0도 안전하게 처리할 수 있다.
-
-**예제: log1p를 사용한 안전한 로그 변환**
+**예제: One-Hot Encoding 적용**
 
 ```{python}
-# log1p: log(1 + x) 계산
-df_log_safe = np.log1p(df_num)
-
-print("log1p 변환 결과 (상위 5개):")
-print(df_log_safe.head())
-```
-
-### 왜도 변화 확인
-
-로그 변환 후 왜도가 어떻게 변했는지 확인한다.
-
-**예제: 로그 변환 후 왜도 비교**
-
-```{python}
-# 변환 전후 왜도 비교
-print("원본 왜도:")
-print(df_num.skew())
-print("\n로그 변환 후 왜도:")
-print(df_log_safe.skew())
-```
-
-일반적으로 로그 변환 후 왜도의 절댓값이 감소하여 분포가 더 대칭적이 된다.
-
-**적용 상황**
-
-- 왜도가 매우 큰 경우 (> 1.0)
-- 극단값(이상치)이 많은 경우
-- 지수적 증가 패턴을 보이는 데이터
-- 금융 데이터, 인구 데이터, 소득 데이터 등
-- "비율 변화"가 중요한 문제
-
-## 제곱근 변환 (Square Root Transform)
-
-제곱근 변환은 로그 변환보다 완만한 변환 방법으로, 왜도가 그리 심하지 않은 데이터에 적합하다. 포아송 분포를 따르는 카운트 데이터에 특히 효과적이다.
-
-**변환 공식**
-
-$$
-x' = \sqrt{x}
-$$
-
-**예제: 제곱근 변환**
-
-```{python}
-# 제곱근 변환
-df_sqrt = np.sqrt(df_num)
-
-print("제곱근 변환 결과 (상위 5개):")
-print(df_sqrt.head())
-
-# 왜도 확인
-print("\n제곱근 변환 후 왜도:")
-print(df_sqrt.skew())
-```
-
-### 로그 변환과 제곱근 변환 비교
-
-두 변환 방법의 선택 기준은 다음과 같다.
-
-**제곱근 변환이 적합한 경우**
-
-- 왜도가 심하지 않음 (0.5 ~ 1.5)
-- 데이터 범위가 크지 않음
-- 분포를 약간만 조정하고 싶을 때
-- 카운트 데이터 (포아송 분포)
-- 변환 전후 해석이 직관적이어야 할 때
-
-**로그 변환이 적합한 경우**
-
-- 왜도가 매우 큼 (> 1.5)
-- 극단값(이상치)이 많음
-- 데이터 범위가 매우 넓음 (여러 자릿수 차이)
-- 선형 회귀, PCA, 거리 기반 모델 사용
-- "비율 변화"가 중요한 문제 (예: 수익률, 성장률)
-
-## Box-Cox 변환
-
-Box-Cox 변환은 로그 변환의 일반화된 형태로, 최적의 변환 파라미터 λ(람다)를 자동으로 추정한다. 다양한 변환을 포괄하는 강력한 방법이지만 양수 데이터에만 적용할 수 있다.
-
-**변환 공식**
-
-$$
-x' =
-\begin{cases}
-\frac{x^\lambda - 1}{\lambda}, & \lambda \neq 0 \\
-\log(x), & \lambda = 0
-\end{cases}
-$$
-
-여기서 λ는 최대우도추정법(MLE)을 통해 자동으로 결정된다. λ 값에 따라 다음과 같은 변환이 수행된다.
-
-| λ 값 | 변환 방법 |
-|------|----------|
-| λ = 1 | 변환 없음 |
-| λ = 0.5 | 제곱근 변환 |
-| λ = 0 | 로그 변환 |
-| λ = -1 | 역수 변환 |
-
-**예제: Box-Cox 변환**
-
-```{python}
-from scipy.stats import boxcox
-
-# Box-Cox 변환
-df_boxcox = df_num.copy()
-lambdas = {}
-
-for col in num_cols:
-    # 결측치 제거
-    data = df_boxcox[col].dropna()
-    
-    # Box-Cox 변환 및 최적 람다 추정
-    transformed, lam = boxcox(data)
-    
-    # 변환 결과 저장
-    df_boxcox.loc[data.index, col] = transformed
-    lambdas[col] = lam
-
-print("Box-Cox 변환 결과 (상위 5개):")
-print(df_boxcox.head())
-```
-
-**예제: 추정된 λ 값 확인**
-
-```{python}
-# 각 변수의 최적 람다 값
-print("변수별 최적 λ 값:")
-for col, lam in lambdas.items():
-    print(f"{col}: {lam:.4f}")
-```
-
-λ 값이 0에 가까우면 로그 변환에 가깝고, 0.5에 가까우면 제곱근 변환에 가깝다.
-
-**적용 상황**
-
-- 양수 데이터만 있는 경우
-- 최적의 변환을 자동으로 찾고 싶을 때
-- 통계적 가정(정규성)을 엄격히 만족해야 하는 경우
-
-## Yeo-Johnson 변환
-
-Yeo-Johnson 변환은 Box-Cox 변환의 확장 버전으로, 0과 음수 값도 처리할 수 있다. 실무에서 가장 권장되는 방법이다.
-
-**변환 공식**
-
-Yeo-Johnson 변환은 데이터의 부호에 따라 다른 공식을 적용한다.
-
-- $x \geq 0, \lambda \neq 0$: $\frac{(x+1)^\lambda - 1}{\lambda}$
-- $x \geq 0, \lambda = 0$: $\log(x+1)$
-- $x < 0, \lambda \neq 2$: $-\frac{(-x+1)^{2-\lambda} - 1}{2-\lambda}$
-- $x < 0, \lambda = 2$: $-\log(-x+1)$
-
-**예제: Yeo-Johnson 변환**
-
-```{python}
-from sklearn.preprocessing import PowerTransformer
-
-# Yeo-Johnson 변환기 생성
-pt = PowerTransformer(method="yeo-johnson")
-
-# 변환 수행
-df_yeojohnson = pd.DataFrame(
-    pt.fit_transform(df_num),
-    columns=num_cols
+# One-Hot Encoding (모든 범주 유지)
+df_ohe = pd.get_dummies(
+    df,
+    columns=["species", "island"],
+    drop_first=False
 )
 
-print("Yeo-Johnson 변환 결과 (상위 5개):")
-print(df_yeojohnson.head())
+print("One-Hot Encoding 결과 (컬럼 목록):")
+print(df_ohe.columns.tolist())
+print(f"\n원본 컬럼 수: {len(df.columns)}")
+print(f"인코딩 후 컬럼 수: {len(df_ohe.columns)}")
 
-# 추정된 람다 값 확인
-print("\n변수별 최적 λ 값:")
-for i, col in enumerate(num_cols):
-    print(f"{col}: {pt.lambdas_[i]:.4f}")
+# 결과 샘플 확인
+print("\n인코딩 결과 (상위 5개):")
+print(df_ohe.head())
 ```
 
-Yeo-Johnson 변환은 다음과 같은 장점이 있다.
+### drop_first 옵션
 
-- 0과 음수 값을 자동으로 처리
-- 결측치를 제외하고 자동 변환
-- sklearn 파이프라인과 통합 가능
-- 실무에서 가장 안전하고 범용적
+`drop_first=True`로 설정하면 첫 번째 더미 변수를 제거하여 다중공선성(multicollinearity)을 방지할 수 있다. 예를 들어, 3개의 종이 있으면 2개의 컬럼만으로도 모든 정보를 표현할 수 있다.
 
-**적용 상황**
-
-- 0 또는 음수를 포함하는 데이터
-- 실무에서 기본적으로 사용할 변환 방법
-- 자동화된 전처리 파이프라인 구축
-
-## 분위수 변환 (Quantile Transform)
-
-분위수 변환은 데이터의 분위수를 목표 분포의 분위수로 매핑하여 분포 자체를 강제로 변환하는 방법이다. 다른 변환 방법과 달리 순위 정보만 유지하고 분포 형태를 완전히 바꾼다.
-
-**예제: 분위수 변환 (정규분포)**
+**예제: drop_first 옵션 사용**
 
 ```{python}
-from sklearn.preprocessing import QuantileTransformer
-
-# 분위수 변환기 생성 (출력 분포: 정규분포)
-qt = QuantileTransformer(
-    output_distribution="normal",
-    random_state=42
+# 첫 번째 더미 변수 제거
+df_ohe_drop = pd.get_dummies(
+    df,
+    columns=["species"],
+    drop_first=True
 )
 
-# 변환 수행
-df_quantile = pd.DataFrame(
-    qt.fit_transform(df_num),
-    columns=num_cols
-)
-
-print("분위수 변환 결과 (상위 5개):")
-print(df_quantile.head())
-
-# 왜도 확인
-print("\n분위수 변환 후 왜도:")
-print(df_quantile.skew())
+print("drop_first=True 결과:")
+print(df_ohe_drop.filter(like='species').columns.tolist())
 ```
 
-분위수 변환은 왜도가 거의 0에 가까워지며 완벽한 정규분포에 가까운 형태가 된다.
+다중공선성은 독립 변수들 간에 높은 상관관계가 존재하는 상태로, 선형 회귀에서 계수 추정을 불안정하게 만든다. k개의 범주를 모두 포함하면 완벽한 선형 종속 관계가 생기므로, 하나를 제거하여 이를 방지한다.
+
+**사용 시점**
+
+- 선형 회귀, 로지스틱 회귀 모델 사용 시
+- 거리 기반 모델(KNN, SVM) 사용 시
+- PCA 등 선형 차원 축소 기법 사용 시
+- 범주의 개수가 적을 때 (일반적으로 10개 이하)
 
 **장단점**
 
 | 장점 | 단점 |
 |------|------|
-| 완벽한 정규분포 생성 | 원본 데이터의 실제 거리 정보 손실 |
-| 이상치 영향 제거 | 새로운 데이터 처리 시 범위 문제 발생 가능 |
-| 비정상 분포에도 효과적 | 해석이 어려움 |
+| 범주 간 순서 관계를 만들지 않음 | 범주가 많으면 컬럼 수가 급격히 증가 (차원의 저주) |
+| 선형 모델과 거리 기반 모델에 적합 | 메모리 사용량 증가 |
+| 해석이 명확함 | 희소 행렬(sparse matrix) 생성 |
 
-**적용 상황**
+## Ordinal Encoding
 
-- 극심하게 왜곡된 비정상 분포
-- 트리 기반 모델이 아닌 알고리즘 사용
-- 이상치를 완전히 무시하고 싶을 때
-- 순위 정보만 중요한 경우
+Ordinal Encoding은 순서가 있는 범주형 변수에 사용하는 방법이다. 사용자가 명시적으로 순서를 정의하여 각 범주에 정수를 할당한다. 예를 들어, "small" < "medium" < "large"와 같은 순서가 있는 경우에 적합하다.
 
-## 변환 전후 왜도 비교
+**변환 예시**
 
-다양한 변환 방법의 효과를 정량적으로 비교한다.
+| 원본 | 인코딩 결과 |
+|------|-----------|
+| small | 0 |
+| medium | 1 |
+| large | 2 |
 
-**예제: 변환 방법별 왜도 비교**
+### 예제 코드
+
+**예제: Ordinal Encoding 적용**
 
 ```{python}
-# 왜도 비교 테이블
-skew_compare = pd.DataFrame({
-    "원본": df_num.skew(),
-    "로그": df_log_safe.skew(),
-    "제곱근": df_sqrt.skew(),
-    "Box-Cox": df_boxcox.skew(),
-    "Yeo-Johnson": df_yeojohnson.skew(),
-    "분위수": df_quantile.skew()
+from sklearn.preprocessing import OrdinalEncoder
+
+# 순서 정의 (작은 것부터 큰 것 순서)
+oe = OrdinalEncoder(
+    categories=[["small", "medium", "large"]]
+)
+
+# 예제 데이터 생성
+size_data = pd.DataFrame({
+    "size": ["small", "large", "medium", "small", "large"]
 })
 
-print("변환 방법별 왜도 비교:")
-print(skew_compare.round(3))
+# 인코딩 수행
+size_encoded = oe.fit_transform(size_data)
+
+# 결과 확인
+result = pd.DataFrame({
+    "원본": size_data["size"],
+    "인코딩": size_encoded.flatten()
+})
+
+print("Ordinal Encoding 결과:")
+print(result)
 ```
 
-일반적으로 분위수 변환이 왜도를 가장 효과적으로 0에 가깝게 만들지만, 원본 데이터의 정보 손실이 가장 크다.
+**사용 시점**
 
-## 분포 변환과 스케일링의 관계
+- 명확한 순서가 있는 범주형 변수 (예: 학력, 등급, 크기, 만족도)
+- 순서 정보가 모델 학습에 중요한 경우
+- 선형 관계를 가정할 수 있는 경우
 
-분포 변환과 스케일링은 서로 다른 목적을 가진 전처리 과정이다.
+**주의사항**
 
-**분포 변환과 스케일링 비교**
+순서를 잘못 정의하면 모델 성능이 저하될 수 있으므로, 도메인 지식을 바탕으로 신중하게 순서를 결정해야 한다.
 
-| 구분 | 분포 변환 | 스케일링 |
-|------|----------|---------|
-| 목적 | 분포의 모양 변경 (대칭화) | 변수의 크기 조정 |
-| 효과 | 왜도 감소, 정규성 개선 | 변수 간 스케일 통일 |
-| 변환 예시 | 로그, 제곱근, Box-Cox | Min-Max, Standard, Robust |
-| 적용 순서 | 먼저 수행 | 나중에 수행 |
+## Target Encoding (Mean Encoding)
 
-**일반적인 전처리 순서**
+Target Encoding은 각 범주를 타겟 변수의 평균값으로 치환하는 방법이다. 범주와 타겟 간의 관계를 직접적으로 반영하므로 정보량이 크지만, 데이터 누수(data leakage) 위험이 있어 주의가 필요하다.
 
-1. **결측치 처리**: 결측값 제거 또는 대체
-2. **이상치 처리**: 이상치 탐지 및 제거/대체
-3. **분포 변환**: 왜곡된 분포를 대칭화 (본 장)
-4. **스케일링**: 변수 간 크기 통일 (이전 장)
-5. **인코딩**: 범주형 변수를 수치형으로 변환
+**변환 예시**
 
-분포 변환을 먼저 수행하는 이유는 왜곡된 분포에서 스케일링을 하면 극단값의 영향을 충분히 제거하지 못하기 때문이다.
+| species | body_mass_g 평균 |
+|---------|-----------------|
+| Adelie | 3700.66 |
+| Chinstrap | 3733.09 |
+| Gentoo | 5076.02 |
+
+### 예제 코드
+
+**예제: Target Encoding 적용**
+
+```{python}
+# 데이터 복사
+df_te = df.copy()
+
+# 타겟 변수 및 인코딩할 컬럼 지정
+target = "body_mass_g"
+col = "species"
+
+# 범주별 타겟 평균 계산
+mean_map = df_te.groupby(col)[target].mean()
+
+print("범주별 타겟 평균:")
+print(mean_map)
+
+# 범주를 평균값으로 치환
+df_te["species_enc"] = df_te[col].map(mean_map)
+
+# 결과 확인
+print("\nTarget Encoding 결과:")
+print(df_te[[col, target, "species_enc"]].head(10))
+```
+
+**데이터 누수 방지**
+
+Target Encoding을 사용할 때는 반드시 다음 규칙을 지켜야 한다.
+
+1. **학습 데이터만 사용**: 평균 계산 시 학습 데이터만 사용하고, 테스트 데이터는 절대 포함하지 않음
+2. **교차 검증**: 학습 데이터 내에서도 fold별로 다른 fold의 평균을 사용 (out-of-fold encoding)
+3. **스무딩(Smoothing)**: 샘플 수가 적은 범주는 전체 평균에 가깝게 조정
+
+**예제: 안전한 Target Encoding (학습/테스트 분리)**
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+# 학습/테스트 분리
+df_clean = df.dropna(subset=[target, col])
+train_df, test_df = train_test_split(df_clean, test_size=0.2, random_state=42)
+
+# 학습 데이터로만 평균 계산
+train_mean_map = train_df.groupby(col)[target].mean()
+
+# 학습/테스트 데이터에 적용
+train_encoded = train_df[col].map(train_mean_map)
+test_encoded = test_df[col].map(train_mean_map)
+
+print("학습 데이터 인코딩 결과:")
+print(train_encoded.head())
+```
+
+**사용 시점**
+
+- 고급 트리 기반 모델(XGBoost, LightGBM, CatBoost) 사용 시
+- 범주와 타겟 간 강한 관계가 있을 때
+- 범주의 개수가 매우 많아 One-Hot Encoding이 비효율적일 때
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 타겟과의 관계를 직접 반영하여 정보량이 큼 | 데이터 누수 위험 (올바른 방법 필수) |
+| 고차원 범주형 변수에 효과적 | 과적합 위험 (스무딩 필요) |
+| 컬럼 수 증가 없음 | 구현이 복잡함 |
+
+## Frequency Encoding (빈도 인코딩)
+
+Frequency Encoding은 각 범주를 해당 범주의 출현 빈도로 치환하는 방법이다. 희귀한 범주와 자주 나타나는 범주를 구분할 수 있어, 희귀 범주가 많은 경우 유용하다.
+
+**변환 예시**
+
+| island | 빈도 (비율) |
+|--------|-----------|
+| Biscoe | 0.488 |
+| Dream | 0.360 |
+| Torgersen | 0.151 |
+
+### 예제 코드
+
+**예제: Frequency Encoding 적용**
+
+```{python}
+# 범주별 빈도 계산 (비율로 정규화)
+freq_map = df["island"].value_counts(normalize=True)
+
+print("범주별 빈도:")
+print(freq_map)
+
+# 빈도로 치환
+df_freq = df.copy()
+df_freq["island_enc"] = df_freq["island"].map(freq_map)
+
+# 결과 확인
+print("\nFrequency Encoding 결과:")
+print(df_freq[["island", "island_enc"]].head(10))
+```
+
+**사용 시점**
+
+- 희귀 범주가 많을 때
+- 범주의 빈도가 타겟과 관련이 있을 때
+- 고차원 범주형 변수를 간단히 처리하고 싶을 때
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 구현이 간단함 | 서로 다른 범주가 같은 빈도를 가질 수 있음 |
+| 희귀 범주를 효과적으로 표현 | 빈도가 타겟과 관련 없으면 효과 제한적 |
+| 컬럼 수 증가 없음 | 정보 손실 가능 |
+
+## 여러 컬럼을 한 번에 인코딩
+
+실무에서는 여러 범주형 컬럼을 동시에 처리해야 하는 경우가 많다. 각 인코딩 방법을 여러 컬럼에 적용하는 방법을 살펴본다.
+
+### One-Hot Encoding (여러 컬럼)
+
+**예제: 여러 컬럼 One-Hot Encoding**
+
+```{python}
+# 인코딩할 범주형 컬럼 목록
+cat_cols = ["species", "island", "sex"]
+
+# 여러 컬럼에 One-Hot Encoding 적용
+df_ohe_multi = pd.get_dummies(
+    df, 
+    columns=cat_cols,
+    drop_first=True  # 다중공선성 방지
+)
+
+print("인코딩된 컬럼 목록:")
+print([col for col in df_ohe_multi.columns if any(cat in col for cat in cat_cols)])
+print(f"\n원본 컬럼 수: {len(df.columns)}")
+print(f"인코딩 후 컬럼 수: {len(df_ohe_multi.columns)}")
+```
+
+### Label Encoding (여러 컬럼)
+
+**예제: 여러 컬럼 Label Encoding**
+
+```{python}
+from sklearn.preprocessing import LabelEncoder
+
+# 데이터 복사
+df_label_multi = df.copy()
+
+# 범주형 컬럼 목록
+cat_cols = ["species", "island", "sex"]
+
+# 각 컬럼에 Label Encoding 적용
+for col in cat_cols:
+    le = LabelEncoder()
+    # 결측치를 문자열로 변환하여 처리
+    df_label_multi[col] = le.fit_transform(df_label_multi[col].astype(str))
+
+print("Label Encoding 결과:")
+print(df_label_multi[cat_cols].head())
+```
+
+### sklearn ColumnTransformer 사용
+
+여러 인코딩 방법을 조합하여 사용하는 경우 `ColumnTransformer`를 사용하면 깔끔하게 처리할 수 있다.
+
+**예제: ColumnTransformer로 여러 인코딩 조합**
+
+```{python}
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+# 인코딩 파이프라인 구성
+ct = ColumnTransformer(
+    transformers=[
+        ("ohe", OneHotEncoder(drop='first', sparse_output=False), ["species", "island"]),
+        # LabelEncoder는 ColumnTransformer와 직접 사용 불가
+    ],
+    remainder='passthrough'  # 나머지 컬럼은 그대로 유지
+)
+
+# 변환 수행
+df_transformed = ct.fit_transform(df[["species", "island", "sex"] + num_cols].dropna())
+
+print("ColumnTransformer 변환 결과 shape:")
+print(df_transformed.shape)
+```
 
 ## 요약
 
-이 장에서는 왜곡된 데이터 분포를 정규분포에 가깝게 만드는 다양한 변환 기법을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 범주형 데이터를 수치형으로 변환하는 다양한 인코딩 기법을 학습했다. 주요 내용은 다음과 같다.
 
-**분포 변환 방법 비교**
+**인코딩 방법 비교**
 
-| 방법 | 공식 | 장점 | 단점 | 적용 상황 |
-|------|------|------|------|----------|
-| 로그 | $\log(x)$ | 간단, 해석 용이 | 0 이하 불가 | 왜도가 큰 양수 데이터, 지수적 증가 |
-| 제곱근 | $\sqrt{x}$ | 완만한 변환, 직관적 | 효과 제한적 | 약한 왜도, 카운트 데이터 |
-| Box-Cox | $\frac{x^\lambda - 1}{\lambda}$ | 최적 λ 자동 추정 | 양수 전용 | 양수 데이터, 최적 변환 필요 |
-| Yeo-Johnson | Box-Cox 확장 | 0, 음수 처리 가능 | 해석 복잡 | 실무 기본 권장 (범용적) |
-| 분위수 | 순위 기반 매핑 | 완벽한 정규분포 생성 | 정보 손실 | 극심한 왜곡, 비정상 분포 |
+| 인코딩 | 순서 필요 | 컬럼 수 증가 | 장점 | 단점 | 추천 모델 |
+|--------|----------|-------------|------|------|----------|
+| Label | X | X | 간단, 효율적 | 순서 관계 생성 | 트리 기반 모델 |
+| One-Hot | X | O | 순서 없음, 안전 | 고차원 문제 | 선형, 거리 기반 모델 |
+| Ordinal | O | X | 순서 정보 반영 | 순서 정의 필요 | 순서형 데이터 |
+| Target | X | X | 정보량 큼 | 데이터 누수 위험 | 고급 트리 모델 (주의 필요) |
+| Frequency | X | X | 희귀 범주 처리 | 정보 손실 가능 | 희귀 범주가 많을 때 |
 
-**분포 변환 선택 가이드**
+**인코딩 방법 선택 가이드**
 
-1. **기본 선택**: Yeo-Johnson 변환 (0, 음수 처리 가능, 실무 권장)
-2. **단순한 경우**: 로그 변환 (양수만 있고 왜도가 큰 경우)
-3. **약한 왜곡**: 제곱근 변환 (카운트 데이터, 포아송 분포)
-4. **최적화 필요**: Box-Cox 변환 (양수 데이터, 통계적 엄격성)
-5. **극심한 왜곡**: 분위수 변환 (비정상 분포, 순위만 중요)
+1. **트리 기반 모델**: Label Encoding (간단하고 효율적)
+2. **선형/거리 기반 모델**: One-Hot Encoding (가장 안전)
+3. **순서가 있는 범주**: Ordinal Encoding (순서 정보 활용)
+4. **고차원 범주**: Target Encoding 또는 Frequency Encoding (차원 증가 방지)
+5. **희귀 범주 많음**: Frequency Encoding (희귀도 반영)
 
-**실무 전처리 순서**
+**주의사항**
 
-분포 변환 → 스케일링 순서로 진행한다.
+- **데이터 누수 방지**: Target Encoding 사용 시 학습/테스트 분리 철저히 지킬 것
+- **다중공선성**: One-Hot Encoding에서 선형 모델 사용 시 `drop_first=True` 권장
+- **결측치 처리**: 인코딩 전 결측치를 별도 범주로 처리하거나 제거할 것
+- **새로운 범주**: 테스트 데이터에 학습 시 없던 범주가 나타나면 처리 전략 필요
 
-- **분포 변환**: 데이터 분포의 모양을 대칭에 가깝게 변경
-- **스케일링**: 변수 간 크기를 통일
+**실무 인코딩 순서**
 
-이 순서를 지키면 극단값의 영향을 효과적으로 완화하고 모델의 성능을 향상시킬 수 있다.
+1. 범주형 변수 식별 및 순서 여부 확인
+2. 모델 유형에 따른 인코딩 방법 선택
+3. 학습/테스트 데이터 분리 (데이터 누수 방지)
+4. 학습 데이터로 인코더 학습(`fit`)
+5. 학습/테스트 데이터에 동일한 인코더 적용(`transform`)
 
-분포 변환은 모델의 가정을 충족시키고 예측 성능을 향상시키는 중요한 전처리 과정이다. 데이터의 분포 특성과 모델의 요구사항을 고려하여 적절한 변환 방법을 선택하는 것이 중요하다. 다음 장에서는 범주형 변수를 수치형으로 변환하는 인코딩 기법을 학습할 것이다.
+범주형 데이터 인코딩은 전처리의 마지막 단계로, 적절한 방법을 선택하면 모델 성능을 크게 향상시킬 수 있다. 데이터의 특성, 모델의 요구사항, 범주의 개수와 순서 관계를 종합적으로 고려하여 최적의 인코딩 방법을 선택하는 것이 중요하다. 이제 데이터 전처리의 전 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.

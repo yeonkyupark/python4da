@@ -1,153 +1,432 @@
 # 범주형 데이터 인코딩
 
-예제 데이터셋 적재
+범주형 데이터 인코딩(Categorical Encoding)은 범주형 변수를 머신러닝 모델이 처리할 수 있는 수치형으로 변환하는 과정이다. 대부분의 머신러닝 알고리즘은 수치형 데이터만 입력으로 받을 수 있으므로, 범주형 변수를 적절히 인코딩하는 것은 필수적이다. 인코딩 방법의 선택은 데이터의 특성과 사용할 모델에 따라 달라지며, 잘못된 선택은 모델 성능을 크게 저하시킬 수 있다. 이 장에서는 Label Encoding, One-Hot Encoding, Ordinal Encoding, Target Encoding, Frequency Encoding 등 주요 인코딩 기법을 학습한다.
+
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
 import pandas as pd
+import numpy as np
 
+# 데이터 로드
 df = sns.load_dataset("penguins")
+
+# 범주형 변수 확인
+print("범주형 변수:")
+print(df.select_dtypes(include='object').columns.tolist())
+print("\n범주형 변수의 고유값 개수:")
+print(df.select_dtypes(include='object').nunique())
 ```
 
 ## Label Encoding
 
-범주를 **정수 값**으로 매핑하는 방식으로 순서가 **없는데 숫자로 바뀌므로 주의 필요**
+Label Encoding은 각 범주를 정수 값으로 매핑하는 가장 단순한 인코딩 방법이다. 예를 들어, "Adelie", "Chinstrap", "Gentoo"를 0, 1, 2로 변환한다. 구현이 간단하고 컬럼 수가 늘어나지 않는 장점이 있지만, 순서가 없는 범주에 순서를 부여하는 문제가 있다.
+
+**변환 예시**
+
+| 원본 | 인코딩 결과 |
+|------|-----------|
+| Adelie | 0 |
+| Chinstrap | 1 |
+| Gentoo | 2 |
 
 ### 예제 코드
+
+**예제: Label Encoding 적용**
 
 ```{python}
 from sklearn.preprocessing import LabelEncoder
 
+# Label Encoder 생성
 le = LabelEncoder()
 
+# 데이터 복사
 df_label = df.copy()
+
+# species 컬럼 인코딩
 df_label["species_enc"] = le.fit_transform(df_label["species"])
 
-print(df_label)
+# 결과 확인
+print("Label Encoding 결과:")
+print(df_label[["species", "species_enc"]].head(10))
+
+# 매핑 관계 확인
+print("\n매핑 관계:")
+for i, label in enumerate(le.classes_):
+    print(f"{label} → {i}")
 ```
 
-### 사용 시점
+**주의사항**
 
-트리 기반 모델 (Decision Tree, RandomForest, XGBoost) 사용 시 순서 의미가 없어도 되는 경우
+Label Encoding은 범주 간에 순서 관계가 없음에도 불구하고 숫자로 변환하므로, 모델이 숫자의 크기를 의미 있는 것으로 해석할 수 있다. 예를 들어, 모델이 "Gentoo(2)"가 "Adelie(0)"보다 2배 크다고 잘못 학습할 수 있다.
 
-## One-Hot Encoding 
+**사용 시점**
 
-각 범주를 **이진 컬럼**으로 분리, 거리 기반, 선형 모델에서 가장 안전
+- 트리 기반 모델(Decision Tree, Random Forest, XGBoost, LightGBM) 사용 시
+- 컬럼 수를 늘리고 싶지 않을 때
+- 범주의 개수가 매우 많을 때 (고차원 문제 완화)
+
+트리 기반 모델은 범주를 분할 기준으로만 사용하므로 숫자의 크기를 의미 있게 해석하지 않는다.
+
+## One-Hot Encoding
+
+One-Hot Encoding은 각 범주를 이진 컬럼으로 분리하는 방법이다. k개의 범주가 있으면 k개의 새로운 컬럼이 생성되며, 각 행은 해당 범주에 해당하는 컬럼에만 1을, 나머지에는 0을 갖는다. 이 방법은 범주 간 순서 관계를 만들지 않으므로 선형 모델과 거리 기반 모델에 가장 안전하다.
+
+**변환 예시**
+
+| 원본 | species_Adelie | species_Chinstrap | species_Gentoo |
+|------|----------------|-------------------|----------------|
+| Adelie | 1 | 0 | 0 |
+| Chinstrap | 0 | 1 | 0 |
+| Gentoo | 0 | 0 | 1 |
 
 ### pandas 방식
 
+pandas의 `get_dummies` 함수를 사용하면 간단하게 One-Hot Encoding을 수행할 수 있다.
+
+**예제: One-Hot Encoding 적용**
+
 ```{python}
+# One-Hot Encoding (모든 범주 유지)
 df_ohe = pd.get_dummies(
     df,
     columns=["species", "island"],
     drop_first=False
 )
 
-print(df_ohe)
+print("One-Hot Encoding 결과 (컬럼 목록):")
+print(df_ohe.columns.tolist())
+print(f"\n원본 컬럼 수: {len(df.columns)}")
+print(f"인코딩 후 컬럼 수: {len(df_ohe.columns)}")
+
+# 결과 샘플 확인
+print("\n인코딩 결과 (상위 5개):")
+print(df_ohe.head())
 ```
 
-drop_first 옵션으로 첫번째 더미 변수 제거, 다중공선성 방지 (회귀 모델에서 중요)
+### drop_first 옵션
+
+`drop_first=True`로 설정하면 첫 번째 더미 변수를 제거하여 다중공선성(multicollinearity)을 방지할 수 있다. 예를 들어, 3개의 종이 있으면 2개의 컬럼만으로도 모든 정보를 표현할 수 있다.
+
+**예제: drop_first 옵션 사용**
 
 ```{python}
-df_ohe = pd.get_dummies(
+# 첫 번째 더미 변수 제거
+df_ohe_drop = pd.get_dummies(
     df,
     columns=["species"],
     drop_first=True
 )
 
-print(df_ohe)
+print("drop_first=True 결과:")
+print(df_ohe_drop.filter(like='species').columns.tolist())
 ```
 
-선형 회귀, 로지스틱 회귀, KNN, SVM, PCA 등의 모델 사용 시 적용
+다중공선성은 독립 변수들 간에 높은 상관관계가 존재하는 상태로, 선형 회귀에서 계수 추정을 불안정하게 만든다. k개의 범주를 모두 포함하면 완벽한 선형 종속 관계가 생기므로, 하나를 제거하여 이를 방지한다.
+
+**사용 시점**
+
+- 선형 회귀, 로지스틱 회귀 모델 사용 시
+- 거리 기반 모델(KNN, SVM) 사용 시
+- PCA 등 선형 차원 축소 기법 사용 시
+- 범주의 개수가 적을 때 (일반적으로 10개 이하)
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 범주 간 순서 관계를 만들지 않음 | 범주가 많으면 컬럼 수가 급격히 증가 (차원의 저주) |
+| 선형 모델과 거리 기반 모델에 적합 | 메모리 사용량 증가 |
+| 해석이 명확함 | 희소 행렬(sparse matrix) 생성 |
 
 ## Ordinal Encoding
 
-**순서가 있는 범주형 변수**에 사용, 사용자가 순서를 직접 정의
+Ordinal Encoding은 순서가 있는 범주형 변수에 사용하는 방법이다. 사용자가 명시적으로 순서를 정의하여 각 범주에 정수를 할당한다. 예를 들어, "small" < "medium" < "large"와 같은 순서가 있는 경우에 적합하다.
+
+**변환 예시**
+
+| 원본 | 인코딩 결과 |
+|------|-----------|
+| small | 0 |
+| medium | 1 |
+| large | 2 |
 
 ### 예제 코드
+
+**예제: Ordinal Encoding 적용**
 
 ```{python}
 from sklearn.preprocessing import OrdinalEncoder
 
+# 순서 정의 (작은 것부터 큰 것 순서)
 oe = OrdinalEncoder(
     categories=[["small", "medium", "large"]]
 )
 
-df_ord = pd.DataFrame(
-    oe.fit_transform(
-        pd.DataFrame({"size": ["small", "large", "medium"]})
-    ),
-    columns=["size_enc"]
-)
+# 예제 데이터 생성
+size_data = pd.DataFrame({
+    "size": ["small", "large", "medium", "small", "large"]
+})
 
-print(df_ord)
+# 인코딩 수행
+size_encoded = oe.fit_transform(size_data)
+
+# 결과 확인
+result = pd.DataFrame({
+    "원본": size_data["size"],
+    "인코딩": size_encoded.flatten()
+})
+
+print("Ordinal Encoding 결과:")
+print(result)
 ```
 
-명확한 순서 존재하는 등급, 크기, 단계 표현 등에 적용
+**사용 시점**
 
-## Target(Mean) Encoding
+- 명확한 순서가 있는 범주형 변수 (예: 학력, 등급, 크기, 만족도)
+- 순서 정보가 모델 학습에 중요한 경우
+- 선형 관계를 가정할 수 있는 경우
 
-범주를 **타깃 변수의 평균값**으로 치환, 정보량은 크지만 **데이터 누수 위험** 존재
+**주의사항**
+
+순서를 잘못 정의하면 모델 성능이 저하될 수 있으므로, 도메인 지식을 바탕으로 신중하게 순서를 결정해야 한다.
+
+## Target Encoding (Mean Encoding)
+
+Target Encoding은 각 범주를 타겟 변수의 평균값으로 치환하는 방법이다. 범주와 타겟 간의 관계를 직접적으로 반영하므로 정보량이 크지만, 데이터 누수(data leakage) 위험이 있어 주의가 필요하다.
+
+**변환 예시**
+
+| species | body_mass_g 평균 |
+|---------|-----------------|
+| Adelie | 3700.66 |
+| Chinstrap | 3733.09 |
+| Gentoo | 5076.02 |
 
 ### 예제 코드
 
+**예제: Target Encoding 적용**
+
 ```{python}
+# 데이터 복사
 df_te = df.copy()
 
+# 타겟 변수 및 인코딩할 컬럼 지정
 target = "body_mass_g"
 col = "species"
 
+# 범주별 타겟 평균 계산
 mean_map = df_te.groupby(col)[target].mean()
+
+print("범주별 타겟 평균:")
+print(mean_map)
+
+# 범주를 평균값으로 치환
 df_te["species_enc"] = df_te[col].map(mean_map)
 
-print(df_te)
+# 결과 확인
+print("\nTarget Encoding 결과:")
+print(df_te[[col, target, "species_enc"]].head(10))
 ```
 
-반드시 **train 데이터 기준으로만 계산**, CV 기반 smoothing 권장
+**데이터 누수 방지**
 
-## 빈도(Frequency) 인코딩
+Target Encoding을 사용할 때는 반드시 다음 규칙을 지켜야 한다.
 
-범주의 **출현 빈도**로 인코딩, 희귀 범주 처리에 유용
+1. **학습 데이터만 사용**: 평균 계산 시 학습 데이터만 사용하고, 테스트 데이터는 절대 포함하지 않음
+2. **교차 검증**: 학습 데이터 내에서도 fold별로 다른 fold의 평균을 사용 (out-of-fold encoding)
+3. **스무딩(Smoothing)**: 샘플 수가 적은 범주는 전체 평균에 가깝게 조정
+
+**예제: 안전한 Target Encoding (학습/테스트 분리)**
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+# 학습/테스트 분리
+df_clean = df.dropna(subset=[target, col])
+train_df, test_df = train_test_split(df_clean, test_size=0.2, random_state=42)
+
+# 학습 데이터로만 평균 계산
+train_mean_map = train_df.groupby(col)[target].mean()
+
+# 학습/테스트 데이터에 적용
+train_encoded = train_df[col].map(train_mean_map)
+test_encoded = test_df[col].map(train_mean_map)
+
+print("학습 데이터 인코딩 결과:")
+print(train_encoded.head())
+```
+
+**사용 시점**
+
+- 고급 트리 기반 모델(XGBoost, LightGBM, CatBoost) 사용 시
+- 범주와 타겟 간 강한 관계가 있을 때
+- 범주의 개수가 매우 많아 One-Hot Encoding이 비효율적일 때
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 타겟과의 관계를 직접 반영하여 정보량이 큼 | 데이터 누수 위험 (올바른 방법 필수) |
+| 고차원 범주형 변수에 효과적 | 과적합 위험 (스무딩 필요) |
+| 컬럼 수 증가 없음 | 구현이 복잡함 |
+
+## Frequency Encoding (빈도 인코딩)
+
+Frequency Encoding은 각 범주를 해당 범주의 출현 빈도로 치환하는 방법이다. 희귀한 범주와 자주 나타나는 범주를 구분할 수 있어, 희귀 범주가 많은 경우 유용하다.
+
+**변환 예시**
+
+| island | 빈도 (비율) |
+|--------|-----------|
+| Biscoe | 0.488 |
+| Dream | 0.360 |
+| Torgersen | 0.151 |
 
 ### 예제 코드
 
+**예제: Frequency Encoding 적용**
+
 ```{python}
+# 범주별 빈도 계산 (비율로 정규화)
 freq_map = df["island"].value_counts(normalize=True)
+
+print("범주별 빈도:")
+print(freq_map)
+
+# 빈도로 치환
 df_freq = df.copy()
 df_freq["island_enc"] = df_freq["island"].map(freq_map)
 
-print(df_freq)
+# 결과 확인
+print("\nFrequency Encoding 결과:")
+print(df_freq[["island", "island_enc"]].head(10))
 ```
+
+**사용 시점**
+
+- 희귀 범주가 많을 때
+- 범주의 빈도가 타겟과 관련이 있을 때
+- 고차원 범주형 변수를 간단히 처리하고 싶을 때
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 구현이 간단함 | 서로 다른 범주가 같은 빈도를 가질 수 있음 |
+| 희귀 범주를 효과적으로 표현 | 빈도가 타겟과 관련 없으면 효과 제한적 |
+| 컬럼 수 증가 없음 | 정보 손실 가능 |
 
 ## 여러 컬럼을 한 번에 인코딩
 
-### One-Hot (pandas)
+실무에서는 여러 범주형 컬럼을 동시에 처리해야 하는 경우가 많다. 각 인코딩 방법을 여러 컬럼에 적용하는 방법을 살펴본다.
+
+### One-Hot Encoding (여러 컬럼)
+
+**예제: 여러 컬럼 One-Hot Encoding**
 
 ```{python}
+# 인코딩할 범주형 컬럼 목록
 cat_cols = ["species", "island", "sex"]
 
-df_ohe = pd.get_dummies(df, columns=cat_cols)
+# 여러 컬럼에 One-Hot Encoding 적용
+df_ohe_multi = pd.get_dummies(
+    df, 
+    columns=cat_cols,
+    drop_first=True  # 다중공선성 방지
+)
+
+print("인코딩된 컬럼 목록:")
+print([col for col in df_ohe_multi.columns if any(cat in col for cat in cat_cols)])
+print(f"\n원본 컬럼 수: {len(df.columns)}")
+print(f"인코딩 후 컬럼 수: {len(df_ohe_multi.columns)}")
 ```
 
-### Label Encoding (반복 처리)
+### Label Encoding (여러 컬럼)
+
+**예제: 여러 컬럼 Label Encoding**
 
 ```{python}
 from sklearn.preprocessing import LabelEncoder
 
-df_label = df.copy()
+# 데이터 복사
+df_label_multi = df.copy()
 
+# 범주형 컬럼 목록
+cat_cols = ["species", "island", "sex"]
+
+# 각 컬럼에 Label Encoding 적용
 for col in cat_cols:
     le = LabelEncoder()
-    df_label[col] = le.fit_transform(df_label[col].astype(str))
+    # 결측치를 문자열로 변환하여 처리
+    df_label_multi[col] = le.fit_transform(df_label_multi[col].astype(str))
+
+print("Label Encoding 결과:")
+print(df_label_multi[cat_cols].head())
 ```
 
-## 인코딩 방식 요약
+### sklearn ColumnTransformer 사용
 
-| 인코딩       | 순서 필요 | 컬럼 수 증가 | 추천 모델      |
-| --------- | ----- | ------- | ---------- |
-| Label     | X     | X       | 트리 모델      |
-| One-Hot   | X     | O       | 선형, 거리 기반  |
-| Ordinal   | O     | X       | 순서형 데이터    |
-| Target    | X     | X       | 고급 모델      |
-| Frequency | X     | X       | 희귀 범주 많을 때 |
+여러 인코딩 방법을 조합하여 사용하는 경우 `ColumnTransformer`를 사용하면 깔끔하게 처리할 수 있다.
 
+**예제: ColumnTransformer로 여러 인코딩 조합**
+
+```{python}
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+# 인코딩 파이프라인 구성
+ct = ColumnTransformer(
+    transformers=[
+        ("ohe", OneHotEncoder(drop='first', sparse_output=False), ["species", "island"]),
+        # LabelEncoder는 ColumnTransformer와 직접 사용 불가
+    ],
+    remainder='passthrough'  # 나머지 컬럼은 그대로 유지
+)
+
+# 변환 수행
+df_transformed = ct.fit_transform(df[["species", "island", "sex"] + num_cols].dropna())
+
+print("ColumnTransformer 변환 결과 shape:")
+print(df_transformed.shape)
+```
+
+## 요약
+
+이 장에서는 범주형 데이터를 수치형으로 변환하는 다양한 인코딩 기법을 학습했다. 주요 내용은 다음과 같다.
+
+**인코딩 방법 비교**
+
+| 인코딩 | 순서 필요 | 컬럼 수 증가 | 장점 | 단점 | 추천 모델 |
+|--------|----------|-------------|------|------|----------|
+| Label | X | X | 간단, 효율적 | 순서 관계 생성 | 트리 기반 모델 |
+| One-Hot | X | O | 순서 없음, 안전 | 고차원 문제 | 선형, 거리 기반 모델 |
+| Ordinal | O | X | 순서 정보 반영 | 순서 정의 필요 | 순서형 데이터 |
+| Target | X | X | 정보량 큼 | 데이터 누수 위험 | 고급 트리 모델 (주의 필요) |
+| Frequency | X | X | 희귀 범주 처리 | 정보 손실 가능 | 희귀 범주가 많을 때 |
+
+**인코딩 방법 선택 가이드**
+
+1. **트리 기반 모델**: Label Encoding (간단하고 효율적)
+2. **선형/거리 기반 모델**: One-Hot Encoding (가장 안전)
+3. **순서가 있는 범주**: Ordinal Encoding (순서 정보 활용)
+4. **고차원 범주**: Target Encoding 또는 Frequency Encoding (차원 증가 방지)
+5. **희귀 범주 많음**: Frequency Encoding (희귀도 반영)
+
+**주의사항**
+
+- **데이터 누수 방지**: Target Encoding 사용 시 학습/테스트 분리 철저히 지킬 것
+- **다중공선성**: One-Hot Encoding에서 선형 모델 사용 시 `drop_first=True` 권장
+- **결측치 처리**: 인코딩 전 결측치를 별도 범주로 처리하거나 제거할 것
+- **새로운 범주**: 테스트 데이터에 학습 시 없던 범주가 나타나면 처리 전략 필요
+
+**실무 인코딩 순서**
+
+1. 범주형 변수 식별 및 순서 여부 확인
+2. 모델 유형에 따른 인코딩 방법 선택
+3. 학습/테스트 데이터 분리 (데이터 누수 방지)
+4. 학습 데이터로 인코더 학습(`fit`)
+5. 학습/테스트 데이터에 동일한 인코더 적용(`transform`)
+
+범주형 데이터 인코딩은 전처리의 마지막 단계로, 적절한 방법을 선택하면 모델 성능을 크게 향상시킬 수 있다. 데이터의 특성, 모델의 요구사항, 범주의 개수와 순서 관계를 종합적으로 고려하여 최적의 인코딩 방법을 선택하는 것이 중요하다. 이제 데이터 전처리의 전 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.
