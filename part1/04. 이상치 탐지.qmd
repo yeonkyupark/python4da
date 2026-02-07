@@ -168,7 +168,7 @@ print(z_scores.head())
 **예제: Z-score 기반 이상치 제거**
 
 ```{python}
-# |Z-score| > 3 인 경우 이상치로 판단
+# abs(Z-score) > 3 인 경우 이상치로 판단
 outlier_z = (np.abs(z_scores) > 3).any(axis=1)
 
 # 이상치 제거
