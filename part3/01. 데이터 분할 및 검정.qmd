@@ -1,2 +1,202 @@
 # 데이터 분할 및 검정
 
+## 데이터 분할 및 검증
+
+머신러닝 모델의 성능은 모델 자체보다 **데이터를 어떻게 나누고 검증했는지**에 더 크게 좌우된다.
+
+## 왜 데이터 분할이 필요한가?
+
+모델은 학습 데이터에 최적화된다. 따라서 동일 데이터를 평가에 사용하면
+
+* 성능이 과대평가(overfitting)
+* 보지 않은 데이터에서의 성능을 추정해야 한다
+
+즉, **일반화 성능(generalization performance)** 평가가 목적이다.
+
+## 학습 · 검증 · 테스트 분할
+
+### 기본 개념
+
+| 구분             | 역할         |
+| -------------- | ---------- |
+| 학습(train)      | 모델 학습      |
+| 검증(validation) | 하이퍼파라미터 튜닝 |
+| 테스트(test)      | 최종 성능 평가   |
+
+### 일반적인 분할 비율
+
+* 60 / 20 / 20
+* 70 / 15 / 15
+* 80 / 20 (검증을 교차 검증으로 대체하는 경우)
+
+### 예제
+
+#### 분석 목표
+
+* species 분류
+* 수치형 변수를 사용한 기본 모델링
+
+```{python}
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+
+df = sns.load_dataset("penguins")
+df_ml = df.dropna()
+
+X = df_ml[
+    ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+]
+y = df_ml["species"]
+```
+
+### 학습 / 테스트 분할
+
+```{python}
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+```
+
+* stratify
+
+  * 클래스 비율 유지
+  * 분류 문제에서 매우 중요
+
+### 학습 / 검증 분할
+
+```{python}
+X_train, X_val, y_train, y_val = train_test_split(
+    X_train, y_train,
+    test_size=0.25,  # 전체 기준 0.2
+    random_state=42,
+    stratify=y_train
+)
+```
+
+## 교차 검증 (Cross-Validation)
+
+### 개념
+
+* 데이터를 여러 번 나누어
+* 학습과 검증을 반복
+* 성능의 평균과 분산을 함께 평가
+
+**단일 분할의 운(luck)에 의존하지 않음**
+
+## K-Fold 교차 검증
+
+### 원리
+
+* 데이터를 K개 폴드로 분할
+* K-1개로 학습, 1개로 검증
+* K번 반복
+
+### 시각적 개념
+
+```
+Fold 1 | V T T ... T T
+Fold 2 | T V T ... T T
+Fold 3 | T T V ... T T
+...
+Fold K | T T T ... T V
+```
+
+### 기본 K-Fold 예제
+
+```{python}
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(max_iter=1000)
+
+kf = KFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
+
+scores = cross_val_score(
+    model, X, y,
+    cv=kf,
+    scoring="accuracy"
+)
+
+scores, scores.mean()
+```
+
+## Stratified K-Fold
+
+### 왜 필요한가?
+
+* 분류 문제에서 클래스 불균형이 있으면
+
+  * 폴드마다 클래스 비율이 달라질 수 있음
+
+각 폴드에 **클래스 비율을 유지**
+
+### 예제
+
+```{python}
+from sklearn.model_selection import StratifiedKFold
+
+skf = StratifiedKFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
+
+scores = cross_val_score(
+    model, X, y,
+    cv=skf,
+    scoring="accuracy"
+)
+
+scores, scores.mean()
+```
+
+## 교차 검증 vs 홀드아웃 검증
+
+| 항목     | 홀드아웃  | 교차 검증 |
+| ------ | ----- | ----- |
+| 계산 비용  | 낮음    | 높음    |
+| 안정성    | 낮음    | 높음    |
+| 데이터 소량 | 부적합   | 적합    |
+| 실무 사용  | 빠른 실험 | 최종 평가 |
+
+## 시계열 데이터의 주의점
+
+* 미래 데이터를 학습에 사용하면 안 됨
+* 반드시 시간 순서 유지
+
+```{python}
+from sklearn.model_selection import TimeSeriesSplit
+
+tscv = TimeSeriesSplit(n_splits=5)
+```
+
+**일반 K-Fold 사용 금지**
+
+## Nested Cross-Validation
+
+### 개념
+
+* 하이퍼파라미터 튜닝과 모델 평가를 분리 및 성능 과대평가 방지
+
+## 체크리스트
+
+* 분류 문제인가?
+
+  * stratify 사용
+* 데이터가 적은가?
+
+  * 교차 검증
+* 하이퍼파라미터 튜닝 중인가?
+
+  * 검증 데이터 분리
+* 최종 성능 보고인가?
+
+  * 테스트 데이터는 마지막까지 보존
+
