@@ -1578,5 +1578,93 @@
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
     ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html",
+    "href": "part2/07. 비모수 검정.html",
+    "title": "17  비모수 검정",
+    "section": "",
+    "text": "17.1 비모수 검정\n비모수 검정(Non-parametric Tests)은\n순위(rank) 정보를 이용해 집단 간 차이를 검정한다.",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#비모수-검정",
+    "href": "part2/07. 비모수 검정.html#비모수-검정",
+    "title": "17  비모수 검정",
+    "section": "",
+    "text": "정규성 가정이 만족되지 않거나\n표본 수가 작거나\n이상치의 영향이 큰 경우",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#비모수-검정이-필요한-상황",
+    "href": "part2/07. 비모수 검정.html#비모수-검정이-필요한-상황",
+    "title": "17  비모수 검정",
+    "section": "17.2 비모수 검정이 필요한 상황",
+    "text": "17.2 비모수 검정이 필요한 상황\n\n정규성 검정에서 귀무가설 기각\n박스플롯에서 극단값 다수 존재\n평균보다 중앙값 비교가 더 적절\n측정 단위가 순서형(ordinal)\n\n데이터 분포에 덜 민감하지만 해석은 평균이 아닌 “분포의 위치 차이”",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#mannwhitney-u-검정",
+    "href": "part2/07. 비모수 검정.html#mannwhitney-u-검정",
+    "title": "17  비모수 검정",
+    "section": "17.3 Mann–Whitney U 검정",
+    "text": "17.3 Mann–Whitney U 검정\n\n17.3.1 개념\n\n두 독립 집단 비교\nt-test의 비모수 대안\n두 집단의 분포 위치가 같은지 검정\n\n\n\n17.3.2 가설 설정\n\nH₀: 두 집단의 분포는 동일하다\nH₁: 두 집단의 분포는 다르다\n\n\n17.3.2.1 분석 목표\n\nAdelie vs Gentoo\n부리 길이(bill_length_mm) 차이가 있는가?\n\n\nimport seaborn as sns\nfrom scipy.stats import mannwhitneyu\n\ndf = sns.load_dataset(\"penguins\")\n\ng1 = df[df[\"species\"] == \"Adelie\"][\"bill_length_mm\"].dropna()\ng2 = df[df[\"species\"] == \"Gentoo\"][\"bill_length_mm\"].dropna()\n\n\nu_stat, p_value = mannwhitneyu(g1, g2, alternative=\"two-sided\")\nu_stat, p_value\n\n(np.float64(224.5), np.float64(7.279301009021372e-44))\n\n\n\np-value &lt; 0.05\n\n두 종의 부리 길이 분포는 다르다",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#wilcoxon-순위합-검정-wilcoxon-signed-rank-test",
+    "href": "part2/07. 비모수 검정.html#wilcoxon-순위합-검정-wilcoxon-signed-rank-test",
+    "title": "17  비모수 검정",
+    "section": "17.4 Wilcoxon 순위합 검정 (Wilcoxon Signed-Rank Test)",
+    "text": "17.4 Wilcoxon 순위합 검정 (Wilcoxon Signed-Rank Test)\n\n17.4.1 개념\n\n대응 표본 비교\npaired t-test의 비모수 대안\n동일 대상의 전·후 비교에 사용\n\n\n\n17.4.2 가설 설정\n\nH₀: 차이의 중앙값은 0이다\nH₁: 차이의 중앙값은 0이 아니다\n\n\n\n17.4.3 예제 (가상 전·후 데이터)\n\npalmerpenguins에는 자연스러운 전후 데이터가 없으므로 예제용으로 생성\n\n\nimport numpy as np\nfrom scipy.stats import wilcoxon\n\nnp.random.seed(0)\n\nbefore = df[df[\"species\"] == \"Adelie\"][\"bill_length_mm\"].dropna().sample(30)\nafter = before + np.random.normal(0.5, 1.0, size=len(before))\n\n\nw_stat, p_value = wilcoxon(before, after)\nw_stat, p_value\n\n(np.float64(99.0), np.float64(0.0050126127898693085))\n\n\n\np-value &lt; 0.05\n\n전·후 차이가 유의하다",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#kruskalwallis-검정",
+    "href": "part2/07. 비모수 검정.html#kruskalwallis-검정",
+    "title": "17  비모수 검정",
+    "section": "17.5 Kruskal–Wallis 검정",
+    "text": "17.5 Kruskal–Wallis 검정\n\n17.5.1 개념\n\n세 개 이상 독립 집단\n일원 ANOVA의 비모수 대안\n집단 간 분포 차이 검정\n\n\n\n17.5.2 가설 설정\n\nH₀: 모든 집단의 분포는 동일하다\nH₁: 적어도 하나의 집단 분포가 다르다\n\n\nfrom scipy.stats import kruskal\n\ngroups = [\n    df[df[\"species\"] == sp][\"bill_length_mm\"].dropna()\n    for sp in df[\"species\"].unique()\n]\n\nh_stat, p_value = kruskal(*groups)\nh_stat, p_value\n\n(np.float64(244.13671803364164), np.float64(9.691371997194331e-54))\n\n\n\np-value &lt; 0.05\n\n종 간 부리 길이 분포에 차이가 있다\n\n\n어느 집단 간 차이인지는 추가 검정 필요 → 사후 검정",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#friedman-검정",
+    "href": "part2/07. 비모수 검정.html#friedman-검정",
+    "title": "17  비모수 검정",
+    "section": "17.6 Friedman 검정",
+    "text": "17.6 Friedman 검정\n\n17.6.1 개념\n\n세 개 이상 대응 집단\n반복 측정 ANOVA의 비모수 대안\n동일 대상에 대해 여러 조건 비교\n\n\n\n17.6.2 예제 (가상 반복 측정 데이터)\n\nfrom scipy.stats import friedmanchisquare\n\nnp.random.seed(1)\n\ncond1 = before\ncond2 = before + np.random.normal(0.3, 1.0, size=len(before))\ncond3 = before + np.random.normal(0.8, 1.0, size=len(before))\n\n\nf_stat, p_value = friedmanchisquare(cond1, cond2, cond3)\nf_stat, p_value\n\n(np.float64(15.800000000000011), np.float64(0.0003707435404590862))\n\n\n\n\n17.6.3 해석\n\np-value &lt; 0.05\n\n조건 간 분포 차이가 존재",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
+  },
+  {
+    "objectID": "part2/07. 비모수 검정.html#모수-vs-비모수-검정-정리",
+    "href": "part2/07. 비모수 검정.html#모수-vs-비모수-검정-정리",
+    "title": "17  비모수 검정",
+    "section": "17.7 모수 vs 비모수 검정 정리",
+    "text": "17.7 모수 vs 비모수 검정 정리\n\n\n\n상황\n모수 검정\n비모수 검정\n\n\n\n\n두 독립 집단\nt-test\nMann–Whitney U\n\n\n두 대응 집단\npaired t-test\nWilcoxon\n\n\n세 집단 이상\nANOVA\nKruskal–Wallis\n\n\n반복 측정\nRM ANOVA\nFriedman\n\n\n\n\n비모수 검정은\n\n평균 비교가 아니라 순위 기반 분포 비교\n\n가정이 깨졌을 때의 안전한 대안\n시각화 → 정규성/등분산 검정 → 비모수 여부 판단",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
+    ]
   }
 ]
