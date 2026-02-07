@@ -1,50 +1,65 @@
 # 분산 분석
 
-## 분산분석 
+분산분석(ANOVA: Analysis of Variance)은 세 개 이상 집단의 평균을 동시에 비교하는 통계적 방법이다. 이름은 분산분석이지만 실제 관심 대상은 집단 간 평균 차이이며, 분산을 이용하여 평균 차이를 검정한다는 점에서 이러한 명칭이 붙었다. ANOVA는 t-검정을 여러 번 반복하는 대신 전체 유의수준을 유지하면서 다집단을 비교할 수 있어 실무에서 매우 중요하다. 이 장에서는 일원분산분석, 이원분산분석, 그리고 사후검정을 상세히 학습한다.
 
-분산분석(ANOVA: Analysis of Variance)은 **세 개 이상 집단의 평균을 동시에 비교**하기 위한 통계적 방법이다. 이름은 분산분석이지만, **관심의 대상은 평균 차이**다.
-
-## 일원 분산 분석 (One-way ANOVA)
-
-### 개념
-
-* 하나의 범주형 독립변수(요인)
-* 하나의 연속형 종속변수
-* 집단 간 평균 차이가 존재하는지 검정
-
-예시
-
-* 종(species)에 따라 부리 길이(bill_length_mm)의 평균이 다른가?
-
-### 가설 설정
-
-* 귀무가설(H₀)
-
-  * 모든 집단의 평균은 같다
-* 대립가설(H₁)
-
-  * 적어도 하나의 집단 평균은 다르다
-
-### 분산분석의 핵심 아이디어
-
-* 전체 변동 = 집단 간 변동 + 집단 내 변동
-* 집단 간 변동이 충분히 크다면
-
-  * 평균 차이가 있다고 판단
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
 
+# 데이터 로드
 df = sns.load_dataset("penguins")
-df_anova = df[["species", "bill_length_mm"]].dropna()
+
+print("데이터 크기:", df.shape)
+print("\n범주형 변수:", df.select_dtypes(include=['object', 'category']).columns.tolist())
+print("연속형 변수:", df.select_dtypes(include=[np.number]).columns.tolist())
 ```
+
+## 분산분석의 기본 개념
+
+분산분석은 전체 변동을 집단 간 변동과 집단 내 변동으로 분해하고, 집단 간 변동이 집단 내 변동에 비해 충분히 큰지를 검정한다.
+
+**분산분석의 핵심 원리**
+
+$$
+\text{총 변동} = \text{집단 간 변동} + \text{집단 내 변동}
+$$
+
+$$
+SST = SSB + SSW
+$$
+
+**F-통계량**
+
+$$
+F = \frac{MSB}{MSW} = \frac{SSB/(k-1)}{SSW/(N-k)}
+$$
+
+F 값이 클수록 집단 간 차이가 집단 내 변동에 비해 크다는 의미이다.
+
+## 일원분산분석 (One-way ANOVA)
+
+일원분산분석은 하나의 범주형 독립변수(요인)가 연속형 종속변수에 미치는 영향을 검정한다.
+
+**가설 설정**
+
+- H₀: μ₁ = μ₂ = μ₃ = ⋯ = μₖ
+- H₁: 적어도 하나의 모평균이 다르다
+
+**예제: 데이터 준비**
 
 ```{python}
-df_anova.groupby("species")["bill_length_mm"].describe()
+df_anova = df[["species", "bill_length_mm"]].dropna()
+
+print("=== 집단별 기술 통계량 ===")
+print(df_anova.groupby("species")["bill_length_mm"].describe())
 ```
 
-#### 일원 ANOVA 수행
+**예제: 일원 ANOVA**
 
 ```{python}
 from scipy.stats import f_oneway
@@ -55,56 +70,24 @@ groups = [
 ]
 
 f_stat, p_value = f_oneway(*groups)
-f_stat, p_value
+
+print("\n=== 일원분산분석 ===")
+print(f"F-통계량: {f_stat:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+if p_value < 0.05:
+    print("✓ 종에 따른 부리 길이 차이가 유의함 → 사후검정 필요")
 ```
 
-### 결과 해석
+## 이원분산분석 (Two-way ANOVA)
 
-* p-value < 유의수준(0.05)
+이원분산분석은 두 개의 범주형 독립변수와 그들의 상호작용 효과를 동시에 검정한다.
 
-  * 종에 따라 평균 부리 길이에 차이가 있다
-* p-value ≥ 유의수준
-
-  * 평균 차이가 있다고 보기 어렵다
-
-중요: **어느 종 간 차이인지는 아직 모른다**
-
-## 이원 분산 분석 (Two-way ANOVA)
-
-### 개념
-
-* 두 개의 범주형 독립변수
-* 하나의 연속형 종속변수
-* 세 가지 효과를 동시에 검정
-
-  * 요인 A의 주효과
-  * 요인 B의 주효과
-  * A × B 상호작용 효과
-
-### 예시
-
-* species(종)
-* sex(성별)
-* → 부리 길이에 어떤 영향을 주는가?
-
-### 가설 구조
-
-* species 효과
-
-  * 종에 따른 평균 차이가 있는가?
-* sex 효과
-
-  * 성별에 따른 평균 차이가 있는가?
-* 상호작용 효과
-
-  * 종에 따른 성별 효과가 달라지는가?
-
+**예제: 이원 ANOVA**
 
 ```{python}
 df_two = df[["species", "sex", "bill_length_mm"]].dropna()
-```
 
-```{python}
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
 
@@ -114,44 +97,13 @@ model = ols(
 ).fit()
 
 anova_table = sm.stats.anova_lm(model, typ=2)
-anova_table
+print("\n=== 이원분산분석 ===")
+print(anova_table)
 ```
 
-### 결과 해석 포인트
+## 사후검정 (Post-hoc Test)
 
-* C(species)
-
-  * 종의 주효과
-* C(sex)
-
-  * 성별의 주효과
-* C(species):C(sex)
-
-  * 상호작용 효과
-
-상호작용이 유의하면
-→ “성별 차이가 종마다 다르게 나타난다”
-
-## 사후 검정 (Post-hoc Test)
-
-### 사후 검정 필요 이유
-
-* ANOVA 결과
-
-  * 평균 차이가 존재함은 알 수 있음
-* 하지만
-
-  * **어느 집단 간 차이인지 알 수 없음**
-
-### 대표적인 사후검정 방법
-
-* Tukey HSD (가장 일반적)
-* Bonferroni
-* Scheffé
-* Games-Howell (등분산 가정이 약할 때)
-
-
-### Tukey HSD
+**예제: Tukey HSD**
 
 ```{python}
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
@@ -162,40 +114,38 @@ tukey = pairwise_tukeyhsd(
     alpha=0.05
 )
 
+print("\n=== Tukey HSD 사후검정 ===")
 print(tukey)
 ```
 
-#### 결과 해석
-
-* reject = True
-
-  * 두 집단 간 평균 차이가 유의함
-* reject = False
-
-  * 평균 차이가 통계적으로 유의하지 않음
-
-#### 시각화와 함께 보기
+**예제: 시각화**
 
 ```{python}
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 sns.boxplot(
     data=df_anova,
     x="species",
     y="bill_length_mm"
 )
-
 plt.title("Bill Length by Species")
 plt.show()
 ```
 
-## 분산분석 사용 시 주의사항
+## 가정 위배 시 대응
 
-* 독립성 가정
-* 정규성 가정
-* 등분산성 가정
-* 가정이 깨질 경우
+- 정규성 위배 → Kruskal-Wallis 검정
+- 등분산성 위배 → Welch ANOVA
+- 독립성 위배 → 반복측정 ANOVA
 
-  * 비모수 방법(Kruskal–Wallis)
-  * 또는 변환(log, Box-Cox 등) 고려
+**예제: Kruskal-Wallis (비모수)**
+
+```{python}
+from scipy.stats import kruskal
+
+h_stat, p_kw = kruskal(*groups)
+print(f"\n=== Kruskal-Wallis ===")
+print(f"H = {h_stat:.4f}, p = {p_kw:.4f}")
+```
+
+## 요약
+
+분산분석은 다집단의 평균을 동시에 비교하는 강력한 도구이다. 가정을 확인하고 사후검정을 통해 구체적인 차이를 파악하는 것이 중요하다.
