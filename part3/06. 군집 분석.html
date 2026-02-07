@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,8 +370,48 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#군집-분석-개요" id="toc-군집-분석-개요" class="nav-link active" data-scroll-target="#군집-분석-개요"><span class="header-section-number">24.1</span> 군집 분석 개요</a></li>
+  <li><a href="#군집-분석의-주요-가정" id="toc-군집-분석의-주요-가정" class="nav-link" data-scroll-target="#군집-분석의-주요-가정"><span class="header-section-number">24.2</span> 군집 분석의 주요 가정</a></li>
+  <li><a href="#분할-기반-군집" id="toc-분할-기반-군집" class="nav-link" data-scroll-target="#분할-기반-군집"><span class="header-section-number">24.3</span> 분할 기반 군집</a>
+  <ul>
+  <li><a href="#k-means" id="toc-k-means" class="nav-link" data-scroll-target="#k-means"><span class="header-section-number">24.3.1</span> K-Means</a>
+  <ul class="collapse">
+  <li><a href="#핵심-아이디어" id="toc-핵심-아이디어" class="nav-link" data-scroll-target="#핵심-아이디어"><span class="header-section-number">24.3.1.1</span> 핵심 아이디어</a></li>
+  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">24.3.1.2</span> 특징</a></li>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">24.3.1.3</span> 예제</a></li>
+  </ul></li>
+  <li><a href="#k-선택-방법" id="toc-k-선택-방법" class="nav-link" data-scroll-target="#k-선택-방법"><span class="header-section-number">24.3.2</span> K 선택 방법</a></li>
+  </ul></li>
+  <li><a href="#밀도-기반-군집" id="toc-밀도-기반-군집" class="nav-link" data-scroll-target="#밀도-기반-군집"><span class="header-section-number">24.4</span> 밀도 기반 군집</a>
+  <ul>
+  <li><a href="#dbscan" id="toc-dbscan" class="nav-link" data-scroll-target="#dbscan"><span class="header-section-number">24.4.1</span> DBSCAN</a>
+  <ul class="collapse">
+  <li><a href="#핵심-아이디어-1" id="toc-핵심-아이디어-1" class="nav-link" data-scroll-target="#핵심-아이디어-1"><span class="header-section-number">24.4.1.1</span> 핵심 아이디어</a></li>
+  <li><a href="#주요-파라미터" id="toc-주요-파라미터" class="nav-link" data-scroll-target="#주요-파라미터"><span class="header-section-number">24.4.1.2</span> 주요 파라미터</a></li>
+  <li><a href="#특징-1" id="toc-특징-1" class="nav-link" data-scroll-target="#특징-1"><span class="header-section-number">24.4.1.3</span> 특징</a></li>
+  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">24.4.1.4</span> 예제</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#혼합-모델-군집" id="toc-혼합-모델-군집" class="nav-link" data-scroll-target="#혼합-모델-군집"><span class="header-section-number">24.5</span> 혼합 모델 군집</a>
+  <ul>
+  <li><a href="#gaussian-mixture-model-gmm" id="toc-gaussian-mixture-model-gmm" class="nav-link" data-scroll-target="#gaussian-mixture-model-gmm"><span class="header-section-number">24.5.1</span> Gaussian Mixture Model (GMM)</a>
+  <ul class="collapse">
+  <li><a href="#핵심-아이디어-2" id="toc-핵심-아이디어-2" class="nav-link" data-scroll-target="#핵심-아이디어-2"><span class="header-section-number">24.5.1.1</span> 핵심 아이디어</a></li>
+  <li><a href="#특징-2" id="toc-특징-2" class="nav-link" data-scroll-target="#특징-2"><span class="header-section-number">24.5.1.2</span> 특징</a></li>
+  <li><a href="#예제-2" id="toc-예제-2" class="nav-link" data-scroll-target="#예제-2"><span class="header-section-number">24.5.1.3</span> 예제</a></li>
+  <li><a href="#확률-기반-해석" id="toc-확률-기반-해석" class="nav-link" data-scroll-target="#확률-기반-해석"><span class="header-section-number">24.5.1.4</span> 확률 기반 해석</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#알고리즘-비교-정리" id="toc-알고리즘-비교-정리" class="nav-link" data-scroll-target="#알고리즘-비교-정리"><span class="header-section-number">24.6</span> 알고리즘 비교 정리</a></li>
+  <li><a href="#선택-가이드" id="toc-선택-가이드" class="nav-link" data-scroll-target="#선택-가이드"><span class="header-section-number">24.7</span> 선택 가이드</a></li>
+  <li><a href="#군집-결과-평가" id="toc-군집-결과-평가" class="nav-link" data-scroll-target="#군집-결과-평가"><span class="header-section-number">24.8</span> 군집 결과 평가</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/06. 군집 분석.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -366,8 +441,258 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="군집-분석-개요" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="군집-분석-개요"><span class="header-section-number">24.1</span> 군집 분석 개요</h2>
+<p><strong>군집 분석</strong>(Clustering)은 라벨이 없는 데이터에서 <strong>유사한 데이터끼리 묶는 비지도 학습 기법</strong>이다.</p>
+<p>주요 목적은 다음과 같다.</p>
+<ul>
+<li>데이터 구조 탐색</li>
+<li>패턴 및 그룹 발견</li>
+<li>이후 모델링을 위한 전처리 또는 특성 생성</li>
+</ul>
+<p>penguins 데이터처럼</p>
+<blockquote class="blockquote">
+<p>“종(species)을 모른다고 가정하고도 묶일까?” 를 실험하기에 매우 적합하다.</p>
+</blockquote>
+</section>
+<section id="군집-분석의-주요-가정" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="군집-분석의-주요-가정"><span class="header-section-number">24.2</span> 군집 분석의 주요 가정</h2>
+<p>군집 알고리즘마다 전제가 다르다.</p>
+<ul>
+<li>거리 기반인가?</li>
+<li>밀도를 가정하는가?</li>
+<li>분포를 가정하는가?</li>
+</ul>
+<p><strong>알고리즘 선택 = 데이터 가정 선택</strong></p>
+</section>
+<section id="분할-기반-군집" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="분할-기반-군집"><span class="header-section-number">24.3</span> 분할 기반 군집</h2>
+<p>분할 기반 군집(Partition-based Clustering)의 대표적인 알고리즘으로 K-Means가 있다.</p>
+<section id="k-means" class="level3" data-number="24.3.1">
+<h3 data-number="24.3.1" class="anchored" data-anchor-id="k-means"><span class="header-section-number">24.3.1</span> K-Means</h3>
+<section id="핵심-아이디어" class="level4" data-number="24.3.1.1">
+<h4 data-number="24.3.1.1" class="anchored" data-anchor-id="핵심-아이디어"><span class="header-section-number">24.3.1.1</span> 핵심 아이디어</h4>
+<ul>
+<li>K개의 군집 중심(centroid)을 미리 정함</li>
+<li>각 데이터 → 가장 가까운 중심에 할당</li>
+<li>중심 재계산 → 반복</li>
+</ul>
+</section>
+<section id="특징" class="level4" data-number="24.3.1.2">
+<h4 data-number="24.3.1.2" class="anchored" data-anchor-id="특징"><span class="header-section-number">24.3.1.2</span> 특징</h4>
+<ul>
+<li>빠르고 구현이 단순</li>
+<li>군집 수 K를 사전에 지정해야 함</li>
+<li>구형(spherical) 군집에 적합</li>
+<li>이상치에 민감</li>
+</ul>
+</section>
+<section id="예제" class="level4" data-number="24.3.1.3">
+<h4 data-number="24.3.1.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">24.3.1.3</span> 예제</h4>
+<div id="94b91345" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> seaborn <span class="im">import</span> load_dataset</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_dataset(<span class="st">'penguins'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X_cluster <span class="op">=</span> df[</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>].dropna()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X_cluster)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>labels_kmeans <span class="op">=</span> kmeans.fit_predict(X_scaled)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>labels_kmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1,
+       1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], dtype=int32)</code></pre>
+</div>
+</div>
+<p>결과 해석</p>
+<ul>
+<li><p>n_clusters=3</p>
+<ul>
+<li>penguins의 실제 종 개수와 일치</li>
+</ul></li>
+<li><p>하지만 군집 ≠ 실제 라벨</p></li>
+<li><p><strong>구조적 유사성</strong>만 반영</p></li>
+</ul>
+</section>
+</section>
+<section id="k-선택-방법" class="level3" data-number="24.3.2">
+<h3 data-number="24.3.2" class="anchored" data-anchor-id="k-선택-방법"><span class="header-section-number">24.3.2</span> K 선택 방법</h3>
+<ul>
+<li>Elbow Method</li>
+<li>Silhouette Score</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>silhouette_score(X_scaled, labels_kmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="밀도-기반-군집" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="밀도-기반-군집"><span class="header-section-number">24.4</span> 밀도 기반 군집</h2>
+<p>대표적인 밀도 기반 군집(Density-based Clustering) 알고리즘으로 DBSCAN이 있다.</p>
+<section id="dbscan" class="level3" data-number="24.4.1">
+<h3 data-number="24.4.1" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">24.4.1</span> DBSCAN</h3>
+<section id="핵심-아이디어-1" class="level4" data-number="24.4.1.1">
+<h4 data-number="24.4.1.1" class="anchored" data-anchor-id="핵심-아이디어-1"><span class="header-section-number">24.4.1.1</span> 핵심 아이디어</h4>
+<ul>
+<li>데이터가 <strong>빽빽한 영역</strong>을 군집으로 간주</li>
+<li>밀도가 낮은 영역은 <strong>노이즈(-1)</strong> 처리</li>
+</ul>
+</section>
+<section id="주요-파라미터" class="level4" data-number="24.4.1.2">
+<h4 data-number="24.4.1.2" class="anchored" data-anchor-id="주요-파라미터"><span class="header-section-number">24.4.1.2</span> 주요 파라미터</h4>
+<ul>
+<li>eps: 이웃으로 간주할 거리</li>
+<li>min_samples: 최소 이웃 수</li>
+</ul>
+</section>
+<section id="특징-1" class="level4" data-number="24.4.1.3">
+<h4 data-number="24.4.1.3" class="anchored" data-anchor-id="특징-1"><span class="header-section-number">24.4.1.3</span> 특징</h4>
+<ul>
+<li>군집 개수 자동 결정</li>
+<li>이상치 탐지 가능</li>
+<li>비구형 군집 탐지 가능</li>
+<li>밀도 차이가 크면 성능 저하</li>
+</ul>
+</section>
+<section id="예제-1" class="level4" data-number="24.4.1.4">
+<h4 data-number="24.4.1.4" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">24.4.1.4</span> 예제</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dbscan <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="fl">0.8</span>, min_samples<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>labels_dbscan <span class="op">=</span> dbscan.fit_predict(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>결과 해석</strong></p>
+<ul>
+<li><p>label = -1</p>
+<ul>
+<li>군집에 속하지 않는 이상치</li>
+</ul></li>
+<li><p>군집 수는 eps에 따라 크게 변함</p></li>
+</ul>
+<p>DBSCAN은 <strong>시각화 + 반복 실험 필수</strong></p>
+</section>
+</section>
+</section>
+<section id="혼합-모델-군집" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="혼합-모델-군집"><span class="header-section-number">24.5</span> 혼합 모델 군집</h2>
+<p>밀도, 거리 등을 혼합한 혼합 모델 군집(Model-based Clustering)도 있다.</p>
+<section id="gaussian-mixture-model-gmm" class="level3" data-number="24.5.1">
+<h3 data-number="24.5.1" class="anchored" data-anchor-id="gaussian-mixture-model-gmm"><span class="header-section-number">24.5.1</span> Gaussian Mixture Model (GMM)</h3>
+<section id="핵심-아이디어-2" class="level4" data-number="24.5.1.1">
+<h4 data-number="24.5.1.1" class="anchored" data-anchor-id="핵심-아이디어-2"><span class="header-section-number">24.5.1.1</span> 핵심 아이디어</h4>
+<ul>
+<li>데이터가 여러 개의 <strong>가우시안 분포 혼합</strong>으로 생성되었다고 가정</li>
+<li>각 데이터는 군집에 <strong>확률적으로 속함</strong></li>
+</ul>
+</section>
+<section id="특징-2" class="level4" data-number="24.5.1.2">
+<h4 data-number="24.5.1.2" class="anchored" data-anchor-id="특징-2"><span class="header-section-number">24.5.1.2</span> 특징</h4>
+<ul>
+<li>타원형 군집 가능</li>
+<li>소프트 군집 (확률)</li>
+<li>분포 가정이 맞지 않으면 성능 저하</li>
+</ul>
+</section>
+<section id="예제-2" class="level4" data-number="24.5.1.3">
+<h4 data-number="24.5.1.3" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">24.5.1.3</span> 예제</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gmm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>labels_gmm <span class="op">=</span> gmm.fit_predict(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="확률-기반-해석" class="level4" data-number="24.5.1.4">
+<h4 data-number="24.5.1.4" class="anchored" data-anchor-id="확률-기반-해석"><span class="header-section-number">24.5.1.4</span> 확률 기반 해석</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> gmm.predict_proba(X_scaled)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>probs[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>“이 데이터는 군집 1에 70% 속한다”</p>
+</section>
+</section>
+</section>
+<section id="알고리즘-비교-정리" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="알고리즘-비교-정리"><span class="header-section-number">24.6</span> 알고리즘 비교 정리</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>K-Means</th>
+<th>DBSCAN</th>
+<th>GMM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>군집 수</td>
+<td>사전 지정</td>
+<td>자동</td>
+<td>사전 지정</td>
+</tr>
+<tr class="even">
+<td>군집 형태</td>
+<td>구형</td>
+<td>자유</td>
+<td>타원</td>
+</tr>
+<tr class="odd">
+<td>이상치 처리</td>
+<td>약함</td>
+<td>강함</td>
+<td>약함</td>
+</tr>
+<tr class="even">
+<td>소프트 할당</td>
+<td>X</td>
+<td>X</td>
+<td>O</td>
+</tr>
+<tr class="odd">
+<td>계산 비용</td>
+<td>낮음</td>
+<td>중간</td>
+<td>중간</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="선택-가이드" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="선택-가이드"><span class="header-section-number">24.7</span> 선택 가이드</h2>
+<ul>
+<li>빠른 탐색, 기준선 모델 → K-Means</li>
+<li>이상치 탐지, 비구형 구조 → DBSCAN</li>
+<li>분포 기반 해석, 확률 필요 → GMM</li>
+</ul>
+<p>한 가지로 끝내지 말고 <strong>여러 군집 결과 비교</strong></p>
+</section>
+<section id="군집-결과-평가" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="군집-결과-평가"><span class="header-section-number">24.8</span> 군집 결과 평가</h2>
+<p><strong>군집에는 “정답”이 없다</strong>. 따라서 평가 기준도 다르다.</p>
+<ul>
+<li>Silhouette Score</li>
+<li>Davies–Bouldin Index</li>
+<li>시각적 해석 (PCA, t-SNE)</li>
+</ul>
+<p>군집은 <strong>수치 + 해석을 함께 봐야 한다</strong></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -790,7 +1115,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/06. 군집 분석.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/06. 군집 분석.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Python for Data Analytics</p>
 </div>
