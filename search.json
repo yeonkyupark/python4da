@@ -1523,5 +1523,60 @@
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>평균 비교 검정</span>"
     ]
+  },
+  {
+    "objectID": "part2/06. 분산 분석.html",
+    "href": "part2/06. 분산 분석.html",
+    "title": "16  분산 분석",
+    "section": "",
+    "text": "16.1 분산분석\n분산분석(ANOVA: Analysis of Variance)은 세 개 이상 집단의 평균을 동시에 비교하기 위한 통계적 방법이다. 이름은 분산분석이지만, 관심의 대상은 평균 차이다.",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/06. 분산 분석.html#일원-분산-분석-one-way-anova",
+    "href": "part2/06. 분산 분석.html#일원-분산-분석-one-way-anova",
+    "title": "16  분산 분석",
+    "section": "16.2 일원 분산 분석 (One-way ANOVA)",
+    "text": "16.2 일원 분산 분석 (One-way ANOVA)\n\n16.2.1 개념\n\n하나의 범주형 독립변수(요인)\n하나의 연속형 종속변수\n집단 간 평균 차이가 존재하는지 검정\n\n예시\n\n종(species)에 따라 부리 길이(bill_length_mm)의 평균이 다른가?\n\n\n\n16.2.2 가설 설정\n\n귀무가설(H₀)\n\n모든 집단의 평균은 같다\n\n대립가설(H₁)\n\n적어도 하나의 집단 평균은 다르다\n\n\n\n\n16.2.3 분산분석의 핵심 아이디어\n\n전체 변동 = 집단 간 변동 + 집단 내 변동\n집단 간 변동이 충분히 크다면\n\n평균 차이가 있다고 판단\n\n\n\nimport seaborn as sns\nimport pandas as pd\n\ndf = sns.load_dataset(\"penguins\")\ndf_anova = df[[\"species\", \"bill_length_mm\"]].dropna()\n\n\ndf_anova.groupby(\"species\")[\"bill_length_mm\"].describe()\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\nspecies\n\n\n\n\n\n\n\n\n\n\n\n\nAdelie\n151.0\n38.791391\n2.663405\n32.1\n36.75\n38.80\n40.750\n46.0\n\n\nChinstrap\n68.0\n48.833824\n3.339256\n40.9\n46.35\n49.55\n51.075\n58.0\n\n\nGentoo\n123.0\n47.504878\n3.081857\n40.9\n45.30\n47.30\n49.550\n59.6\n\n\n\n\n\n\n\n\n16.2.3.1 일원 ANOVA 수행\n\nfrom scipy.stats import f_oneway\n\ngroups = [\n    df_anova[df_anova[\"species\"] == sp][\"bill_length_mm\"]\n    for sp in df_anova[\"species\"].unique()\n]\n\nf_stat, p_value = f_oneway(*groups)\nf_stat, p_value\n\n(np.float64(410.6002550405077), np.float64(2.6946137388895495e-91))\n\n\n\n\n\n16.2.4 결과 해석\n\np-value &lt; 유의수준(0.05)\n\n종에 따라 평균 부리 길이에 차이가 있다\n\np-value ≥ 유의수준\n\n평균 차이가 있다고 보기 어렵다\n\n\n중요: 어느 종 간 차이인지는 아직 모른다",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/06. 분산 분석.html#이원-분산-분석-two-way-anova",
+    "href": "part2/06. 분산 분석.html#이원-분산-분석-two-way-anova",
+    "title": "16  분산 분석",
+    "section": "16.3 이원 분산 분석 (Two-way ANOVA)",
+    "text": "16.3 이원 분산 분석 (Two-way ANOVA)\n\n16.3.1 개념\n\n두 개의 범주형 독립변수\n하나의 연속형 종속변수\n세 가지 효과를 동시에 검정\n\n요인 A의 주효과\n요인 B의 주효과\nA × B 상호작용 효과\n\n\n\n\n16.3.2 예시\n\nspecies(종)\nsex(성별)\n→ 부리 길이에 어떤 영향을 주는가?\n\n\n\n16.3.3 가설 구조\n\nspecies 효과\n\n종에 따른 평균 차이가 있는가?\n\nsex 효과\n\n성별에 따른 평균 차이가 있는가?\n\n상호작용 효과\n\n종에 따른 성별 효과가 달라지는가?\n\n\n\ndf_two = df[[\"species\", \"sex\", \"bill_length_mm\"]].dropna()\n\n\nimport statsmodels.api as sm\nfrom statsmodels.formula.api import ols\n\nmodel = ols(\n    \"bill_length_mm ~ C(species) + C(sex) + C(species):C(sex)\",\n    data=df_two\n).fit()\n\nanova_table = sm.stats.anova_lm(model, typ=2)\nanova_table\n\n\n\n\n\n\n\n\nsum_sq\ndf\nF\nPR(&gt;F)\n\n\n\n\nC(species)\n6975.591607\n2.0\n650.478579\n1.059087e-114\n\n\nC(sex)\n1135.683888\n1.0\n211.806563\n2.422971e-37\n\n\nC(species):C(sex)\n24.494427\n2.0\n2.284122\n1.034865e-01\n\n\nResidual\n1753.338642\n327.0\nNaN\nNaN\n\n\n\n\n\n\n\n\n\n16.3.4 결과 해석 포인트\n\nC(species)\n\n종의 주효과\n\nC(sex)\n\n성별의 주효과\n\nC(species):C(sex)\n\n상호작용 효과\n\n\n상호작용이 유의하면 → “성별 차이가 종마다 다르게 나타난다”",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/06. 분산 분석.html#사후-검정-post-hoc-test",
+    "href": "part2/06. 분산 분석.html#사후-검정-post-hoc-test",
+    "title": "16  분산 분석",
+    "section": "16.4 사후 검정 (Post-hoc Test)",
+    "text": "16.4 사후 검정 (Post-hoc Test)\n\n16.4.1 사후 검정 필요 이유\n\nANOVA 결과\n\n평균 차이가 존재함은 알 수 있음\n\n하지만\n\n어느 집단 간 차이인지 알 수 없음\n\n\n\n\n16.4.2 대표적인 사후검정 방법\n\nTukey HSD (가장 일반적)\nBonferroni\nScheffé\nGames-Howell (등분산 가정이 약할 때)\n\n\n\n16.4.3 Tukey HSD\n\nfrom statsmodels.stats.multicomp import pairwise_tukeyhsd\n\ntukey = pairwise_tukeyhsd(\n    endog=df_anova[\"bill_length_mm\"],\n    groups=df_anova[\"species\"],\n    alpha=0.05\n)\n\nprint(tukey)\n\n   Multiple Comparison of Means - Tukey HSD, FWER=0.05   \n=========================================================\n  group1    group2  meandiff p-adj   lower  upper  reject\n---------------------------------------------------------\n   Adelie Chinstrap  10.0424    0.0  9.0249  11.06   True\n   Adelie    Gentoo   8.7135    0.0  7.8672 9.5598   True\nChinstrap    Gentoo  -1.3289 0.0089 -2.3819 -0.276   True\n---------------------------------------------------------\n\n\n\n16.4.3.1 결과 해석\n\nreject = True\n\n두 집단 간 평균 차이가 유의함\n\nreject = False\n\n평균 차이가 통계적으로 유의하지 않음\n\n\n\n\n16.4.3.2 시각화와 함께 보기\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nsns.boxplot(\n    data=df_anova,\n    x=\"species\",\n    y=\"bill_length_mm\"\n)\n\nplt.title(\"Bill Length by Species\")\nplt.show()",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/06. 분산 분석.html#분산분석-사용-시-주의사항",
+    "href": "part2/06. 분산 분석.html#분산분석-사용-시-주의사항",
+    "title": "16  분산 분석",
+    "section": "16.5 분산분석 사용 시 주의사항",
+    "text": "16.5 분산분석 사용 시 주의사항\n\n독립성 가정\n정규성 가정\n등분산성 가정\n가정이 깨질 경우\n\n비모수 방법(Kruskal–Wallis)\n또는 변환(log, Box-Cox 등) 고려",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>분산 분석</span>"
+    ]
   }
 ]
