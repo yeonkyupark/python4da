@@ -450,7 +450,7 @@ window.Quarto = {
 
 
 <p>예제 데이터셋 적재</p>
-<div id="2d7b54de" class="cell" data-execution_count="1">
+<div id="6ff11db0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -470,7 +470,7 @@ window.Quarto = {
 <h2 data-number="5.1" class="anchored" data-anchor-id="스케일링-이유"><span class="header-section-number">5.1</span> 스케일링 이유</h2>
 <section id="스케일-차이-확인" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="스케일-차이-확인"><span class="header-section-number">5.1.1</span> 스케일 차이 확인</h3>
-<div id="4a297a02" class="cell" data-execution_count="2">
+<div id="03b24782" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_num.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -556,14 +556,14 @@ window.Quarto = {
 <section id="min-max-스케일링-정규화" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="min-max-스케일링-정규화"><span class="header-section-number">5.2</span> Min-Max 스케일링 (정규화)</h2>
 <p>모든 값을 0~1 범위로 변환</p>
-<div id="682513f6" class="cell" data-execution_count="3">
+<div id="57cbeb62" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="bb191afd" class="cell" data-execution_count="4">
+<div id="6d5e98b5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scaler_minmax <span class="op">=</span> MinMaxScaler()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_minmax <span class="op">=</span> scaler_minmax.fit_transform(df_num)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="e8a27f3a" class="cell" data-execution_count="5">
+<div id="6eb09510" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_minmax <span class="op">=</span> pd.DataFrame(df_minmax, columns<span class="op">=</span>num_cols)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_minmax.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -583,7 +583,7 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 <p><span class="math display">\[
 x' = \frac{x-x_{min}}{x_{max} - x_{min}}
 \]</span></p>
-<div id="75dabfcc" class="cell" data-execution_count="6">
+<div id="9132c68a" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_minmax_manual <span class="op">=</span> df_num.copy()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
@@ -597,24 +597,24 @@ x' = \frac{x-x_{min}}{x_{max} - x_{min}}
 <p><span class="math display">\[
 x' = a + \frac{x-x_{min}}{x_{max} - x_{min}}\times(b-a)
 \]</span></p>
-<div id="85d1c6fd" class="cell" data-execution_count="7">
+<div id="594f588e" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minmax_scale_ab(series, a, b):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    x_min <span class="op">=</span> series.<span class="bu">min</span>()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    x_max <span class="op">=</span> series.<span class="bu">max</span>()</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> (series <span class="op">-</span> x_min) <span class="op">*</span> (b <span class="op">-</span> a) <span class="op">/</span> (x_max <span class="op">-</span> x_min)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="c97244e4" class="cell" data-execution_count="8">
+<div id="2cc51067" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>scaler_genernal <span class="op">=</span> MinMaxScaler(feature_range<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="표준화-standard-scaling" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="표준화-standard-scaling"><span class="header-section-number">5.3</span> 표준화 (Standard Scaling)</h2>
 <p>변수 변위를 평균 0, 표준편차 1로 변환</p>
-<div id="ce45b5c0" class="cell" data-execution_count="9">
+<div id="14043208" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="2b4f8d0d" class="cell" data-execution_count="10">
+<div id="ba217d9f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>scaler_std <span class="op">=</span> StandardScaler()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_std <span class="op">=</span> scaler_std.fit_transform(df_num)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df_std <span class="op">=</span> pd.DataFrame(df_std, columns<span class="op">=</span>num_cols)</span>
@@ -637,7 +637,7 @@ max      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00</code></pr
 <p><span class="math display">\[
 x' = \frac{x - \mu}{\sigma}
 \]</span></p>
-<div id="32cdf62e" class="cell" data-execution_count="11">
+<div id="8539fb13" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_std_manual <span class="op">=</span> df_num.copy()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> num_cols:</span>
@@ -651,10 +651,10 @@ x' = \frac{x - \mu}{\sigma}
 <section id="robust-scaling-이상치-대응" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="robust-scaling-이상치-대응"><span class="header-section-number">5.4</span> Robust Scaling (이상치 대응)</h2>
 <p>중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응</p>
-<div id="c27466f0" class="cell" data-execution_count="12">
+<div id="11403f4b" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> RobustScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="36cdecb9" class="cell" data-execution_count="13">
+<div id="171f1dec" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>scaler_robust <span class="op">=</span> RobustScaler()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_robust <span class="op">=</span> scaler_robust.fit_transform(df_num)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_robust <span class="op">=</span> pd.DataFrame(df_robust, columns<span class="op">=</span>num_cols)</span>
@@ -677,10 +677,10 @@ max      1.633423e+00       1.354839           1.478261     1.875000</code></pre
 <section id="maxabs-scaling" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="maxabs-scaling"><span class="header-section-number">5.5</span> MaxAbs Scaling</h2>
 <p>최대 절댓값으로 나눔</p>
-<div id="7d0f498c" class="cell" data-execution_count="14">
+<div id="d13fcc76" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MaxAbsScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="b76bf820" class="cell" data-execution_count="15">
+<div id="77e343bb" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>scaler_maxabs <span class="op">=</span> MaxAbsScaler()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_maxabs <span class="op">=</span> scaler_maxabs.fit_transform(df_num)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df_maxabs <span class="op">=</span> pd.DataFrame(df_maxabs, columns<span class="op">=</span>num_cols)</span>
@@ -702,16 +702,16 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 </section>
 <section id="범주별-스케일링" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="범주별-스케일링"><span class="header-section-number">5.6</span> 범주별 스케일링</h2>
-<div id="c7afc9b5" class="cell" data-execution_count="16">
+<div id="e3902e76" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a8a93602" class="cell" data-execution_count="17">
+<div id="5ee49989" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scale_by_species(group):</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    scaled <span class="op">=</span> scaler.fit_transform(group[num_cols])</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(scaled, columns<span class="op">=</span>num_cols, index<span class="op">=</span>group.index)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="961566a6" class="cell" data-execution_count="18">
+<div id="14fb68af" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_scaled_group <span class="op">=</span> (</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"species"</span>, group_keys<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>      .<span class="bu">apply</span>(scale_by_species)</span>
@@ -720,12 +720,12 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 </section>
 <section id="파이프라인-적용" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="파이프라인-적용"><span class="header-section-number">5.7</span> 파이프라인 적용</h2>
-<div id="5d03a207" class="cell" data-execution_count="19">
+<div id="3d20c1ef" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7aa3f85e" class="cell" data-execution_count="20">
+<div id="cbfa615b" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, LogisticRegression())</span>

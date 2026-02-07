@@ -2029,5 +2029,115 @@
       "Ⅲ. 머신러닝 모델링 및 평가",
       "<span class='chapter-number'>21</span>  <span class='chapter-title'>차원 축소</span>"
     ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html",
+    "href": "part3/04. 회귀 모델.html",
+    "title": "22  회귀 모델",
+    "section": "",
+    "text": "22.1 회귀 모델",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#회귀-모델",
+    "href": "part3/04. 회귀 모델.html#회귀-모델",
+    "title": "22  회귀 모델",
+    "section": "",
+    "text": "22.1.1 회귀 모델\n회귀 모델(Regression Models)은 입력 변수(X)와 연속형 타깃 변수(y) 사이의 관계를 학습하여 새로운 입력에 대한 수치값을 예측하는 모델이다.\n\n예측 대상이 수치형\n관계를 함수 형태로 모델링\n\n\n\n22.1.2 회귀 vs 분류\n\n회귀\n\n출력: 연속형 값\n예: 체중 예측, 매출 예측\n\n분류\n\n출력: 범주\n예: 종 분류, 합격/불합격",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#선형-회귀",
+    "href": "part3/04. 회귀 모델.html#선형-회귀",
+    "title": "22  회귀 모델",
+    "section": "22.2 선형 회귀",
+    "text": "22.2 선형 회귀\n\n22.2.1 기본 개념\n선형 회귀(Linear Regression)는 입력 변수와 출력 변수 사이의 관계를 선형 결합으로 표현한다.\n\n22.2.1.1 수식 형태\n\\[\ny = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots + \\beta_p x_p + \\varepsilon\n\\]\n\n\\(\\beta\\): 회귀 계수\n\\(\\varepsilon\\): 오차항\n\n\n\n\n22.2.2 선형 회귀의 가정\n\n선형성\n독립성\n등분산성\n정규성 (오차)\n\n현실 데이터에서는 완벽히 만족하지 않는 경우가 많음\n\n\n22.2.3 선형 회귀 예제\n\nimport seaborn as sns\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import train_test_split\n\ndf = sns.load_dataset(\"penguins\").dropna()\n\nX = df[[\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\"]]\ny = df[\"body_mass_g\"]\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42\n)\n\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\nmodel.coef_, model.intercept_\n\n(array([ 3.85768347, 10.05813347, 50.24725463]),\n np.float64(-6227.688410615796))\n\n\n\n\n22.2.4 선형 회귀의 한계\n\n다중공선성 문제\n과적합 위험\n변수 수가 많을수록 불안정\n\n이를 해결하기 위한 방법이 정규화 회귀",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#정규화-개념",
+    "href": "part3/04. 회귀 모델.html#정규화-개념",
+    "title": "22  회귀 모델",
+    "section": "22.3 정규화 개념",
+    "text": "22.3 정규화 개념\n\n22.3.1 왜 정규화가 필요한가?\n정규화(Regularization)가 필요한 이유는 다음과 같다.\n\n계수가 너무 커지는 것을 방지\n불필요한 변수 영향 축소\n과적합 감소\n\n손실 함수에 패널티 항을 추가\n\n\n22.3.2 일반적인 손실 함수 구조\n\\[\n\\text{Loss} = \\text{오차} + \\lambda \\times \\text{패널티}\n\\]\n\n\\(\\lambda\\): 규제 강도\n값이 클수록 규제 강함",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#ridge-회귀-l2-정규화",
+    "href": "part3/04. 회귀 모델.html#ridge-회귀-l2-정규화",
+    "title": "22  회귀 모델",
+    "section": "22.4 Ridge 회귀 (L2 정규화)",
+    "text": "22.4 Ridge 회귀 (L2 정규화)\n\n22.4.1 개념\n계수의 제곱합(L2)에 패널티 부여하여 모든 변수를 유지하되 계수 크기를 줄이는 방식이다.\n\n\n22.4.2 특징\n\n다중공선성 완화\n변수 선택은 하지 않음\n계수를 0에 가깝게 만듦\n\n\n\n22.4.3 Ridge 예제\nfrom sklearn.linear_model import Ridge\n\nridge = Ridge(alpha=1.0)\nridge.fit(X_train, y_train)\n\nridge.coef_",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#lasso-회귀-l1-정규화",
+    "href": "part3/04. 회귀 모델.html#lasso-회귀-l1-정규화",
+    "title": "22  회귀 모델",
+    "section": "22.5 Lasso 회귀 (L1 정규화)",
+    "text": "22.5 Lasso 회귀 (L1 정규화)\n\n22.5.1 개념\n계수의 절댓값 합(L1)에 패널티 부여 일부 계수를 0으로 만든다.\n\n\n22.5.2 특징\n\n자동 변수 선택 효과\n해석이 쉬움\n변수 수가 많을 때 유리\n\n\n\n22.5.3 Lasso 예제\nfrom sklearn.linear_model import Lasso\n\nlasso = Lasso(alpha=0.1)\nlasso.fit(X_train, y_train)\n\nlasso.coef_",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#elasticnet-l1-l2",
+    "href": "part3/04. 회귀 모델.html#elasticnet-l1-l2",
+    "title": "22  회귀 모델",
+    "section": "22.6 ElasticNet (L1 + L2)",
+    "text": "22.6 ElasticNet (L1 + L2)\n\n22.6.1 개념\nRidge + Lasso의 혼합 방법으로 두 패널티의 장점 결합한 형태이다.\n\n\n22.6.2 하이퍼파라미터\n\nalpha: 전체 규제 강도\nl1_ratio: L1 비율\n\n\n\n22.6.3 ElasticNet 예제\nfrom sklearn.linear_model import ElasticNet\n\nelastic = ElasticNet(alpha=0.1, l1_ratio=0.5)\nelastic.fit(X_train, y_train)\n\nelastic.coef_",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#회귀-모델-비교-요약",
+    "href": "part3/04. 회귀 모델.html#회귀-모델-비교-요약",
+    "title": "22  회귀 모델",
+    "section": "22.7 회귀 모델 비교 요약",
+    "text": "22.7 회귀 모델 비교 요약\n\n선형 회귀\n\n기준 모델\n규제 없음\n\nRidge\n\n안정적인 계수\n다중공선성 대응\n\nLasso\n\n변수 선택\n해석 용이\n\nElasticNet\n\n복합적인 상황에 적합",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#선택-가이드",
+    "href": "part3/04. 회귀 모델.html#선택-가이드",
+    "title": "22  회귀 모델",
+    "section": "22.8 선택 가이드",
+    "text": "22.8 선택 가이드\n\n변수 수 적고 해석 중요\n\n선형 회귀\n\n변수 간 상관 높음\n\nRidge\n\n변수 선택 필요\n\nLasso\n\n고차원 데이터\n\nElasticNet",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
+  },
+  {
+    "objectID": "part3/04. 회귀 모델.html#전처리-주의-사항",
+    "href": "part3/04. 회귀 모델.html#전처리-주의-사항",
+    "title": "22  회귀 모델",
+    "section": "22.9 전처리 주의 사항",
+    "text": "22.9 전처리 주의 사항\n\n정규화 회귀는 스케일에 민감\n반드시 표준화 후 적용\n\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.pipeline import Pipeline\n\npipe = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", Ridge(alpha=1.0))\n])\n\npipe.fit(X_train, y_train)\n회귀 모델은 연속형 예측의 기본이고 정규화는 과적합 방지의 핵심이다. 모델 선택보다 전처리 + 하이퍼파라미터 튜닝이 더 중요할 수 있다.",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>22</span>  <span class='chapter-title'>회귀 모델</span>"
+    ]
   }
 ]
