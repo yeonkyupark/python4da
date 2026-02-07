@@ -1666,5 +1666,104 @@
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>비모수 검정</span>"
     ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html",
+    "href": "part2/08. 상관 분석.html",
+    "title": "18  상관 분석",
+    "section": "",
+    "text": "18.1 상관 분석\n상관 분석(Correlation Analysis)은 두 연속형 변수 간의 관계의 방향과 강도를 수치로 표현하는 방법이다. 인과관계를 의미하지는 않는다.",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#상관계수-기본-개념",
+    "href": "part2/08. 상관 분석.html#상관계수-기본-개념",
+    "title": "18  상관 분석",
+    "section": "18.2 상관계수 기본 개념",
+    "text": "18.2 상관계수 기본 개념\n\n값의 범위: -1 ~ +1\n해석\n\n+1: 완전한 양의 상관\n0: 선형 관계 없음\n-1: 완전한 음의 상관\n\n\n\n18.2.1 주의사항\n\n상관관계 ≠ 인과관계\n이상치에 민감할 수 있음\n관계가 비선형이면 값이 작게 나올 수 있음",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#pearson-상관-분석",
+    "href": "part2/08. 상관 분석.html#pearson-상관-분석",
+    "title": "18  상관 분석",
+    "section": "18.3 Pearson 상관 분석",
+    "text": "18.3 Pearson 상관 분석\n\n18.3.1 개념\n\n선형(linear) 관계 측정\n평균과 분산을 기반으로 계산\n정규성 가정이 비교적 중요\n\n\n\n18.3.2 사용 조건\n\n연속형 변수\n선형 관계\n극단값이 많지 않음\n\n\n\n18.3.3 가설 설정\n\nH₀: 두 변수 간 선형 상관이 없다 (ρ = 0)\nH₁: 두 변수 간 선형 상관이 있다 (ρ ≠ 0)\n\n\n\n18.3.4 예제\n\n18.3.4.1 분석 목표\n\n부리 길이(bill_length_mm)와 부리 깊이(bill_depth_mm) 사이의 관계\n\n\nimport seaborn as sns\nfrom scipy.stats import pearsonr\n\ndf = sns.load_dataset(\"penguins\")\n\nx = df[\"bill_length_mm\"]\ny = df[\"bill_depth_mm\"]\n\ndf_corr = df[[\"bill_length_mm\", \"bill_depth_mm\"]].dropna()\n\n\n\n18.3.4.2 Pearson 상관계수 계산\n\nr, p_value = pearsonr(\n    df_corr[\"bill_length_mm\"],\n    df_corr[\"bill_depth_mm\"]\n)\n\nr, p_value\n\n(np.float64(-0.2350528703555327), np.float64(1.1196621961373343e-05))\n\n\n\n\n\n18.3.5 결과 해석\n\nr &gt; 0\n\n양의 선형 관계\n\n|r|가 클수록\n\n관계가 강함\n\np-value &lt; 0.05\n\n상관관계가 통계적으로 유의함",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#spearman-순위-상관-분석",
+    "href": "part2/08. 상관 분석.html#spearman-순위-상관-분석",
+    "title": "18  상관 분석",
+    "section": "18.4 Spearman 순위 상관 분석",
+    "text": "18.4 Spearman 순위 상관 분석\n\n18.4.1 개념\n\n순위(rank) 기반 상관 분석\n비선형이지만 단조(monotonic) 관계면 탐지 가능\n비모수적 방법\n\n\n\n18.4.2 언제 사용하는가?\n\n정규성 가정이 깨졌을 때\n이상치가 많은 경우\n값의 크기보다 순서가 중요할 때\n\n\n\n18.4.3 가설 설정\n\nH₀: 두 변수 간 순위 상관이 없다\nH₁: 두 변수 간 순위 상관이 있다\n\n\n\n18.4.4 예제\n\nfrom scipy.stats import spearmanr\n\nrho, p_value = spearmanr(\n    df_corr[\"bill_length_mm\"],\n    df_corr[\"bill_depth_mm\"]\n)\n\nrho, p_value\n\n(np.float64(-0.22174915179457863), np.float64(3.511539739648999e-05))\n\n\n\n\n18.4.5 Pearson vs Spearman 비교\n\n\n\n항목\nPearson\nSpearman\n\n\n\n\n기반\n실제 값\n순위\n\n\n관계 형태\n선형\n단조\n\n\n이상치 영향\n큼\n작음\n\n\n정규성\n중요\n덜 중요",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#상관-행렬correlation-matrix",
+    "href": "part2/08. 상관 분석.html#상관-행렬correlation-matrix",
+    "title": "18  상관 분석",
+    "section": "18.5 상관 행렬(Correlation Matrix)",
+    "text": "18.5 상관 행렬(Correlation Matrix)\n\n18.5.1 여러 변수 간 관계 한 번에 보기\n\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\ncorr_matrix = df[num_cols].corr(method=\"pearson\")\ncorr_matrix\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\nbill_length_mm\n1.000000\n-0.235053\n0.656181\n0.595110\n\n\nbill_depth_mm\n-0.235053\n1.000000\n-0.583851\n-0.471916\n\n\nflipper_length_mm\n0.656181\n-0.583851\n1.000000\n0.871202\n\n\nbody_mass_g\n0.595110\n-0.471916\n0.871202\n1.000000\n\n\n\n\n\n\n\n\n\n18.5.2 시각화\n\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\nsns.heatmap(\n    corr_matrix,\n    annot=True,\n    cmap=\"coolwarm\",\n    fmt=\".2f\"\n)\n\nplt.title(\"Correlation Matrix of Penguins\")\nplt.show()",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#해석-팁",
+    "href": "part2/08. 상관 분석.html#해석-팁",
+    "title": "18  상관 분석",
+    "section": "18.6 해석 팁",
+    "text": "18.6 해석 팁\n\n상관계수 절대값 기준(경험적)\n\n0.1 ~ 0.3: 약함\n0.3 ~ 0.5: 중간\n0.5 이상: 강함\n\n항상 산점도와 함께 확인\n상관이 높다고 변수 제거를 바로 결정하지 말 것",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#정리",
+    "href": "part2/08. 상관 분석.html#정리",
+    "title": "18  상관 분석",
+    "section": "18.7 정리",
+    "text": "18.7 정리\n\nPearson\n\n선형 관계 분석의 기본\n\nSpearman\n\n분포·이상치에 강한 대안\n\n상관 분석은\n\nEDA\n피처 선택\n회귀 모델링의 출발점",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#kendall-순위-상관",
+    "href": "part2/08. 상관 분석.html#kendall-순위-상관",
+    "title": "18  상관 분석",
+    "section": "18.8 Kendall 순위 상관",
+    "text": "18.8 Kendall 순위 상관\nKendall 순위 상관(Kendall’s τ)은 순위 기반 상관 분석 방법이다.\n\n18.8.1 개념\n\n순위 기반 상관 분석\nSpearman과 유사하지만 계산 방식이 다름\n두 변수의 순위 쌍이 얼마나 일관되게 증가/감소하는지 측정\n\n\n\n18.8.2 직관적 설명\n\n관측치 쌍 (xᵢ, yᵢ), (xⱼ, yⱼ)에 대해\n\nx와 y가 같은 방향으로 증가/감소 → concordant\n방향이 다르면 → discordant\n\nKendall τ는\n\n(일치 쌍 − 불일치 쌍) / 전체 쌍\n\n\n“순서가 얼마나 자주 같은 방향으로 움직이는가?”\n\n\n18.8.3 값의 범위\n\n-1 ~ +1\nSpearman보다 절댓값이 작게 나오는 경향\n대신 해석은 더 보수적이고 안정적\n\n\n\n18.8.4 언제 사용하는가?\n\n표본 수가 작을 때\n동일 값(ties)이 많을 때\n순서 정보가 매우 중요한 경우\n비선형 + 단조 관계\n\n\n\n18.8.5 예제\n\nfrom scipy.stats import kendalltau\n\ntau, p_value = kendalltau(\n    df_corr[\"bill_length_mm\"],\n    df_corr[\"bill_depth_mm\"]\n)\n\ntau, p_value\n\n(np.float64(-0.12285019226399843), np.float64(0.0007864168450192424))\n\n\n\n\n18.8.6 해석\n\nτ &gt; 0\n\n순위가 함께 증가하는 경향\n\np-value &lt; 0.05\n\n순위 상관이 통계적으로 유의함",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
+  },
+  {
+    "objectID": "part2/08. 상관 분석.html#pearson-spearman-kendall-비교-정리",
+    "href": "part2/08. 상관 분석.html#pearson-spearman-kendall-비교-정리",
+    "title": "18  상관 분석",
+    "section": "18.9 Pearson · Spearman · Kendall 비교 정리",
+    "text": "18.9 Pearson · Spearman · Kendall 비교 정리\n\n\n\n구분\nPearson\nSpearman\nKendall\n\n\n\n\n기반\n실제 값\n순위\n순위 쌍\n\n\n관계 형태\n선형\n단조\n단조\n\n\n이상치 영향\n큼\n중간\n작음\n\n\n정규성 필요\n높음\n낮음\n낮음\n\n\n값 크기\n가장 큼\n중간\n가장 작음\n\n\n해석 안정성\n낮음\n중간\n높음",
+    "crumbs": [
+      "Ⅱ. 통계분석 및 가설검정",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>상관 분석</span>"
+    ]
   }
 ]
