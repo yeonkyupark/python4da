@@ -1,14 +1,18 @@
 # 스케일링
 
-예제 데이터셋 적재
+스케일링(Scaling)은 서로 다른 척도를 가진 변수들을 동일한 범위나 분포로 변환하는 과정이다. 머신러닝 알고리즘 중 거리 기반 모델(K-Nearest Neighbors, Support Vector Machine, K-means 등)은 변수의 크기에 민감하므로, 스케일링을 통해 모든 변수가 공정하게 모델에 기여하도록 만들어야 한다. 이 장에서는 다양한 스케일링 기법의 원리와 적용 방법, 그리고 상황에 맞는 선택 기준을 학습한다.
+
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
 import pandas as pd
 import numpy as np
 
+# 데이터 로드
 df = sns.load_dataset("penguins")
 
+# 수치형 컬럼 선택
 num_cols = [
     "bill_length_mm",
     "bill_depth_mm",
@@ -19,188 +23,343 @@ num_cols = [
 df_num = df[num_cols]
 ```
 
-## 스케일링 이유
+## 스케일링의 필요성
+
+변수마다 측정 단위와 범위가 다르면 모델 학습 과정에서 큰 값을 가진 변수가 지배적인 영향을 미치게 된다. 예를 들어, 체중(g 단위)은 수천의 값을 가지지만 부리 길이(mm 단위)는 수십의 값을 가지므로, 거리를 계산할 때 체중이 과도하게 반영된다.
 
 ### 스케일 차이 확인
 
+각 변수의 평균, 표준편차, 최솟값, 최댓값을 확인하여 스케일 차이를 파악한다.
+
+**예제: 변수별 스케일 확인**
+
 ```{python}
-df_num.describe()
+# 기술 통계량 확인
+print(df_num.describe())
 ```
 
-변수별 측정 단위가 다름(상호 비교가 어려움)  
-- 거리 기반 모델(KNN, SVM, K-means)에서는 **큰 값이 모델을 지배**
+위 결과에서 `body_mass_g`는 2000~6000 범위를 가지지만, `bill_depth_mm`는 13~22 범위를 가진다. 이러한 스케일 차이는 다음과 같은 문제를 일으킨다.
+
+- 거리 기반 모델에서 큰 값이 거리 계산을 지배
+- 경사 하강법 기반 최적화에서 수렴 속도 저하
+- 가중치 해석의 어려움
 
 ## Min-Max 스케일링 (정규화)
 
-모든 값을 0~1 범위로 변환
+Min-Max 스케일링은 모든 값을 지정된 범위(기본값 0~1)로 변환하는 방법이다. 데이터의 분포 형태는 유지하면서 범위만 조정한다.
+
+**변환 공식**
+
+$$
+x' = \frac{x - x_{min}}{x_{max} - x_{min}}
+$$
+
+**예제: Min-Max 스케일링 적용**
 
 ```{python}
 from sklearn.preprocessing import MinMaxScaler
-```
 
-```{python}
+# 스케일러 생성
 scaler_minmax = MinMaxScaler()
-df_minmax = scaler_minmax.fit_transform(df_num)
-```
 
-```{python}
+# 스케일링 수행
+df_minmax = scaler_minmax.fit_transform(df_num)
+
+# DataFrame으로 변환
 df_minmax = pd.DataFrame(df_minmax, columns=num_cols)
+
+# 결과 확인
 print(df_minmax.describe())
 ```
 
-변수 범위가 고정(0~1) 되며 **이상치에 매우 민감**한 특징
+스케일링 후 모든 변수의 최솟값은 0, 최댓값은 1이 된다. 이 방법은 신경망의 활성화 함수나 이미지 데이터 전처리에 자주 사용된다.
 
-참고. 아래와 같이 수식을 통해 직접 구현
+**장단점**
 
-$$
-x' = \frac{x-x_{min}}{x_{max} - x_{min}}
-$$
+| 장점 | 단점 |
+|------|------|
+| 범위가 고정되어 해석이 명확함 | 이상치에 매우 민감함 |
+| 신경망의 활성화 함수에 적합 | 새로운 데이터의 범위를 벗어날 수 있음 |
+| 구현이 간단함 | 변수 간 분산 비율이 왜곡될 수 있음 |
 
+**예제: 수동 구현**
+
+이해를 돕기 위해 공식을 직접 구현하면 다음과 같다.
 
 ```{python}
+# Min-Max 스케일링 수동 구현
 df_minmax_manual = df_num.copy()
 
 for col in num_cols:
     col_min = df_minmax_manual[col].min()
     col_max = df_minmax_manual[col].max()
+    
+    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) / (col_max - col_min)
 
-    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) \
-                            / (col_max - col_min)
-
+# 결과 확인
+print(df_minmax_manual.describe())
 ```
 
-`(a, b)` 구간으로 일반화한 수식
+### 일반화된 Min-Max 스케일링
+
+기본 범위인 [0, 1] 대신 임의의 범위 [a, b]로 변환할 수도 있다.
+
+**일반화 공식**
 
 $$
-x' = a + \frac{x-x_{min}}{x_{max} - x_{min}}\times(b-a)
+x' = a + \frac{x - x_{min}}{x_{max} - x_{min}} \times (b - a)
 $$
+
+**예제: 사용자 정의 범위로 스케일링**
+
+```{python}
+# [-1, 1] 범위로 스케일링
+scaler_general = MinMaxScaler(feature_range=(-1, 1))
+df_minmax_custom = scaler_general.fit_transform(df_num)
+df_minmax_custom = pd.DataFrame(df_minmax_custom, columns=num_cols)
+
+print(df_minmax_custom.describe())
+```
+
+**예제: 일반화 함수 구현**
 
 ```{python}
 def minmax_scale_ab(series, a, b):
+    """임의의 [a, b] 범위로 Min-Max 스케일링"""
     x_min = series.min()
     x_max = series.max()
-
     return a + (series - x_min) * (b - a) / (x_max - x_min)
-```
 
-```{python}
-scaler_genernal = MinMaxScaler(feature_range=(-1, 1))
+# 사용 예시
+df_custom = df_num.copy()
+df_custom['bill_length_mm'] = minmax_scale_ab(df_num['bill_length_mm'], -1, 1)
 ```
 
 ## 표준화 (Standard Scaling)
 
-변수 변위를 평균 0, 표준편차 1로 변환
+표준화는 각 변수의 평균을 0, 표준편차를 1로 변환하는 방법이다. 가장 널리 사용되는 스케일링 기법으로, 대부분의 머신러닝 알고리즘에 적합하다.
 
-```{python}
-from sklearn.preprocessing import StandardScaler
-```
-
-```{python}
-scaler_std = StandardScaler()
-df_std = scaler_std.fit_transform(df_num)
-df_std = pd.DataFrame(df_std, columns=num_cols)
-
-print(df_std.describe())
-```
-
-가장 널리 사용되며 변수가 정규분포 가정(완전하지 않아도 OK)하에 수행
-
-참고. 아래와 같이 수식을 통해 직접 구현
+**변환 공식**
 
 $$
 x' = \frac{x - \mu}{\sigma}
 $$
 
+여기서 $\mu$는 평균, $\sigma$는 표준편차이다.
+
+**예제: 표준화 적용**
+
 ```{python}
+from sklearn.preprocessing import StandardScaler
+
+# 스케일러 생성
+scaler_std = StandardScaler()
+
+# 표준화 수행
+df_std = scaler_std.fit_transform(df_num)
+
+# DataFrame으로 변환
+df_std = pd.DataFrame(df_std, columns=num_cols)
+
+# 결과 확인
+print(df_std.describe())
+```
+
+표준화 후 모든 변수의 평균은 0에 가깝고, 표준편차는 1에 가까워진다. 표준화는 데이터가 완전히 정규분포를 따르지 않아도 효과적으로 작동한다.
+
+**장단점**
+
+| 장점 | 단점 |
+|------|------|
+| 가장 널리 사용되는 방법 | 고정된 범위가 없어 해석이 상대적 |
+| 정규분포를 완전히 따르지 않아도 작동 | 이상치에 영향을 받음 |
+| 대부분의 머신러닝 알고리즘에 적합 | 신경망의 일부 활성화 함수에 부적합할 수 있음 |
+
+**예제: 수동 구현**
+
+```{python}
+# 표준화 수동 구현
 df_std_manual = df_num.copy()
 
 for col in num_cols:
     mean = df_std_manual[col].mean()
     std = df_std_manual[col].std()
+    
+    df_std_manual[col] = (df_std_manual[col] - mean) / std
 
-    df_std_manual[col] = (df_std_manual[col] - mean) \
-                         / std
+# 결과 확인
+print(df_std_manual.describe())
 ```
 
-## Robust Scaling (이상치 대응)
+## Robust 스케일링 (이상치 대응)
 
-중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응
+Robust 스케일링은 중앙값과 IQR(Interquartile Range)을 사용하여 이상치의 영향을 최소화하는 방법이다. 평균과 표준편차 대신 중앙값과 사분위수를 사용하므로 이상치에 강건하다.
+
+**변환 공식**
+
+$$
+x' = \frac{x - \text{median}}{\text{IQR}}
+$$
+
+여기서 $\text{IQR} = Q_3 - Q_1$이다.
+
+**예제: Robust 스케일링 적용**
 
 ```{python}
 from sklearn.preprocessing import RobustScaler
-```
 
-```{python}
+# 스케일러 생성
 scaler_robust = RobustScaler()
+
+# Robust 스케일링 수행
 df_robust = scaler_robust.fit_transform(df_num)
+
+# DataFrame으로 변환
 df_robust = pd.DataFrame(df_robust, columns=num_cols)
 
+# 결과 확인
 print(df_robust.describe())
 ```
 
-이상치 영향 최소화
+Robust 스케일링은 이상치가 많거나 데이터 분포가 심하게 왜곡된 경우 표준화보다 안정적인 결과를 제공한다.
 
-## MaxAbs Scaling
+**적용 상황**
 
-최대 절댓값으로 나눔
+- 이상치가 많은 실무 데이터
+- 분포가 왜곡되어 있는 경우
+- 이상치를 제거하지 않고 분석해야 하는 경우
+
+## MaxAbs 스케일링
+
+MaxAbs 스케일링은 각 변수의 절댓값 최댓값으로 나누어 [-1, 1] 범위로 변환하는 방법이다. 값의 부호를 유지하므로 희소 행렬(Sparse Matrix)에 적합하다.
+
+**변환 공식**
+
+$$
+x' = \frac{x}{|x|_{max}}
+$$
+
+**예제: MaxAbs 스케일링 적용**
 
 ```{python}
 from sklearn.preprocessing import MaxAbsScaler
-```
 
-```{python}
+# 스케일러 생성
 scaler_maxabs = MaxAbsScaler()
+
+# MaxAbs 스케일링 수행
 df_maxabs = scaler_maxabs.fit_transform(df_num)
+
+# DataFrame으로 변환
 df_maxabs = pd.DataFrame(df_maxabs, columns=num_cols)
 
+# 결과 확인
 print(df_maxabs.describe())
 ```
 
-희소 행렬에 유리하며 값 **부호 유지**하는 특징
+**장단점**
 
-## 범주별 스케일링
+| 장점 | 단점 |
+|------|------|
+| 값의 부호를 유지함 | 이상치에 민감함 |
+| 희소 행렬의 0을 보존함 | 범위가 비대칭일 수 있음 |
+| 계산이 간단함 | 사용 사례가 제한적 |
+
+**적용 상황**
+
+- 희소 행렬 데이터(텍스트 데이터, 추천 시스템 등)
+- 양수와 음수를 모두 포함하는 데이터
+- 0 값의 보존이 중요한 경우
+
+## 그룹별 스케일링
+
+데이터가 여러 그룹으로 구성되어 있고 그룹별로 분포가 다른 경우, 전체 데이터를 대상으로 스케일링하면 그룹 내 패턴이 왜곡될 수 있다. 그룹별 스케일링은 각 그룹 내에서 독립적으로 스케일링을 수행하여 그룹 특성을 보존한다.
+
+**예제: 종별 표준화**
 
 ```{python}
 from sklearn.preprocessing import StandardScaler
-```
 
-```{python}
 def scale_by_species(group):
+    """그룹별 표준화 함수"""
     scaler = StandardScaler()
     scaled = scaler.fit_transform(group[num_cols])
     return pd.DataFrame(scaled, columns=num_cols, index=group.index)
-```
 
-```{python}
+# 종별로 표준화 적용
 df_scaled_group = (
     df.groupby("species", group_keys=False)
       .apply(scale_by_species)
 )
+
+# 결과 확인
+print(df_scaled_group.groupby(df['species']).describe())
 ```
 
+그룹별 스케일링은 각 그룹의 평균과 표준편차가 다를 때 유용하며, 그룹 내 비교가 중요한 경우 사용한다.
 
-## 파이프라인 적용 
+**적용 상황**
+
+- 범주별로 분포가 크게 다른 경우
+- 그룹 내 패턴 분석이 목적인 경우
+- 도메인 지식상 그룹별 처리가 적절한 경우
+
+## 파이프라인 적용
+
+실무에서는 스케일링을 모델 학습 파이프라인에 포함시켜 데이터 전처리와 모델 학습을 일관성 있게 관리한다. scikit-learn의 `Pipeline`을 사용하면 전처리와 모델을 하나의 객체로 관리할 수 있다.
+
+**예제: 스케일링과 모델을 파이프라인으로 구성**
 
 ```{python}
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
-```
 
-```{python}
+# 파이프라인 생성
 pipeline = Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", LogisticRegression())
+    ("scaler", StandardScaler()),       # 1단계: 표준화
+    ("model", LogisticRegression())     # 2단계: 로지스틱 회귀 모델
 ])
+
+# 파이프라인 사용 예시 (실제 학습 시)
+# pipeline.fit(X_train, y_train)
+# predictions = pipeline.predict(X_test)
 ```
 
-## 스케일링 방법 선택 가이드
+파이프라인을 사용하면 다음과 같은 장점이 있다.
 
-| 방법       | 특징     | 추천 상황       |
-| -------- | ------ | ----------- |
-| Min-Max  | 0~1    | 신경망, 시각화    |
-| Standard | 평균 0   | 대부분의 모델     |
-| Robust   | 이상치 강함 | 실무 기본       |
-| MaxAbs   | 부호 유지  | 희소 데이터      |
-| 그룹별      | 분포 반영  | 도메인 지식 있을 때 |
+- 학습 데이터와 테스트 데이터에 동일한 스케일링 파라미터 적용
+- 코드 간결성과 재사용성 향상
+- 교차 검증 시 데이터 누수(data leakage) 방지
 
+## 요약
+
+이 장에서는 다양한 스케일링 기법의 원리와 적용 방법을 학습했다. 주요 내용은 다음과 같다.
+
+**스케일링 방법 비교**
+
+| 방법 | 범위 | 공식 | 장점 | 단점 | 적용 상황 |
+|------|------|------|------|------|----------|
+| Min-Max | [0, 1] 또는 [a, b] | $(x - x_{min}) / (x_{max} - x_{min})$ | 범위 고정, 해석 명확 | 이상치에 매우 민감 | 신경망, 이미지 처리, 시각화 |
+| Standard | 평균=0, 표준편차=1 | $(x - \mu) / \sigma$ | 널리 사용, 정규분포 불필요 | 고정 범위 없음 | 대부분의 머신러닝 모델 (기본 선택) |
+| Robust | 중앙값=0 기준 | $(x - \text{median}) / \text{IQR}$ | 이상치에 강건 | 해석이 복잡함 | 이상치가 많은 실무 데이터 (실무 권장) |
+| MaxAbs | [-1, 1] | $x / |x|_{max}$ | 부호 유지, 0 보존 | 이상치 민감, 제한적 사용 | 희소 행렬, 텍스트 데이터 |
+| 그룹별 | 그룹 내 기준 적용 | 그룹별로 위 방법 적용 | 그룹 특성 반영 | 구현 복잡도 증가 | 그룹 간 분포 차이가 큰 경우 |
+
+**스케일링 방법 선택 가이드**
+
+1. **기본 선택**: 대부분의 경우 표준화(Standard Scaling) 사용
+2. **이상치 존재**: Robust 스케일링 고려 (실무에서 가장 안전)
+3. **신경망 모델**: Min-Max 스케일링으로 [0, 1] 범위 변환
+4. **희소 데이터**: MaxAbs 스케일링으로 0 값 보존
+5. **그룹 차이**: 그룹별 스케일링으로 그룹 특성 반영
+6. **파이프라인**: Pipeline으로 전처리와 모델 통합 관리
+
+**주의사항**
+
+- 학습 데이터로 스케일러를 학습(`fit`)하고, 동일한 파라미터로 테스트 데이터를 변환(`transform`)해야 함
+- 테스트 데이터로 스케일러를 재학습하면 데이터 누수 발생
+- 범주형 변수는 스케일링 대상에서 제외
+- 모델에 따라 스케일링이 불필요한 경우도 있음 (트리 기반 모델 등)
+
+스케일링은 머신러닝 모델의 성능과 학습 안정성을 크게 향상시키는 필수 전처리 과정이다. 데이터의 특성과 모델의 요구사항을 고려하여 적절한 방법을 선택하는 것이 중요하다. 다음 장에서는 범주형 변수를 수치형으로 변환하는 인코딩 기법을 학습할 것이다.
