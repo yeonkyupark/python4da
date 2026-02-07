@@ -264,7 +264,7 @@
     "href": "part1/04. 이상치 탐지.html",
     "title": "4  이상치 탐지",
     "section": "",
-    "text": "4.1 분포 기반 이상치 탐지\n분석 대상은 수치형 변수만 사용",
+    "text": "4.1 분석 대상 변수 선택\n이상치(Outlier)는 다른 관측값들과 현저히 다른 값을 의미한다. 이상치는 측정 오류, 입력 오류, 또는 실제로 극단적인 사건에 의해 발생할 수 있다. 이상치가 존재하면 통계 분석 결과가 왜곡되고 머신러닝 모델의 성능이 저하될 수 있으므로, 적절한 탐지와 처리가 필요하다. 이 장에서는 통계적 방법과 머신러닝 기법을 활용한 다양한 이상치 탐지 방법을 학습한다.\n예제: 데이터 로드\n이상치 탐지는 주로 수치형 변수를 대상으로 수행한다. 범주형 변수는 이상치 개념이 명확하지 않기 때문에 일반적으로 제외한다.\n예제: 수치형 변수 추출\n# 분석 대상 수치형 컬럼\nnum_cols = [\n    \"bill_length_mm\",\n    \"bill_depth_mm\",\n    \"flipper_length_mm\",\n    \"body_mass_g\"\n]\n\n# 수치형 데이터만 선택\ndf_num = df[num_cols]\n\n# 기본 통계량 확인\nprint(df_num.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean        43.921930      17.151170         200.915205  4201.754386\nstd          5.459584       1.974793          14.061714   801.954536\nmin         32.100000      13.100000         172.000000  2700.000000\n25%         39.225000      15.600000         190.000000  3550.000000\n50%         44.450000      17.300000         197.000000  4050.000000\n75%         48.500000      18.700000         213.000000  4750.000000\nmax         59.600000      21.500000         231.000000  6300.000000",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -274,8 +274,8 @@
     "objectID": "part1/04. 이상치 탐지.html#분포-기반-이상치-탐지",
     "href": "part1/04. 이상치 탐지.html#분포-기반-이상치-탐지",
     "title": "4  이상치 탐지",
-    "section": "",
-    "text": "4.1.1 박스플롯으로 이상치 확인\n\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import StandardScaler\nscale = StandardScaler()\n\ndf_num_scaled = pd.DataFrame(scale.fit_transform(df_num[num_cols]),\n                              columns=df_num.columns)\n\ndf_num_scaled.boxplot(figsize=(10, 5))\nplt.show()",
+    "section": "4.2 분포 기반 이상치 탐지",
+    "text": "4.2 분포 기반 이상치 탐지\n데이터의 분포를 시각화하여 이상치를 직관적으로 파악하는 방법이다. 박스플롯은 사분위수를 기반으로 이상치를 자동으로 표시해주므로 가장 먼저 사용하는 탐색 도구이다.\n\n4.2.1 박스플롯으로 이상치 확인\n박스플롯은 각 변수의 중앙값, 사분위수, 이상치를 한눈에 보여준다. 다만, 변수마다 척도가 다르면 비교가 어려우므로 표준화를 적용하는 것이 좋다.\n예제: 표준화 후 박스플롯\n\nimport matplotlib.pyplot as plt\nfrom sklearn.preprocessing import StandardScaler\n\n# 표준화 (평균=0, 표준편차=1)\nscaler = StandardScaler()\ndf_num_scaled = pd.DataFrame(\n    scaler.fit_transform(df_num),\n    columns=df_num.columns\n)\n\n# 박스플롯 시각화\ndf_num_scaled.boxplot(figsize=(10, 5))\nplt.title(\"Boxplot of Standardized Numeric Variables\")\nplt.ylabel(\"Standardized Value\")\nplt.axhline(y=0, color='r', linestyle='--', linewidth=0.8, alpha=0.5)\nplt.show()\n\n\n\n\n\n\n\n\n표준화를 통해 모든 변수가 동일한 척도(평균 0, 표준편차 1)로 변환되어 이상치를 더 쉽게 비교할 수 있다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -285,8 +285,8 @@
     "objectID": "part1/04. 이상치 탐지.html#iqr-기반-이상치-탐지",
     "href": "part1/04. 이상치 탐지.html#iqr-기반-이상치-탐지",
     "title": "4  이상치 탐지",
-    "section": "4.2 IQR 기반 이상치 탐지",
-    "text": "4.2 IQR 기반 이상치 탐지\n\n4.2.1 IQR 계산\n\nQ1 = df_num.quantile(0.25)\nQ3 = df_num.quantile(0.75)\nIQR = Q3 - Q1\n\n\n\n4.2.2 이상치 조건 정의\n\noutlier_condition = (df_num &lt; (Q1 - 1.5 * IQR)) | (df_num &gt; (Q3 + 1.5 * IQR))\n\n\n\n4.2.3 이상치가 있는 행 확인\n\noutlier_rows = outlier_condition.any(axis=1)\ndf[outlier_rows]\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\n\n\n\n\n\n\n\n\n\n컬럼 중 하나라도 이상치면 해당 행 전체를 이상치로 판단\n\n\n4.2.4 이상치 제거\n\ndf_iqr_clean = df[~outlier_rows]",
+    "section": "4.3 IQR 기반 이상치 탐지",
+    "text": "4.3 IQR 기반 이상치 탐지\nIQR(Interquartile Range, 사분위수 범위)은 Q3(75 백분위수)에서 Q1(25 백분위수)을 뺀 값으로, 데이터의 중간 50%가 분포하는 범위를 나타낸다. 일반적으로 Q1 - 1.5×IQR 미만이거나 Q3 + 1.5×IQR 초과인 값을 이상치로 정의한다.\n\n4.3.1 IQR 계산\n예제: 사분위수 및 IQR 계산\n\n# 제1사분위수 (Q1, 25%)\nQ1 = df_num.quantile(0.25)\n\n# 제3사분위수 (Q3, 75%)\nQ3 = df_num.quantile(0.75)\n\n# IQR 계산\nIQR = Q3 - Q1\n\nprint(\"Q1 (25%):\")\nprint(Q1)\nprint(\"\\nQ3 (75%):\")\nprint(Q3)\nprint(\"\\nIQR:\")\nprint(IQR)\n\nQ1 (25%):\nbill_length_mm         39.225\nbill_depth_mm          15.600\nflipper_length_mm     190.000\nbody_mass_g          3550.000\nName: 0.25, dtype: float64\n\nQ3 (75%):\nbill_length_mm         48.5\nbill_depth_mm          18.7\nflipper_length_mm     213.0\nbody_mass_g          4750.0\nName: 0.75, dtype: float64\n\nIQR:\nbill_length_mm          9.275\nbill_depth_mm           3.100\nflipper_length_mm      23.000\nbody_mass_g          1200.000\ndtype: float64\n\n\n\n\n4.3.2 이상치 조건 정의\nIQR 기반 이상치 범위는 다음과 같다.\n\n하한: Q1 - 1.5 × IQR\n상한: Q3 + 1.5 × IQR\n\n이 범위를 벗어나는 값을 이상치로 판단한다.\n예제: 이상치 조건 정의\n\n# 이상치 조건: 하한 미만 또는 상한 초과\noutlier_condition = (df_num &lt; (Q1 - 1.5 * IQR)) | (df_num &gt; (Q3 + 1.5 * IQR))\n\n# 컬럼별 이상치 개수\nprint(\"컬럼별 이상치 개수:\")\nprint(outlier_condition.sum())\n\n컬럼별 이상치 개수:\nbill_length_mm       0\nbill_depth_mm        0\nflipper_length_mm    0\nbody_mass_g          0\ndtype: int64\n\n\n\n\n4.3.3 이상치가 있는 행 확인\n하나의 컬럼이라도 이상치가 있으면 해당 행 전체를 이상치로 판단하는 방법이다.\n예제: 이상치 행 추출\n\n# 하나라도 이상치가 있는 행\noutlier_rows = outlier_condition.any(axis=1)\n\n# 이상치 행 확인\nprint(f\"이상치가 있는 행 수: {outlier_rows.sum()}\")\nprint(\"\\n이상치 행 샘플:\")\nprint(df[outlier_rows].head())\n\n이상치가 있는 행 수: 0\n\n이상치 행 샘플:\nEmpty DataFrame\nColumns: [species, island, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, sex]\nIndex: []\n\n\n\n\n4.3.4 이상치 제거\n이상치를 제거하여 정제된 데이터셋을 생성한다.\n예제: IQR 기반 이상치 제거\n\n# 이상치가 없는 행만 유지\ndf_iqr_clean = df[~outlier_rows]\n\nprint(f\"원본 데이터: {df.shape}\")\nprint(f\"이상치 제거 후: {df_iqr_clean.shape}\")\nprint(f\"제거된 행 수: {outlier_rows.sum()}\")\n\n원본 데이터: (344, 7)\n이상치 제거 후: (344, 7)\n제거된 행 수: 0\n\n\nIQR 방법은 분포에 대한 가정이 없어 안전하게 사용할 수 있으며, 실무에서 가장 기본적으로 사용되는 방법이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -296,8 +296,8 @@
     "objectID": "part1/04. 이상치 탐지.html#z-score-기반-이상치-탐지",
     "href": "part1/04. 이상치 탐지.html#z-score-기반-이상치-탐지",
     "title": "4  이상치 탐지",
-    "section": "4.3 Z-score 기반 이상치 탐지",
-    "text": "4.3 Z-score 기반 이상치 탐지\n\nfrom scipy.stats import zscore\n\n\nz_scores = df_num.apply(zscore)\n\n\n4.3.1 임계값 기준 이상치 탐지 (|z| &gt; 3)\n\noutlier_z = (np.abs(z_scores) &gt; 3).any(axis=1)\ndf_z_clean = df[~outlier_z]\n\n계산이 간단한 장점이 있으나 분포 왜곡에 취약한 단점 존재",
+    "section": "4.4 Z-score 기반 이상치 탐지",
+    "text": "4.4 Z-score 기반 이상치 탐지\nZ-score는 각 값이 평균으로부터 표준편차의 몇 배만큼 떨어져 있는지를 나타내는 지표이다. 일반적으로 |Z| &gt; 3인 경우를 이상치로 판단한다. 이 방법은 계산이 간단하지만 데이터가 정규분포를 따른다고 가정하므로, 분포가 왜곡된 경우 적절하지 않을 수 있다.\n예제: Z-score 계산 및 이상치 탐지\n\nfrom scipy.stats import zscore\n\n# Z-score 계산\nz_scores = df_num.apply(zscore)\n\nprint(\"Z-score 샘플:\")\nprint(z_scores.head())\n\nZ-score 샘플:\n   bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\n0             NaN            NaN                NaN          NaN\n1             NaN            NaN                NaN          NaN\n2             NaN            NaN                NaN          NaN\n3             NaN            NaN                NaN          NaN\n4             NaN            NaN                NaN          NaN\n\n\n\n4.4.1 임계값 기준 이상치 탐지\n절댓값이 3을 초과하는 Z-score를 가진 값을 이상치로 판단한다.\n예제: Z-score 기반 이상치 제거\n\n# abs(Z-score) &gt; 3 인 경우 이상치로 판단\noutlier_z = (np.abs(z_scores) &gt; 3).any(axis=1)\n\n# 이상치 제거\ndf_z_clean = df[~outlier_z]\n\nprint(f\"원본 데이터: {df.shape}\")\nprint(f\"Z-score 이상치 제거 후: {df_z_clean.shape}\")\nprint(f\"제거된 행 수: {outlier_z.sum()}\")\n\n원본 데이터: (344, 7)\nZ-score 이상치 제거 후: (344, 7)\n제거된 행 수: 0\n\n\nZ-score 방법은 계산이 간단하고 직관적이지만, 정규분포 가정을 위반하면 정확도가 떨어진다. 따라서 데이터의 분포를 먼저 확인한 후 사용하는 것이 좋다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -307,8 +307,8 @@
     "objectID": "part1/04. 이상치 탐지.html#범주별-이상치-탐지",
     "href": "part1/04. 이상치 탐지.html#범주별-이상치-탐지",
     "title": "4  이상치 탐지",
-    "section": "4.4 범주별 이상치 탐지",
-    "text": "4.4 범주별 이상치 탐지\n\n4.4.1 species별 IQR 이상치 탐지\n\ndef iqr_outlier_by_group(group):\n    Q1 = group[num_cols].quantile(0.25)\n    Q3 = group[num_cols].quantile(0.75)\n    IQR = Q3 - Q1\n\n    condition = (group[num_cols] &lt; (Q1 - 1.5 * IQR)) | \\\n                (group[num_cols] &gt; (Q3 + 1.5 * IQR))\n    return group[~condition.any(axis=1)]\n\n\ndf_group_iqr_clean = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(iqr_outlier_by_group)\n)",
+    "section": "4.5 범주별 이상치 탐지",
+    "text": "4.5 범주별 이상치 탐지\n전체 데이터를 대상으로 이상치를 탐지하면 그룹 간 차이가 큰 경우 정상 값이 이상치로 오판될 수 있다. 예를 들어, 펭귄 종에 따라 체중 분포가 크게 다르므로, 종별로 이상치를 탐지하는 것이 더 정확하다.\n\n4.5.1 그룹별 IQR 이상치 탐지\n각 그룹 내에서 독립적으로 IQR 기반 이상치를 탐지하는 방법이다.\n예제: 종별 IQR 이상치 탐지\n\ndef iqr_outlier_by_group(group):\n    \"\"\"그룹별 IQR 기반 이상치 제거 함수\"\"\"\n    # 그룹 내 Q1, Q3, IQR 계산\n    Q1 = group[num_cols].quantile(0.25)\n    Q3 = group[num_cols].quantile(0.75)\n    IQR = Q3 - Q1\n    \n    # 이상치 조건\n    condition = (group[num_cols] &lt; (Q1 - 1.5 * IQR)) | \\\n                (group[num_cols] &gt; (Q3 + 1.5 * IQR))\n    \n    # 이상치가 없는 행만 반환\n    return group[~condition.any(axis=1)]\n\n# 종별로 이상치 제거 적용\ndf_group_iqr_clean = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(iqr_outlier_by_group)\n      .reset_index(drop=True)\n)\n\nprint(f\"원본 데이터: {df.shape}\")\nprint(f\"그룹별 IQR 이상치 제거 후: {df_group_iqr_clean.shape}\")\nprint(f\"제거된 행 수: {df.shape[0] - df_group_iqr_clean.shape[0]}\")\n\n원본 데이터: (344, 7)\n그룹별 IQR 이상치 제거 후: (338, 6)\n제거된 행 수: 6\n\n\n그룹별 이상치 탐지는 그룹 간 특성 차이를 고려하므로 실무에서 가장 권장되는 방법이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -318,8 +318,8 @@
     "objectID": "part1/04. 이상치 탐지.html#밀도-기반-이상치-탐지-lof",
     "href": "part1/04. 이상치 탐지.html#밀도-기반-이상치-탐지-lof",
     "title": "4  이상치 탐지",
-    "section": "4.5 밀도 기반 이상치 탐지 (LOF)",
-    "text": "4.5 밀도 기반 이상치 탐지 (LOF)\n\nfrom sklearn.neighbors import LocalOutlierFactor\n\n\ndf_lof = df_num.dropna()\n\nlof = LocalOutlierFactor(n_neighbors=20)\noutlier_lof = lof.fit_predict(df_lof)\n\n\ndf_lof_clean = df.loc[df_lof.index][outlier_lof == 1]\n\n주변 데이터와 너무 다른 밀도를 가지면 이상치로 판단하는 방식으로 비선형 데이터에 강함",
+    "section": "4.6 밀도 기반 이상치 탐지 (LOF)",
+    "text": "4.6 밀도 기반 이상치 탐지 (LOF)\nLOF(Local Outlier Factor)는 각 데이터 포인트의 주변 밀도를 계산하여 이상치를 탐지하는 방법이다. 주변 데이터와 비교하여 밀도가 현저히 낮은 점을 이상치로 판단한다. 이 방법은 비선형적인 데이터 분포나 군집 구조가 복잡한 경우에 효과적이다.\n예제: LOF를 사용한 이상치 탐지\n\nfrom sklearn.neighbors import LocalOutlierFactor\n\n# 결측치 제거 (LOF는 결측치를 처리하지 못함)\ndf_lof = df_num.dropna()\n\n# LOF 모델 생성 (이웃 수 20개)\nlof = LocalOutlierFactor(n_neighbors=20)\n\n# 이상치 예측 (-1: 이상치, 1: 정상)\noutlier_lof = lof.fit_predict(df_lof)\n\n# 정상 데이터만 추출\ndf_lof_clean = df.loc[df_lof.index][outlier_lof == 1]\n\nprint(f\"분석 대상 데이터: {len(df_lof)}\")\nprint(f\"LOF 이상치 제거 후: {df_lof_clean.shape}\")\nprint(f\"탐지된 이상치 수: {(outlier_lof == -1).sum()}\")\n\n분석 대상 데이터: 342\nLOF 이상치 제거 후: (337, 7)\n탐지된 이상치 수: 5\n\n\nLOF는 주변 데이터와의 상대적 밀도를 고려하므로 데이터가 여러 군집으로 구성되어 있거나 비선형 관계가 있는 경우 IQR이나 Z-score보다 우수한 성능을 보인다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -329,19 +329,19 @@
     "objectID": "part1/04. 이상치 탐지.html#트리-기반-이상치-탐지-isolation-forest",
     "href": "part1/04. 이상치 탐지.html#트리-기반-이상치-탐지-isolation-forest",
     "title": "4  이상치 탐지",
-    "section": "4.6 트리 기반 이상치 탐지 (Isolation Forest)",
-    "text": "4.6 트리 기반 이상치 탐지 (Isolation Forest)\n\nfrom sklearn.ensemble import IsolationForest\n\n\niso = IsolationForest(contamination=0.05, random_state=42)\noutlier_if = iso.fit_predict(df_lof)\n\n\ndf_if_clean = df.loc[df_lof.index][outlier_if == 1]\n\n이상치는 트리 분류 기준으로 쉽게 분리가 된다는 가정하에 이상치를 탐지하는 방식으로 고차원 데이터에 강함하고 실무에서 자주 사용",
+    "section": "4.7 트리 기반 이상치 탐지 (Isolation Forest)",
+    "text": "4.7 트리 기반 이상치 탐지 (Isolation Forest)\nIsolation Forest는 이상치가 정상 데이터보다 쉽게 분리(isolate)된다는 아이디어에 기반한다. 랜덤하게 특성과 분할 값을 선택하여 트리를 구성할 때, 이상치는 적은 분할로 고립되는 반면 정상 데이터는 많은 분할이 필요하다. 이 방법은 고차원 데이터에 강건하며 실무에서 널리 사용된다.\n예제: Isolation Forest를 사용한 이상치 탐지\n\nfrom sklearn.ensemble import IsolationForest\n\n# Isolation Forest 모델 생성\n# contamination: 예상 이상치 비율 (5%)\niso = IsolationForest(contamination=0.05, random_state=42)\n\n# 이상치 예측 (-1: 이상치, 1: 정상)\noutlier_if = iso.fit_predict(df_lof)\n\n# 정상 데이터만 추출\ndf_if_clean = df.loc[df_lof.index][outlier_if == 1]\n\nprint(f\"분석 대상 데이터: {len(df_lof)}\")\nprint(f\"Isolation Forest 이상치 제거 후: {df_if_clean.shape}\")\nprint(f\"탐지된 이상치 수: {(outlier_if == -1).sum()}\")\n\n분석 대상 데이터: 342\nIsolation Forest 이상치 제거 후: (324, 7)\n탐지된 이상치 수: 18\n\n\nIsolation Forest는 다음과 같은 장점이 있다.\n\n고차원 데이터에서도 효율적으로 작동\n분포에 대한 가정이 없음\n계산 속도가 빠름\n대규모 데이터셋에 적합\n\ncontamination 파라미터는 데이터셋에서 예상되는 이상치 비율을 지정한다. 일반적으로 0.05~0.1 사이의 값을 사용한다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
     ]
   },
   {
-    "objectID": "part1/04. 이상치 탐지.html#단계별-선택-가이드",
-    "href": "part1/04. 이상치 탐지.html#단계별-선택-가이드",
+    "objectID": "part1/04. 이상치 탐지.html#요약",
+    "href": "part1/04. 이상치 탐지.html#요약",
     "title": "4  이상치 탐지",
-    "section": "4.7 단계별 선택 가이드",
-    "text": "4.7 단계별 선택 가이드\n\n\n\n단계\n방법\n언제 쓰나\n\n\n\n\n1\n시각화\n이해, 설명\n\n\n2\nIQR\n기본, 안전\n\n\n3\nZ-score\n정규분포 가정\n\n\n4\n그룹별 IQR\n가장 실무적\n\n\n5\nLOF\n비선형, 밀도\n\n\n6\nIsolationForest\n대규모, 고급",
+    "section": "4.8 요약",
+    "text": "4.8 요약\n이 장에서는 통계적 방법부터 머신러닝 기법까지 다양한 이상치 탐지 방법을 학습했다. 주요 내용은 다음과 같다.\n이상치 탐지 방법 비교\n\n\n\n\n\n\n\n\n\n\n방법\n원리\n장점\n단점\n적용 상황\n\n\n\n\n박스플롯\n시각적 탐색\n직관적, 설명 용이\n정량적 기준 부족\n초기 탐색 및 보고서\n\n\nIQR\n사분위수 범위\n간단, 분포 가정 불필요\n그룹 차이 미고려\n기본적인 이상치 제거\n\n\nZ-score\n표준편차 기반\n계산 간단, 해석 명확\n정규분포 가정 필요\n정규분포 데이터\n\n\n그룹별 IQR\n그룹 내 IQR\n그룹 특성 반영\n구현 복잡도 증가\n그룹 간 차이가 큰 경우 (가장 실무적)\n\n\nLOF\n국소 밀도 비교\n비선형 데이터 강건\n계산 비용 높음, 파라미터 민감\n복잡한 군집 구조\n\n\nIsolation Forest\n트리 기반 분리\n고차원 강건, 빠른 속도\n결과 해석 어려움\n대규모 고차원 데이터\n\n\n\n이상치 탐지 단계별 가이드\n\n시각적 탐색: 박스플롯으로 데이터 분포와 이상치 후보 확인\n기본 탐지: IQR 방법으로 명확한 이상치 제거\n정규성 확인: 데이터가 정규분포를 따르면 Z-score 적용\n그룹 고려: 범주별 차이가 있으면 그룹별 IQR 적용 (실무 권장)\n고급 기법: 비선형 관계나 복잡한 구조에는 LOF 적용\n대규모 처리: 고차원 대용량 데이터는 Isolation Forest 사용\n\n이상치 처리 전략\n이상치를 탐지한 후에는 다음 전략 중 하나를 선택한다.\n\n제거: 측정 오류나 입력 오류로 판단되는 경우\n대체: 극단값을 상/하한값으로 조정 (Winsorization)\n변환: 로그 변환이나 Box-Cox 변환으로 분포 정규화\n유지: 실제 극단 사건이며 분석에 중요한 경우\n\n이상치 탐지는 데이터의 품질을 높이는 중요한 과정이지만, 모든 이상치를 무조건 제거하는 것이 아니라 도메인 지식을 바탕으로 신중하게 판단해야 한다. 다음 장에서는 처리된 데이터를 바탕으로 변수 변환과 파생 변수 생성 기법을 학습할 것이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>이상치 탐지</span>"
@@ -352,18 +352,18 @@
     "href": "part1/05. 스케일링.html",
     "title": "5  스케일링",
     "section": "",
-    "text": "5.1 스케일링 이유\n예제 데이터셋 적재",
+    "text": "5.1 스케일링의 필요성\n스케일링(Scaling)은 서로 다른 척도를 가진 변수들을 동일한 범위나 분포로 변환하는 과정이다. 머신러닝 알고리즘 중 거리 기반 모델(K-Nearest Neighbors, Support Vector Machine, K-means 등)은 변수의 크기에 민감하므로, 스케일링을 통해 모든 변수가 공정하게 모델에 기여하도록 만들어야 한다. 이 장에서는 다양한 스케일링 기법의 원리와 적용 방법, 그리고 상황에 맞는 선택 기준을 학습한다.\n예제: 데이터 로드\n변수마다 측정 단위와 범위가 다르면 모델 학습 과정에서 큰 값을 가진 변수가 지배적인 영향을 미치게 된다. 예를 들어, 체중(g 단위)은 수천의 값을 가지지만 부리 길이(mm 단위)는 수십의 값을 가지므로, 거리를 계산할 때 체중이 과도하게 반영된다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
     ]
   },
   {
-    "objectID": "part1/05. 스케일링.html#스케일링-이유",
-    "href": "part1/05. 스케일링.html#스케일링-이유",
+    "objectID": "part1/05. 스케일링.html#스케일링의-필요성",
+    "href": "part1/05. 스케일링.html#스케일링의-필요성",
     "title": "5  스케일링",
     "section": "",
-    "text": "5.1.1 스케일 차이 확인\n\ndf_num.describe()\n\n\n\n\n\n\n\n\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\n\n\n\n\ncount\n342.000000\n342.000000\n342.000000\n342.000000\n\n\nmean\n43.921930\n17.151170\n200.915205\n4201.754386\n\n\nstd\n5.459584\n1.974793\n14.061714\n801.954536\n\n\nmin\n32.100000\n13.100000\n172.000000\n2700.000000\n\n\n25%\n39.225000\n15.600000\n190.000000\n3550.000000\n\n\n50%\n44.450000\n17.300000\n197.000000\n4050.000000\n\n\n75%\n48.500000\n18.700000\n213.000000\n4750.000000\n\n\nmax\n59.600000\n21.500000\n231.000000\n6300.000000\n\n\n\n\n\n\n\n변수별 측정 단위가 다름(상호 비교가 어려움)\n- 거리 기반 모델(KNN, SVM, K-means)에서는 큰 값이 모델을 지배",
+    "text": "5.1.1 스케일 차이 확인\n각 변수의 평균, 표준편차, 최솟값, 최댓값을 확인하여 스케일 차이를 파악한다.\n예제: 변수별 스케일 확인\n\n# 기술 통계량 확인\nprint(df_num.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean        43.921930      17.151170         200.915205  4201.754386\nstd          5.459584       1.974793          14.061714   801.954536\nmin         32.100000      13.100000         172.000000  2700.000000\n25%         39.225000      15.600000         190.000000  3550.000000\n50%         44.450000      17.300000         197.000000  4050.000000\n75%         48.500000      18.700000         213.000000  4750.000000\nmax         59.600000      21.500000         231.000000  6300.000000\n\n\n위 결과에서 body_mass_g는 2000~6000 범위를 가지지만, bill_depth_mm는 13~22 범위를 가진다. 이러한 스케일 차이는 다음과 같은 문제를 일으킨다.\n\n거리 기반 모델에서 큰 값이 거리 계산을 지배\n경사 하강법 기반 최적화에서 수렴 속도 저하\n가중치 해석의 어려움",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
@@ -374,7 +374,7 @@
     "href": "part1/05. 스케일링.html#min-max-스케일링-정규화",
     "title": "5  스케일링",
     "section": "5.2 Min-Max 스케일링 (정규화)",
-    "text": "5.2 Min-Max 스케일링 (정규화)\n모든 값을 0~1 범위로 변환\n\nfrom sklearn.preprocessing import MinMaxScaler\n\n\nscaler_minmax = MinMaxScaler()\ndf_minmax = scaler_minmax.fit_transform(df_num)\n\n\ndf_minmax = pd.DataFrame(df_minmax, columns=num_cols)\nprint(df_minmax.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.429888       0.482282           0.490088     0.417154\nstd          0.198530       0.235094           0.238334     0.222765\nmin          0.000000       0.000000           0.000000     0.000000\n25%          0.259091       0.297619           0.305085     0.236111\n50%          0.449091       0.500000           0.423729     0.375000\n75%          0.596364       0.666667           0.694915     0.569444\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n변수 범위가 고정(0~1) 되며 이상치에 매우 민감한 특징\n참고. 아래와 같이 수식을 통해 직접 구현\n\\[\nx' = \\frac{x-x_{min}}{x_{max} - x_{min}}\n\\]\n\ndf_minmax_manual = df_num.copy()\n\nfor col in num_cols:\n    col_min = df_minmax_manual[col].min()\n    col_max = df_minmax_manual[col].max()\n\n    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) \\\n                            / (col_max - col_min)\n\n(a, b) 구간으로 일반화한 수식\n\\[\nx' = a + \\frac{x-x_{min}}{x_{max} - x_{min}}\\times(b-a)\n\\]\n\ndef minmax_scale_ab(series, a, b):\n    x_min = series.min()\n    x_max = series.max()\n\n    return a + (series - x_min) * (b - a) / (x_max - x_min)\n\n\nscaler_genernal = MinMaxScaler(feature_range=(-1, 1))",
+    "text": "5.2 Min-Max 스케일링 (정규화)\nMin-Max 스케일링은 모든 값을 지정된 범위(기본값 0~1)로 변환하는 방법이다. 데이터의 분포 형태는 유지하면서 범위만 조정한다.\n변환 공식\n\\[\nx' = \\frac{x - x_{min}}{x_{max} - x_{min}}\n\\]\n예제: Min-Max 스케일링 적용\n\nfrom sklearn.preprocessing import MinMaxScaler\n\n# 스케일러 생성\nscaler_minmax = MinMaxScaler()\n\n# 스케일링 수행\ndf_minmax = scaler_minmax.fit_transform(df_num)\n\n# DataFrame으로 변환\ndf_minmax = pd.DataFrame(df_minmax, columns=num_cols)\n\n# 결과 확인\nprint(df_minmax.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.429888       0.482282           0.490088     0.417154\nstd          0.198530       0.235094           0.238334     0.222765\nmin          0.000000       0.000000           0.000000     0.000000\n25%          0.259091       0.297619           0.305085     0.236111\n50%          0.449091       0.500000           0.423729     0.375000\n75%          0.596364       0.666667           0.694915     0.569444\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n스케일링 후 모든 변수의 최솟값은 0, 최댓값은 1이 된다. 이 방법은 신경망의 활성화 함수나 이미지 데이터 전처리에 자주 사용된다.\n장단점\n\n\n\n장점\n단점\n\n\n\n\n범위가 고정되어 해석이 명확함\n이상치에 매우 민감함\n\n\n신경망의 활성화 함수에 적합\n새로운 데이터의 범위를 벗어날 수 있음\n\n\n구현이 간단함\n변수 간 분산 비율이 왜곡될 수 있음\n\n\n\n예제: 수동 구현\n이해를 돕기 위해 공식을 직접 구현하면 다음과 같다.\n\n# Min-Max 스케일링 수동 구현\ndf_minmax_manual = df_num.copy()\n\nfor col in num_cols:\n    col_min = df_minmax_manual[col].min()\n    col_max = df_minmax_manual[col].max()\n    \n    df_minmax_manual[col] = (df_minmax_manual[col] - col_min) / (col_max - col_min)\n\n# 결과 확인\nprint(df_minmax_manual.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.429888       0.482282           0.490088     0.417154\nstd          0.198530       0.235094           0.238334     0.222765\nmin          0.000000       0.000000           0.000000     0.000000\n25%          0.259091       0.297619           0.305085     0.236111\n50%          0.449091       0.500000           0.423729     0.375000\n75%          0.596364       0.666667           0.694915     0.569444\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n\n5.2.1 일반화된 Min-Max 스케일링\n기본 범위인 [0, 1] 대신 임의의 범위 [a, b]로 변환할 수도 있다.\n일반화 공식\n\\[\nx' = a + \\frac{x - x_{min}}{x_{max} - x_{min}} \\times (b - a)\n\\]\n예제: 사용자 정의 범위로 스케일링\n\n# [-1, 1] 범위로 스케일링\nscaler_general = MinMaxScaler(feature_range=(-1, 1))\ndf_minmax_custom = scaler_general.fit_transform(df_num)\ndf_minmax_custom = pd.DataFrame(df_minmax_custom, columns=num_cols)\n\nprint(df_minmax_custom.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean        -0.140223      -0.035436          -0.019824    -0.165692\nstd          0.397061       0.470189           0.476668     0.445530\nmin         -1.000000      -1.000000          -1.000000    -1.000000\n25%         -0.481818      -0.404762          -0.389831    -0.527778\n50%         -0.101818       0.000000          -0.152542    -0.250000\n75%          0.192727       0.333333           0.389831     0.138889\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n예제: 일반화 함수 구현\n\ndef minmax_scale_ab(series, a, b):\n    \"\"\"임의의 [a, b] 범위로 Min-Max 스케일링\"\"\"\n    x_min = series.min()\n    x_max = series.max()\n    return a + (series - x_min) * (b - a) / (x_max - x_min)\n\n# 사용 예시\ndf_custom = df_num.copy()\ndf_custom['bill_length_mm'] = minmax_scale_ab(df_num['bill_length_mm'], -1, 1)",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
@@ -385,40 +385,40 @@
     "href": "part1/05. 스케일링.html#표준화-standard-scaling",
     "title": "5  스케일링",
     "section": "5.3 표준화 (Standard Scaling)",
-    "text": "5.3 표준화 (Standard Scaling)\n변수 변위를 평균 0, 표준편차 1로 변환\n\nfrom sklearn.preprocessing import StandardScaler\n\n\nscaler_std = StandardScaler()\ndf_std = scaler_std.fit_transform(df_num)\ndf_std = pd.DataFrame(df_std, columns=num_cols)\n\nprint(df_std.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm   body_mass_g\ncount    3.420000e+02   3.420000e+02       3.420000e+02  3.420000e+02\nmean     8.310441e-17  -1.412775e-15      -8.310441e-16  4.155221e-17\nstd      1.001465e+00   1.001465e+00       1.001465e+00  1.001465e+00\nmin     -2.168526e+00  -2.054446e+00      -2.059320e+00 -1.875362e+00\n25%     -8.615697e-01  -7.866355e-01      -7.773731e-01 -8.138982e-01\n50%      9.686524e-02   7.547549e-02      -2.788381e-01 -1.895079e-01\n75%      8.397670e-01   7.854492e-01       8.606705e-01  6.846384e-01\nmax      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00\n\n\n가장 널리 사용되며 변수가 정규분포 가정(완전하지 않아도 OK)하에 수행\n참고. 아래와 같이 수식을 통해 직접 구현\n\\[\nx' = \\frac{x - \\mu}{\\sigma}\n\\]\n\ndf_std_manual = df_num.copy()\n\nfor col in num_cols:\n    mean = df_std_manual[col].mean()\n    std = df_std_manual[col].std()\n\n    df_std_manual[col] = (df_std_manual[col] - mean) \\\n                         / std",
+    "text": "5.3 표준화 (Standard Scaling)\n표준화는 각 변수의 평균을 0, 표준편차를 1로 변환하는 방법이다. 가장 널리 사용되는 스케일링 기법으로, 대부분의 머신러닝 알고리즘에 적합하다.\n변환 공식\n\\[\nx' = \\frac{x - \\mu}{\\sigma}\n\\]\n여기서 \\(\\mu\\)는 평균, \\(\\sigma\\)는 표준편차이다.\n예제: 표준화 적용\n\nfrom sklearn.preprocessing import StandardScaler\n\n# 스케일러 생성\nscaler_std = StandardScaler()\n\n# 표준화 수행\ndf_std = scaler_std.fit_transform(df_num)\n\n# DataFrame으로 변환\ndf_std = pd.DataFrame(df_std, columns=num_cols)\n\n# 결과 확인\nprint(df_std.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm   body_mass_g\ncount    3.420000e+02   3.420000e+02       3.420000e+02  3.420000e+02\nmean     8.310441e-17  -1.412775e-15      -8.310441e-16  4.155221e-17\nstd      1.001465e+00   1.001465e+00       1.001465e+00  1.001465e+00\nmin     -2.168526e+00  -2.054446e+00      -2.059320e+00 -1.875362e+00\n25%     -8.615697e-01  -7.866355e-01      -7.773731e-01 -8.138982e-01\n50%      9.686524e-02   7.547549e-02      -2.788381e-01 -1.895079e-01\n75%      8.397670e-01   7.854492e-01       8.606705e-01  6.846384e-01\nmax      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00\n\n\n표준화 후 모든 변수의 평균은 0에 가깝고, 표준편차는 1에 가까워진다. 표준화는 데이터가 완전히 정규분포를 따르지 않아도 효과적으로 작동한다.\n장단점\n\n\n\n\n\n\n\n장점\n단점\n\n\n\n\n가장 널리 사용되는 방법\n고정된 범위가 없어 해석이 상대적\n\n\n정규분포를 완전히 따르지 않아도 작동\n이상치에 영향을 받음\n\n\n대부분의 머신러닝 알고리즘에 적합\n신경망의 일부 활성화 함수에 부적합할 수 있음\n\n\n\n예제: 수동 구현\n\n# 표준화 수동 구현\ndf_std_manual = df_num.copy()\n\nfor col in num_cols:\n    mean = df_std_manual[col].mean()\n    std = df_std_manual[col].std()\n    \n    df_std_manual[col] = (df_std_manual[col] - mean) / std\n\n# 결과 확인\nprint(df_std_manual.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm   body_mass_g\ncount    3.420000e+02   3.420000e+02       3.420000e+02  3.420000e+02\nmean     1.662088e-16  -1.454327e-15      -8.310441e-16  8.310441e-17\nstd      1.000000e+00   1.000000e+00       1.000000e+00  1.000000e+00\nmin     -2.165354e+00  -2.051440e+00      -2.056307e+00 -1.872618e+00\n25%     -8.603092e-01  -7.854846e-01      -7.762357e-01 -8.127074e-01\n50%      9.672352e-02   7.536506e-02      -2.784301e-01 -1.892307e-01\n75%      8.385383e-01   7.843001e-01       8.594113e-01  6.836368e-01\nmax      2.871660e+00   2.202170e+00       2.139483e+00  2.616415e+00",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
     ]
   },
   {
-    "objectID": "part1/05. 스케일링.html#robust-scaling-이상치-대응",
-    "href": "part1/05. 스케일링.html#robust-scaling-이상치-대응",
+    "objectID": "part1/05. 스케일링.html#robust-스케일링-이상치-대응",
+    "href": "part1/05. 스케일링.html#robust-스케일링-이상치-대응",
     "title": "5  스케일링",
-    "section": "5.4 Robust Scaling (이상치 대응)",
-    "text": "5.4 Robust Scaling (이상치 대응)\n중앙값과 IQR 기준으로 변환을 수행하여 이상치에 대응\n\nfrom sklearn.preprocessing import RobustScaler\n\n\nscaler_robust = RobustScaler()\ndf_robust = scaler_robust.fit_transform(df_num)\ndf_robust = pd.DataFrame(df_robust, columns=num_cols)\n\nprint(df_robust.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount    3.420000e+02     342.000000         342.000000   342.000000\nmean    -5.693479e-02      -0.048010           0.170226     0.126462\nstd      5.886344e-01       0.637030           0.611379     0.668295\nmin     -1.331536e+00      -1.354839          -1.086957    -1.125000\n25%     -5.633423e-01      -0.548387          -0.304348    -0.416667\n50%     -3.833739e-16       0.000000           0.000000     0.000000\n75%      4.366577e-01       0.451613           0.695652     0.583333\nmax      1.633423e+00       1.354839           1.478261     1.875000\n\n\n이상치 영향 최소화",
+    "section": "5.4 Robust 스케일링 (이상치 대응)",
+    "text": "5.4 Robust 스케일링 (이상치 대응)\nRobust 스케일링은 중앙값과 IQR(Interquartile Range)을 사용하여 이상치의 영향을 최소화하는 방법이다. 평균과 표준편차 대신 중앙값과 사분위수를 사용하므로 이상치에 강건하다.\n변환 공식\n\\[\nx' = \\frac{x - \\text{median}}{\\text{IQR}}\n\\]\n여기서 \\(\\text{IQR} = Q_3 - Q_1\\)이다.\n예제: Robust 스케일링 적용\n\nfrom sklearn.preprocessing import RobustScaler\n\n# 스케일러 생성\nscaler_robust = RobustScaler()\n\n# Robust 스케일링 수행\ndf_robust = scaler_robust.fit_transform(df_num)\n\n# DataFrame으로 변환\ndf_robust = pd.DataFrame(df_robust, columns=num_cols)\n\n# 결과 확인\nprint(df_robust.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount    3.420000e+02     342.000000         342.000000   342.000000\nmean    -5.693479e-02      -0.048010           0.170226     0.126462\nstd      5.886344e-01       0.637030           0.611379     0.668295\nmin     -1.331536e+00      -1.354839          -1.086957    -1.125000\n25%     -5.633423e-01      -0.548387          -0.304348    -0.416667\n50%     -3.833739e-16       0.000000           0.000000     0.000000\n75%      4.366577e-01       0.451613           0.695652     0.583333\nmax      1.633423e+00       1.354839           1.478261     1.875000\n\n\nRobust 스케일링은 이상치가 많거나 데이터 분포가 심하게 왜곡된 경우 표준화보다 안정적인 결과를 제공한다.\n적용 상황\n\n이상치가 많은 실무 데이터\n분포가 왜곡되어 있는 경우\n이상치를 제거하지 않고 분석해야 하는 경우",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
     ]
   },
   {
-    "objectID": "part1/05. 스케일링.html#maxabs-scaling",
-    "href": "part1/05. 스케일링.html#maxabs-scaling",
+    "objectID": "part1/05. 스케일링.html#maxabs-스케일링",
+    "href": "part1/05. 스케일링.html#maxabs-스케일링",
     "title": "5  스케일링",
-    "section": "5.5 MaxAbs Scaling",
-    "text": "5.5 MaxAbs Scaling\n최대 절댓값으로 나눔\n\nfrom sklearn.preprocessing import MaxAbsScaler\n\n\nscaler_maxabs = MaxAbsScaler()\ndf_maxabs = scaler_maxabs.fit_transform(df_num)\ndf_maxabs = pd.DataFrame(df_maxabs, columns=num_cols)\n\nprint(df_maxabs.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.736945       0.797729           0.869763     0.666945\nstd          0.091604       0.091851           0.060873     0.127294\nmin          0.538591       0.609302           0.744589     0.428571\n25%          0.658138       0.725581           0.822511     0.563492\n50%          0.745805       0.804651           0.852814     0.642857\n75%          0.813758       0.869767           0.922078     0.753968\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n희소 행렬에 유리하며 값 부호 유지하는 특징",
+    "section": "5.5 MaxAbs 스케일링",
+    "text": "5.5 MaxAbs 스케일링\nMaxAbs 스케일링은 각 변수의 절댓값 최댓값으로 나누어 [-1, 1] 범위로 변환하는 방법이다. 값의 부호를 유지하므로 희소 행렬(Sparse Matrix)에 적합하다.\n변환 공식\n\\[\nx' = \\frac{x}{|x|_{max}}\n\\]\n예제: MaxAbs 스케일링 적용\n\nfrom sklearn.preprocessing import MaxAbsScaler\n\n# 스케일러 생성\nscaler_maxabs = MaxAbsScaler()\n\n# MaxAbs 스케일링 수행\ndf_maxabs = scaler_maxabs.fit_transform(df_num)\n\n# DataFrame으로 변환\ndf_maxabs = pd.DataFrame(df_maxabs, columns=num_cols)\n\n# 결과 확인\nprint(df_maxabs.describe())\n\n       bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g\ncount      342.000000     342.000000         342.000000   342.000000\nmean         0.736945       0.797729           0.869763     0.666945\nstd          0.091604       0.091851           0.060873     0.127294\nmin          0.538591       0.609302           0.744589     0.428571\n25%          0.658138       0.725581           0.822511     0.563492\n50%          0.745805       0.804651           0.852814     0.642857\n75%          0.813758       0.869767           0.922078     0.753968\nmax          1.000000       1.000000           1.000000     1.000000\n\n\n장단점\n\n\n\n장점\n단점\n\n\n\n\n값의 부호를 유지함\n이상치에 민감함\n\n\n희소 행렬의 0을 보존함\n범위가 비대칭일 수 있음\n\n\n계산이 간단함\n사용 사례가 제한적\n\n\n\n적용 상황\n\n희소 행렬 데이터(텍스트 데이터, 추천 시스템 등)\n양수와 음수를 모두 포함하는 데이터\n0 값의 보존이 중요한 경우",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
     ]
   },
   {
-    "objectID": "part1/05. 스케일링.html#범주별-스케일링",
-    "href": "part1/05. 스케일링.html#범주별-스케일링",
+    "objectID": "part1/05. 스케일링.html#그룹별-스케일링",
+    "href": "part1/05. 스케일링.html#그룹별-스케일링",
     "title": "5  스케일링",
-    "section": "5.6 범주별 스케일링",
-    "text": "5.6 범주별 스케일링\n\nfrom sklearn.preprocessing import StandardScaler\n\n\ndef scale_by_species(group):\n    scaler = StandardScaler()\n    scaled = scaler.fit_transform(group[num_cols])\n    return pd.DataFrame(scaled, columns=num_cols, index=group.index)\n\n\ndf_scaled_group = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(scale_by_species)\n)",
+    "section": "5.6 그룹별 스케일링",
+    "text": "5.6 그룹별 스케일링\n데이터가 여러 그룹으로 구성되어 있고 그룹별로 분포가 다른 경우, 전체 데이터를 대상으로 스케일링하면 그룹 내 패턴이 왜곡될 수 있다. 그룹별 스케일링은 각 그룹 내에서 독립적으로 스케일링을 수행하여 그룹 특성을 보존한다.\n예제: 종별 표준화\n\nfrom sklearn.preprocessing import StandardScaler\n\ndef scale_by_species(group):\n    \"\"\"그룹별 표준화 함수\"\"\"\n    scaler = StandardScaler()\n    scaled = scaler.fit_transform(group[num_cols])\n    return pd.DataFrame(scaled, columns=num_cols, index=group.index)\n\n# 종별로 표준화 적용\ndf_scaled_group = (\n    df.groupby(\"species\", group_keys=False)\n      .apply(scale_by_species)\n)\n\n# 결과 확인\nprint(df_scaled_group.groupby(df['species']).describe())\n\n          bill_length_mm                                              \\\n                   count          mean       std       min       25%   \nspecies                                                                \nAdelie             151.0  5.734927e-16  1.003328 -2.520705 -0.769010   \nChinstrap           68.0 -5.020494e-16  1.007435 -2.393591 -0.749356   \nGentoo             123.0  1.487518e-15  1.004090 -2.151914 -0.718364   \n\n                                        bill_depth_mm                ...  \\\n                50%       75%       max         count          mean  ...   \nspecies                                                              ...   \nAdelie     0.003243  0.737825  2.715546         151.0 -2.305735e-15  ...   \nChinstrap  0.216066  0.676151  2.765385          68.0 -9.902210e-16  ...   \nGentoo    -0.066751  0.666315  3.940673         123.0 -2.780071e-16  ...   \n\n          flipper_length_mm           body_mass_g                          \\\n                        75%       max       count          mean       std   \nspecies                                                                     \nAdelie             0.774246  3.075648       151.0  2.705709e-16  1.003328   \nChinstrap          0.731216  2.285051        68.0  2.024524e-16  1.007435   \nGentoo             0.590381  2.138713       123.0  2.346813e-17  1.004090   \n\n                                                             \n                min       25%       50%       75%       max  \nspecies                                                      \nAdelie    -1.861221 -0.767238 -0.001449  0.654941  2.350616  \nChinstrap -2.707974 -0.643746 -0.086732  0.568578  2.796633  \nGentoo    -2.242780 -0.748943 -0.151408  0.844483  2.437910  \n\n[3 rows x 32 columns]\n\n\n그룹별 스케일링은 각 그룹의 평균과 표준편차가 다를 때 유용하며, 그룹 내 비교가 중요한 경우 사용한다.\n적용 상황\n\n범주별로 분포가 크게 다른 경우\n그룹 내 패턴 분석이 목적인 경우\n도메인 지식상 그룹별 처리가 적절한 경우",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
@@ -429,18 +429,18 @@
     "href": "part1/05. 스케일링.html#파이프라인-적용",
     "title": "5  스케일링",
     "section": "5.7 파이프라인 적용",
-    "text": "5.7 파이프라인 적용\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\n\npipeline = Pipeline([\n    (\"scaler\", StandardScaler()),\n    (\"model\", LogisticRegression())\n])",
+    "text": "5.7 파이프라인 적용\n실무에서는 스케일링을 모델 학습 파이프라인에 포함시켜 데이터 전처리와 모델 학습을 일관성 있게 관리한다. scikit-learn의 Pipeline을 사용하면 전처리와 모델을 하나의 객체로 관리할 수 있다.\n예제: 스케일링과 모델을 파이프라인으로 구성\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\n# 파이프라인 생성\npipeline = Pipeline([\n    (\"scaler\", StandardScaler()),       # 1단계: 표준화\n    (\"model\", LogisticRegression())     # 2단계: 로지스틱 회귀 모델\n])\n\n# 파이프라인 사용 예시 (실제 학습 시)\n# pipeline.fit(X_train, y_train)\n# predictions = pipeline.predict(X_test)\n\n파이프라인을 사용하면 다음과 같은 장점이 있다.\n\n학습 데이터와 테스트 데이터에 동일한 스케일링 파라미터 적용\n코드 간결성과 재사용성 향상\n교차 검증 시 데이터 누수(data leakage) 방지",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
     ]
   },
   {
-    "objectID": "part1/05. 스케일링.html#스케일링-방법-선택-가이드",
-    "href": "part1/05. 스케일링.html#스케일링-방법-선택-가이드",
+    "objectID": "part1/05. 스케일링.html#요약",
+    "href": "part1/05. 스케일링.html#요약",
     "title": "5  스케일링",
-    "section": "5.8 스케일링 방법 선택 가이드",
-    "text": "5.8 스케일링 방법 선택 가이드\n\n\n\n방법\n특징\n추천 상황\n\n\n\n\nMin-Max\n0~1\n신경망, 시각화\n\n\nStandard\n평균 0\n대부분의 모델\n\n\nRobust\n이상치 강함\n실무 기본\n\n\nMaxAbs\n부호 유지\n희소 데이터\n\n\n그룹별\n분포 반영\n도메인 지식 있을 때",
+    "section": "5.8 요약",
+    "text": "5.8 요약\n이 장에서는 다양한 스케일링 기법의 원리와 적용 방법을 학습했다. 주요 내용은 다음과 같다.\n스케일링 방법 비교\n\n\n\n\n\n\n\n\n\n\n\n방법\n범위\n공식\n장점\n단점\n적용 상황\n\n\n\n\nMin-Max\n[0, 1] 또는 [a, b]\n\\((x - x_{min}) / (x_{max} - x_{min})\\)\n범위 고정, 해석 명확\n이상치에 매우 민감\n신경망, 이미지 처리, 시각화\n\n\nStandard\n평균=0, 표준편차=1\n\\((x - \\mu) / \\sigma\\)\n널리 사용, 정규분포 불필요\n고정 범위 없음\n대부분의 머신러닝 모델 (기본 선택)\n\n\nRobust\n중앙값=0 기준\n\\((x - \\text{median}) / \\text{IQR}\\)\n이상치에 강건\n해석이 복잡함\n이상치가 많은 실무 데이터 (실무 권장)\n\n\nMaxAbs\n[-1, 1]\n\\(x / |x|_{max}\\)\n부호 유지, 0 보존\n이상치 민감, 제한적 사용\n희소 행렬, 텍스트 데이터\n\n\n그룹별\n그룹 내 기준 적용\n그룹별로 위 방법 적용\n그룹 특성 반영\n구현 복잡도 증가\n그룹 간 분포 차이가 큰 경우\n\n\n\n스케일링 방법 선택 가이드\n\n기본 선택: 대부분의 경우 표준화(Standard Scaling) 사용\n이상치 존재: Robust 스케일링 고려 (실무에서 가장 안전)\n신경망 모델: Min-Max 스케일링으로 [0, 1] 범위 변환\n희소 데이터: MaxAbs 스케일링으로 0 값 보존\n그룹 차이: 그룹별 스케일링으로 그룹 특성 반영\n파이프라인: Pipeline으로 전처리와 모델 통합 관리\n\n주의사항\n\n학습 데이터로 스케일러를 학습(fit)하고, 동일한 파라미터로 테스트 데이터를 변환(transform)해야 함\n테스트 데이터로 스케일러를 재학습하면 데이터 누수 발생\n범주형 변수는 스케일링 대상에서 제외\n모델에 따라 스케일링이 불필요한 경우도 있음 (트리 기반 모델 등)\n\n스케일링은 머신러닝 모델의 성능과 학습 안정성을 크게 향상시키는 필수 전처리 과정이다. 데이터의 특성과 모델의 요구사항을 고려하여 적절한 방법을 선택하는 것이 중요하다. 다음 장에서는 범주형 변수를 수치형으로 변환하는 인코딩 기법을 학습할 것이다.",
     "crumbs": [
       "Ⅰ. 데이터 전처리 및 변환",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>스케일링</span>"
