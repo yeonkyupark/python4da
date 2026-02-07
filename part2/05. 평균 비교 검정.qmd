@@ -1,2 +1,339 @@
 # 평균 비교 검정
 
+## 평균 비교 검정
+
+### 평균 비교 검정
+
+두 개 이상 집단간 **평균 차이**가 단순한 우연인지 통계적으로 유의한 차이인지를 검정하는 방법이다. 범주형 변수로 집단을 나누고, 연속형 변수의 평균을 비교한다.
+
+예시
+
+* 성별에 따라 몸무게 평균이 다른가?
+* 종(species)에 따라 부리 길이 평균이 다른가?
+* 처리 전·후 평균이 달라졌는가?
+
+### 평균 비교 검정의 종류
+
+| 상황            | 사용 검정       |
+| ------------- | ----------- |
+| 두 집단 평균 비교    | t-test      |
+| 세 집단 이상 평균 비교 | ANOVA       |
+| 동일 대상 전·후 비교  | 대응표본 t-test |
+
+### 평균 비교 전 반드시 확인할 가정
+
+1. 정규성
+
+   * 각 집단의 데이터가 정규분포를 따른다고 가정
+2. 등분산성
+
+   * 집단 간 분산이 동일하다고 가정
+3. 독립성
+
+   * 각 관측치는 서로 독립
+
+현실에서는 가정이 완벽하지 않아도 표본 수가 충분하면 비교적 강건하게 동작한다.
+
+## 두 집단 평균 비교
+
+### 독립표본 t-검정
+
+서로 독립된 두 집단의 평균을 비교한다.
+
+* 예
+
+  * 남성 vs 여성
+  * 처리군 vs 대조군
+
+### 가설 설정
+
+* 귀무가설(H₀)
+
+  * 두 집단의 평균은 같다
+* 대립가설(H₁)
+
+  * 두 집단의 평균은 다르다
+
+### 예제 코드
+
+```{python}
+import seaborn as sns
+import pandas as pd
+from scipy.stats import ttest_ind
+
+# 데이터 로드
+df = sns.load_dataset("penguins")
+
+# 필요한 열만 선택 및 결측치 제거
+df_t = df[["sex", "body_mass_g"]].dropna()
+
+# 집단 분리
+male = df_t[df_t["sex"] == "Male"]["body_mass_g"]
+female = df_t[df_t["sex"] == "Female"]["body_mass_g"]
+
+# 독립표본 t-test
+t_stat, p_value = ttest_ind(male, female, equal_var=True)
+
+t_stat, p_value
+```
+
+### 결과 해석
+
+* p-value < 유의수준
+
+  * 성별에 따라 평균 몸무게 차이가 있다
+* p-value ≥ 유의수준
+
+  * 평균 차이가 있다고 보기 어렵다
+
+## 등분산 가정이 깨진 경우
+
+### Welch’s t-test
+
+* 등분산이 의심되면 `equal_var=False` 사용
+
+```{python}
+t_stat, p_value = ttest_ind(male, female, equal_var=False)
+
+t_stat, p_value
+```
+
+## 세 집단 이상 평균 비교
+
+### 일원분산분석(One-way ANOVA)
+
+세 개 이상의 집단 평균을 동시에 비교한다. “어느 집단이 다른지”가 아니라 **적어도 하나의 평균이 다른지**를 먼저 검정한다.
+
+### 가설 설정
+
+* 귀무가설(H₀)
+
+  * 모든 집단의 평균은 같다
+* 대립가설(H₁)
+
+  * 적어도 하나의 집단 평균은 다르다
+
+### 예제 코드
+
+```{python}
+from scipy.stats import f_oneway
+
+# 필요한 열 선택
+df_a = df[["species", "bill_length_mm"]].dropna()
+
+# 집단별 데이터 분리
+adelie = df_a[df_a["species"] == "Adelie"]["bill_length_mm"]
+chinstrap = df_a[df_a["species"] == "Chinstrap"]["bill_length_mm"]
+gentoo = df_a[df_a["species"] == "Gentoo"]["bill_length_mm"]
+
+# ANOVA
+f_stat, p_value = f_oneway(adelie, chinstrap, gentoo)
+
+f_stat, p_value
+```
+
+### 결과 해석
+
+* p-value < 유의수준
+
+  * 종에 따라 평균 부리 길이에 차이가 있다
+* p-value ≥ 유의수준
+
+  * 평균 차이가 있다고 보기 어렵다
+
+### 주의점
+
+* ANOVA 결과는 “어디가 다른지”를 알려주지 않는다. 이후 단계 `사후검정`(Post-hoc test)이 필요하다
+
+## 대응표본 t-검정
+
+동일한 대상의 전·후 변화 비교하여 차이값의 평균이 0인지 검정한다.
+
+### 가설 설정
+
+* 귀무가설(H₀)
+
+  * 전·후 평균 차이는 0이다
+* 대립가설(H₁)
+
+  * 전·후 평균 차이는 0이 아니다
+
+### 예시 코드
+
+```python
+from scipy.stats import ttest_rel
+
+t_stat, p_value = ttest_rel(before, after)
+```
+
+- penguins 데이터셋에는 전후 비교가 불가하여 코드 구조만 제시함
+
+
+## 평균 비교 검정 요약
+
+| 상황         | 검정 방법        |
+| ---------- | ------------ |
+| 두 독립 집단    | 독립표본 t-test  |
+| 등분산 가정 불확실 | Welch t-test |
+| 세 집단 이상    | ANOVA        |
+| 동일 대상 전·후  | 대응표본 t-test  |
+
+## 핵심 포인트
+
+* 평균 차이 ≠ 의미 있는 차이
+* p-value는
+
+  * 차이 **존재 여부**
+  * 크기나 중요도를 직접 말해주지는 않는다.
+* 항상
+
+  * 시각화
+  * 기초 통계량
+  * 가정 점검
+    을 함께 본다.
+
+## ANOVA 이후 사후검정(Post-hoc Test)
+
+### 사후검정 필요 이유
+
+* ANOVA 결과
+
+  * p-value < 유의수준
+  * → **집단 간 평균 차이가 존재함**
+* 하지만
+
+  * 어떤 집단과 어떤 집단 사이가 다른지는 알려주지 않는다.
+
+예시
+
+* species에 따라 부리 길이가 다르다. 하지만
+* Adelie vs Chinstrap?
+* Chinstrap vs Gentoo?
+* Adelie vs Gentoo? → **사후검정 필요**
+
+### 사후검정의 기본 아이디어
+
+* 모든 집단 쌍(pairwise comparison)을 비교
+* 단순 t-test를 여러 번 하면 문제 발생
+
+  * **다중 비교 문제 (Multiple Testing Problem)**
+  * 우연에 의한 유의 결과가 늘어난다
+* 사후검정은
+
+  * **유의수준을 보정**하여 신뢰도를 유지한다
+
+## 대표적인 사후검정 방법
+
+| 방법           | 특징         | 사용 상황       |
+| ------------ | ---------- | ----------- |
+| Tukey HSD    | 가장 많이 사용   | 등분산 가정 만족   |
+| Bonferroni   | 매우 보수적     | 비교 횟수가 적을 때 |
+| Scheffé      | 매우 보수적     | 모든 선형 조합 비교 |
+| Games-Howell | 등분산 가정 불필요 | 분산이 다를 때    |
+
+## Tukey HSD (Honestly Significant Difference)
+
+### 개념
+
+* 모든 집단 쌍의 평균 차이를 비교
+* 전체 유의수준을 유지하면서 검정
+* ANOVA 이후 가장 표준적인 선택
+
+### 가설 구조
+
+각 집단 쌍에 대해
+
+* 귀무가설(H₀)
+
+  * 두 집단의 평균은 같다
+* 대립가설(H₁)
+
+  * 두 집단의 평균은 다르다
+
+### 분석 목표
+
+종(species)에 따라 부리 길이(bill_length_mm)의 평균 차이가 어떤 종 간에 존재하는지 확인한다.
+
+```{python}
+import seaborn as sns
+import pandas as pd
+
+df = sns.load_dataset("penguins")
+df_post = df[["species", "bill_length_mm"]].dropna()
+```
+
+```{python}
+from scipy.stats import f_oneway
+
+groups = [
+    df_post[df_post["species"] == sp]["bill_length_mm"]
+    for sp in df_post["species"].unique()
+]
+
+f_stat, p_value = f_oneway(*groups)
+f_stat, p_value
+```
+
+* p-value < 유의수준 → 사후검정 진행
+
+```{python}
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+
+tukey = pairwise_tukeyhsd(
+    endog=df_post["bill_length_mm"],   # 비교할 수치형 변수
+    groups=df_post["species"],         # 집단 변수
+    alpha=0.05
+)
+
+print(tukey)
+```
+
+
+### 출력 결과 해석
+
+출력 테이블 주요 열 의미
+
+| 열              | 의미          |
+| -------------- | ----------- |
+| group1, group2 | 비교되는 집단     |
+| meandiff       | 평균 차이       |
+| p-adj          | 보정된 p-value |
+| lower, upper   | 평균 차이 신뢰구간  |
+| reject         | 귀무가설 기각 여부  |
+
+### 해석 예시
+
+* reject = True
+
+  * 두 종 간 평균 부리 길이에 유의한 차이 존재
+* reject = False
+
+  * 평균 차이가 있다고 보기 어렵다
+
+**ANOVA 결과를 구체적인 집단 비교로 분해**한 것이 사후검정
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.boxplot(
+    data=df_post,
+    x="species",
+    y="bill_length_mm"
+)
+
+plt.title("Bill Length by Species")
+plt.show()
+```
+
+* 사후검정 결과와 박스플롯 분포를 함께 보면 통계적 결과 + 직관적 이해가 동시에 가능
+
+## 등분산 가정이 깨진 경우
+
+* ANOVA 전에 등분산 검정에서 문제가 있었다면
+
+  * Tukey 대신 **Games-Howell** 권장
+* statsmodels 기본 API에는 직접 구현이 없어서
+
+  * pingouin 라이브러리를 자주 사용
+
