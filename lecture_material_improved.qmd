@@ -1,6 +1,8 @@
-# 불균형 데이터 처리
+# 피처 엔지니어링
 
-불균형 데이터(Imbalanced Data)는 타겟 클래스 간 샘플 수의 차이가 큰 데이터셋을 의미한다. 예를 들어, 사기 거래 탐지 문제에서 정상 거래가 99%, 사기 거래가 1%인 경우가 대표적이다. 불균형 데이터로 학습된 모델은 다수 클래스에 편향되어 소수 클래스를 제대로 예측하지 못하는 문제가 발생한다. 이 장에서는 불균형 데이터의 문제점을 진단하고, 데이터 수준 처리(언더샘플링, 오버샘플링, SMOTE)와 모델 수준 처리(클래스 가중치 조정) 방법을 학습한다.
+피처 엔지니어링(Feature Engineering)은 기존 데이터를 변형하거나 조합하여 모델이 더 잘 학습할 수 있는 새로운 입력 변수를 만드는 과정이다. 머신러닝에서 "좋은 피처"는 복잡한 알고리즘보다 더 큰 영향을 미치며, 실무 데이터 과학자의 역량이 가장 잘 드러나는 단계이다. 피처 엔지니어링은 도메인 지식과 데이터 탐색을 결합하여 모델이 패턴을 더 쉽게 학습할 수 있도록 돕는다. 이 장에서는 비율 피처, 조합 피처, 변환 피처, 집계 피처 등 다양한 피처 생성 기법과 모델별 전략을 학습한다.
+
+> "모델 성능의 상당 부분은 알고리즘이 아니라 피처에서 결정된다."
 
 **예제: 데이터 로드**
 
@@ -9,514 +11,551 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 
-# 데이터 로드
-df = sns.load_dataset("penguins").dropna(subset=["species"])
+# 데이터 로드 및 결측치 제거
+df = sns.load_dataset("penguins").dropna()
 
 print("데이터 크기:", df.shape)
-print("\n클래스 정보:")
-print(df["species"].unique())
+print("\n사용 가능한 컬럼:")
+print(df.columns.tolist())
 ```
 
-## 불균형 데이터의 문제점
+## 피처 엔지니어링의 중요성
 
-불균형 데이터로 학습된 모델은 다수 클래스만 예측하는 경향이 있다. 이 경우 전체 정확도(Accuracy)는 높아 보이지만, 실제로 중요한 소수 클래스는 거의 예측하지 못한다.
+피처 엔지니어링이 중요한 이유는 다음과 같다.
 
-**문제 상황 예시**
+**피처 엔지니어링의 영향력**
 
-의료 진단 모델에서 질병이 있는 경우가 5%, 없는 경우가 95%라고 가정하자.
+| 관점 | 설명 | 예시 |
+|------|------|------|
+| 성능 차이의 핵심 | 같은 모델도 피처에 따라 성능 천차만별 | 기본 피처 80% → 파생 피처 95% |
+| 단순함의 강력함 | 좋은 피처 + 단순 모델 > 나쁜 피처 + 복잡 모델 | 선형 회귀 + 좋은 피처 > 복잡한 신경망 |
+| 도메인 지식 반영 | 전문가 지식이 모델에 직접 반영되는 단계 | 의료: 체질량지수(BMI), 금융: 부채비율 |
+| 해석력 향상 | 의미 있는 피처는 모델 설명에 도움 | "연령대"가 "나이 제곱"보다 이해 쉬움 |
+| 차원 축소 효과 | 여러 변수의 관계를 하나로 압축 | 길이/너비 대신 종횡비 사용 |
 
-| 지표 | 값 | 해석 |
-|------|-----|------|
-| 전체 정확도 | 95% | 모든 환자를 "질병 없음"으로 예측해도 달성 |
-| 질병 재현율 | 10% | 실제 질병 환자 중 10%만 탐지 |
-| 결과 | 잘못된 모델 | 높은 정확도에도 불구하고 실제로는 쓸모없음 |
+**실무 관점**
 
-이는 "잘 맞춘 것처럼 보이지만 중요한 건 다 틀림" 상황으로, 정확도만으로는 모델의 실제 성능을 평가할 수 없음을 보여준다.
+- 캐글 경진대회에서 상위권 진입의 핵심 요소
+- 프로덕션 환경에서 모델 유지보수성 향상
+- 컴퓨팅 리소스 절약 (단순 모델 사용 가능)
+- 비즈니스 이해관계자와의 커뮤니케이션 개선
 
-**불균형으로 인한 문제점**
+## 파생 변수 생성 기법
 
-- 다수 클래스에 편향된 학습
-- 소수 클래스의 패턴을 학습하지 못함
-- 정확도 지표가 실제 성능을 반영하지 못함
-- 비용이 큰 오분류(예: 질병 미탐지) 발생
+파생 변수는 기존 변수를 수학적으로 변환하거나 조합하여 새로운 정보를 추출하는 방법이다.
 
-## 불균형 여부 진단
+### 비율(Ratio) 피처
 
-모델 학습 전에 타겟 변수의 클래스 분포를 확인하여 불균형 정도를 파악해야 한다.
+두 변수의 비율은 각 변수의 절대값보다 더 의미 있는 정보를 담을 수 있다. 특히 크기가 다른 개체를 비교할 때 유용하다.
 
-### 클래스 분포 확인
-
-**예제: 클래스별 샘플 수 확인**
+**예제: 부리 비율 피처 생성**
 
 ```{python}
-# 클래스별 샘플 수
-class_counts = df["species"].value_counts()
-print("클래스별 샘플 수:")
-print(class_counts)
-print(f"\n총 샘플 수: {len(df)}")
+# 부리 길이 대 깊이 비율
+df["bill_ratio"] = df["bill_length_mm"] / df["bill_depth_mm"]
+
+print("부리 비율 피처:")
+print(df["bill_ratio"].describe())
+
+# 종별 비율 비교
+print("\n종별 평균 부리 비율:")
+print(df.groupby("species")["bill_ratio"].mean().sort_values())
 ```
 
-### 비율로 확인
+비율 피처는 다음과 같은 상황에서 효과적이다.
 
-절대 개수보다 비율로 확인하면 불균형 정도를 더 명확히 파악할 수 있다.
+- 신체 비례나 형태를 나타낼 때 (예: 부리 형태, 체형)
+- 스케일이 다른 개체를 비교할 때
+- 효율성이나 밀도를 나타낼 때 (예: 연비, 인구밀도)
 
-**예제: 클래스별 비율 확인**
+**추가 예시**
 
 ```{python}
-# 클래스별 비율
-class_ratios = df["species"].value_counts(normalize=True)
-print("클래스별 비율:")
-print(class_ratios.round(3))
+# 체중 대 날개 길이 비율 (체중 효율성)
+df["body_flipper_ratio"] = df["body_mass_g"] / df["flipper_length_mm"]
 
-# 불균형 비율 계산
-max_ratio = class_ratios.max()
-min_ratio = class_ratios.min()
-imbalance_ratio = max_ratio / min_ratio
+# 전체 부리 크기 대비 길이 비율
+df["bill_total"] = df["bill_length_mm"] + df["bill_depth_mm"]
+df["bill_length_proportion"] = df["bill_length_mm"] / df["bill_total"]
 
-print(f"\n불균형 비율: {imbalance_ratio:.2f}:1")
-print(f"(가장 많은 클래스가 가장 적은 클래스의 {imbalance_ratio:.2f}배)")
+print("\n생성된 비율 피처:")
+print(df[["bill_ratio", "body_flipper_ratio", "bill_length_proportion"]].head())
 ```
 
-**불균형 정도 기준**
+### 조합 피처 (곱셈, 덧셈)
 
-| 비율 | 불균형 정도 | 조치 |
-|------|-----------|------|
-| 1:1 ~ 3:1 | 균형 | 특별한 조치 불필요 |
-| 3:1 ~ 10:1 | 경미한 불균형 | 클래스 가중치 고려 |
-| 10:1 ~ 100:1 | 심각한 불균형 | 샘플링 기법 필수 |
-| 100:1 이상 | 극심한 불균형 | 복합적 접근 필요 |
+여러 변수를 곱하거나 더하면 변수 간 상호작용이나 전체 크기를 나타낼 수 있다.
 
-### 시각화
+**예제: 상호작용 피처 생성**
 
-시각적으로 불균형을 확인하면 직관적으로 파악할 수 있다.
+```{python}
+# 체중과 날개 길이의 상호작용 (전체적인 신체 크기)
+df["body_flipper_interaction"] = df["body_mass_g"] * df["flipper_length_mm"]
 
-**예제: 클래스 분포 시각화**
+print("상호작용 피처:")
+print(df["body_flipper_interaction"].describe())
+
+# 종별 상호작용 피처 비교
+print("\n종별 평균 상호작용:")
+print(df.groupby("species")["body_flipper_interaction"].mean())
+```
+
+**조합 피처 유형**
+
+| 연산 | 의미 | 예시 |
+|------|------|------|
+| 곱셈 (A × B) | 상호작용, 면적, 부피 | 가로 × 세로 = 면적 |
+| 덧셈 (A + B) | 전체 크기, 합계 | 총 점수, 총 길이 |
+| 차이 (A - B) | 변화량, 격차 | 가격 변동, 수입-지출 |
+| 평균 ((A + B) / 2) | 중심 경향 | 평균 성적, 평균 온도 |
+
+**추가 예시**
+
+```{python}
+# 전체 부리 크기 (길이 + 깊이)
+df["bill_total_size"] = df["bill_length_mm"] + df["bill_depth_mm"]
+
+# 날개와 부리 길이 차이
+df["flipper_bill_diff"] = df["flipper_length_mm"] - df["bill_length_mm"]
+
+print("\n조합 피처 샘플:")
+print(df[["bill_total_size", "flipper_bill_diff"]].head())
+```
+
+### 다항식 피처
+
+변수의 제곱이나 고차항은 비선형 관계를 선형 모델에서 포착할 수 있게 한다.
+
+**예제: 제곱 피처 생성**
+
+```{python}
+# 체중의 제곱 (비선형 관계 표현)
+df["body_mass_squared"] = df["body_mass_g"] ** 2
+
+# 부리 길이의 제곱근 (분포 정규화 효과)
+df["bill_length_sqrt"] = np.sqrt(df["bill_length_mm"])
+
+print("다항식 피처 샘플:")
+print(df[["body_mass_g", "body_mass_squared", "bill_length_sqrt"]].head())
+```
+
+## 변환 기반 피처
+
+변환은 분포를 정규화하거나 스케일을 안정화하여 모델 학습을 돕는다.
+
+### 로그 변환 피처
+
+로그 변환은 왜곡된 분포를 정규화하고 큰 값의 영향을 줄인다.
+
+**예제: 로그 변환 피처**
+
+```{python}
+# 체중의 로그 변환
+df["log_body_mass"] = np.log(df["body_mass_g"])
+
+print("로그 변환 전후 비교:")
+print("원본 왜도:", df["body_mass_g"].skew().round(3))
+print("로그 왜도:", df["log_body_mass"].skew().round(3))
+
+# 분포 비교
+print("\n원본 통계:")
+print(df["body_mass_g"].describe())
+print("\n로그 변환 통계:")
+print(df["log_body_mass"].describe())
+```
+
+**변환의 효과**
+
+- 스케일 안정화: 큰 값과 작은 값의 차이 완화
+- 거리 기반 모델 성능 향상: KNN, SVM 등에서 중요
+- 선형 관계 강화: 지수적 관계를 선형으로 변환
+- 이상치 영향 감소: 극단값을 상대적으로 축소
+
+### 표준화/정규화 피처
+
+변수를 일정 범위로 변환하여 스케일을 통일한다.
+
+**예제: 표준화 피처 생성**
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+
+# 주요 수치형 변수들을 표준화
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+
+scaler = StandardScaler()
+df_scaled = pd.DataFrame(
+    scaler.fit_transform(df[num_cols]),
+    columns=[f"{col}_scaled" for col in num_cols],
+    index=df.index
+)
+
+# 원본 데이터프레임에 추가
+df = pd.concat([df, df_scaled], axis=1)
+
+print("표준화 피처 샘플:")
+print(df[[num_cols[0], f"{num_cols[0]}_scaled"]].head())
+```
+
+## 구간 기반 피처 (Binning)
+
+연속형 변수를 구간으로 나누어 범주화하면 비선형 관계를 포착하고 해석력을 높일 수 있다.
+
+**예제: 체중 구간 피처**
+
+```{python}
+# 체중을 3개 구간으로 분류
+df["body_mass_group"] = pd.cut(
+    df["body_mass_g"],
+    bins=[0, 3500, 4500, 7000],
+    labels=["small", "medium", "large"]
+)
+
+print("체중 구간 분포:")
+print(df["body_mass_group"].value_counts())
+
+# 구간별 평균 날개 길이
+print("\n구간별 평균 날개 길이:")
+print(df.groupby("body_mass_group")["flipper_length_mm"].mean())
+```
+
+**구간화의 효과**
+
+- 연속값을 해석 가능한 범주로 변환
+- 비선형 관계를 단계적으로 표현
+- 트리 모델에서 분할 힌트 제공
+- 이상치의 영향 완화
+
+**추가 예시: 등빈도 구간화**
+
+```{python}
+# 사분위수 기준 구간화
+df["body_mass_quantile"] = pd.qcut(
+    df["body_mass_g"],
+    q=4,
+    labels=["Q1", "Q2", "Q3", "Q4"]
+)
+
+print("사분위수 구간 분포:")
+print(df["body_mass_quantile"].value_counts())
+```
+
+## 집계 기반 피처 (Aggregation Features)
+
+그룹별 통계량을 계산하여 개체가 그룹 내에서 어떤 위치에 있는지 나타낸다.
+
+### 그룹 평균 대비 차이
+
+**예제: 종별 평균 대비 편차**
+
+```{python}
+# 종별 평균 체중 계산
+species_mean = df.groupby("species")["body_mass_g"].transform("mean")
+
+# 개체별 편차 계산
+df["body_mass_diff_species"] = df["body_mass_g"] - species_mean
+
+print("종별 평균 대비 편차:")
+print(df[["species", "body_mass_g", "body_mass_diff_species"]].head(10))
+
+# 편차의 분포
+print("\n종별 편차 통계:")
+print(df.groupby("species")["body_mass_diff_species"].describe())
+```
+
+### 그룹별 다양한 통계량
+
+**예제: 종별 순위와 백분위수**
+
+```{python}
+# 종 내 체중 순위
+df["body_mass_rank_species"] = df.groupby("species")["body_mass_g"].rank(ascending=False)
+
+# 종 내 체중 백분위수
+df["body_mass_pct_species"] = df.groupby("species")["body_mass_g"].rank(pct=True)
+
+print("종 내 순위와 백분위수:")
+print(df[["species", "body_mass_g", "body_mass_rank_species", "body_mass_pct_species"]].head(10))
+```
+
+**집계 피처의 유형**
+
+| 통계량 | 의미 | 활용 예시 |
+|--------|------|----------|
+| mean | 그룹 평균 | 평균 대비 큰지 작은지 |
+| std | 그룹 분산 | 그룹 내 변동성 |
+| min, max | 그룹 범위 | 극단값과의 거리 |
+| rank | 그룹 내 순위 | 상대적 위치 |
+| count | 그룹 크기 | 희귀도 판단 |
+
+## 통계 요약 피처
+
+여러 변수의 통계량을 계산하여 개체의 전반적인 특성을 요약한다.
+
+**예제: 행 단위 통계 피처**
+
+```{python}
+# 주요 수치형 변수 선택
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+
+# 행 단위 평균 (개체의 전반적인 크기)
+df["num_mean"] = df[num_cols].mean(axis=1)
+
+# 행 단위 표준편차 (측정값의 변동성)
+df["num_std"] = df[num_cols].std(axis=1)
+
+# 행 단위 최댓값
+df["num_max"] = df[num_cols].max(axis=1)
+
+# 행 단위 최솟값
+df["num_min"] = df[num_cols].min(axis=1)
+
+# 행 단위 범위 (최댓값 - 최솟값)
+df["num_range"] = df["num_max"] - df["num_min"]
+
+print("통계 요약 피처:")
+print(df[["num_mean", "num_std", "num_range"]].describe())
+```
+
+**통계 요약의 효과**
+
+- 개체의 전체적인 특성을 하나의 값으로 압축
+- 변수 간 일관성 또는 변동성 파악
+- 차원 축소 효과
+- 노이즈 감소 (평균화 효과)
+
+## 범주형 조합 피처
+
+여러 범주형 변수를 결합하여 세분화된 그룹을 만든다.
+
+**예제: 종과 성별 조합**
+
+```{python}
+# 종과 성별을 결합한 새로운 범주
+df["species_sex"] = df["species"].astype(str) + "_" + df["sex"].astype(str)
+
+print("종-성별 조합 분포:")
+print(df["species_sex"].value_counts())
+
+# 조합별 평균 체중
+print("\n종-성별 조합별 평균 체중:")
+print(df.groupby("species_sex")["body_mass_g"].mean().sort_values())
+```
+
+**조합 피처 사용 시 주의사항**
+
+- 빈도가 너무 낮은 조합은 과적합 위험 (최소 30개 이상 권장)
+- 조합 수가 너무 많으면 차원이 폭발적으로 증가
+- 도메인 지식상 의미 있는 조합만 생성
+- One-Hot Encoding 시 컬럼 수 급증 주의
+
+**추가 예시: 삼원 조합**
+
+```{python}
+# 종, 성별, 체중 구간의 삼원 조합
+df["species_sex_mass"] = (
+    df["species"].astype(str) + "_" + 
+    df["sex"].astype(str) + "_" + 
+    df["body_mass_group"].astype(str)
+)
+
+print("\n삼원 조합 샘플:")
+print(df["species_sex_mass"].value_counts().head(10))
+```
+
+## 시간 및 순서형 데이터 피처
+
+시계열 데이터나 순서가 있는 데이터에서는 추가적인 피처 생성 기법을 사용한다.
+
+**시간 데이터 피처 예시**
+
+```{python}
+# 예시: 날짜 데이터가 있다고 가정
+# df["date"] = pd.to_datetime(df["date"])
+# 
+# # 날짜에서 추출
+# df["year"] = df["date"].dt.year
+# df["month"] = df["date"].dt.month
+# df["day_of_week"] = df["date"].dt.dayofweek
+# df["quarter"] = df["date"].dt.quarter
+# df["is_weekend"] = df["day_of_week"].isin([5, 6]).astype(int)
+# 
+# # 주기성 표현 (원형 인코딩)
+# df["month_sin"] = np.sin(2 * np.pi * df["month"] / 12)
+# df["month_cos"] = np.cos(2 * np.pi * df["month"] / 12)
+# 
+# # 시간 경과
+# df["days_since_start"] = (df["date"] - df["date"].min()).dt.days
+# 
+# # 이동 평균 (윈도우 = 7일)
+# df["rolling_mean_7d"] = df["value"].rolling(window=7).mean()
+```
+
+**시간 피처 유형**
+
+| 피처 유형 | 예시 | 설명 |
+|----------|------|------|
+| 추출 | 연, 월, 요일, 시간 | 날짜/시간에서 구성 요소 분리 |
+| 주기 | sin/cos 변환 | 원형 데이터의 연속성 표현 |
+| 경과 | 시작일로부터 일수 | 시간의 흐름을 수치로 표현 |
+| 집계 | 이동평균, 누적합 | 과거 패턴 요약 |
+| 차분 | 전일 대비 변화량 | 변화율이나 추세 |
+
+## 피처 선택과의 연결
+
+모든 피처를 사용하는 것이 정답은 아니다. 중복되거나 불필요한 피처는 모델 성능을 저하시킬 수 있다.
+
+**예제: 상관관계 분석**
 
 ```{python}
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# 막대 그래프
-plt.figure(figsize=(8, 5))
-df["species"].value_counts().plot(kind="bar")
-plt.title("Class Distribution")
-plt.xlabel("Species")
-plt.ylabel("Count")
-plt.xticks(rotation=45)
+# 주요 피처들의 상관관계
+feature_cols = [
+    "bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g",
+    "bill_ratio", "body_flipper_interaction", "log_body_mass"
+]
+
+corr_matrix = df[feature_cols].corr()
+
+# 히트맵 시각화
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", center=0, fmt=".2f")
+plt.title("Feature Correlation Matrix")
 plt.tight_layout()
 plt.show()
 ```
 
-## 평가 지표 변경
+**피처 선택 기준**
 
-불균형 데이터에서는 정확도(Accuracy)가 모델 성능을 제대로 반영하지 못하므로, 다른 평가 지표를 사용해야 한다.
+- 높은 상관관계 (|r| > 0.9): 중복 정보, 하나만 선택
+- 타겟과의 상관관계: 타겟과 관련 없는 피처 제거
+- 다중공선성: VIF(Variance Inflation Factor) > 10이면 문제
+- 피처 중요도: 트리 모델의 `feature_importances_` 활용
 
-**적절한 평가 지표**
-
-| 지표 | 계산 방식 | 의미 | 사용 상황 |
-|------|----------|------|----------|
-| Precision | TP / (TP + FP) | 양성 예측 중 실제 양성 비율 | 거짓 양성(FP) 비용이 클 때 |
-| Recall | TP / (TP + FN) | 실제 양성 중 예측한 비율 | 거짓 음성(FN) 비용이 클 때 |
-| F1-score | 2 × (Precision × Recall) / (Precision + Recall) | Precision과 Recall의 조화평균 | 균형 잡힌 평가 필요 |
-| ROC-AUC | 곡선 아래 면적 | 클래스 구분 능력 | 이진 분류, 확률 출력 가능 |
-| PR-AUC | Precision-Recall 곡선 아래 면적 | 불균형 데이터에 강건 | 극심한 불균형 |
-
-**예제: 다양한 평가 지표 사용**
+**예제: 중요도 기반 선택**
 
 ```{python}
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
-# 데이터 준비
-num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
-df_clean = df[['species'] + num_cols].dropna()
+# 간단한 모델로 피처 중요도 확인
+X = df[feature_cols].dropna()
+y = df.loc[X.index, "species"]
 
-X = df_clean[num_cols]
-y = df_clean["species"]
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X, y)
 
-# 학습/테스트 분리
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
-)
+# 피처 중요도 출력
+importance_df = pd.DataFrame({
+    "feature": feature_cols,
+    "importance": rf.feature_importances_
+}).sort_values("importance", ascending=False)
 
-# 간단한 모델 학습
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-
-# 평가 지표 출력
-print("분류 보고서:")
-print(classification_report(y_test, y_pred))
-
-print("\n혼동 행렬:")
-print(confusion_matrix(y_test, y_pred))
+print("피처 중요도:")
+print(importance_df)
 ```
 
-불균형 데이터에서는 특히 소수 클래스의 Recall(재현율)을 주의 깊게 확인해야 한다.
+## 모델별 피처 엔지니어링 전략
 
-## 데이터 수준 처리 방법
+모델의 특성에 따라 효과적인 피처가 다르다.
 
-데이터 수준 처리는 학습 데이터의 클래스 분포를 직접 조정하는 방법이다. 크게 언더샘플링과 오버샘플링으로 나뉜다.
+**모델별 피처 전략**
 
-### 언더샘플링 (Under-sampling)
+| 모델 유형 | 중요 피처 | 이유 | 권장 기법 |
+|----------|----------|------|----------|
+| 선형 모델 (회귀, 로지스틱) | 스케일링, 상호작용 | 변수 간 관계를 명시적으로 표현 필요 | 표준화, 다항식, 상호작용 |
+| KNN, SVM | 스케일링, 분포 정규화 | 거리 기반이라 스케일에 민감 | Min-Max, 로그 변환 |
+| 트리 계열 (RF, XGBoost) | 비선형 파생, 범주화 | 분할 힌트 제공, 비선형 자동 처리 | 비율, Binning, 집계 |
+| 신경망 | 단순 + 대량 데이터 | 자체적으로 복잡한 피처 학습 | 정규화, 임베딩 |
+| Naive Bayes | 독립 피처 | 피처 간 독립성 가정 | 단순 변환, 중복 제거 |
 
-언더샘플링은 다수 클래스의 샘플 일부를 제거하여 클래스 균형을 맞추는 방법이다. 구현이 간단하고 빠르지만, 정보 손실이 발생한다.
-
-**예제: 랜덤 언더샘플링**
+**모델별 예시**
 
 ```{python}
-from imblearn.under_sampling import RandomUnderSampler
+# 선형 모델용: 상호작용 피처
+from sklearn.preprocessing import PolynomialFeatures
 
-# 데이터 준비
-num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
-df_dropna = df[['species'] + num_cols].dropna()
+poly = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly.fit_transform(df[["bill_length_mm", "bill_depth_mm"]])
+print("다항식 피처 개수:", X_poly.shape[1])
 
-X = df_dropna[num_cols]
-y = df_dropna["species"]
-
-# 언더샘플링 적용
-rus = RandomUnderSampler(random_state=42)
-X_under, y_under = rus.fit_resample(X, y)
-
-print("언더샘플링 전:")
-print(y.value_counts())
-print(f"총 샘플 수: {len(y)}")
-
-print("\n언더샘플링 후:")
-print(y_under.value_counts())
-print(f"총 샘플 수: {len(y_under)}")
-print(f"제거된 샘플 수: {len(y) - len(y_under)}")
+# 트리 모델용: 범주화 + 집계
+tree_features = ["body_mass_group", "body_mass_diff_species", "bill_ratio"]
+print("\n트리 모델 추천 피처:", tree_features)
 ```
 
-**장단점**
+## 전처리 전체 흐름에서의 위치
 
-| 장점 | 단점 |
-|------|------|
-| 구현이 간단하고 빠름 | 정보 손실 (유용한 샘플도 제거) |
-| 학습 속도 향상 (데이터 감소) | 데이터가 적으면 성능 저하 |
-| 과적합 위험 감소 | 다수 클래스의 패턴을 놓칠 수 있음 |
+피처 엔지니어링은 전처리의 후반부에 위치하며, 정제된 데이터를 바탕으로 수행한다.
 
-**적용 상황**
+**데이터 전처리 전체 흐름**
 
-- 데이터가 충분히 많을 때 (수만 개 이상)
-- 학습 속도가 중요할 때
-- 노이즈가 많아 일부 제거가 유익할 때
-
-### 오버샘플링 (Over-sampling)
-
-오버샘플링은 소수 클래스의 샘플을 복제하거나 생성하여 클래스 균형을 맞추는 방법이다.
-
-#### 단순 복제 (Random Over-sampling)
-
-**예제: 랜덤 오버샘플링**
-
-```{python}
-from imblearn.over_sampling import RandomOverSampler
-
-# 오버샘플링 적용
-ros = RandomOverSampler(random_state=42)
-X_over, y_over = ros.fit_resample(X, y)
-
-print("오버샘플링 전:")
-print(y.value_counts())
-print(f"총 샘플 수: {len(y)}")
-
-print("\n오버샘플링 후:")
-print(y_over.value_counts())
-print(f"총 샘플 수: {len(y_over)}")
-print(f"생성된 샘플 수: {len(y_over) - len(y)}")
+```
+1. 데이터 로드
+   ↓
+2. 결측치 처리 (제거/대체)
+   ↓
+3. 이상치 탐지 및 처리
+   ↓
+4. 스케일링 (변수 크기 통일)
+   ↓
+5. 분포 변환 (왜도 정규화)
+   ↓
+6. 인코딩 (범주형 → 수치형)
+   ↓
+7. 불균형 데이터 처리
+   ↓
+8. 피처 엔지니어링 ← 현재 장
+   ↓
+9. 피처 선택 (중요 피처 추출)
+   ↓
+10. 모델링
 ```
 
-**문제점**
-
-단순 복제는 동일한 샘플을 여러 번 학습하므로 과적합(overfitting) 위험이 크다. 모델이 복제된 샘플을 암기하게 되어 일반화 성능이 저하될 수 있다.
-
-### SMOTE (Synthetic Minority Over-sampling Technique)
-
-SMOTE는 소수 클래스의 기존 샘플 사이에 가상의 샘플을 생성하는 방법이다. 단순 복제보다 과적합 위험이 적고, 소수 클래스의 특성 공간을 확장한다.
-
-**SMOTE 작동 원리**
-
-1. 소수 클래스의 각 샘플에 대해 k개의 최근접 이웃(KNN) 찾기
-2. 이웃 중 하나를 무작위로 선택
-3. 선택된 샘플과의 사이에 새로운 샘플 생성 (보간)
-
-**예제: SMOTE 적용**
-
-```{python}
-from imblearn.over_sampling import SMOTE
-
-# SMOTE 적용
-smote = SMOTE(random_state=42)
-X_smote, y_smote = smote.fit_resample(X, y)
-
-print("SMOTE 전:")
-print(y.value_counts())
-print(f"총 샘플 수: {len(y)}")
-
-print("\nSMOTE 후:")
-print(y_smote.value_counts())
-print(f"총 샘플 수: {len(y_smote)}")
-print(f"생성된 합성 샘플 수: {len(y_smote) - len(y)}")
-```
-
-**장단점**
-
-| 장점 | 단점 |
-|------|------|
-| 정보 손실 없음 (새로운 샘플 생성) | 노이즈가 있으면 노이즈도 증폭 |
-| 과적합 위험 낮음 (단순 복제보다) | 계산 비용이 높음 (KNN 사용) |
-| 특성 공간 확장 | 범주형 변수 처리 어려움 |
-
-**적용 상황**
-
-- 데이터가 적을 때
-- 정보 손실을 최소화하고 싶을 때
-- 연속형 변수가 많을 때
-
-### SMOTE 변형 기법
-
-SMOTE의 한계를 보완한 다양한 변형 기법이 존재한다.
-
-**SMOTE 변형 기법 비교**
-
-| 기법 | 특징 | 장점 | 적용 상황 |
-|------|------|------|----------|
-| Borderline-SMOTE | 경계 근처 샘플만 증강 | 분류 경계 강화 | 클래스 간 겹침이 많을 때 |
-| SMOTE-NC | 수치형 + 범주형 혼합 | 범주형 변수 처리 가능 | 범주형 변수 포함 데이터 |
-| ADASYN | 학습이 어려운 영역 집중 | 어려운 샘플에 집중 | 클래스 내 분포 복잡 |
-| SMOTE-ENN | SMOTE + 노이즈 제거 | 경계 정리 | 노이즈가 많을 때 |
-
-**예제: Borderline-SMOTE**
-
-```{python}
-from imblearn.over_sampling import BorderlineSMOTE
-
-# Borderline-SMOTE 적용
-bsmote = BorderlineSMOTE(random_state=42)
-X_bsmote, y_bsmote = bsmote.fit_resample(X, y)
-
-print("Borderline-SMOTE 결과:")
-print(y_bsmote.value_counts())
-```
-
-**예제: SMOTE-NC (범주형 포함)**
-
-```{python}
-from imblearn.over_sampling import SMOTENC
-
-# 범주형 변수가 포함된 경우 (예시)
-# categorical_features 파라미터에 범주형 변수의 인덱스 지정
-# smotenc = SMOTENC(categorical_features=[0, 1], random_state=42)
-# X_smotenc, y_smotenc = smotenc.fit_resample(X_mixed, y)
-```
-
-## 모델 수준 처리 방법
-
-모델 수준 처리는 데이터를 변경하지 않고 모델의 학습 과정에서 클래스 가중치를 조정하는 방법이다.
-
-### 클래스 가중치 자동 조정
-
-많은 머신러닝 알고리즘은 `class_weight` 파라미터를 제공한다. `class_weight='balanced'`로 설정하면 클래스 비율의 역수로 가중치를 자동 계산한다.
-
-**가중치 계산 공식**
-
-$$
-w_i = \frac{n_{\text{samples}}}{n_{\text{classes}} \times n_{\text{samples}_i}}
-$$
-
-**예제: 자동 클래스 가중치**
-
-```{python}
-from sklearn.linear_model import LogisticRegression
-
-# 클래스 가중치 자동 조정
-model_balanced = LogisticRegression(
-    class_weight="balanced",
-    max_iter=1000,
-    random_state=42
-)
-
-# 학습
-model_balanced.fit(X_train, y_train)
-y_pred_balanced = model_balanced.predict(X_test)
-
-print("가중치 조정 모델 평가:")
-print(classification_report(y_test, y_pred_balanced))
-```
-
-### 수동 가중치 설정
-
-도메인 지식에 따라 클래스별 가중치를 수동으로 설정할 수 있다. 특정 클래스의 오분류 비용이 클 때 유용하다.
-
-**예제: 수동 클래스 가중치**
-
-```{python}
-# 수동 가중치 설정 (중요한 클래스에 더 높은 가중치)
-weights = {
-    "Adelie": 1.0,
-    "Gentoo": 1.5,
-    "Chinstrap": 2.0  # 가장 희귀한 클래스에 높은 가중치
-}
-
-model_weighted = LogisticRegression(
-    class_weight=weights,
-    max_iter=1000,
-    random_state=42
-)
-
-model_weighted.fit(X_train, y_train)
-y_pred_weighted = model_weighted.predict(X_test)
-
-print("수동 가중치 모델 평가:")
-print(classification_report(y_test, y_pred_weighted))
-```
-
-**장단점**
-
-| 장점 | 단점 |
-|------|------|
-| 데이터 변경 없음 (원본 유지) | 모든 알고리즘이 지원하지 않음 |
-| 구현이 간단함 | 최적 가중치 찾기 어려움 |
-| 학습 시간 증가 없음 | 극심한 불균형에는 한계 있음 |
-
-**적용 상황**
-
-- 데이터가 충분히 많을 때
-- 샘플링으로 인한 정보 손실을 피하고 싶을 때
-- 트리 기반 모델 사용 시
-
-## 앙상블 + 불균형 대응
-
-앙상블 기법과 불균형 처리를 결합한 방법이다. 여러 모델을 조합하여 성능을 향상시킨다.
-
-### Balanced Random Forest
-
-각 트리를 학습할 때 다수 클래스를 언더샘플링하여 균형을 맞춘다.
-
-**예제: Balanced Random Forest**
-
-```{python}
-from imblearn.ensemble import BalancedRandomForestClassifier
-
-# Balanced Random Forest 모델 생성
-brf = BalancedRandomForestClassifier(
-    n_estimators=100,
-    random_state=42,
-    n_jobs=-1
-)
-
-# 학습 및 예측
-brf.fit(X_train, y_train)
-y_pred_brf = brf.predict(X_test)
-
-print("Balanced Random Forest 평가:")
-print(classification_report(y_test, y_pred_brf))
-```
-
-### EasyEnsemble
-
-여러 번 언더샘플링하여 다양한 서브셋을 만들고, 각각에 대해 모델을 학습한 후 앙상블한다.
-
-**예제: EasyEnsemble**
-
-```{python}
-from imblearn.ensemble import EasyEnsembleClassifier
-
-# EasyEnsemble 모델 생성
-eec = EasyEnsembleClassifier(
-    n_estimators=10,
-    random_state=42,
-    n_jobs=-1
-)
-
-eec.fit(X_train, y_train)
-y_pred_eec = eec.predict(X_test)
-
-print("EasyEnsemble 평가:")
-print(classification_report(y_test, y_pred_eec))
-```
-
-**앙상블 기법 장점**
-
-- 여러 모델의 강점을 결합하여 강건성 향상
-- 언더샘플링의 정보 손실을 앙상블로 보완
-- 과적합 위험 감소
-
-## Pipeline으로 안전하게 적용
-
-샘플링 기법을 적용할 때 가장 중요한 원칙은 **학습 데이터에만 적용**하는 것이다. 테스트 데이터에 샘플링을 적용하면 데이터 누수(data leakage)가 발생하여 성능이 과대평가된다.
-
-**예제: Pipeline을 사용한 안전한 샘플링**
-
-```{python}
-from imblearn.pipeline import Pipeline as ImbPipeline
-from sklearn.preprocessing import StandardScaler
-from imblearn.over_sampling import SMOTE
-from sklearn.linear_model import LogisticRegression
-
-# Pipeline 구성 (SMOTE는 학습 데이터에만 적용됨)
-pipeline = ImbPipeline([
-    ("scaler", StandardScaler()),
-    ("smote", SMOTE(random_state=42)),
-    ("model", LogisticRegression(max_iter=1000))
-])
-
-# 학습 (SMOTE는 fit 시에만 적용)
-pipeline.fit(X_train, y_train)
-
-# 예측 (SMOTE는 적용되지 않음)
-y_pred_pipeline = pipeline.predict(X_test)
-
-print("Pipeline 모델 평가:")
-print(classification_report(y_test, y_pred_pipeline))
-```
-
-Pipeline을 사용하면 다음과 같은 장점이 있다.
-
-- 데이터 누수 방지 (샘플링은 학습에만 적용)
-- 교차 검증 시 자동으로 안전하게 처리
-- 코드 간결성 및 재사용성 향상
+**단계별 피처 생성 시점**
+
+- 결측치 처리 전: X (결측치가 계산을 방해)
+- 이상치 처리 전: △ (이상치가 비율/평균에 영향)
+- 스케일링 전: O (원본 값으로 비율 계산 후 스케일링)
+- 인코딩 후: O (범주형 조합 피처 생성 가능)
+- 피처 선택 전: O (모든 후보 피처 생성 후 선택)
 
 ## 요약
 
-이 장에서는 불균형 데이터의 문제점과 다양한 처리 방법을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 피처 엔지니어링의 개념과 다양한 기법을 학습했다. 주요 내용은 다음과 같다.
 
-**불균형 데이터 처리 방법 비교**
+**피처 엔지니어링 기법 정리**
 
-| 방법 | 원리 | 장점 | 단점 | 적용 상황 |
-|------|------|------|------|----------|
-| 언더샘플링 | 다수 클래스 제거 | 빠름, 과적합 감소 | 정보 손실 | 데이터 충분, 노이즈 많음 |
-| 오버샘플링 | 소수 클래스 복제 | 정보 손실 없음 | 과적합 위험 | 데이터 적음 |
-| SMOTE | 합성 샘플 생성 | 과적합 감소, 공간 확장 | 노이즈 증폭 | 데이터 적음, 연속형 변수 |
-| 클래스 가중치 | 모델 학습 조정 | 데이터 변경 없음 | 극심한 불균형 한계 | 데이터 충분, 원본 유지 |
-| 앙상블 | 여러 모델 결합 | 강건성 높음 | 계산 비용 높음 | 성능 중요, 트리 모델 |
+| 기법 | 방법 | 효과 | 예시 |
+|------|------|------|------|
+| 비율 | A / B | 상대적 크기, 형태 | 부리 길이/깊이 비율 |
+| 조합 | A × B, A + B | 상호작용, 전체 크기 | 체중 × 날개 길이 |
+| 변환 | log, sqrt, 제곱 | 분포 정규화, 비선형 관계 | log(체중) |
+| 구간화 | cut, qcut | 비선형 포착, 해석력 | 체중 그룹(소/중/대) |
+| 집계 | groupby + transform | 그룹 내 상대적 위치 | 종별 평균 대비 편차 |
+| 통계 요약 | mean, std, max | 전체 특성 압축 | 측정값 평균 |
+| 범주 조합 | 문자열 결합 | 세분화된 그룹 | 종_성별 조합 |
+| 시계열 | lag, rolling, diff | 시간 패턴, 추세 | 7일 이동평균 |
 
-**권장 처리 전략**
+**피처 엔지니어링 모범 사례**
 
-| 상황 | 1순위 권장 | 2순위 권장 | 이유 |
-|------|----------|----------|------|
-| 데이터 적음 (수천 개 이하) | SMOTE | 오버샘플링 | 정보 손실 최소화 |
-| 데이터 많음 (수만 개 이상) | 클래스 가중치 | 언더샘플링 | 원본 보존, 학습 속도 |
-| 노이즈 많음 | 언더샘플링 | Borderline-SMOTE | 노이즈 제거 효과 |
-| 범주형 변수 포함 | SMOTE-NC | 클래스 가중치 | 범주형 처리 가능 |
-| 트리 기반 모델 | 클래스 가중치 | Balanced RF | 가중치 기본 지원 |
-| 극심한 불균형 (100:1 이상) | SMOTE + 가중치 | 앙상블 | 복합적 접근 |
+1. **EDA 먼저**: 데이터 탐색을 통해 패턴 발견 후 피처 생성
+2. **도메인 지식 활용**: 전문가 의견이나 논문의 아이디어 반영
+3. **단순하게 시작**: 복잡한 피처보다 직관적인 피처부터
+4. **반복적 개선**: 모델 성능을 확인하며 점진적으로 추가
+5. **과적합 주의**: 학습 데이터로만 통계량 계산, 테스트 누수 방지
+6. **문서화**: 피처 생성 논리와 의미를 명확히 기록
+7. **재현성 확보**: 파이프라인으로 자동화하여 일관성 유지
 
-**불균형 데이터 처리 프로세스**
+**피처 엔지니어링 체크리스트**
 
-1. **불균형 진단**: 클래스 분포 확인 및 비율 계산
-2. **평가 지표 설정**: Precision, Recall, F1-score, ROC-AUC 등 선택
-3. **처리 방법 선택**: 데이터 크기, 특성, 모델에 따라 결정
-4. **Pipeline 구성**: 데이터 누수 방지를 위한 안전한 적용
-5. **교차 검증**: Stratified K-Fold로 성능 평가
-6. **하이퍼파라미터 튜닝**: 처리 방법별 최적 파라미터 찾기
+- [ ] EDA를 통해 변수 간 관계 파악했는가?
+- [ ] 도메인 지식을 반영한 피처를 고려했는가?
+- [ ] 비율, 조합, 변환 등 다양한 기법을 시도했는가?
+- [ ] 생성한 피처의 분포와 타겟과의 관계를 확인했는가?
+- [ ] 중복되거나 불필요한 피처를 제거했는가?
+- [ ] 학습/테스트 데이터 누수를 방지했는가?
+- [ ] 피처 생성 과정을 파이프라인으로 자동화했는가?
 
-**주의사항**
-
-- **데이터 누수 방지**: 샘플링은 반드시 학습 데이터에만 적용
-- **평가 지표**: 정확도 대신 Recall, F1-score 등 사용
-- **Stratified Split**: 학습/테스트 분리 시 클래스 비율 유지
-- **과적합 모니터링**: 학습/검증 성능 차이 확인
-
-불균형 데이터 처리는 실무에서 매우 흔하게 마주치는 문제이다. 데이터의 특성과 비즈니스 목표를 고려하여 적절한 방법을 선택하고, Pipeline을 사용하여 안전하게 적용하는 것이 중요하다. 이제 전처리의 모든 과정을 마쳤으며, 다음 단계로 정제된 데이터를 활용한 모델링을 진행할 수 있다.
+피처 엔지니어링은 데이터 과학의 핵심 기술이자 예술이다. 도메인 지식, 창의성, 그리고 반복적인 실험을 통해 모델 성능을 크게 향상시킬 수 있다. 좋은 피처는 복잡한 모델보다 강력하며, 실무에서 데이터 과학자의 역량을 가장 잘 드러내는 단계이다. 다음 단계로는 생성된 피처를 바탕으로 모델을 학습하고 평가하는 과정을 진행할 수 있다.
