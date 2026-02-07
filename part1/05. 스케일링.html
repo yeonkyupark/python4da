@@ -451,7 +451,7 @@ window.Quarto = {
 
 <p>스케일링(Scaling)은 서로 다른 척도를 가진 변수들을 동일한 범위나 분포로 변환하는 과정이다. 머신러닝 알고리즘 중 거리 기반 모델(K-Nearest Neighbors, Support Vector Machine, K-means 등)은 변수의 크기에 민감하므로, 스케일링을 통해 모든 변수가 공정하게 모델에 기여하도록 만들어야 한다. 이 장에서는 다양한 스케일링 기법의 원리와 적용 방법, 그리고 상황에 맞는 선택 기준을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="6b3bd976" class="cell" data-execution_count="1">
+<div id="cfb49cc7" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -476,7 +476,7 @@ window.Quarto = {
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="스케일-차이-확인"><span class="header-section-number">5.1.1</span> 스케일 차이 확인</h3>
 <p>각 변수의 평균, 표준편차, 최솟값, 최댓값을 확인하여 스케일 차이를 파악한다.</p>
 <p><strong>예제: 변수별 스케일 확인</strong></p>
-<div id="778b72f6" class="cell" data-execution_count="2">
+<div id="0cbe924e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기술 통계량 확인</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_num.describe())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -507,7 +507,7 @@ max         59.600000      21.500000         231.000000  6300.000000</code></pre
 x' = \frac{x - x_{min}}{x_{max} - x_{min}}
 \]</span></p>
 <p><strong>예제: Min-Max 스케일링 적용</strong></p>
-<div id="5c5104b1" class="cell" data-execution_count="3">
+<div id="9a41b1f8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 스케일러 생성</span></span>
@@ -559,7 +559,7 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 </table>
 <p><strong>예제: 수동 구현</strong></p>
 <p>이해를 돕기 위해 공식을 직접 구현하면 다음과 같다.</p>
-<div id="cd8116e0" class="cell" data-execution_count="4">
+<div id="e740b6d9" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Min-Max 스케일링 수동 구현</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_minmax_manual <span class="op">=</span> df_num.copy()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -591,7 +591,7 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 x' = a + \frac{x - x_{min}}{x_{max} - x_{min}} \times (b - a)
 \]</span></p>
 <p><strong>예제: 사용자 정의 범위로 스케일링</strong></p>
-<div id="c675cabd" class="cell" data-execution_count="5">
+<div id="3cd7f4fb" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [-1, 1] 범위로 스케일링</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>scaler_general <span class="op">=</span> MinMaxScaler(feature_range<span class="op">=</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df_minmax_custom <span class="op">=</span> scaler_general.fit_transform(df_num)</span>
@@ -611,7 +611,7 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 </div>
 </div>
 <p><strong>예제: 일반화 함수 구현</strong></p>
-<div id="04cd1c70" class="cell" data-execution_count="6">
+<div id="02c00bc4" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minmax_scale_ab(series, a, b):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""임의의 [a, b] 범위로 Min-Max 스케일링"""</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    x_min <span class="op">=</span> series.<span class="bu">min</span>()</span>
@@ -633,7 +633,7 @@ x' = \frac{x - \mu}{\sigma}
 \]</span></p>
 <p>여기서 <span class="math inline">\(\mu\)</span>는 평균, <span class="math inline">\(\sigma\)</span>는 표준편차이다.</p>
 <p><strong>예제: 표준화 적용</strong></p>
-<div id="15c23bd7" class="cell" data-execution_count="7">
+<div id="0506b9c7" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 스케일러 생성</span></span>
@@ -688,7 +688,7 @@ max      2.875868e+00   2.205397e+00       2.142618e+00  2.620248e+00</code></pr
 </tbody>
 </table>
 <p><strong>예제: 수동 구현</strong></p>
-<div id="63e3c064" class="cell" data-execution_count="8">
+<div id="9433ee8b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 표준화 수동 구현</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_std_manual <span class="op">=</span> df_num.copy()</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -722,7 +722,7 @@ x' = \frac{x - \text{median}}{\text{IQR}}
 \]</span></p>
 <p>여기서 <span class="math inline">\(\text{IQR} = Q_3 - Q_1\)</span>이다.</p>
 <p><strong>예제: Robust 스케일링 적용</strong></p>
-<div id="6069be1d" class="cell" data-execution_count="9">
+<div id="561b4b1d" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> RobustScaler</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 스케일러 생성</span></span>
@@ -764,7 +764,7 @@ max      1.633423e+00       1.354839           1.478261     1.875000</code></pre
 x' = \frac{x}{|x|_{max}}
 \]</span></p>
 <p><strong>예제: MaxAbs 스케일링 적용</strong></p>
-<div id="1eb9812d" class="cell" data-execution_count="10">
+<div id="c44a9450" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MaxAbsScaler</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 스케일러 생성</span></span>
@@ -824,7 +824,7 @@ max          1.000000       1.000000           1.000000     1.000000</code></pre
 <h2 data-number="5.6" class="anchored" data-anchor-id="그룹별-스케일링"><span class="header-section-number">5.6</span> 그룹별 스케일링</h2>
 <p>데이터가 여러 그룹으로 구성되어 있고 그룹별로 분포가 다른 경우, 전체 데이터를 대상으로 스케일링하면 그룹 내 패턴이 왜곡될 수 있다. 그룹별 스케일링은 각 그룹 내에서 독립적으로 스케일링을 수행하여 그룹 특성을 보존한다.</p>
 <p><strong>예제: 종별 표준화</strong></p>
-<div id="219b781c" class="cell" data-execution_count="11">
+<div id="d7a2a9e5" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scale_by_species(group):</span>
@@ -885,7 +885,7 @@ Gentoo    -2.242780 -0.748943 -0.151408  0.844483  2.437910
 <h2 data-number="5.7" class="anchored" data-anchor-id="파이프라인-적용"><span class="header-section-number">5.7</span> 파이프라인 적용</h2>
 <p>실무에서는 스케일링을 모델 학습 파이프라인에 포함시켜 데이터 전처리와 모델 학습을 일관성 있게 관리한다. scikit-learn의 <code>Pipeline</code>을 사용하면 전처리와 모델을 하나의 객체로 관리할 수 있다.</p>
 <p><strong>예제: 스케일링과 모델을 파이프라인으로 구성</strong></p>
-<div id="d8a87d3c" class="cell" data-execution_count="12">
+<div id="7a1198d9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>

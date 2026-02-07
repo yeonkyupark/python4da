@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>정규성 검정(Normality Test)은 데이터가 정규분포를 따르는지 확인하는 과정이다. 많은 통계 기법이 정규성을 가정하므로, 분석 전에 이 가정이 타당한지 검증해야 한다. 다만, 정규성 검정의 목적은 “데이터가 완벽히 정규분포인가?”를 판단하는 것이 아니라 “정규분포 가정을 사용해도 분석 결과가 타당한가?”를 확인하는 것이다. 이 장에서는 시각적 방법과 통계적 검정을 통해 정규성을 평가하고, 정규성 가정이 위배될 때의 대응 전략을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="e1ad7dac" class="cell" data-execution_count="1">
+<div id="ce8fb7c3" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -549,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="12.2.1" class="anchored" data-anchor-id="히스토그램과-kde-kernel-density-estimation"><span class="header-section-number">12.2.1</span> 히스토그램과 KDE (Kernel Density Estimation)</h3>
 <p>히스토그램은 데이터의 분포 형태를 가장 간단하게 확인할 수 있는 방법이다. KDE 곡선을 함께 표시하면 연속적인 분포 형태를 더 잘 파악할 수 있다.</p>
 <p><strong>예제: 히스토그램 + KDE</strong></p>
-<div id="bb0a273c" class="cell" data-execution_count="2">
+<div id="46b4737b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 분포 시각화</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"body_mass_g"</span>], kde<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
@@ -604,7 +604,7 @@ Name: body_mass_g, dtype: float64
 <h3 data-number="12.2.2" class="anchored" data-anchor-id="q-q-plot-quantile-quantile-plot"><span class="header-section-number">12.2.2</span> Q-Q Plot (Quantile-Quantile Plot)</h3>
 <p>Q-Q 플롯은 데이터의 분위수를 이론적 정규분포의 분위수와 비교하는 그래프이다. 가장 신뢰할 수 있는 시각적 정규성 검정 방법이다.</p>
 <p><strong>예제: Q-Q Plot</strong></p>
-<div id="d2ab6c0c" class="cell" data-execution_count="3">
+<div id="3fc4007c" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q 플롯 생성</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -675,7 +675,7 @@ Name: body_mass_g, dtype: float64
 <h3 data-number="12.2.3" class="anchored" data-anchor-id="박스플롯"><span class="header-section-number">12.2.3</span> 박스플롯</h3>
 <p>박스플롯은 이상치와 분포의 대칭성을 한눈에 확인할 수 있다.</p>
 <p><strong>예제: 박스플롯으로 대칭성 확인</strong></p>
-<div id="14d41d65" class="cell" data-execution_count="4">
+<div id="b31b879e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 박스플롯</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -780,7 +780,7 @@ Name: body_mass_g, dtype: float64
 <li>H₁ (대립가설): 데이터가 정규분포를 따르지 않는다</li>
 </ul>
 <p><strong>예제: Shapiro-Wilk 검정</strong></p>
-<div id="f4630dc2" class="cell" data-execution_count="5">
+<div id="372d2a32" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중에 대한 정규성 검정</span></span>
@@ -802,7 +802,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>여러 변수에 대한 검정</strong></p>
-<div id="ebcc3d55" class="cell" data-execution_count="6">
+<div id="835d4c92" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 여러 변수 검정</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -834,7 +834,7 @@ flipper_length_mm       0.9517      0.0      No
 <h3 data-number="12.3.3" class="anchored" data-anchor-id="kolmogorov-smirnov-검정"><span class="header-section-number">12.3.3</span> Kolmogorov-Smirnov 검정</h3>
 <p>Kolmogorov-Smirnov (K-S) 검정은 데이터의 누적분포함수(CDF)를 이론적 분포와 비교한다.</p>
 <p><strong>예제: Kolmogorov-Smirnov 검정</strong></p>
-<div id="ff8414dd" class="cell" data-execution_count="7">
+<div id="3b833474" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kstest</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포와 비교 (표준화 필요)</span></span>
@@ -861,7 +861,7 @@ p-value: 0.0011
 <h3 data-number="12.3.4" class="anchored" data-anchor-id="anderson-darling-검정"><span class="header-section-number">12.3.4</span> Anderson-Darling 검정</h3>
 <p>Anderson-Darling 검정은 분포의 꼬리 부분에 더 많은 가중치를 두어 극단값의 정규성을 엄격히 평가한다.</p>
 <p><strong>예제: Anderson-Darling 검정</strong></p>
-<div id="b3010d34" class="cell" data-execution_count="8">
+<div id="4a4e6d1f" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> anderson</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Anderson-Darling 검정</span></span>
@@ -894,7 +894,7 @@ p-value: 0.0011
 <h3 data-number="12.3.5" class="anchored" data-anchor-id="dagostino-pearson-검정"><span class="header-section-number">12.3.5</span> D’Agostino-Pearson 검정</h3>
 <p>D’Agostino-Pearson 검정은 왜도와 첨도를 동시에 고려하여 정규성을 평가한다.</p>
 <p><strong>예제: D’Agostino-Pearson 검정</strong></p>
-<div id="3eef84ea" class="cell" data-execution_count="9">
+<div id="2d037eb1" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> normaltest</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># D'Agostino-Pearson 검정</span></span>
@@ -921,7 +921,7 @@ p-value: 0.0000
 <h2 data-number="12.4" class="anchored" data-anchor-id="표본-크기와-p-value의-함정"><span class="header-section-number">12.4</span> 표본 크기와 p-value의 함정</h2>
 <p>표본 크기가 커지면 정규성 검정이 작은 편차에도 민감하게 반응하여 거의 항상 귀무가설을 기각한다. 이는 통계적으로 유의하지만 실무적으로는 무의미한 결과일 수 있다.</p>
 <p><strong>예제: 표본 크기 효과</strong></p>
-<div id="64e70e00" class="cell" data-execution_count="10">
+<div id="c4ffe688" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 표본 크기로 검정</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">100</span>, <span class="dv">300</span>]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -975,7 +975,7 @@ n = 300: W = 0.9592, p-value = 0.0000 → 비정규</code></pre>
 <p><strong>핵심</strong>: 큰 표본에서는 통계적으로 비정규라도 중심극한정리에 의해 표본 평균이 정규분포에 수렴하므로 실무적으로 문제없는 경우가 많다.</p>
 </blockquote>
 <p><strong>예제: 시각적 vs 통계적 판단</strong></p>
-<div id="c16424c0" class="cell" data-execution_count="11">
+<div id="07022602" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 큰 표본에서의 시각적 검정</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>large_sample <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].sample(<span class="dv">300</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1019,7 +1019,7 @@ Shapiro-Wilk: p-value = 0.0000
 <h3 data-number="12.5.1" class="anchored" data-anchor-id="전략-1-분포-변환"><span class="header-section-number">12.5.1</span> 전략 1: 분포 변환</h3>
 <p>데이터를 변환하여 정규분포에 가깝게 만든다. 이는 5장(분포 변환)에서 학습한 내용이다.</p>
 <p><strong>예제: 로그 변환 후 정규성 검정</strong></p>
-<div id="8ad009c0" class="cell" data-execution_count="12">
+<div id="f5d7416f" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그 변환</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>log_mass <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1111,7 +1111,7 @@ Shapiro-Wilk: p-value = 0.0000
 </tbody>
 </table>
 <p><strong>예제: t-test vs Mann-Whitney U test</strong></p>
-<div id="cc3977a0" class="cell" data-execution_count="13">
+<div id="2610f1a4" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind, mannwhitneyu</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 종의 체중 비교 (Adelie vs Gentoo)</span></span>
@@ -1149,7 +1149,7 @@ Mann-Whitney (비모수): U = 358.5000, p = 0.0000
 <li>극단적인 이상치 없음</li>
 </ul>
 <p><strong>예제: 표본 평균의 정규성</strong></p>
-<div id="bdf50c37" class="cell" data-execution_count="14">
+<div id="4413b75b" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 비정규 데이터 생성 (지수분포)</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>non_normal_data <span class="op">=</span> np.random.exponential(scale<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
