@@ -404,26 +404,23 @@ window.Quarto = {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#확률분포란" id="toc-확률분포란" class="nav-link active" data-scroll-target="#확률분포란"><span class="header-section-number">11.1</span> 확률분포란?</a></li>
+  <li><a href="#확률분포의-개념" id="toc-확률분포의-개념" class="nav-link active" data-scroll-target="#확률분포의-개념"><span class="header-section-number">11.1</span> 확률분포의 개념</a></li>
   <li><a href="#연속형-확률분포-continuous-distributions" id="toc-연속형-확률분포-continuous-distributions" class="nav-link" data-scroll-target="#연속형-확률분포-continuous-distributions"><span class="header-section-number">11.2</span> 연속형 확률분포 (Continuous Distributions)</a>
   <ul>
   <li><a href="#대표적인-연속형-분포" id="toc-대표적인-연속형-분포" class="nav-link" data-scroll-target="#대표적인-연속형-분포"><span class="header-section-number">11.2.1</span> 대표적인 연속형 분포</a></li>
-  <li><a href="#예제-연속형-변수" id="toc-예제-연속형-변수" class="nav-link" data-scroll-target="#예제-연속형-변수"><span class="header-section-number">11.2.2</span> 예제 – 연속형 변수</a></li>
-  <li><a href="#정규분포-수식" id="toc-정규분포-수식" class="nav-link" data-scroll-target="#정규분포-수식"><span class="header-section-number">11.2.3</span> 정규분포 수식</a></li>
+  <li><a href="#정규분포-normal-distribution" id="toc-정규분포-normal-distribution" class="nav-link" data-scroll-target="#정규분포-normal-distribution"><span class="header-section-number">11.2.2</span> 정규분포 (Normal Distribution)</a></li>
+  <li><a href="#기타-연속형-분포" id="toc-기타-연속형-분포" class="nav-link" data-scroll-target="#기타-연속형-분포"><span class="header-section-number">11.2.3</span> 기타 연속형 분포</a></li>
   </ul></li>
   <li><a href="#이산형-확률분포-discrete-distributions" id="toc-이산형-확률분포-discrete-distributions" class="nav-link" data-scroll-target="#이산형-확률분포-discrete-distributions"><span class="header-section-number">11.3</span> 이산형 확률분포 (Discrete Distributions)</a>
   <ul>
   <li><a href="#대표적인-이산형-분포" id="toc-대표적인-이산형-분포" class="nav-link" data-scroll-target="#대표적인-이산형-분포"><span class="header-section-number">11.3.1</span> 대표적인 이산형 분포</a></li>
-  <li><a href="#예제-이산형-변수" id="toc-예제-이산형-변수" class="nav-link" data-scroll-target="#예제-이산형-변수"><span class="header-section-number">11.3.2</span> 예제 – 이산형 변수</a></li>
+  <li><a href="#베르누이-분포와-이항분포" id="toc-베르누이-분포와-이항분포" class="nav-link" data-scroll-target="#베르누이-분포와-이항분포"><span class="header-section-number">11.3.2</span> 베르누이 분포와 이항분포</a></li>
   </ul></li>
   <li><a href="#표본과-모집단" id="toc-표본과-모집단" class="nav-link" data-scroll-target="#표본과-모집단"><span class="header-section-number">11.4</span> 표본과 모집단</a></li>
-  <li><a href="#표본-분포-sampling-distribution" id="toc-표본-분포-sampling-distribution" class="nav-link" data-scroll-target="#표본-분포-sampling-distribution"><span class="header-section-number">11.5</span> 표본 분포 (Sampling Distribution)</a>
-  <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">11.5.1</span> 개념</a></li>
-  <li><a href="#예제-표본-평균-분포" id="toc-예제-표본-평균-분포" class="nav-link" data-scroll-target="#예제-표본-평균-분포"><span class="header-section-number">11.5.2</span> 예제 – 표본 평균 분포</a></li>
-  </ul></li>
-  <li><a href="#중심극한정리-central-limit-theorem" id="toc-중심극한정리-central-limit-theorem" class="nav-link" data-scroll-target="#중심극한정리-central-limit-theorem"><span class="header-section-number">11.6</span> 중심극한정리 (Central Limit Theorem)</a></li>
-  <li><a href="#중심극한-정리가-중요한-이유" id="toc-중심극한-정리가-중요한-이유" class="nav-link" data-scroll-target="#중심극한-정리가-중요한-이유"><span class="header-section-number">11.7</span> 중심극한 정리가 중요한 이유</a></li>
+  <li><a href="#표본-분포-sampling-distribution" id="toc-표본-분포-sampling-distribution" class="nav-link" data-scroll-target="#표본-분포-sampling-distribution"><span class="header-section-number">11.5</span> 표본 분포 (Sampling Distribution)</a></li>
+  <li><a href="#중심극한정리-central-limit-theorem-clt" id="toc-중심극한정리-central-limit-theorem-clt" class="nav-link" data-scroll-target="#중심극한정리-central-limit-theorem-clt"><span class="header-section-number">11.6</span> 중심극한정리 (Central Limit Theorem, CLT)</a></li>
+  <li><a href="#중심극한정리의-중요성" id="toc-중심극한정리의-중요성" class="nav-link" data-scroll-target="#중심극한정리의-중요성"><span class="header-section-number">11.7</span> 중심극한정리의 중요성</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">11.8</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/01. 확률분포와 표본.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -455,212 +452,827 @@ window.Quarto = {
 </header>
 
 
-<p><strong>통계적 추론의 출발점은 “데이터가 어떤 분포에서 나왔는가?”를 이해하는 것</strong>이다.</p>
-<section id="확률분포란" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="확률분포란"><span class="header-section-number">11.1</span> 확률분포란?</h2>
-<p><strong>확률변수(Random Variable)</strong> 가 취할 수 있는 값과 그 값이 나타날 <strong>확률의 구조</strong></p>
-<p>분류</p>
+<p>통계적 추론의 출발점은 데이터가 어떤 확률분포에서 생성되었는지를 이해하는 것이다. 확률분포는 데이터의 불확실성을 수학적으로 모델링하며, 이를 통해 데이터의 패턴을 파악하고 미래를 예측할 수 있다. 또한 표본과 모집단의 관계를 이해하면, 제한된 데이터로부터 전체에 대한 결론을 도출할 수 있다. 이 장에서는 대표적인 확률분포와 표본 개념, 그리고 통계적 추론의 핵심인 중심극한정리를 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="c3c9602b" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">수치형 변수:"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.select_dtypes(include<span class="op">=</span>[np.number]).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
+
+수치형 변수:
+['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']</code></pre>
+</div>
+</div>
+<section id="확률분포의-개념" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="확률분포의-개념"><span class="header-section-number">11.1</span> 확률분포의 개념</h2>
+<p>확률분포(Probability Distribution)는 확률변수가 취할 수 있는 값과 그 값이 나타날 확률의 구조를 나타낸다. 모든 통계 분석은 데이터가 특정 확률분포를 따른다는 가정에서 출발한다.</p>
+<p><strong>확률분포의 핵심 개념</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>개념</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>확률변수 (Random Variable)</td>
+<td>결과가 확률적으로 결정되는 변수</td>
+<td>주사위 눈, 키, 몸무게</td>
+</tr>
+<tr class="even">
+<td>확률질량함수 (PMF)</td>
+<td>이산형 변수의 확률 분포</td>
+<td>P(X = k)</td>
+</tr>
+<tr class="odd">
+<td>확률밀도함수 (PDF)</td>
+<td>연속형 변수의 확률 밀도</td>
+<td>f(x)</td>
+</tr>
+<tr class="even">
+<td>누적분포함수 (CDF)</td>
+<td>특정 값 이하일 확률</td>
+<td>P(X ≤ x)</td>
+</tr>
+<tr class="odd">
+<td>기댓값 (Expected Value)</td>
+<td>평균적으로 기대되는 값</td>
+<td>E[X] = μ</td>
+</tr>
+<tr class="even">
+<td>분산 (Variance)</td>
+<td>값의 퍼짐 정도</td>
+<td>Var[X] = σ²</td>
+</tr>
+</tbody>
+</table>
+<p><strong>확률분포의 분류</strong></p>
+<p>확률분포는 변수의 유형에 따라 크게 두 가지로 구분된다.</p>
 <ul>
-<li>이산형 확률분포</li>
-<li>연속형 확률분포</li>
+<li><strong>이산형 확률분포</strong>: 셀 수 있는 값들의 분포 (예: 0, 1, 2, 3, …)</li>
+<li><strong>연속형 확률분포</strong>: 실수 구간의 모든 값을 가질 수 있는 분포 (예: 키, 몸무게)</li>
 </ul>
 </section>
 <section id="연속형-확률분포-continuous-distributions" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="연속형-확률분포-continuous-distributions"><span class="header-section-number">11.2</span> 연속형 확률분포 (Continuous Distributions)</h2>
+<p>연속형 확률분포는 실수 구간의 모든 값을 가질 수 있는 변수의 분포이다. 특정 점에서의 확률은 0이며, 구간의 확률을 확률밀도함수(PDF)의 적분으로 계산한다.</p>
 <section id="대표적인-연속형-분포" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="대표적인-연속형-분포"><span class="header-section-number">11.2.1</span> 대표적인 연속형 분포</h3>
+<p><strong>연속형 분포 비교</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>분포</th>
+<th>형태</th>
 <th>특징</th>
-<th>사용 예</th>
+<th>파라미터</th>
+<th>사용 예시</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>정규분포</td>
-<td>종 모양, 평균 중심 대칭</td>
-<td>신체 측정값</td>
+<td>정규분포 (Normal)</td>
+<td>종 모양, 대칭</td>
+<td>중심극한정리, 자연 현상</td>
+<td>μ (평균), σ² (분산)</td>
+<td>신체 측정값, 시험 점수</td>
 </tr>
 <tr class="even">
-<td>지수분포</td>
+<td>지수분포 (Exponential)</td>
 <td>오른쪽 꼬리</td>
-<td>대기 시간</td>
+<td>무기억성, 대기 시간</td>
+<td>λ (비율)</td>
+<td>고장 시간, 서비스 대기</td>
 </tr>
 <tr class="odd">
-<td>감마분포</td>
-<td>비대칭 양수</td>
-<td>생존 시간</td>
+<td>감마분포 (Gamma)</td>
+<td>비대칭, 양수</td>
+<td>지수분포의 일반화</td>
+<td>α (형태), β (척도)</td>
+<td>생존 시간, 보험 청구액</td>
 </tr>
 <tr class="even">
-<td>로그정규</td>
-<td>로그 후 정규</td>
-<td>소득, 크기</td>
+<td>로그정규분포 (Lognormal)</td>
+<td>오른쪽 꼬리</td>
+<td>로그 변환 시 정규분포</td>
+<td>μ (로그 평균), σ² (로그 분산)</td>
+<td>소득, 주택 가격, 입자 크기</td>
+</tr>
+<tr class="odd">
+<td>t-분포 (Student’s t)</td>
+<td>정규와 유사, 두꺼운 꼬리</td>
+<td>작은 표본 추론</td>
+<td>ν (자유도)</td>
+<td>소표본 가설검정</td>
+</tr>
+<tr class="even">
+<td>카이제곱분포 (Chi-squared)</td>
+<td>오른쪽 치우침</td>
+<td>정규분포 제곱합</td>
+<td>k (자유도)</td>
+<td>분산 검정, 적합도 검정</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="예제-연속형-변수" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="예제-연속형-변수"><span class="header-section-number">11.2.2</span> 예제 – 연속형 변수</h3>
-<div id="330e489e" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="9417b556" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    kde<span class="op">=</span><span class="va">True</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="정규분포-normal-distribution" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="정규분포-normal-distribution"><span class="header-section-number">11.2.2</span> 정규분포 (Normal Distribution)</h3>
+<p>정규분포는 자연 현상에서 가장 흔히 나타나는 분포로, 평균을 중심으로 좌우 대칭인 종 모양을 띤다.</p>
+<p><strong>정규분포 확률밀도함수</strong></p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\]</span></p>
+<p>여기서 μ는 평균(중심 위치), σ²는 분산(퍼짐 정도)을 나타낸다.</p>
+<p><strong>정규분포의 특성</strong></p>
+<ul>
+<li>평균, 중앙값, 최빈값이 모두 같음</li>
+<li>68-95-99.7 규칙: μ±σ에 68%, μ±2σ에 95%, μ±3σ에 99.7% 포함</li>
+<li>두 정규분포의 합도 정규분포</li>
+<li>중심극한정리의 핵심</li>
+</ul>
+<p><strong>예제: 연속형 변수의 분포 시각화</strong></p>
+<div id="6e9d8d18" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 분포 확인</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 히스토그램 + KDE</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">"body_mass_g"</span>], kde<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Body Mass Distribution"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q 플롯 (정규성 확인)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>stats.probplot(df[<span class="st">"body_mass_g"</span>], dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Q-Q Plot"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 기술 통계량</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">체중 기술 통계량:"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"body_mass_g"</span>].describe())</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">왜도(Skewness): </span><span class="sc">{</span>df[<span class="st">'body_mass_g'</span>]<span class="sc">.</span>skew()<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"첨도(Kurtosis): </span><span class="sc">{</span>df[<span class="st">'body_mass_g'</span>]<span class="sc">.</span>kurtosis()<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01. 확률분포와 표본_files/figure-html/cell-3-output-1.png" width="585" height="429" class="figure-img"></p>
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-3-output-1.png" width="1142" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+체중 기술 통계량:
+count     333.000000
+mean     4207.057057
+std       805.215802
+min      2700.000000
+25%      3550.000000
+50%      4050.000000
+75%      4775.000000
+max      6300.000000
+Name: body_mass_g, dtype: float64
+
+왜도(Skewness): 0.472
+첨도(Kurtosis): -0.733</code></pre>
+</div>
+</div>
+<p>Q-Q 플롯이 직선에 가까우면 정규분포에 가깝다고 판단할 수 있다.</p>
+<p><strong>예제: 정규성 검정</strong></p>
+<div id="6c5020d8" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk 검정 (정규성 검정)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>statistic, p_value <span class="op">=</span> stats.shapiro(df[<span class="st">"body_mass_g"</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shapiro-Wilk 정규성 검정:"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"검정 통계량: </span><span class="sc">{</span>statistic<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"결론: 정규분포를 따른다고 볼 수 있음 (유의수준 0.05)"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"결론: 정규분포를 따르지 않음 (유의수준 0.05)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shapiro-Wilk 정규성 검정:
+검정 통계량: 0.9580
+p-value: 0.0000
+결론: 정규분포를 따르지 않음 (유의수준 0.05)</code></pre>
+</div>
+</div>
+</section>
+<section id="기타-연속형-분포" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="기타-연속형-분포"><span class="header-section-number">11.2.3</span> 기타 연속형 분포</h3>
+<p><strong>예제: 다양한 연속형 분포 시각화</strong></p>
+<div id="cbfb0748" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이론적 분포 시각화</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].plot(x, stats.norm.pdf(x, <span class="dv">5</span>, <span class="dv">1</span>), label<span class="op">=</span><span class="st">'μ=5, σ=1'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].plot(x, stats.norm.pdf(x, <span class="dv">5</span>, <span class="dv">2</span>), label<span class="op">=</span><span class="st">'μ=5, σ=2'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">"Normal Distribution"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].legend()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 지수분포</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].plot(x, stats.expon.pdf(x, scale<span class="op">=</span><span class="dv">1</span>), label<span class="op">=</span><span class="st">'λ=1'</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].plot(x, stats.expon.pdf(x, scale<span class="op">=</span><span class="dv">2</span>), label<span class="op">=</span><span class="st">'λ=0.5'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_title(<span class="st">"Exponential Distribution"</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].legend()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 감마분포</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].plot(x, stats.gamma.pdf(x, a<span class="op">=</span><span class="dv">2</span>, scale<span class="op">=</span><span class="dv">1</span>), label<span class="op">=</span><span class="st">'α=2, β=1'</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].plot(x, stats.gamma.pdf(x, a<span class="op">=</span><span class="dv">5</span>, scale<span class="op">=</span><span class="dv">1</span>), label<span class="op">=</span><span class="st">'α=5, β=1'</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">"Gamma Distribution"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].legend()</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 로그정규분포</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].plot(x, stats.lognorm.pdf(x, s<span class="op">=</span><span class="fl">0.5</span>), label<span class="op">=</span><span class="st">'σ=0.5'</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].plot(x, stats.lognorm.pdf(x, s<span class="op">=</span><span class="dv">1</span>), label<span class="op">=</span><span class="st">'σ=1'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_title(<span class="st">"Lognormal Distribution"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].legend()</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-5-output-1.png" width="1142" height="950" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="정규분포-수식" class="level3" data-number="11.2.3">
-<h3 data-number="11.2.3" class="anchored" data-anchor-id="정규분포-수식"><span class="header-section-number">11.2.3</span> 정규분포 수식</h3>
-<p><span class="math display">\[
-f(x) = \frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
-\]</span></p>
 </section>
 </section>
 <section id="이산형-확률분포-discrete-distributions" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="이산형-확률분포-discrete-distributions"><span class="header-section-number">11.3</span> 이산형 확률분포 (Discrete Distributions)</h2>
+<p>이산형 확률분포는 셀 수 있는 값들만 가질 수 있는 변수의 분포이다. 각 값에 대한 확률을 확률질량함수(PMF)로 표현한다.</p>
 <section id="대표적인-이산형-분포" class="level3" data-number="11.3.1">
 <h3 data-number="11.3.1" class="anchored" data-anchor-id="대표적인-이산형-분포"><span class="header-section-number">11.3.1</span> 대표적인 이산형 분포</h3>
+<p><strong>이산형 분포 비교</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 22%">
+<col style="width: 28%">
+<col style="width: 22%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>분포</th>
 <th>특징</th>
-<th>사용 예</th>
+<th>파라미터</th>
+<th>확률질량함수</th>
+<th>사용 예시</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>베르누이</td>
-<td>성공/실패</td>
-<td>합격 여부</td>
+<td>베르누이 (Bernoulli)</td>
+<td>성공/실패 1회 시행</td>
+<td>p (성공 확률)</td>
+<td>P(X=1)=p, P(X=0)=1-p</td>
+<td>동전 던지기, 합격 여부</td>
 </tr>
 <tr class="even">
-<td>이항분포</td>
-<td>n번 시행</td>
-<td>불량 개수</td>
+<td>이항분포 (Binomial)</td>
+<td>n번 독립 시행 성공 횟수</td>
+<td>n (시행 횟수), p (성공 확률)</td>
+<td><span class="math inline">\(\binom{n}{k}p^k(1-p)^{n-k}\)</span></td>
+<td>불량품 개수, 설문 응답</td>
 </tr>
 <tr class="odd">
-<td>포아송</td>
-<td>단위 시간 발생 횟수</td>
-<td>고객 유입</td>
+<td>포아송분포 (Poisson)</td>
+<td>단위 시간/공간 발생 횟수</td>
+<td>λ (평균 발생률)</td>
+<td><span class="math inline">\(\frac{\lambda^k e^{-\lambda}}{k!}\)</span></td>
+<td>고객 방문 수, 교통사고 건수</td>
+</tr>
+<tr class="even">
+<td>기하분포 (Geometric)</td>
+<td>첫 성공까지 시행 횟수</td>
+<td>p (성공 확률)</td>
+<td><span class="math inline">\((1-p)^{k-1}p\)</span></td>
+<td>제품 판매까지 시도 횟수</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="예제-이산형-변수" class="level3" data-number="11.3.2">
-<h3 data-number="11.3.2" class="anchored" data-anchor-id="예제-이산형-변수"><span class="header-section-number">11.3.2</span> 예제 – 이산형 변수</h3>
-<div id="ccf42392" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>species
+<section id="베르누이-분포와-이항분포" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="베르누이-분포와-이항분포"><span class="header-section-number">11.3.2</span> 베르누이 분포와 이항분포</h3>
+<p>베르누이 분포는 성공(1) 또는 실패(0)의 이진 결과를 가지며, 이항분포는 n번의 독립적인 베르누이 시행에서 성공 횟수의 분포이다.</p>
+<p><strong>이항분포 확률질량함수</strong></p>
+<p><span class="math display">\[
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+\]</span></p>
+<p>여기서 n은 시행 횟수, k는 성공 횟수, p는 각 시행의 성공 확률이다.</p>
+<p><strong>예제: 이산형 변수의 분포</strong></p>
+<div id="347a897b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 개체 수 확인</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>species_counts <span class="op">=</span> df[<span class="st">"species"</span>].value_counts()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"종별 개체 수:"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(species_counts)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">총 개체 수: </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span><span class="st">"species"</span>, data<span class="op">=</span>df, order<span class="op">=</span>species_counts.index)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Species Distribution"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 비율 계산</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>species_prob <span class="op">=</span> species_counts <span class="op">/</span> <span class="bu">len</span>(df)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">종별 확률 (비율):"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(species_prob.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>종별 개체 수:
+species
 Adelie       146
 Gentoo       119
 Chinstrap     68
-Name: count, dtype: int64</code></pre>
+Name: count, dtype: int64
+
+총 개체 수: 333</code></pre>
 </div>
-</div>
-<div id="b553e8fd" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sns.countplot(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"species"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01. 확률분포와 표본_files/figure-html/cell-5-output-1.png" width="593" height="429" class="figure-img"></p>
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-6-output-2.png" width="667" height="449" class="figure-img"></p>
 </figure>
 </div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+종별 확률 (비율):
+species
+Adelie       0.438
+Gentoo       0.357
+Chinstrap    0.204
+Name: count, dtype: float64</code></pre>
+</div>
+</div>
+<p><strong>예제: 이항분포 시뮬레이션</strong></p>
+<div id="60686f73" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 동전 던지기 100번을 1000회 반복</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n_trials <span class="op">=</span> <span class="dv">100</span>  <span class="co"># 각 실험에서 동전을 던지는 횟수</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>p_success <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># 앞면이 나올 확률</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>n_experiments <span class="op">=</span> <span class="dv">1000</span>  <span class="co"># 실험 반복 횟수</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 시뮬레이션</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> np.random.binomial(n_trials, p_success, n_experiments)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.hist(results, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.axvline(n_trials <span class="op">*</span> p_success, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Expected (np=</span><span class="sc">{</span>n_trials <span class="op">*</span> p_success<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Binomial Distribution: n=</span><span class="sc">{</span>n_trials<span class="sc">}</span><span class="ss">, p=</span><span class="sc">{</span>p_success<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of Successes"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Probability Density"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"이론적 평균: </span><span class="sc">{</span>n_trials <span class="op">*</span> p_success<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"시뮬레이션 평균: </span><span class="sc">{</span>results<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"이론적 표준편차: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(n_trials <span class="op">*</span> p_success <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> p_success))<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"시뮬레이션 표준편차: </span><span class="sc">{</span>results<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-7-output-1.png" width="820" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>이론적 평균: 50.0
+시뮬레이션 평균: 49.98
+이론적 표준편차: 5.00
+시뮬레이션 표준편차: 4.99</code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="표본과-모집단" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="표본과-모집단"><span class="header-section-number">11.4</span> 표본과 모집단</h2>
+<p>통계 분석에서 가장 중요한 개념은 표본과 모집단의 구분이다.</p>
+<p><strong>표본과 모집단의 개념</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>개념</th>
+<th>정의</th>
+<th>특성</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모집단 (Population)</td>
+<td>연구 대상 전체 집합</td>
+<td>파라미터(parameter)로 표현: μ, σ²</td>
+<td>한국의 모든 성인</td>
+</tr>
+<tr class="even">
+<td>표본 (Sample)</td>
+<td>모집단에서 추출한 일부</td>
+<td>통계량(statistic)으로 표현: x̄, s²</td>
+<td>1000명의 설문 응답자</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표본 추출의 필요성</strong></p>
 <ul>
-<li><p><strong>모집단(Population)</strong> 전체 관심 대상</p></li>
-<li><p><strong>표본(Sample)</strong> 모집단에서 일부 추출한 데이터</p></li>
+<li><strong>비용 절감</strong>: 전수 조사는 시간과 비용이 막대함</li>
+<li><strong>실용성</strong>: 모집단이 너무 크거나 무한할 수 있음</li>
+<li><strong>파괴적 검사</strong>: 제품 수명 테스트처럼 전수 조사가 불가능한 경우</li>
+<li><strong>시의성</strong>: 빠른 의사결정이 필요한 경우</li>
 </ul>
 <blockquote class="blockquote">
-<p>실제 분석은 거의 항상 <strong>표본 기반</strong></p>
+<p>실무에서는 거의 항상 표본 데이터를 기반으로 분석하며, 표본으로부터 모집단에 대한 결론을 추론한다.</p>
 </blockquote>
+<p><strong>표본 추출 방법</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>설명</th>
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>단순무작위추출</td>
+<td>모든 개체가 동일한 선택 확률</td>
+<td>편향 최소화</td>
+<td>모집단 전체 접근 필요</td>
+</tr>
+<tr class="even">
+<td>층화추출</td>
+<td>그룹별로 나누어 추출</td>
+<td>그룹별 대표성 확보</td>
+<td>사전 정보 필요</td>
+</tr>
+<tr class="odd">
+<td>군집추출</td>
+<td>군집 단위로 추출</td>
+<td>비용 효율적</td>
+<td>군집 내 유사성 높으면 정보 손실</td>
+</tr>
+<tr class="even">
+<td>계통추출</td>
+<td>일정 간격으로 추출</td>
+<td>구현 간단</td>
+<td>주기성 존재 시 편향</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="표본-분포-sampling-distribution" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="표본-분포-sampling-distribution"><span class="header-section-number">11.5</span> 표본 분포 (Sampling Distribution)</h2>
-<section id="개념" class="level3" data-number="11.5.1">
-<h3 data-number="11.5.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">11.5.1</span> 개념</h3>
+<p>표본 분포는 표본 통계량(평균, 분산, 비율 등)의 확률분포를 의미한다. 이는 데이터 자체의 분포와는 다른 개념이다.</p>
+<p><strong>중요한 구분</strong></p>
 <ul>
-<li>“표본 통계량(평균, 분산 등)”의 분포</li>
-<li><strong>데이터의 분포 ≠ 표본 평균의 분포</strong></li>
+<li><strong>데이터의 분포</strong>: 개별 관측값의 분포 (예: 펭귄 체중 분포)</li>
+<li><strong>표본 평균의 분포</strong>: 여러 표본에서 계산한 평균들의 분포</li>
 </ul>
-</section>
-<section id="예제-표본-평균-분포" class="level3" data-number="11.5.2">
-<h3 data-number="11.5.2" class="anchored" data-anchor-id="예제-표본-평균-분포"><span class="header-section-number">11.5.2</span> 예제 – 표본 평균 분포</h3>
-<div id="7ce84609" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>body_mass <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: 표본 평균 분포 시뮬레이션</strong></p>
+<div id="e82b48c2" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터 (모집단으로 가정)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>body_mass <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].values</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"모집단 크기: </span><span class="sc">{</span><span class="bu">len</span>(body_mass)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"모집단 평균: </span><span class="sc">{</span>body_mass<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"모집단 표준편차: </span><span class="sc">{</span>body_mass<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 크기와 반복 횟수 설정</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 평균 수집</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>sample_means <span class="op">=</span> []</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> np.random.choice(body_mass, size<span class="op">=</span>sample_size, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    sample_means.append(sample.mean())</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>sample_means <span class="op">=</span> np.array(sample_means)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">표본 평균의 평균: </span><span class="sc">{</span>sample_means<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"표본 평균의 표준편차(표준오차): </span><span class="sc">{</span>sample_means<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"이론적 표준오차: </span><span class="sc">{</span>body_mass<span class="sc">.</span>std() <span class="op">/</span> np<span class="sc">.</span>sqrt(sample_size)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>모집단 크기: 333
+모집단 평균: 4207.06
+모집단 표준편차: 804.01
+
+표본 평균의 평균: 4211.17
+표본 평균의 표준편차(표준오차): 148.12
+이론적 표준오차: 146.79</code></pre>
 </div>
-<div id="1448e97a" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sample_means <span class="op">=</span> []</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> np.random.choice(body_mass, size<span class="op">=</span><span class="dv">30</span>, replace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    sample_means.append(sample.mean())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="5d9d88a4" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(sample_means, kde<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: 원본 데이터 vs 표본 평균 분포</strong></p>
+<div id="f922c284" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터 분포</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(body_mass, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axvline(body_mass.mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="ss">f'Mean = </span><span class="sc">{</span>body_mass<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Original Data Distribution"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 평균 분포</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(sample_means, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(sample_means.mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="ss">f'Mean = </span><span class="sc">{</span>sample_means<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">'</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규분포 곡선 추가</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(sample_means.<span class="bu">min</span>(), sample_means.<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, stats.norm.pdf(x, sample_means.mean(), sample_means.std()), </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>             <span class="st">'g-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Normal fit'</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Sampling Distribution of the Mean"</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Sample Mean"</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01. 확률분포와 표본_files/figure-html/cell-8-output-1.png" width="593" height="411" class="figure-img"></p>
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-9-output-1.png" width="1334" height="470" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<ul>
-<li>원 데이터는 비대칭</li>
-<li><strong>표본 평균 분포는 정규에 가까워짐</strong> &gt; <strong>중심극한정리(CLT)</strong></li>
-</ul>
+<p>위 그래프에서 확인할 수 있듯이, 원본 데이터는 다소 비대칭적이지만 표본 평균의 분포는 정규분포에 가깝다.</p>
 </section>
-</section>
-<section id="중심극한정리-central-limit-theorem" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="중심극한정리-central-limit-theorem"><span class="header-section-number">11.6</span> 중심극한정리 (Central Limit Theorem)</h2>
-<blockquote class="blockquote">
-<p>표본 크기가 충분히 크면 <strong>표본 평균의 분포는 원래 분포와 관계없이 정규분포에 수렴</strong></p>
-</blockquote>
-<p>조건</p>
+<section id="중심극한정리-central-limit-theorem-clt" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="중심극한정리-central-limit-theorem-clt"><span class="header-section-number">11.6</span> 중심극한정리 (Central Limit Theorem, CLT)</h2>
+<p>중심극한정리는 통계학에서 가장 중요한 정리 중 하나로, 표본 크기가 충분히 크면 표본 평균의 분포가 원래 모집단의 분포와 관계없이 정규분포에 수렴한다는 내용이다.</p>
+<p><strong>중심극한정리의 내용</strong></p>
+<p>모집단의 분포와 무관하게, 표본 크기 n이 충분히 크면 표본 평균 <span class="math inline">\(\bar{X}\)</span>는 다음과 같이 근사적으로 정규분포를 따른다.</p>
+<p><span class="math display">\[
+\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)
+\]</span></p>
+<p>여기서 μ는 모집단 평균, σ²는 모집단 분산, n은 표본 크기이다.</p>
+<p><strong>중심극한정리의 조건</strong></p>
 <ul>
-<li>표본 크기 ↑</li>
-<li>독립성 가정</li>
+<li><strong>표본 크기</strong>: 일반적으로 n ≥ 30이면 충분 (분포가 심하게 왜곡되지 않은 경우)</li>
+<li><strong>독립성</strong>: 각 관측값이 서로 독립적으로 추출</li>
+<li><strong>동일 분포</strong>: 같은 모집단에서 추출 (i.i.d.: independent and identically distributed)</li>
 </ul>
+<p><strong>예제: 표본 크기에 따른 정규성 개선</strong></p>
+<div id="dbe1e19c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 표본 크기로 실험</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, sample_size <span class="kw">in</span> <span class="bu">enumerate</span>(sample_sizes):</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    sample_means <span class="op">=</span> []</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_samples):</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        sample <span class="op">=</span> np.random.choice(body_mass, size<span class="op">=</span>sample_size, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        sample_means.append(sample.mean())</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 히스토그램</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    axes[i].hist(sample_means, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 정규분포 곡선</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(<span class="bu">min</span>(sample_means), <span class="bu">max</span>(sample_means), <span class="dv">100</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    axes[i].plot(x, stats.norm.pdf(x, np.mean(sample_means), np.std(sample_means)), </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Normal fit'</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(<span class="ss">f"Sample Size = </span><span class="sc">{</span>sample_size<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="st">"Sample Mean"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    axes[i].set_ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    axes[i].legend()</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-10-output-1.png" width="1334" height="950" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>표본 크기가 증가할수록 표본 평균 분포가 정규분포에 더 가까워지는 것을 확인할 수 있다.</p>
 </section>
-<section id="중심극한-정리가-중요한-이유" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="중심극한-정리가-중요한-이유"><span class="header-section-number">11.7</span> 중심극한 정리가 중요한 이유</h2>
+<section id="중심극한정리의-중요성" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="중심극한정리의-중요성"><span class="header-section-number">11.7</span> 중심극한정리의 중요성</h2>
+<p>중심극한정리는 대부분의 통계적 추론 방법의 이론적 기반이다.</p>
+<p><strong>중심극한정리가 적용되는 통계 기법</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>기법</th>
+<th>설명</th>
+<th>중심극한정리의 역할</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>t-검정</td>
+<td>두 그룹 평균 비교</td>
+<td>표본 평균이 정규분포를 따름</td>
+</tr>
+<tr class="even">
+<td>ANOVA</td>
+<td>여러 그룹 평균 비교</td>
+<td>그룹별 평균이 정규분포를 따름</td>
+</tr>
+<tr class="odd">
+<td>신뢰구간</td>
+<td>모수 추정 범위</td>
+<td>표본 평균의 분포가 정규분포</td>
+</tr>
+<tr class="even">
+<td>선형 회귀</td>
+<td>변수 간 관계 모델링</td>
+<td>잔차의 정규성 가정</td>
+</tr>
+<tr class="odd">
+<td>가설검정</td>
+<td>통계적 의사결정</td>
+<td>검정 통계량의 분포</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실무적 의미</strong></p>
 <ul>
-<li>t 검정</li>
-<li>ANOVA</li>
-<li>신뢰구간</li>
-<li>회귀 분석</li>
+<li><strong>모집단 분포 불필요</strong>: 모집단이 정규분포가 아니어도 분석 가능</li>
+<li><strong>신뢰구간 구성</strong>: 표본으로부터 모수의 범위 추정</li>
+<li><strong>가설검정</strong>: p-value 계산의 이론적 근거</li>
+<li><strong>예측 구간</strong>: 미래 값의 불확실성 정량화</li>
 </ul>
-<p><strong>모두 “표본 평균 분포” 가정 위에서 동작</strong></p>
+<p><strong>예제: 비정규 분포에서의 중심극한정리</strong></p>
+<div id="e463b878" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 극단적으로 왜곡된 분포 (지수분포) 생성</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>exponential_data <span class="op">=</span> np.random.exponential(scale<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터 분포</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(exponential_data, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Original Exponential Distribution"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Value"</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 표본 평균 분포 (n=30)</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>sample_means_exp <span class="op">=</span> []</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    sample <span class="op">=</span> np.random.choice(exponential_data, size<span class="op">=</span><span class="dv">30</span>, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    sample_means_exp.append(sample.mean())</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(sample_means_exp, bins<span class="op">=</span><span class="dv">30</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(sample_means_exp), <span class="bu">max</span>(sample_means_exp), <span class="dv">100</span>)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, stats.norm.pdf(x, np.mean(sample_means_exp), np.std(sample_means_exp)), </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>             <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Normal fit'</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Sampling Distribution (n=30)"</span>)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Sample Mean"</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Density"</span>)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"원본 데이터 왜도: </span><span class="sc">{</span>stats<span class="sc">.</span>skew(exponential_data)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"표본 평균 왜도: </span><span class="sc">{</span>stats<span class="sc">.</span>skew(sample_means_exp)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-11-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>원본 데이터 왜도: 2.107
+표본 평균 왜도: 0.418</code></pre>
+</div>
+</div>
+<p>원본 데이터는 극도로 왜곡되어 있지만, 표본 평균의 분포는 정규분포에 매우 가깝다는 것을 확인할 수 있다.</p>
+</section>
+<section id="요약" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">11.8</span> 요약</h2>
+<p>이 장에서는 확률분포와 표본의 개념, 그리고 통계적 추론의 핵심인 중심극한정리를 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>확률분포 요약</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 29%">
+<col style="width: 17%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>대표 분포</th>
+<th>특징</th>
+<th>주요 사용처</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>연속형</td>
+<td>정규분포</td>
+<td>대칭, 종 모양</td>
+<td>신체 측정, 자연 현상</td>
+</tr>
+<tr class="even">
+<td>연속형</td>
+<td>지수분포, 감마분포</td>
+<td>양수, 오른쪽 치우침</td>
+<td>대기 시간, 생존 분석</td>
+</tr>
+<tr class="odd">
+<td>연속형</td>
+<td>로그정규분포</td>
+<td>로그 변환 시 정규</td>
+<td>소득, 가격, 크기</td>
+</tr>
+<tr class="even">
+<td>이산형</td>
+<td>이항분포</td>
+<td>성공 횟수</td>
+<td>불량품 개수, 설문 응답</td>
+</tr>
+<tr class="odd">
+<td>이산형</td>
+<td>포아송분포</td>
+<td>발생 횟수</td>
+<td>고객 방문, 사고 건수</td>
+</tr>
+</tbody>
+</table>
+<p><strong>표본과 모집단</strong></p>
+<ul>
+<li><strong>모집단</strong>: 연구 대상 전체 (파라미터: μ, σ²)</li>
+<li><strong>표본</strong>: 모집단에서 추출한 일부 (통계량: x̄, s²)</li>
+<li><strong>표본 추출의 목적</strong>: 비용 절감, 실용성, 시의성</li>
+</ul>
+<p><strong>중심극한정리 핵심</strong></p>
+<ol type="1">
+<li><strong>내용</strong>: 표본 크기가 충분히 크면 표본 평균은 정규분포에 수렴</li>
+<li><strong>조건</strong>: n ≥ 30 (일반적), 독립성, 동일 분포</li>
+<li><strong>의미</strong>: 모집단 분포와 무관하게 정규분포 기반 추론 가능</li>
+<li><strong>적용</strong>: t-검정, ANOVA, 신뢰구간, 회귀분석 등</li>
+</ol>
+<p><strong>실무 적용</strong></p>
+<ul>
+<li>데이터 분포 확인: 히스토그램, Q-Q 플롯, 정규성 검정</li>
+<li>표본 설계: 적절한 표본 크기와 추출 방법 선택</li>
+<li>통계 분석: 중심극한정리를 바탕으로 가설검정과 신뢰구간 구성</li>
+<li>결과 해석: 표본 통계량으로 모집단 파라미터 추정</li>
+</ul>
+<p>확률분포와 표본의 개념은 통계학과 데이터 분석의 기초이다. 중심극한정리를 이해하면 제한된 표본으로부터 모집단에 대한 타당한 결론을 도출할 수 있으며, 이는 모든 통계적 추론의 출발점이 된다. 다음 장에서는 이러한 이론을 바탕으로 실제 가설검정과 신뢰구간 추정을 학습할 것이다.</p>
 
 
 </section>
