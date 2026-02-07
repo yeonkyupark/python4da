@@ -385,7 +385,14 @@ ct = ColumnTransformer(
     remainder='passthrough'  # 나머지 컬럼은 그대로 유지
 )
 
-# 변환 수행
+# 수치형 컬럼 선택
+num_cols = [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+]
+
 df_transformed = ct.fit_transform(df[["species", "island", "sex"] + num_cols].dropna())
 
 print("ColumnTransformer 변환 결과 shape:")
