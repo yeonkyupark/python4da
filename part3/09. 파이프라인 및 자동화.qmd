@@ -1,2 +1,170 @@
 # 파이프라인 및 자동화
 
+## 왜 파이프라인이 필요한가
+
+머신러닝 실무에서 가장 흔한 실수는 다음과 같다.
+
+* 학습 데이터와 테스트 데이터에 **다른 전처리 적용**
+* 교차 검증 전에 스케일링 수행
+* 실험 재현 불가
+
+파이프라인은 이 모든 문제를 **구조적으로 차단**한다.
+
+## 파이프라인의 개념
+
+**파이프라인(Pipeline)** 은 `전처리 → 모델 → 평가` 단계를 **하나의 객체로 묶는 구조**다.
+
+특징
+
+* 순차 실행 보장
+* 데이터 누수 방지
+* 코드 단순화
+* 자동화에 최적
+
+## 기본 파이프라인 구성
+
+### penguins 분류 예제
+
+```python
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+pipe = Pipeline([
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression(max_iter=1000))
+])
+```
+
+### 학습 및 평가
+
+```python
+pipe.fit(X_train, y_train)
+pipe.score(X_test, y_test)
+```
+
+`fit()` 호출 시
+
+* scaler → fit + transform
+* model → fit
+
+이 순서가 자동으로 수행된다.
+
+## ColumnTransformer
+
+실제 데이터는 수치형 + 범주형이 섞여 있다. 컬럼별 전처리를 명시적으로 분리해야 한다.
+
+### 예제
+
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]
+cat_cols = ["sex"]
+
+preprocessor = ColumnTransformer([
+    ("num", StandardScaler(), num_cols),
+    ("cat", OneHotEncoder(handle_unknown="ignore"), cat_cols)
+])
+```
+
+### 전체 파이프라인
+
+```python
+pipe = Pipeline([
+    ("preprocess", preprocessor),
+    ("model", LogisticRegression(max_iter=1000))
+])
+```
+
+## 하이퍼파라미터 최적화 개요
+
+모델 성능은 **하이퍼파라미터 설정**에 크게 좌우된다.
+
+* 사람이 일일이 조정 → 비효율
+* 자동 탐색 필요
+
+## 3.9.6 GridSearchCV
+
+### 개념
+
+* 지정한 모든 파라미터 조합 탐색
+* 계산 비용 큼
+* 기준선 모델에 적합
+
+### 예제
+
+```python
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    "model__C": [0.1, 1, 10],
+    "model__penalty": ["l2"]
+}
+
+grid = GridSearchCV(
+    pipe,
+    param_grid,
+    cv=5,
+    scoring="f1_macro"
+)
+
+grid.fit(X_train, y_train)
+```
+
+### 결과 확인
+
+```python
+grid.best_params_
+grid.best_score_
+```
+
+## 3.9.7 RandomizedSearchCV
+
+### 특징
+
+* 파라미터 공간에서 무작위 샘플링
+* 대규모 탐색에 효율적
+* 실무에서 자주 사용
+
+```python
+from sklearn.model_selection import RandomizedSearchCV
+
+random_search = RandomizedSearchCV(
+    pipe,
+    param_distributions={
+        "model__C": [0.01, 0.1, 1, 10, 100]
+    },
+    n_iter=10,
+    cv=5,
+    scoring="f1_macro",
+    random_state=42
+)
+```
+
+## 교차 검증과 파이프라인의 결합
+
+중요 포인트
+
+* 교차 검증 **안에서** 전처리 수행
+* 데이터 누수 완전 차단
+
+파이프라인 없이 CV는 위험
+
+## 성능 평가 흐름 정리
+
+1. 파이프라인 정의
+2. 교차 검증 기반 탐색
+3. 최적 모델 선택
+4. 테스트 데이터 최종 평가
+
+테스트 데이터는 **마지막에 한 번만**
+
+## 권장 사항
+
+* 모든 실험은 파이프라인으로 시작
+* 전처리 로직을 코드 밖으로 빼지 않기
+* scoring 기준을 문제에 맞게 선택
+* random_state 고정
+
