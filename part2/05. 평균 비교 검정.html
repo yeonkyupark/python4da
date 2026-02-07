@@ -109,6 +109,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -375,53 +404,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#평균-비교-검정" id="toc-평균-비교-검정" class="nav-link active" data-scroll-target="#평균-비교-검정"><span class="header-section-number">15.1</span> 평균 비교 검정</a>
+  <li><a href="#평균-비교-검정의-개념" id="toc-평균-비교-검정의-개념" class="nav-link active" data-scroll-target="#평균-비교-검정의-개념"><span class="header-section-number">15.1</span> 평균 비교 검정의 개념</a>
   <ul>
-  <li><a href="#평균-비교-검정-1" id="toc-평균-비교-검정-1" class="nav-link" data-scroll-target="#평균-비교-검정-1"><span class="header-section-number">15.1.1</span> 평균 비교 검정</a></li>
-  <li><a href="#평균-비교-검정의-종류" id="toc-평균-비교-검정의-종류" class="nav-link" data-scroll-target="#평균-비교-검정의-종류"><span class="header-section-number">15.1.2</span> 평균 비교 검정의 종류</a></li>
-  <li><a href="#평균-비교-전-반드시-확인할-가정" id="toc-평균-비교-전-반드시-확인할-가정" class="nav-link" data-scroll-target="#평균-비교-전-반드시-확인할-가정"><span class="header-section-number">15.1.3</span> 평균 비교 전 반드시 확인할 가정</a></li>
+  <li><a href="#검정-방법-선택-기준" id="toc-검정-방법-선택-기준" class="nav-link" data-scroll-target="#검정-방법-선택-기준"><span class="header-section-number">15.1.1</span> 검정 방법 선택 기준</a></li>
+  <li><a href="#평균-비교-전-필수-가정-확인" id="toc-평균-비교-전-필수-가정-확인" class="nav-link" data-scroll-target="#평균-비교-전-필수-가정-확인"><span class="header-section-number">15.1.2</span> 평균 비교 전 필수 가정 확인</a></li>
   </ul></li>
-  <li><a href="#두-집단-평균-비교" id="toc-두-집단-평균-비교" class="nav-link" data-scroll-target="#두-집단-평균-비교"><span class="header-section-number">15.2</span> 두 집단 평균 비교</a>
+  <li><a href="#두-집단-평균-비교-독립표본-t-검정" id="toc-두-집단-평균-비교-독립표본-t-검정" class="nav-link" data-scroll-target="#두-집단-평균-비교-독립표본-t-검정"><span class="header-section-number">15.2</span> 두 집단 평균 비교: 독립표본 t-검정</a>
   <ul>
-  <li><a href="#독립표본-t-검정" id="toc-독립표본-t-검정" class="nav-link" data-scroll-target="#독립표본-t-검정"><span class="header-section-number">15.2.1</span> 독립표본 t-검정</a></li>
-  <li><a href="#가설-설정" id="toc-가설-설정" class="nav-link" data-scroll-target="#가설-설정"><span class="header-section-number">15.2.2</span> 가설 설정</a></li>
-  <li><a href="#예제-코드" id="toc-예제-코드" class="nav-link" data-scroll-target="#예제-코드"><span class="header-section-number">15.2.3</span> 예제 코드</a></li>
-  <li><a href="#결과-해석" id="toc-결과-해석" class="nav-link" data-scroll-target="#결과-해석"><span class="header-section-number">15.2.4</span> 결과 해석</a></li>
+  <li><a href="#예제-성별에-따른-체중-비교" id="toc-예제-성별에-따른-체중-비교" class="nav-link" data-scroll-target="#예제-성별에-따른-체중-비교"><span class="header-section-number">15.2.1</span> 예제: 성별에 따른 체중 비교</a></li>
+  <li><a href="#효과-크기-effect-size" id="toc-효과-크기-effect-size" class="nav-link" data-scroll-target="#효과-크기-effect-size"><span class="header-section-number">15.2.2</span> 효과 크기 (Effect Size)</a></li>
   </ul></li>
-  <li><a href="#등분산-가정이-깨진-경우" id="toc-등분산-가정이-깨진-경우" class="nav-link" data-scroll-target="#등분산-가정이-깨진-경우"><span class="header-section-number">15.3</span> 등분산 가정이 깨진 경우</a>
+  <li><a href="#welch-t-검정-등분산-가정-불필요" id="toc-welch-t-검정-등분산-가정-불필요" class="nav-link" data-scroll-target="#welch-t-검정-등분산-가정-불필요"><span class="header-section-number">15.3</span> Welch t-검정 (등분산 가정 불필요)</a></li>
+  <li><a href="#세-집단-이상-비교-일원분산분석-anova" id="toc-세-집단-이상-비교-일원분산분석-anova" class="nav-link" data-scroll-target="#세-집단-이상-비교-일원분산분석-anova"><span class="header-section-number">15.4</span> 세 집단 이상 비교: 일원분산분석 (ANOVA)</a>
   <ul>
-  <li><a href="#welchs-t-test" id="toc-welchs-t-test" class="nav-link" data-scroll-target="#welchs-t-test"><span class="header-section-number">15.3.1</span> Welch’s t-test</a></li>
+  <li><a href="#예제-종별-부리-길이-비교" id="toc-예제-종별-부리-길이-비교" class="nav-link" data-scroll-target="#예제-종별-부리-길이-비교"><span class="header-section-number">15.4.1</span> 예제: 종별 부리 길이 비교</a></li>
+  <li><a href="#anova의-한계와-사후검정-필요성" id="toc-anova의-한계와-사후검정-필요성" class="nav-link" data-scroll-target="#anova의-한계와-사후검정-필요성"><span class="header-section-number">15.4.2</span> ANOVA의 한계와 사후검정 필요성</a></li>
   </ul></li>
-  <li><a href="#세-집단-이상-평균-비교" id="toc-세-집단-이상-평균-비교" class="nav-link" data-scroll-target="#세-집단-이상-평균-비교"><span class="header-section-number">15.4</span> 세 집단 이상 평균 비교</a>
+  <li><a href="#대응표본-t-검정" id="toc-대응표본-t-검정" class="nav-link" data-scroll-target="#대응표본-t-검정"><span class="header-section-number">15.5</span> 대응표본 t-검정</a></li>
+  <li><a href="#사후검정-post-hoc-test" id="toc-사후검정-post-hoc-test" class="nav-link" data-scroll-target="#사후검정-post-hoc-test"><span class="header-section-number">15.6</span> 사후검정 (Post-hoc Test)</a>
   <ul>
-  <li><a href="#일원분산분석one-way-anova" id="toc-일원분산분석one-way-anova" class="nav-link" data-scroll-target="#일원분산분석one-way-anova"><span class="header-section-number">15.4.1</span> 일원분산분석(One-way ANOVA)</a></li>
-  <li><a href="#가설-설정-1" id="toc-가설-설정-1" class="nav-link" data-scroll-target="#가설-설정-1"><span class="header-section-number">15.4.2</span> 가설 설정</a></li>
-  <li><a href="#예제-코드-1" id="toc-예제-코드-1" class="nav-link" data-scroll-target="#예제-코드-1"><span class="header-section-number">15.4.3</span> 예제 코드</a></li>
-  <li><a href="#결과-해석-1" id="toc-결과-해석-1" class="nav-link" data-scroll-target="#결과-해석-1"><span class="header-section-number">15.4.4</span> 결과 해석</a></li>
-  <li><a href="#주의점" id="toc-주의점" class="nav-link" data-scroll-target="#주의점"><span class="header-section-number">15.4.5</span> 주의점</a></li>
+  <li><a href="#대표적인-사후검정-방법" id="toc-대표적인-사후검정-방법" class="nav-link" data-scroll-target="#대표적인-사후검정-방법"><span class="header-section-number">15.6.1</span> 대표적인 사후검정 방법</a></li>
+  <li><a href="#tukey-hsd-honestly-significant-difference" id="toc-tukey-hsd-honestly-significant-difference" class="nav-link" data-scroll-target="#tukey-hsd-honestly-significant-difference"><span class="header-section-number">15.6.2</span> Tukey HSD (Honestly Significant Difference)</a></li>
+  <li><a href="#bonferroni-보정" id="toc-bonferroni-보정" class="nav-link" data-scroll-target="#bonferroni-보정"><span class="header-section-number">15.6.3</span> Bonferroni 보정</a></li>
+  <li><a href="#games-howell-등분산-불필요" id="toc-games-howell-등분산-불필요" class="nav-link" data-scroll-target="#games-howell-등분산-불필요"><span class="header-section-number">15.6.4</span> Games-Howell (등분산 불필요)</a></li>
   </ul></li>
-  <li><a href="#대응표본-t-검정" id="toc-대응표본-t-검정" class="nav-link" data-scroll-target="#대응표본-t-검정"><span class="header-section-number">15.5</span> 대응표본 t-검정</a>
-  <ul>
-  <li><a href="#가설-설정-2" id="toc-가설-설정-2" class="nav-link" data-scroll-target="#가설-설정-2"><span class="header-section-number">15.5.1</span> 가설 설정</a></li>
-  <li><a href="#예시-코드" id="toc-예시-코드" class="nav-link" data-scroll-target="#예시-코드"><span class="header-section-number">15.5.2</span> 예시 코드</a></li>
-  </ul></li>
-  <li><a href="#평균-비교-검정-요약" id="toc-평균-비교-검정-요약" class="nav-link" data-scroll-target="#평균-비교-검정-요약"><span class="header-section-number">15.6</span> 평균 비교 검정 요약</a></li>
-  <li><a href="#핵심-포인트" id="toc-핵심-포인트" class="nav-link" data-scroll-target="#핵심-포인트"><span class="header-section-number">15.7</span> 핵심 포인트</a></li>
-  <li><a href="#anova-이후-사후검정post-hoc-test" id="toc-anova-이후-사후검정post-hoc-test" class="nav-link" data-scroll-target="#anova-이후-사후검정post-hoc-test"><span class="header-section-number">15.8</span> ANOVA 이후 사후검정(Post-hoc Test)</a>
-  <ul>
-  <li><a href="#사후검정-필요-이유" id="toc-사후검정-필요-이유" class="nav-link" data-scroll-target="#사후검정-필요-이유"><span class="header-section-number">15.8.1</span> 사후검정 필요 이유</a></li>
-  <li><a href="#사후검정의-기본-아이디어" id="toc-사후검정의-기본-아이디어" class="nav-link" data-scroll-target="#사후검정의-기본-아이디어"><span class="header-section-number">15.8.2</span> 사후검정의 기본 아이디어</a></li>
-  </ul></li>
-  <li><a href="#대표적인-사후검정-방법" id="toc-대표적인-사후검정-방법" class="nav-link" data-scroll-target="#대표적인-사후검정-방법"><span class="header-section-number">15.9</span> 대표적인 사후검정 방법</a></li>
-  <li><a href="#tukey-hsd-honestly-significant-difference" id="toc-tukey-hsd-honestly-significant-difference" class="nav-link" data-scroll-target="#tukey-hsd-honestly-significant-difference"><span class="header-section-number">15.10</span> Tukey HSD (Honestly Significant Difference)</a>
-  <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">15.10.1</span> 개념</a></li>
-  <li><a href="#가설-구조" id="toc-가설-구조" class="nav-link" data-scroll-target="#가설-구조"><span class="header-section-number">15.10.2</span> 가설 구조</a></li>
-  <li><a href="#분석-목표" id="toc-분석-목표" class="nav-link" data-scroll-target="#분석-목표"><span class="header-section-number">15.10.3</span> 분석 목표</a></li>
-  <li><a href="#출력-결과-해석" id="toc-출력-결과-해석" class="nav-link" data-scroll-target="#출력-결과-해석"><span class="header-section-number">15.10.4</span> 출력 결과 해석</a></li>
-  <li><a href="#해석-예시" id="toc-해석-예시" class="nav-link" data-scroll-target="#해석-예시"><span class="header-section-number">15.10.5</span> 해석 예시</a></li>
-  </ul></li>
-  <li><a href="#등분산-가정이-깨진-경우-1" id="toc-등분산-가정이-깨진-경우-1" class="nav-link" data-scroll-target="#등분산-가정이-깨진-경우-1"><span class="header-section-number">15.11</span> 등분산 가정이 깨진 경우</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">15.7</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/05. 평균 비교 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -453,324 +460,600 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="평균-비교-검정" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="평균-비교-검정"><span class="header-section-number">15.1</span> 평균 비교 검정</h2>
-<section id="평균-비교-검정-1" class="level3" data-number="15.1.1">
-<h3 data-number="15.1.1" class="anchored" data-anchor-id="평균-비교-검정-1"><span class="header-section-number">15.1.1</span> 평균 비교 검정</h3>
-<p>두 개 이상 집단간 <strong>평균 차이</strong>가 단순한 우연인지 통계적으로 유의한 차이인지를 검정하는 방법이다. 범주형 변수로 집단을 나누고, 연속형 변수의 평균을 비교한다.</p>
-<p>예시</p>
-<ul>
-<li>성별에 따라 몸무게 평균이 다른가?</li>
-<li>종(species)에 따라 부리 길이 평균이 다른가?</li>
-<li>처리 전·후 평균이 달라졌는가?</li>
-</ul>
-</section>
-<section id="평균-비교-검정의-종류" class="level3" data-number="15.1.2">
-<h3 data-number="15.1.2" class="anchored" data-anchor-id="평균-비교-검정의-종류"><span class="header-section-number">15.1.2</span> 평균 비교 검정의 종류</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>상황</th>
-<th>사용 검정</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>두 집단 평균 비교</td>
-<td>t-test</td>
-</tr>
-<tr class="even">
-<td>세 집단 이상 평균 비교</td>
-<td>ANOVA</td>
-</tr>
-<tr class="odd">
-<td>동일 대상 전·후 비교</td>
-<td>대응표본 t-test</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="평균-비교-전-반드시-확인할-가정" class="level3" data-number="15.1.3">
-<h3 data-number="15.1.3" class="anchored" data-anchor-id="평균-비교-전-반드시-확인할-가정"><span class="header-section-number">15.1.3</span> 평균 비교 전 반드시 확인할 가정</h3>
-<ol type="1">
-<li><p>정규성</p>
-<ul>
-<li>각 집단의 데이터가 정규분포를 따른다고 가정</li>
-</ul></li>
-<li><p>등분산성</p>
-<ul>
-<li>집단 간 분산이 동일하다고 가정</li>
-</ul></li>
-<li><p>독립성</p>
-<ul>
-<li>각 관측치는 서로 독립</li>
-</ul></li>
-</ol>
-<p>현실에서는 가정이 완벽하지 않아도 표본 수가 충분하면 비교적 강건하게 동작한다.</p>
-</section>
-</section>
-<section id="두-집단-평균-비교" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="두-집단-평균-비교"><span class="header-section-number">15.2</span> 두 집단 평균 비교</h2>
-<section id="독립표본-t-검정" class="level3" data-number="15.2.1">
-<h3 data-number="15.2.1" class="anchored" data-anchor-id="독립표본-t-검정"><span class="header-section-number">15.2.1</span> 독립표본 t-검정</h3>
-<p>서로 독립된 두 집단의 평균을 비교한다.</p>
-<ul>
-<li><p>예</p>
-<ul>
-<li>남성 vs 여성</li>
-<li>처리군 vs 대조군</li>
-</ul></li>
-</ul>
-</section>
-<section id="가설-설정" class="level3" data-number="15.2.2">
-<h3 data-number="15.2.2" class="anchored" data-anchor-id="가설-설정"><span class="header-section-number">15.2.2</span> 가설 설정</h3>
-<ul>
-<li><p>귀무가설(H₀)</p>
-<ul>
-<li>두 집단의 평균은 같다</li>
-</ul></li>
-<li><p>대립가설(H₁)</p>
-<ul>
-<li>두 집단의 평균은 다르다</li>
-</ul></li>
-</ul>
-</section>
-<section id="예제-코드" class="level3" data-number="15.2.3">
-<h3 data-number="15.2.3" class="anchored" data-anchor-id="예제-코드"><span class="header-section-number">15.2.3</span> 예제 코드</h3>
-<div id="0f1b6250" class="cell" data-execution_count="1">
+<p>평균 비교 검정(Mean Comparison Test)은 두 개 이상 집단 간 평균 차이가 단순한 우연인지 통계적으로 유의한지를 판단하는 방법이다. 범주형 변수로 집단을 나누고 연속형 변수의 평균을 비교한다. 이는 실무에서 가장 흔하게 사용되는 통계 기법 중 하나로, 약물 효과, 마케팅 전략, 제품 품질 등 다양한 분야에서 집단 간 차이를 과학적으로 검증하는 데 사용된다. 이 장에서는 t-검정과 ANOVA, 그리고 사후검정을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="35f6c66b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 열만 선택 및 결측치 제거</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df_t <span class="op">=</span> df[[<span class="st">"sex"</span>, <span class="st">"body_mass_g"</span>]].dropna()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 집단 분리</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>male <span class="op">=</span> df_t[df_t[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"Male"</span>][<span class="st">"body_mass_g"</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>female <span class="op">=</span> df_t[df_t[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"Female"</span>][<span class="st">"body_mass_g"</span>]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립표본 t-test</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> ttest_ind(male, female, equal_var<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>t_stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>(np.float64(8.541720337994516), np.float64(4.897246751596277e-16))</code></pre>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">범주형 변수:"</span>, df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns.tolist())</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"연속형 변수:"</span>, df.select_dtypes(include<span class="op">=</span>[np.number]).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (344, 7)
+
+범주형 변수: ['species', 'island', 'sex']
+연속형 변수: ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']</code></pre>
 </div>
 </div>
-</section>
-<section id="결과-해석" class="level3" data-number="15.2.4">
-<h3 data-number="15.2.4" class="anchored" data-anchor-id="결과-해석"><span class="header-section-number">15.2.4</span> 결과 해석</h3>
-<ul>
-<li><p>p-value &lt; 유의수준</p>
-<ul>
-<li>성별에 따라 평균 몸무게 차이가 있다</li>
-</ul></li>
-<li><p>p-value ≥ 유의수준</p>
-<ul>
-<li>평균 차이가 있다고 보기 어렵다</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="등분산-가정이-깨진-경우" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="등분산-가정이-깨진-경우"><span class="header-section-number">15.3</span> 등분산 가정이 깨진 경우</h2>
-<section id="welchs-t-test" class="level3" data-number="15.3.1">
-<h3 data-number="15.3.1" class="anchored" data-anchor-id="welchs-t-test"><span class="header-section-number">15.3.1</span> Welch’s t-test</h3>
-<ul>
-<li>등분산이 의심되면 <code>equal_var=False</code> 사용</li>
-</ul>
-<div id="1a1cb93b" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> ttest_ind(male, female, equal_var<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>t_stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>(np.float64(8.554537231165762), np.float64(4.793891255051508e-16))</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="세-집단-이상-평균-비교" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="세-집단-이상-평균-비교"><span class="header-section-number">15.4</span> 세 집단 이상 평균 비교</h2>
-<section id="일원분산분석one-way-anova" class="level3" data-number="15.4.1">
-<h3 data-number="15.4.1" class="anchored" data-anchor-id="일원분산분석one-way-anova"><span class="header-section-number">15.4.1</span> 일원분산분석(One-way ANOVA)</h3>
-<p>세 개 이상의 집단 평균을 동시에 비교한다. “어느 집단이 다른지”가 아니라 <strong>적어도 하나의 평균이 다른지</strong>를 먼저 검정한다.</p>
-</section>
-<section id="가설-설정-1" class="level3" data-number="15.4.2">
-<h3 data-number="15.4.2" class="anchored" data-anchor-id="가설-설정-1"><span class="header-section-number">15.4.2</span> 가설 설정</h3>
-<ul>
-<li><p>귀무가설(H₀)</p>
-<ul>
-<li>모든 집단의 평균은 같다</li>
-</ul></li>
-<li><p>대립가설(H₁)</p>
-<ul>
-<li>적어도 하나의 집단 평균은 다르다</li>
-</ul></li>
-</ul>
-</section>
-<section id="예제-코드-1" class="level3" data-number="15.4.3">
-<h3 data-number="15.4.3" class="anchored" data-anchor-id="예제-코드-1"><span class="header-section-number">15.4.3</span> 예제 코드</h3>
-<div id="0e90cf75" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 열 선택</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df_a <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 집단별 데이터 분리</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"bill_length_mm"</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"bill_length_mm"</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>][<span class="st">"bill_length_mm"</span>]</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> f_oneway(adelie, chinstrap, gentoo)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>f_stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>(np.float64(410.6002550405077), np.float64(2.6946137388895495e-91))</code></pre>
-</div>
-</div>
-</section>
-<section id="결과-해석-1" class="level3" data-number="15.4.4">
-<h3 data-number="15.4.4" class="anchored" data-anchor-id="결과-해석-1"><span class="header-section-number">15.4.4</span> 결과 해석</h3>
-<ul>
-<li><p>p-value &lt; 유의수준</p>
-<ul>
-<li>종에 따라 평균 부리 길이에 차이가 있다</li>
-</ul></li>
-<li><p>p-value ≥ 유의수준</p>
-<ul>
-<li>평균 차이가 있다고 보기 어렵다</li>
-</ul></li>
-</ul>
-</section>
-<section id="주의점" class="level3" data-number="15.4.5">
-<h3 data-number="15.4.5" class="anchored" data-anchor-id="주의점"><span class="header-section-number">15.4.5</span> 주의점</h3>
-<ul>
-<li>ANOVA 결과는 “어디가 다른지”를 알려주지 않는다. 이후 단계 <code>사후검정</code>(Post-hoc test)이 필요하다</li>
-</ul>
-</section>
-</section>
-<section id="대응표본-t-검정" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="대응표본-t-검정"><span class="header-section-number">15.5</span> 대응표본 t-검정</h2>
-<p>동일한 대상의 전·후 변화 비교하여 차이값의 평균이 0인지 검정한다.</p>
-<section id="가설-설정-2" class="level3" data-number="15.5.1">
-<h3 data-number="15.5.1" class="anchored" data-anchor-id="가설-설정-2"><span class="header-section-number">15.5.1</span> 가설 설정</h3>
-<ul>
-<li><p>귀무가설(H₀)</p>
-<ul>
-<li>전·후 평균 차이는 0이다</li>
-</ul></li>
-<li><p>대립가설(H₁)</p>
-<ul>
-<li>전·후 평균 차이는 0이 아니다</li>
-</ul></li>
-</ul>
-</section>
-<section id="예시-코드" class="level3" data-number="15.5.2">
-<h3 data-number="15.5.2" class="anchored" data-anchor-id="예시-코드"><span class="header-section-number">15.5.2</span> 예시 코드</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_rel</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> ttest_rel(before, after)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ul>
-<li>penguins 데이터셋에는 전후 비교가 불가하여 코드 구조만 제시함</li>
-</ul>
-</section>
-</section>
-<section id="평균-비교-검정-요약" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="평균-비교-검정-요약"><span class="header-section-number">15.6</span> 평균 비교 검정 요약</h2>
+<section id="평균-비교-검정의-개념" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="평균-비교-검정의-개념"><span class="header-section-number">15.1</span> 평균 비교 검정의 개념</h2>
+<p>평균 비교 검정은 집단 간 평균의 차이가 우연에 의한 것인지, 실제로 의미 있는 차이인지를 통계적으로 판단한다.</p>
+<p><strong>평균 비교 검정의 예시</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 34%">
+<col style="width: 34%">
+<col style="width: 19%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>상황</th>
+<th>질문</th>
+<th>독립 변수 (범주형)</th>
+<th>종속 변수 (연속형)</th>
 <th>검정 방법</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>두 독립 집단</td>
-<td>독립표본 t-test</td>
+<td>성별에 따라 몸무게가 다른가?</td>
+<td>성별 (2그룹)</td>
+<td>몸무게</td>
+<td>독립표본 t-검정</td>
 </tr>
 <tr class="even">
-<td>등분산 가정 불확실</td>
-<td>Welch t-test</td>
-</tr>
-<tr class="odd">
-<td>세 집단 이상</td>
+<td>종에 따라 부리 길이가 다른가?</td>
+<td>종 (3그룹)</td>
+<td>부리 길이</td>
 <td>ANOVA</td>
 </tr>
+<tr class="odd">
+<td>약물 투여 전후 혈압이 달라졌는가?</td>
+<td>시점 (전/후)</td>
+<td>혈압</td>
+<td>대응표본 t-검정</td>
+</tr>
 <tr class="even">
-<td>동일 대상 전·후</td>
-<td>대응표본 t-test</td>
+<td>교육 방법별 시험 점수가 다른가?</td>
+<td>교육 방법 (4그룹)</td>
+<td>시험 점수</td>
+<td>ANOVA</td>
+</tr>
+</tbody>
+</table>
+<section id="검정-방법-선택-기준" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="검정-방법-선택-기준"><span class="header-section-number">15.1.1</span> 검정 방법 선택 기준</h3>
+<p><strong>평균 비교 검정 종류</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>집단 수</th>
+<th>표본 관계</th>
+<th>사용 검정</th>
+<th>조건</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>두 독립 집단 비교</td>
+<td>2</td>
+<td>독립</td>
+<td>독립표본 t-검정</td>
+<td>정규성, 등분산성</td>
+</tr>
+<tr class="even">
+<td>두 독립 집단 (등분산 X)</td>
+<td>2</td>
+<td>독립</td>
+<td>Welch t-검정</td>
+<td>정규성</td>
+</tr>
+<tr class="odd">
+<td>동일 대상 전후 비교</td>
+<td>2</td>
+<td>대응</td>
+<td>대응표본 t-검정</td>
+<td>차이값의 정규성</td>
+</tr>
+<tr class="even">
+<td>세 집단 이상 비교</td>
+<td>3+</td>
+<td>독립</td>
+<td>일원분산분석(ANOVA)</td>
+<td>정규성, 등분산성</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="핵심-포인트" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="핵심-포인트"><span class="header-section-number">15.7</span> 핵심 포인트</h2>
+<section id="평균-비교-전-필수-가정-확인" class="level3" data-number="15.1.2">
+<h3 data-number="15.1.2" class="anchored" data-anchor-id="평균-비교-전-필수-가정-확인"><span class="header-section-number">15.1.2</span> 평균 비교 전 필수 가정 확인</h3>
+<p>평균 비교 검정은 다음 가정들을 전제로 한다.</p>
+<p><strong>검정 가정</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 28%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>가정</th>
+<th>내용</th>
+<th>확인 방법</th>
+<th>위배 시 대응</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. 정규성</td>
+<td>각 집단의 데이터가 정규분포를 따름</td>
+<td>Shapiro-Wilk, Q-Q plot</td>
+<td>비모수 검정, 변환</td>
+</tr>
+<tr class="even">
+<td>2. 등분산성</td>
+<td>집단 간 분산이 동일함</td>
+<td>Levene 검정</td>
+<td>Welch 검정, Games-Howell</td>
+</tr>
+<tr class="odd">
+<td>3. 독립성</td>
+<td>각 관측치가 서로 독립적</td>
+<td>실험 설계 확인</td>
+<td>혼합 모델, 반복측정 ANOVA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>가정 위배 시 강건성</strong></p>
 <ul>
-<li><p>평균 차이 ≠ 의미 있는 차이</p></li>
-<li><p>p-value는</p>
-<ul>
-<li>차이 <strong>존재 여부</strong></li>
-<li>크기나 중요도를 직접 말해주지는 않는다.</li>
-</ul></li>
-<li><p>항상</p>
-<ul>
-<li>시각화</li>
-<li>기초 통계량</li>
-<li>가정 점검 을 함께 본다.</li>
-</ul></li>
-</ul>
-</section>
-<section id="anova-이후-사후검정post-hoc-test" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="anova-이후-사후검정post-hoc-test"><span class="header-section-number">15.8</span> ANOVA 이후 사후검정(Post-hoc Test)</h2>
-<section id="사후검정-필요-이유" class="level3" data-number="15.8.1">
-<h3 data-number="15.8.1" class="anchored" data-anchor-id="사후검정-필요-이유"><span class="header-section-number">15.8.1</span> 사후검정 필요 이유</h3>
-<ul>
-<li><p>ANOVA 결과</p>
-<ul>
-<li>p-value &lt; 유의수준</li>
-<li>→ <strong>집단 간 평균 차이가 존재함</strong></li>
-</ul></li>
-<li><p>하지만</p>
-<ul>
-<li>어떤 집단과 어떤 집단 사이가 다른지는 알려주지 않는다.</li>
-</ul></li>
-</ul>
-<p>예시</p>
-<ul>
-<li>species에 따라 부리 길이가 다르다. 하지만</li>
-<li>Adelie vs Chinstrap?</li>
-<li>Chinstrap vs Gentoo?</li>
-<li>Adelie vs Gentoo? → <strong>사후검정 필요</strong></li>
-</ul>
-</section>
-<section id="사후검정의-기본-아이디어" class="level3" data-number="15.8.2">
-<h3 data-number="15.8.2" class="anchored" data-anchor-id="사후검정의-기본-아이디어"><span class="header-section-number">15.8.2</span> 사후검정의 기본 아이디어</h3>
-<ul>
-<li><p>모든 집단 쌍(pairwise comparison)을 비교</p></li>
-<li><p>단순 t-test를 여러 번 하면 문제 발생</p>
-<ul>
-<li><strong>다중 비교 문제 (Multiple Testing Problem)</strong></li>
-<li>우연에 의한 유의 결과가 늘어난다</li>
-</ul></li>
-<li><p>사후검정은</p>
-<ul>
-<li><strong>유의수준을 보정</strong>하여 신뢰도를 유지한다</li>
-</ul></li>
+<li>표본 크기가 충분히 크면(n ≥ 30) 중심극한정리에 의해 정규성 가정이 완화됨</li>
+<li>등분산성은 표본 크기가 집단 간 유사하면 어느 정도 강건함</li>
+<li>독립성은 절대 위배되어서는 안 되는 가정</li>
 </ul>
 </section>
 </section>
-<section id="대표적인-사후검정-방법" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="대표적인-사후검정-방법"><span class="header-section-number">15.9</span> 대표적인 사후검정 방법</h2>
+<section id="두-집단-평균-비교-독립표본-t-검정" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="두-집단-평균-비교-독립표본-t-검정"><span class="header-section-number">15.2</span> 두 집단 평균 비교: 독립표본 t-검정</h2>
+<p>독립표본 t-검정(Independent Samples t-test)은 서로 독립된 두 집단의 평균을 비교하는 가장 기본적인 검정이다.</p>
+<p><strong>가설 설정</strong></p>
+<ul>
+<li>H₀ (귀무가설): μ₁ = μ₂ (두 집단의 모평균이 같다)</li>
+<li>H₁ (대립가설): μ₁ ≠ μ₂ (두 집단의 모평균이 다르다)</li>
+</ul>
+<p><strong>t-통계량</strong></p>
+<p><span class="math display">\[
+t = \frac{\bar{x}_1 - \bar{x}_2}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}
+\]</span></p>
+<p>여기서 <span class="math inline">\(s_p\)</span>는 합동 표준편차(pooled standard deviation)이다.</p>
+<section id="예제-성별에-따른-체중-비교" class="level3" data-number="15.2.1">
+<h3 data-number="15.2.1" class="anchored" data-anchor-id="예제-성별에-따른-체중-비교"><span class="header-section-number">15.2.1</span> 예제: 성별에 따른 체중 비교</h3>
+<p><strong>예제: 데이터 준비 및 탐색</strong></p>
+<div id="95b07afe" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 열만 선택 및 결측치 제거</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df_t <span class="op">=</span> df[[<span class="st">"sex"</span>, <span class="st">"body_mass_g"</span>]].dropna()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 집단별 기술 통계량 ==="</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> df_t.groupby(<span class="st">"sex"</span>)[<span class="st">"body_mass_g"</span>].agg([<span class="st">'count'</span>, <span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 집단 분리</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>male <span class="op">=</span> df_t[df_t[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"Male"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>female <span class="op">=</span> df_t[df_t[<span class="st">"sex"</span>] <span class="op">==</span> <span class="st">"Female"</span>][<span class="st">"body_mass_g"</span>]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">남성 표본 크기: </span><span class="sc">{</span><span class="bu">len</span>(male)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"여성 표본 크기: </span><span class="sc">{</span><span class="bu">len</span>(female)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 집단별 기술 통계량 ===
+        count         mean         std     min     max
+sex                                                   
+Female    165  3862.272727  666.172050  2700.0  5200.0
+Male      168  4545.684524  787.628884  3250.0  6300.0
+
+남성 표본 크기: 168
+여성 표본 크기: 165</code></pre>
+</div>
+</div>
+<p><strong>예제: 가정 확인</strong></p>
+<div id="9463f2ee" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 정규성 검정</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> shapiro, levene</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 정규성 검정 (Shapiro-Wilk) ==="</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>_, p_male <span class="op">=</span> shapiro(male)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>_, p_female <span class="op">=</span> shapiro(female)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"남성: p = </span><span class="sc">{</span>p_male<span class="sc">:.4f}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'(정규)'</span> <span class="cf">if</span> p_male <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'(비정규)'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"여성: p = </span><span class="sc">{</span>p_female<span class="sc">:.4f}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'(정규)'</span> <span class="cf">if</span> p_female <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'(비정규)'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 등분산성 검정</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 등분산성 검정 (Levene) ==="</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>_, p_levene <span class="op">=</span> levene(male, female)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p = </span><span class="sc">{</span>p_levene<span class="sc">:.4f}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'(등분산)'</span> <span class="cf">if</span> p_levene <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'(이분산)'</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 정규성 검정 (Shapiro-Wilk) ===
+남성: p = 0.0000 (비정규)
+여성: p = 0.0000 (비정규)
+
+=== 등분산성 검정 (Levene) ===
+p = 0.0143 (이분산)</code></pre>
+</div>
+</div>
+<p><strong>예제: 독립표본 t-검정</strong></p>
+<div id="dddb6ac2" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립표본 t-검정 (등분산 가정)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>t_stat, p_value <span class="op">=</span> ttest_ind(male, female, equal_var<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 독립표본 t-검정 (Student) ==="</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-통계량: </span><span class="sc">{</span>t_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"자유도: </span><span class="sc">{</span><span class="bu">len</span>(male) <span class="op">+</span> <span class="bu">len</span>(female) <span class="op">-</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 해석</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 </span><span class="sc">{</span>alpha<span class="sc">}</span><span class="ss"> 기준:"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✓ 귀무가설 기각: 성별에 따른 체중 차이가 유의함"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  평균 차이: </span><span class="sc">{</span>male<span class="sc">.</span>mean() <span class="op">-</span> female<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">g"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✗ 귀무가설 채택: 성별에 따른 체중 차이가 유의하지 않음"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 독립표본 t-검정 (Student) ===
+t-통계량: 8.5417
+p-value: 0.0000
+자유도: 331
+
+유의수준 0.05 기준:
+✓ 귀무가설 기각: 성별에 따른 체중 차이가 유의함
+  평균 차이: 683.41g</code></pre>
+</div>
+</div>
+<p><strong>예제: 시각화</strong></p>
+<div id="2b16d747" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 박스플롯</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"sex"</span>, y<span class="op">=</span><span class="st">"body_mass_g"</span>, data<span class="op">=</span>df_t, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Body Mass by Sex"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Sex"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 히스토그램</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(male, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="ss">f'Male (n=</span><span class="sc">{</span><span class="bu">len</span>(male)<span class="sc">}</span><span class="ss">)'</span>, bins<span class="op">=</span><span class="dv">20</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(female, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="ss">f'Female (n=</span><span class="sc">{</span><span class="bu">len</span>(female)<span class="sc">}</span><span class="ss">)'</span>, bins<span class="op">=</span><span class="dv">20</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(male.mean(), color<span class="op">=</span><span class="st">'blue'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Male mean'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(female.mean(), color<span class="op">=</span><span class="st">'orange'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Female mean'</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Distribution of Body Mass"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Body Mass (g)"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05. 평균 비교 검정_files/figure-html/cell-6-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="효과-크기-effect-size" class="level3" data-number="15.2.2">
+<h3 data-number="15.2.2" class="anchored" data-anchor-id="효과-크기-effect-size"><span class="header-section-number">15.2.2</span> 효과 크기 (Effect Size)</h3>
+<p>p-value는 차이의 존재 여부만 알려주므로, 차이의 크기를 측정하는 효과 크기를 함께 확인해야 한다.</p>
+<p><strong>예제: Cohen’s d 계산</strong></p>
+<div id="60557fd4" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cohen's d 계산</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pooled_std <span class="op">=</span> np.sqrt(((<span class="bu">len</span>(male)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>male.std()<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (<span class="bu">len</span>(female)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span>female.std()<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                     (<span class="bu">len</span>(male) <span class="op">+</span> <span class="bu">len</span>(female) <span class="op">-</span> <span class="dv">2</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>cohens_d <span class="op">=</span> (male.mean() <span class="op">-</span> female.mean()) <span class="op">/</span> pooled_std</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== 효과 크기 ==="</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cohen's d: </span><span class="sc">{</span>cohens_d<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 해석</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">abs</span>(cohens_d) <span class="op">&lt;</span> <span class="fl">0.2</span>:</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">"매우 작음"</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">abs</span>(cohens_d) <span class="op">&lt;</span> <span class="fl">0.5</span>:</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">"작음"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="bu">abs</span>(cohens_d) <span class="op">&lt;</span> <span class="fl">0.8</span>:</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">"중간"</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    effect <span class="op">=</span> <span class="st">"큼"</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"효과 크기: </span><span class="sc">{</span>effect<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 효과 크기 ===
+Cohen's d: 0.9362
+효과 크기: 큼</code></pre>
+</div>
+</div>
+<p><strong>Cohen’s d 해석 기준</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.2 미만</td>
+<td>매우 작음</td>
+</tr>
+<tr class="even">
+<td>0.2 ~ 0.5</td>
+<td>작음</td>
+</tr>
+<tr class="odd">
+<td>0.5 ~ 0.8</td>
+<td>중간</td>
+</tr>
+<tr class="even">
+<td>0.8 이상</td>
+<td>큼</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="welch-t-검정-등분산-가정-불필요" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="welch-t-검정-등분산-가정-불필요"><span class="header-section-number">15.3</span> Welch t-검정 (등분산 가정 불필요)</h2>
+<p>등분산 가정이 의심되면 Welch t-검정을 사용한다. 이는 등분산을 가정하지 않는 t-검정으로, 더 보수적인 결과를 제공한다.</p>
+<p><strong>예제: Welch t-검정</strong></p>
+<div id="8c5607e7" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Welch t-검정 (등분산 가정 불필요)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>t_stat_welch, p_value_welch <span class="op">=</span> ttest_ind(male, female, equal_var<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Welch t-검정 ==="</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"t-통계량: </span><span class="sc">{</span>t_stat_welch<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value_welch<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Student vs Welch 비교</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== t-검정 비교 ==="</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Student t-test: t = </span><span class="sc">{</span>t_stat<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Welch t-test:   t = </span><span class="sc">{</span>t_stat_welch<span class="sc">:.4f}</span><span class="ss">, p = </span><span class="sc">{</span>p_value_welch<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Welch t-검정 ===
+t-통계량: 8.5545
+p-value: 0.0000
+
+=== t-검정 비교 ===
+Student t-test: t = 8.5417, p = 0.0000
+Welch t-test:   t = 8.5545, p = 0.0000</code></pre>
+</div>
+</div>
+<p><strong>Student vs Welch 선택 기준</strong></p>
+<ul>
+<li>등분산성 만족 → Student t-검정 (검정력 높음)</li>
+<li>등분산성 의심 → Welch t-검정 (안전)</li>
+<li>확신 없음 → Welch t-검정 (기본 선택 권장)</li>
+</ul>
+</section>
+<section id="세-집단-이상-비교-일원분산분석-anova" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="세-집단-이상-비교-일원분산분석-anova"><span class="header-section-number">15.4</span> 세 집단 이상 비교: 일원분산분석 (ANOVA)</h2>
+<p>일원분산분석(One-way ANOVA)은 세 개 이상 집단의 평균을 동시에 비교한다. 여러 번의 t-검정 대신 ANOVA를 사용하는 이유는 다중 비교로 인한 1종 오류 증가를 방지하기 위해서다.</p>
+<p><strong>가설 설정</strong></p>
+<ul>
+<li>H₀ (귀무가설): μ₁ = μ₂ = μ₃ = ⋯ = μₖ (모든 집단의 모평균이 같다)</li>
+<li>H₁ (대립가설): 적어도 하나의 모평균이 다르다</li>
+</ul>
+<p><strong>F-통계량</strong></p>
+<p><span class="math display">\[
+F = \frac{\text{집단 간 분산}}{\text{집단 내 분산}} = \frac{MSB}{MSW}
+\]</span></p>
+<p>F 값이 클수록 집단 간 차이가 집단 내 변동에 비해 크다는 의미이다.</p>
+<section id="예제-종별-부리-길이-비교" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="예제-종별-부리-길이-비교"><span class="header-section-number">15.4.1</span> 예제: 종별 부리 길이 비교</h3>
+<p><strong>예제: 데이터 준비 및 탐색</strong></p>
+<div id="4fd62e02" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 필요한 열 선택 및 결측치 제거</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_a <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 종별 부리 길이 기술 통계량 ==="</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> df_a.groupby(<span class="st">"species"</span>)[<span class="st">"bill_length_mm"</span>].agg([<span class="st">'count'</span>, <span class="st">'mean'</span>, <span class="st">'std'</span>])</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(summary)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 집단별 데이터 분리</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"bill_length_mm"</span>]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"bill_length_mm"</span>]</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>][<span class="st">"bill_length_mm"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 종별 부리 길이 기술 통계량 ===
+           count       mean       std
+species                              
+Adelie       151  38.791391  2.663405
+Chinstrap     68  48.833824  3.339256
+Gentoo       123  47.504878  3.081857</code></pre>
+</div>
+</div>
+<p><strong>예제: 가정 확인</strong></p>
+<div id="3f50c2db" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 각 집단의 정규성 검정</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 정규성 검정 ==="</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> species, data <span class="kw">in</span> [(<span class="st">"Adelie"</span>, adelie), (<span class="st">"Chinstrap"</span>, chinstrap), (<span class="st">"Gentoo"</span>, gentoo)]:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    _, p <span class="op">=</span> shapiro(data)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>species<span class="sc">}</span><span class="ss">: p = </span><span class="sc">{</span>p<span class="sc">:.4f}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'(정규)'</span> <span class="cf">if</span> p <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'(비정규)'</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 등분산성 검정</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 등분산성 검정 (Levene) ==="</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>_, p_levene <span class="op">=</span> levene(adelie, chinstrap, gentoo)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p = </span><span class="sc">{</span>p_levene<span class="sc">:.4f}</span><span class="ss"> </span><span class="sc">{</span><span class="st">'(등분산)'</span> <span class="cf">if</span> p_levene <span class="op">&gt;</span> <span class="fl">0.05</span> <span class="cf">else</span> <span class="st">'(이분산)'</span><span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 정규성 검정 ===
+Adelie: p = 0.7166 (정규)
+Chinstrap: p = 0.1941 (정규)
+Gentoo: p = 0.0135 (비정규)
+
+=== 등분산성 검정 (Levene) ===
+p = 0.1078 (등분산)</code></pre>
+</div>
+</div>
+<p><strong>예제: 일원분산분석</strong></p>
+<div id="0cb788d1" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA 수행</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> f_oneway(adelie, chinstrap, gentoo)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 일원분산분석 (One-way ANOVA) ==="</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F-통계량: </span><span class="sc">{</span>f_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 해석</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 </span><span class="sc">{</span>alpha<span class="sc">}</span><span class="ss"> 기준:"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha:</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✓ 귀무가설 기각: 종에 따른 부리 길이 차이가 유의함"</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  → 사후검정(Post-hoc test) 필요"</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"✗ 귀무가설 채택: 종에 따른 부리 길이 차이가 유의하지 않음"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 일원분산분석 (One-way ANOVA) ===
+F-통계량: 410.6003
+p-value: 0.0000
+
+유의수준 0.05 기준:
+✓ 귀무가설 기각: 종에 따른 부리 길이 차이가 유의함
+  → 사후검정(Post-hoc test) 필요</code></pre>
+</div>
+</div>
+<p><strong>예제: 시각화</strong></p>
+<div id="9cf55d2d" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 박스플롯</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"bill_length_mm"</span>, data<span class="op">=</span>df_a, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Bill Length by Species"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 바이올린 플롯</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"bill_length_mm"</span>, data<span class="op">=</span>df_a, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Bill Length Distribution by Species"</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05. 평균 비교 검정_files/figure-html/cell-12-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="anova의-한계와-사후검정-필요성" class="level3" data-number="15.4.2">
+<h3 data-number="15.4.2" class="anchored" data-anchor-id="anova의-한계와-사후검정-필요성"><span class="header-section-number">15.4.2</span> ANOVA의 한계와 사후검정 필요성</h3>
+<p>ANOVA는 “적어도 하나의 평균이 다르다”는 것만 알려주고, 구체적으로 어떤 집단 간 차이가 있는지는 알려주지 않는다. 이를 확인하기 위해 <strong>사후검정(Post-hoc Test)</strong>이 필요하다.</p>
+<p><strong>다중 비교 문제</strong></p>
+<p>여러 번의 t-검정을 반복하면 1종 오류(α)가 누적되어 증가한다.</p>
+<ul>
+<li>3개 집단: 3번 비교 → 전체 α ≈ 0.14</li>
+<li>4개 집단: 6번 비교 → 전체 α ≈ 0.26</li>
+<li>5개 집단: 10번 비교 → 전체 α ≈ 0.40</li>
+</ul>
+<p>사후검정은 이러한 다중 비교 문제를 보정한다.</p>
+</section>
+</section>
+<section id="대응표본-t-검정" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="대응표본-t-검정"><span class="header-section-number">15.5</span> 대응표본 t-검정</h2>
+<p>대응표본 t-검정(Paired Samples t-test)은 동일한 대상의 전후 변화를 비교한다. 각 대상의 차이값(전 - 후)을 계산하고, 이 차이값의 평균이 0인지 검정한다.</p>
+<p><strong>가설 설정</strong></p>
+<ul>
+<li>H₀ (귀무가설): μd = 0 (전후 평균 차이가 0이다)</li>
+<li>H₁ (대립가설): μd ≠ 0 (전후 평균 차이가 0이 아니다)</li>
+</ul>
+<p><strong>예제 구조 (개념적)</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_rel</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 전후 데이터 (예시)</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># before = [120, 125, 130, 135, 128]  # 처치 전 혈압</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># after = [115, 120, 125, 130, 122]   # 처치 후 혈압</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 대응표본 t-검정</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># t_stat, p_value = ttest_rel(before, after)</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"t-통계량: {t_stat:.4f}")</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"p-value: {p_value:.4f}")</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># if p_value &lt; 0.05:</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     print("처치 효과가 유의함")</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># else:</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     print("처치 효과가 유의하지 않음")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>대응표본 vs 독립표본</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>대응표본 t-검정</th>
+<th>독립표본 t-검정</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>데이터 구조</td>
+<td>동일 대상 전후</td>
+<td>서로 다른 대상</td>
+</tr>
+<tr class="even">
+<td>예시</td>
+<td>약물 투여 전후 혈압</td>
+<td>남성 vs 여성 체중</td>
+</tr>
+<tr class="odd">
+<td>장점</td>
+<td>개인차 통제, 검정력 높음</td>
+<td>구현 간단</td>
+</tr>
+<tr class="even">
+<td>가정</td>
+<td>차이값의 정규성</td>
+<td>각 집단의 정규성, 등분산성</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="사후검정-post-hoc-test" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="사후검정-post-hoc-test"><span class="header-section-number">15.6</span> 사후검정 (Post-hoc Test)</h2>
+<p>ANOVA에서 유의한 결과가 나오면, 구체적으로 어떤 집단 간 차이가 있는지 확인하기 위해 사후검정을 수행한다.</p>
+<section id="대표적인-사후검정-방법" class="level3" data-number="15.6.1">
+<h3 data-number="15.6.1" class="anchored" data-anchor-id="대표적인-사후검정-방법"><span class="header-section-number">15.6.1</span> 대표적인 사후검정 방법</h3>
+<p><strong>사후검정 비교</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>방법</th>
 <th>특징</th>
+<th>보수성</th>
+<th>가정</th>
 <th>사용 상황</th>
 </tr>
 </thead>
@@ -778,89 +1061,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>Tukey HSD</td>
 <td>가장 많이 사용</td>
-<td>등분산 가정 만족</td>
+<td>중간</td>
+<td>등분산</td>
+<td>ANOVA 후 표준 선택</td>
 </tr>
 <tr class="even">
 <td>Bonferroni</td>
 <td>매우 보수적</td>
-<td>비교 횟수가 적을 때</td>
+<td>높음</td>
+<td>등분산</td>
+<td>비교 횟수 적을 때</td>
 </tr>
 <tr class="odd">
 <td>Scheffé</td>
 <td>매우 보수적</td>
+<td>매우 높음</td>
+<td>등분산</td>
 <td>모든 선형 조합 비교</td>
 </tr>
 <tr class="even">
 <td>Games-Howell</td>
-<td>등분산 가정 불필요</td>
-<td>분산이 다를 때</td>
+<td>등분산 불필요</td>
+<td>중간</td>
+<td>정규성만</td>
+<td>이분산 시 사용</td>
+</tr>
+<tr class="odd">
+<td>Dunnett</td>
+<td>대조군 비교</td>
+<td>중간</td>
+<td>등분산</td>
+<td>하나의 대조군과 비교</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="tukey-hsd-honestly-significant-difference" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="tukey-hsd-honestly-significant-difference"><span class="header-section-number">15.10</span> Tukey HSD (Honestly Significant Difference)</h2>
-<section id="개념" class="level3" data-number="15.10.1">
-<h3 data-number="15.10.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">15.10.1</span> 개념</h3>
-<ul>
-<li>모든 집단 쌍의 평균 차이를 비교</li>
-<li>전체 유의수준을 유지하면서 검정</li>
-<li>ANOVA 이후 가장 표준적인 선택</li>
-</ul>
-</section>
-<section id="가설-구조" class="level3" data-number="15.10.2">
-<h3 data-number="15.10.2" class="anchored" data-anchor-id="가설-구조"><span class="header-section-number">15.10.2</span> 가설 구조</h3>
-<p>각 집단 쌍에 대해</p>
-<ul>
-<li><p>귀무가설(H₀)</p>
-<ul>
-<li>두 집단의 평균은 같다</li>
-</ul></li>
-<li><p>대립가설(H₁)</p>
-<ul>
-<li>두 집단의 평균은 다르다</li>
-</ul></li>
-</ul>
-</section>
-<section id="분석-목표" class="level3" data-number="15.10.3">
-<h3 data-number="15.10.3" class="anchored" data-anchor-id="분석-목표"><span class="header-section-number">15.10.3</span> 분석 목표</h3>
-<p>종(species)에 따라 부리 길이(bill_length_mm)의 평균 차이가 어떤 종 간에 존재하는지 확인한다.</p>
-<div id="d3b18763" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>df_post <span class="op">=</span> df[[<span class="st">"species"</span>, <span class="st">"bill_length_mm"</span>]].dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="99f5f630" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> [</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df_post[df_post[<span class="st">"species"</span>] <span class="op">==</span> sp][<span class="st">"bill_length_mm"</span>]</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> sp <span class="kw">in</span> df_post[<span class="st">"species"</span>].unique()</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> f_oneway(<span class="op">*</span>groups)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>f_stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(np.float64(410.6002550405077), np.float64(2.6946137388895495e-91))</code></pre>
-</div>
-</div>
-<ul>
-<li>p-value &lt; 유의수준 → 사후검정 진행</li>
-</ul>
-<div id="ebce5a85" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    endog<span class="op">=</span>df_post[<span class="st">"bill_length_mm"</span>],   <span class="co"># 비교할 수치형 변수</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>df_post[<span class="st">"species"</span>],         <span class="co"># 집단 변수</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="tukey-hsd-honestly-significant-difference" class="level3" data-number="15.6.2">
+<h3 data-number="15.6.2" class="anchored" data-anchor-id="tukey-hsd-honestly-significant-difference"><span class="header-section-number">15.6.2</span> Tukey HSD (Honestly Significant Difference)</h3>
+<p>Tukey HSD는 ANOVA 이후 가장 표준적인 사후검정으로, 모든 집단 쌍의 평균 차이를 전체 유의수준을 유지하면서 비교한다.</p>
+<p><strong>예제: Tukey HSD 수행</strong></p>
+<div id="b10faf38" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey HSD 사후검정</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    endog<span class="op">=</span>df_a[<span class="st">"bill_length_mm"</span>],   <span class="co"># 비교할 연속형 변수</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    groups<span class="op">=</span>df_a[<span class="st">"species"</span>],          <span class="co"># 집단 변수</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.05</span>                        <span class="co"># 유의수준</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Tukey HSD 사후검정 ==="</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Multiple Comparison of Means - Tukey HSD, FWER=0.05   
+<pre><code>=== Tukey HSD 사후검정 ===
+   Multiple Comparison of Means - Tukey HSD, FWER=0.05   
 =========================================================
   group1    group2  meandiff p-adj   lower  upper  reject
 ---------------------------------------------------------
@@ -870,10 +1124,7 @@ Chinstrap    Gentoo  -1.3289 0.0089 -2.3819 -0.276   True
 ---------------------------------------------------------</code></pre>
 </div>
 </div>
-</section>
-<section id="출력-결과-해석" class="level3" data-number="15.10.4">
-<h3 data-number="15.10.4" class="anchored" data-anchor-id="출력-결과-해석"><span class="header-section-number">15.10.4</span> 출력 결과 해석</h3>
-<p>출력 테이블 주요 열 의미</p>
+<p><strong>출력 결과 해석</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -884,77 +1135,215 @@ Chinstrap    Gentoo  -1.3289 0.0089 -2.3819 -0.276   True
 <tbody>
 <tr class="odd">
 <td>group1, group2</td>
-<td>비교되는 집단</td>
+<td>비교되는 두 집단</td>
 </tr>
 <tr class="even">
 <td>meandiff</td>
-<td>평균 차이</td>
+<td>평균 차이 (group1 - group2)</td>
 </tr>
 <tr class="odd">
 <td>p-adj</td>
-<td>보정된 p-value</td>
+<td>보정된 p-value (다중 비교 보정)</td>
 </tr>
 <tr class="even">
 <td>lower, upper</td>
-<td>평균 차이 신뢰구간</td>
+<td>평균 차이의 95% 신뢰구간</td>
 </tr>
 <tr class="odd">
 <td>reject</td>
-<td>귀무가설 기각 여부</td>
+<td>귀무가설 기각 여부 (True = 유의한 차이)</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="해석-예시" class="level3" data-number="15.10.5">
-<h3 data-number="15.10.5" class="anchored" data-anchor-id="해석-예시"><span class="header-section-number">15.10.5</span> 해석 예시</h3>
-<ul>
-<li><p>reject = True</p>
-<ul>
-<li>두 종 간 평균 부리 길이에 유의한 차이 존재</li>
-</ul></li>
-<li><p>reject = False</p>
-<ul>
-<li>평균 차이가 있다고 보기 어렵다</li>
-</ul></li>
-</ul>
-<p><strong>ANOVA 결과를 구체적인 집단 비교로 분해</strong>한 것이 사후검정</p>
-<div id="da9ee9cf" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>sns.boxplot(</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_post,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"species"</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"bill_length_mm"</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Bill Length by Species"</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>예제: 사후검정 시각화</strong></p>
+<div id="53d2774e" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey HSD 결과 시각화</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tukey.plot_simultaneous()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Tukey HSD: Simultaneous Confidence Intervals"</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 박스플롯과 함께 비교</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"bill_length_mm"</span>, data<span class="op">=</span>df_a)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Bill Length by Species with Post-hoc Results"</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Bill Length (mm)"</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 유의한 차이가 있는 쌍에 별표 표시 (수동)</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># (실제로는 자동화된 시각화 패키지 사용 권장)</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05. 평균 비교 검정_files/figure-html/cell-8-output-1.png" width="585" height="449" class="figure-img"></p>
+<p><img src="05. 평균 비교 검정_files/figure-html/cell-14-output-1.png" width="837" height="505" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05. 평균 비교 검정_files/figure-html/cell-14-output-2.png" width="808" height="523" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<ul>
-<li>사후검정 결과와 박스플롯 분포를 함께 보면 통계적 결과 + 직관적 이해가 동시에 가능</li>
-</ul>
+</section>
+<section id="bonferroni-보정" class="level3" data-number="15.6.3">
+<h3 data-number="15.6.3" class="anchored" data-anchor-id="bonferroni-보정"><span class="header-section-number">15.6.3</span> Bonferroni 보정</h3>
+<p>Bonferroni 보정은 가장 보수적인 방법으로, 각 비교의 유의수준을 비교 횟수로 나눈다.</p>
+<p><span class="math display">\[
+\alpha_{\text{adjusted}} = \frac{\alpha}{k}
+\]</span></p>
+<p>여기서 k는 비교 횟수이다.</p>
+<p><strong>예제: Bonferroni 보정 수동 적용</strong></p>
+<div id="d926f74f" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3개 집단의 모든 쌍 비교 (3C2 = 3번)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>comparisons <span class="op">=</span> [</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Chinstrap"</span>, <span class="st">"Gentoo"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bonferroni 보정 유의수준</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="bu">len</span>(comparisons)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>alpha_bonf <span class="op">=</span> alpha <span class="op">/</span> k</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== Bonferroni 보정 ==="</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"원래 유의수준: </span><span class="sc">{</span>alpha<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"비교 횟수: </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"보정된 유의수준: </span><span class="sc">{</span>alpha_bonf<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">개별 t-검정 결과:"</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sp1, sp2 <span class="kw">in</span> comparisons:</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    group1 <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> sp1][<span class="st">"bill_length_mm"</span>]</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    group2 <span class="op">=</span> df_a[df_a[<span class="st">"species"</span>] <span class="op">==</span> sp2][<span class="st">"bill_length_mm"</span>]</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    t_stat, p_val <span class="op">=</span> ttest_ind(group1, group2)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>sp1<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span>sp2<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  p-value: </span><span class="sc">{</span>p_val<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  결과: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p_val <span class="op">&lt;</span> alpha_bonf:</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"유의한 차이 (Bonferroni 보정 후)"</span>)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"유의하지 않음 (Bonferroni 보정 후)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Bonferroni 보정 ===
+원래 유의수준: 0.05
+비교 횟수: 3
+보정된 유의수준: 0.0167
+
+개별 t-검정 결과:
+
+Adelie vs Chinstrap:
+  p-value: 0.0000
+  결과: 유의한 차이 (Bonferroni 보정 후)
+
+Adelie vs Gentoo:
+  p-value: 0.0000
+  결과: 유의한 차이 (Bonferroni 보정 후)
+
+Chinstrap vs Gentoo:
+  p-value: 0.0062
+  결과: 유의한 차이 (Bonferroni 보정 후)</code></pre>
+</div>
+</div>
+</section>
+<section id="games-howell-등분산-불필요" class="level3" data-number="15.6.4">
+<h3 data-number="15.6.4" class="anchored" data-anchor-id="games-howell-등분산-불필요"><span class="header-section-number">15.6.4</span> Games-Howell (등분산 불필요)</h3>
+<p>등분산 가정이 위배된 경우 Games-Howell 검정을 사용한다. 이는 Welch t-검정의 다중 비교 버전이다.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Games-Howell은 pingouin 라이브러리 사용 권장</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import pingouin as pg</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># games_howell = pg.pairwise_gameshowell(</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     data=df_a,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     dv="bill_length_mm",</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     between="species"</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># print(games_howell)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
-<section id="등분산-가정이-깨진-경우-1" class="level2" data-number="15.11">
-<h2 data-number="15.11" class="anchored" data-anchor-id="등분산-가정이-깨진-경우-1"><span class="header-section-number">15.11</span> 등분산 가정이 깨진 경우</h2>
+<section id="요약" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="요약"><span class="header-section-number">15.7</span> 요약</h2>
+<p>이 장에서는 집단 간 평균을 비교하는 다양한 검정 방법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>평균 비교 검정 종합</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>집단 수</th>
+<th>표본 관계</th>
+<th>등분산 가정</th>
+<th>검정 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>두 집단 비교</td>
+<td>2</td>
+<td>독립</td>
+<td>만족</td>
+<td>Student t-검정</td>
+</tr>
+<tr class="even">
+<td>두 집단 비교</td>
+<td>2</td>
+<td>독립</td>
+<td>위배</td>
+<td>Welch t-검정</td>
+</tr>
+<tr class="odd">
+<td>동일 대상 전후</td>
+<td>2</td>
+<td>대응</td>
+<td>-</td>
+<td>대응표본 t-검정</td>
+</tr>
+<tr class="even">
+<td>다집단 비교</td>
+<td>3+</td>
+<td>독립</td>
+<td>만족</td>
+<td>ANOVA + Tukey</td>
+</tr>
+<tr class="odd">
+<td>다집단 비교</td>
+<td>3+</td>
+<td>독립</td>
+<td>위배</td>
+<td>ANOVA + Games-Howell</td>
+</tr>
+</tbody>
+</table>
+<p><strong>분석 흐름</strong></p>
+<ol type="1">
+<li><strong>가정 확인</strong>: 정규성(Shapiro-Wilk), 등분산성(Levene)</li>
+<li><strong>적절한 검정 선택</strong>: 집단 수, 표본 관계, 가정 만족 여부</li>
+<li><strong>검정 수행</strong>: t-검정 또는 ANOVA</li>
+<li><strong>효과 크기 측정</strong>: Cohen’s d 또는 η² (eta-squared)</li>
+<li><strong>사후검정</strong> (ANOVA만): Tukey HSD 또는 Games-Howell</li>
+<li><strong>시각화</strong>: 박스플롯, 바이올린 플롯</li>
+</ol>
+<p><strong>핵심 포인트</strong></p>
 <ul>
-<li><p>ANOVA 전에 등분산 검정에서 문제가 있었다면</p>
-<ul>
-<li>Tukey 대신 <strong>Games-Howell</strong> 권장</li>
-</ul></li>
-<li><p>statsmodels 기본 API에는 직접 구현이 없어서</p>
-<ul>
-<li>pingouin 라이브러리를 자주 사용</li>
-</ul></li>
+<li><strong>p-value의 의미</strong>: 차이의 존재 여부만 판단, 크기나 중요도는 별도 측정</li>
+<li><strong>효과 크기 필수</strong>: p-value와 함께 Cohen’s d 등 효과 크기 보고</li>
+<li><strong>다중 비교 보정</strong>: 여러 비교 시 사후검정으로 1종 오류 통제</li>
+<li><strong>가정 점검</strong>: 정규성과 등분산성 확인 후 적절한 방법 선택</li>
+<li><strong>시각화 중요</strong>: 통계적 결과와 함께 분포를 시각적으로 확인</li>
 </ul>
+<p><strong>주의사항</strong></p>
+<ul>
+<li>통계적 유의성 ≠ 실무적 중요성</li>
+<li>표본 크기가 크면 작은 차이도 유의하게 나올 수 있음</li>
+<li>가정 위배 시 적절한 대안 검정 사용</li>
+<li>사후검정은 ANOVA가 유의할 때만 수행</li>
+<li>결과 해석 시 도메인 지식 함께 고려</li>
+</ul>
+<p>평균 비교 검정은 데이터 분석에서 가장 기본이 되는 기법이다. 적절한 검정을 선택하고 가정을 확인하며, 결과를 올바르게 해석하는 것이 중요하다. 다음 장에서는 변수 간 관계를 분석하는 상관분석과 회귀분석을 학습할 것이다.</p>
 
 
 </section>

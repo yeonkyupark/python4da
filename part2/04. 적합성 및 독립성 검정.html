@@ -456,7 +456,7 @@ window.Quarto = {
 
 <p>적합성 검정(Goodness-of-Fit Test)과 독립성 검정(Test of Independence)은 범주형 데이터의 빈도와 구조를 분석하는 방법이다. 이 검정들은 평균이 아닌 관측 빈도와 기대 빈도의 차이를 통해 데이터의 패턴을 파악한다. 적합성 검정은 “데이터가 특정 이론적 분포를 따르는가?”를, 독립성 검정은 “두 범주형 변수가 서로 관련이 있는가?”를 확인한다. 이 장에서는 카이제곱 검정을 중심으로 범주형 데이터 분석 방법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="20a7e20b" class="cell" data-execution_count="1">
+<div id="7f7fb686" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -569,7 +569,7 @@ window.Quarto = {
 <h3 data-number="14.3.1" class="anchored" data-anchor-id="균등-분포-검정"><span class="header-section-number">14.3.1</span> 균등 분포 검정</h3>
 <p>가장 기본적인 적합성 검정은 모든 범주가 동일한 비율로 나타나는지 확인하는 것이다.</p>
 <p><strong>예제: 종 분포가 균등한가?</strong></p>
-<div id="d8ac8700" class="cell" data-execution_count="2">
+<div id="6f3619ec" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 관측 빈도</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>observed <span class="op">=</span> df[<span class="st">"species"</span>].value_counts().sort_index()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -600,7 +600,7 @@ Gentoo: 111.00</code></pre>
 </div>
 </div>
 <p><strong>예제: 카이제곱 적합성 검정</strong></p>
-<div id="26805af5" class="cell" data-execution_count="3">
+<div id="4863bcf1" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 적합성 검정</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -657,7 +657,7 @@ p-value: 0.0000
 <h3 data-number="14.3.2" class="anchored" data-anchor-id="특정-비율-검정"><span class="header-section-number">14.3.2</span> 특정 비율 검정</h3>
 <p>이론적으로 특정 비율이 예상되는 경우, 그 비율과 관측 데이터를 비교할 수 있다.</p>
 <p><strong>예제: 특정 비율 검정</strong></p>
-<div id="c20d29fd" class="cell" data-execution_count="4">
+<div id="c74713a0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이론적 비율 설정 (예: 4:3:3)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>theoretical_ratio <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> observed.<span class="bu">sum</span>()</span>
@@ -756,7 +756,7 @@ P(A \cap B) = P(A) \times P(B)
 <h3 data-number="14.4.1" class="anchored" data-anchor-id="교차표-contingency-table"><span class="header-section-number">14.4.1</span> 교차표 (Contingency Table)</h3>
 <p>독립성 검정은 교차표를 기반으로 수행한다.</p>
 <p><strong>예제: 종과 성별의 교차표</strong></p>
-<div id="2cc8ef3b" class="cell" data-execution_count="5">
+<div id="dfe1d3e1" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표 생성</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
@@ -794,7 +794,7 @@ Gentoo       48.7  51.3</code></pre>
 </div>
 </div>
 <p><strong>예제: 교차표 시각화</strong></p>
-<div id="b235253a" class="cell" data-execution_count="6">
+<div id="2b423c8d" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표 시각화 (합계 제외)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>contingency_no_margin <span class="op">=</span> pd.crosstab(df[<span class="st">"species"</span>], df[<span class="st">"sex"</span>])</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -834,7 +834,7 @@ Gentoo       48.7  51.3</code></pre>
 <section id="카이제곱-독립성-검정" class="level3" data-number="14.4.2">
 <h3 data-number="14.4.2" class="anchored" data-anchor-id="카이제곱-독립성-검정"><span class="header-section-number">14.4.2</span> 카이제곱 독립성 검정</h3>
 <p><strong>예제: 독립성 검정 수행</strong></p>
-<div id="263c9d3c" class="cell" data-execution_count="7">
+<div id="73a0dd9d" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립성 검정 (합계 제외)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>chi2, p_value, dof, expected_freq <span class="op">=</span> chi2_contingency(contingency_no_margin)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -861,7 +861,7 @@ p-value: 0.9760
 <h3 data-number="14.4.3" class="anchored" data-anchor-id="기대-빈도-확인"><span class="header-section-number">14.4.3</span> 기대 빈도 확인</h3>
 <p>카이제곱 검정의 신뢰도는 기대 빈도에 의존한다.</p>
 <p><strong>예제: 기대 빈도 확인</strong></p>
-<div id="f45a02bf" class="cell" data-execution_count="8">
+<div id="bb8cb12b" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기대 빈도 출력</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>expected_df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    expected_freq,</span>
@@ -924,7 +924,7 @@ Gentoo      58.96  60.04
 <h3 data-number="14.4.4" class="anchored" data-anchor-id="연관성의-강도-측정"><span class="header-section-number">14.4.4</span> 연관성의 강도 측정</h3>
 <p>카이제곱 검정은 연관성의 존재 여부만 알려주므로, 연관성의 강도를 측정하려면 추가 지표가 필요하다.</p>
 <p><strong>예제: Cramér’s V 계산</strong></p>
-<div id="1d921a0c" class="cell" data-execution_count="9">
+<div id="78a33b1f" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cramér's V 계산</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> contingency_no_margin.<span class="bu">sum</span>().<span class="bu">sum</span>()</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>min_dim <span class="op">=</span> <span class="bu">min</span>(contingency_no_margin.shape[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">1</span>, contingency_no_margin.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>)</span>
@@ -989,7 +989,7 @@ F = \frac{s_1^2}{s_2^2}
 \]</span></p>
 <p>여기서 <span class="math inline">\(s_1^2\)</span>와 <span class="math inline">\(s_2^2\)</span>는 각 집단의 표본 분산이다.</p>
 <p><strong>예제: F 검정</strong></p>
-<div id="70b04980" class="cell" data-execution_count="10">
+<div id="087273b4" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 종 선택</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>].dropna()</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"body_mass_g"</span>].dropna()</span>
