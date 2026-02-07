@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,9 +107,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -407,32 +404,25 @@ window.Quarto = {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#적합성-및-독립성-검정-시점" id="toc-적합성-및-독립성-검정-시점" class="nav-link active" data-scroll-target="#적합성-및-독립성-검정-시점"><span class="header-section-number">14.1</span> 적합성 및 독립성 검정 시점</a></li>
-  <li><a href="#카이제곱χ²-검정-공통-아이디어" id="toc-카이제곱χ²-검정-공통-아이디어" class="nav-link" data-scroll-target="#카이제곱χ²-검정-공통-아이디어"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정 공통 아이디어</a></li>
+  <li><a href="#검정-유형과-적용-시점" id="toc-검정-유형과-적용-시점" class="nav-link active" data-scroll-target="#검정-유형과-적용-시점"><span class="header-section-number">14.1</span> 검정 유형과 적용 시점</a></li>
+  <li><a href="#카이제곱χ²-검정의-기본-원리" id="toc-카이제곱χ²-검정의-기본-원리" class="nav-link" data-scroll-target="#카이제곱χ²-검정의-기본-원리"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정의 기본 원리</a></li>
   <li><a href="#적합성-검정-goodness-of-fit-test" id="toc-적합성-검정-goodness-of-fit-test" class="nav-link" data-scroll-target="#적합성-검정-goodness-of-fit-test"><span class="header-section-number">14.3</span> 적합성 검정 (Goodness-of-Fit Test)</a>
   <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">14.3.1</span> 개념</a></li>
-  <li><a href="#가설-설정" id="toc-가설-설정" class="nav-link" data-scroll-target="#가설-설정"><span class="header-section-number">14.3.2</span> 가설 설정</a></li>
-  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">14.3.3</span> 예제</a></li>
-  <li><a href="#적합성-검정-예시" id="toc-적합성-검정-예시" class="nav-link" data-scroll-target="#적합성-검정-예시"><span class="header-section-number">14.3.4</span> 적합성 검정 예시</a></li>
+  <li><a href="#균등-분포-검정" id="toc-균등-분포-검정" class="nav-link" data-scroll-target="#균등-분포-검정"><span class="header-section-number">14.3.1</span> 균등 분포 검정</a></li>
+  <li><a href="#특정-비율-검정" id="toc-특정-비율-검정" class="nav-link" data-scroll-target="#특정-비율-검정"><span class="header-section-number">14.3.2</span> 특정 비율 검정</a></li>
+  <li><a href="#적합성-검정의-활용-사례" id="toc-적합성-검정의-활용-사례" class="nav-link" data-scroll-target="#적합성-검정의-활용-사례"><span class="header-section-number">14.3.3</span> 적합성 검정의 활용 사례</a></li>
   </ul></li>
   <li><a href="#독립성-검정-test-of-independence" id="toc-독립성-검정-test-of-independence" class="nav-link" data-scroll-target="#독립성-검정-test-of-independence"><span class="header-section-number">14.4</span> 독립성 검정 (Test of Independence)</a>
   <ul>
-  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">14.4.1</span> 개념</a></li>
-  <li><a href="#가설-설정-1" id="toc-가설-설정-1" class="nav-link" data-scroll-target="#가설-설정-1"><span class="header-section-number">14.4.2</span> 가설 설정</a></li>
-  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">14.4.3</span> 예제</a></li>
-  <li><a href="#교차표-생성" id="toc-교차표-생성" class="nav-link" data-scroll-target="#교차표-생성"><span class="header-section-number">14.4.4</span> 교차표 생성</a></li>
-  <li><a href="#카이제곱-독립성-검정" id="toc-카이제곱-독립성-검정" class="nav-link" data-scroll-target="#카이제곱-독립성-검정"><span class="header-section-number">14.4.5</span> 카이제곱 독립성 검정</a></li>
-  <li><a href="#기대-빈도-확인" id="toc-기대-빈도-확인" class="nav-link" data-scroll-target="#기대-빈도-확인"><span class="header-section-number">14.4.6</span> 기대 빈도 확인</a></li>
+  <li><a href="#교차표-contingency-table" id="toc-교차표-contingency-table" class="nav-link" data-scroll-target="#교차표-contingency-table"><span class="header-section-number">14.4.1</span> 교차표 (Contingency Table)</a></li>
+  <li><a href="#카이제곱-독립성-검정" id="toc-카이제곱-독립성-검정" class="nav-link" data-scroll-target="#카이제곱-독립성-검정"><span class="header-section-number">14.4.2</span> 카이제곱 독립성 검정</a></li>
+  <li><a href="#기대-빈도-확인" id="toc-기대-빈도-확인" class="nav-link" data-scroll-target="#기대-빈도-확인"><span class="header-section-number">14.4.3</span> 기대 빈도 확인</a></li>
+  <li><a href="#연관성의-강도-측정" id="toc-연관성의-강도-측정" class="nav-link" data-scroll-target="#연관성의-강도-측정"><span class="header-section-number">14.4.4</span> 연관성의 강도 측정</a></li>
   </ul></li>
-  <li><a href="#f-검정" id="toc-f-검정" class="nav-link" data-scroll-target="#f-검정"><span class="header-section-number">14.5</span> F 검정</a>
-  <ul>
-  <li><a href="#f-검정의-의미" id="toc-f-검정의-의미" class="nav-link" data-scroll-target="#f-검정의-의미"><span class="header-section-number">14.5.1</span> F 검정의 의미</a></li>
-  <li><a href="#예제-2" id="toc-예제-2" class="nav-link" data-scroll-target="#예제-2"><span class="header-section-number">14.5.2</span> 예제</a></li>
-  </ul></li>
-  <li><a href="#검정별-예시" id="toc-검정별-예시" class="nav-link" data-scroll-target="#검정별-예시"><span class="header-section-number">14.6</span> 검정별 예시</a></li>
-  <li><a href="#자주-하는-오해" id="toc-자주-하는-오해" class="nav-link" data-scroll-target="#자주-하는-오해"><span class="header-section-number">14.7</span> 자주 하는 오해</a></li>
-  <li><a href="#정리" id="toc-정리" class="nav-link" data-scroll-target="#정리"><span class="header-section-number">14.8</span> 정리</a></li>
+  <li><a href="#f-검정-분산-비교" id="toc-f-검정-분산-비교" class="nav-link" data-scroll-target="#f-검정-분산-비교"><span class="header-section-number">14.5</span> F 검정 (분산 비교)</a></li>
+  <li><a href="#검정-방법-종합-비교" id="toc-검정-방법-종합-비교" class="nav-link" data-scroll-target="#검정-방법-종합-비교"><span class="header-section-number">14.6</span> 검정 방법 종합 비교</a></li>
+  <li><a href="#자주-하는-오해와-주의사항" id="toc-자주-하는-오해와-주의사항" class="nav-link" data-scroll-target="#자주-하는-오해와-주의사항"><span class="header-section-number">14.7</span> 자주 하는 오해와 주의사항</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">14.8</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part2/04. 적합성 및 독립성 검정.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -464,285 +454,777 @@ window.Quarto = {
 </header>
 
 
-<section id="적합성-및-독립성-검정-시점" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="적합성-및-독립성-검정-시점"><span class="header-section-number">14.1</span> 적합성 및 독립성 검정 시점</h2>
-<ul>
-<li><strong>이 데이터는 내가 기대한 분포를 따르는가?</strong></li>
-<li><strong>두 범주형 변수는 서로 관련이 있는가?</strong></li>
-</ul>
-<p>평균이 아니라 <strong>빈도와 구조</strong>를 파악하기 위해 수행한다.</p>
-</section>
-<section id="카이제곱χ²-검정-공통-아이디어" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="카이제곱χ²-검정-공통-아이디어"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정 공통 아이디어</h2>
-<p>카이제곱 검정 논리:</p>
-<p><span class="math display">\[
-\chi^2 = \sum \frac{(관측값 - 기대값)^2}{기대값}
-\]</span></p>
-<p>핵심 비교</p>
-<ul>
-<li>관측 빈도 (Observed)</li>
-<li>기대 빈도 (Expected)</li>
-</ul>
-</section>
-<section id="적합성-검정-goodness-of-fit-test" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="적합성-검정-goodness-of-fit-test"><span class="header-section-number">14.3</span> 적합성 검정 (Goodness-of-Fit Test)</h2>
-<section id="개념" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">14.3.1</span> 개념</h3>
-<p><strong>관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는가?</strong></p>
-</section>
-<section id="가설-설정" class="level3" data-number="14.3.2">
-<h3 data-number="14.3.2" class="anchored" data-anchor-id="가설-설정"><span class="header-section-number">14.3.2</span> 가설 설정</h3>
-<ul>
-<li>귀무가설 (H_0): 관측 분포 = 기대 분포</li>
-<li>대립가설 (H_1): 관측 분포 ≠ 기대 분포</li>
-</ul>
-</section>
-<section id="예제" class="level3" data-number="14.3.3">
-<h3 data-number="14.3.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">14.3.3</span> 예제</h3>
-<p>species 분포가 <strong>균등 분포</strong>라고 볼 수 있을까?</p>
-<div id="831c394f" class="cell" data-execution_count="1">
+<p>적합성 검정(Goodness-of-Fit Test)과 독립성 검정(Test of Independence)은 범주형 데이터의 빈도와 구조를 분석하는 방법이다. 이 검정들은 평균이 아닌 관측 빈도와 기대 빈도의 차이를 통해 데이터의 패턴을 파악한다. 적합성 검정은 “데이터가 특정 이론적 분포를 따르는가?”를, 독립성 검정은 “두 범주형 변수가 서로 관련이 있는가?”를 확인한다. 이 장에서는 카이제곱 검정을 중심으로 범주형 데이터 분석 방법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="20a7e20b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="53474b2e" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>observed <span class="op">=</span> df[<span class="st">"species"</span>].value_counts().sort_index()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>observed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>species
-Adelie       146
-Chinstrap     68
-Gentoo       119
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<p>기대 빈도 (균등 가정)</p>
-<div id="04de6943" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> [observed.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(observed)] <span class="op">*</span> <span class="bu">len</span>(observed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="889495b0" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stat, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>(np.float64(28.270270270270274), np.float64(7.264217011785265e-07))</code></pre>
-</div>
-</div>
-<p>판단</p>
-<ul>
-<li>p ≥ 0.05 → 기대 분포와 크게 다르지 않음</li>
-<li>p &lt; 0.05 → 분포가 다름</li>
-</ul>
-</section>
-<section id="적합성-검정-예시" class="level3" data-number="14.3.4">
-<h3 data-number="14.3.4" class="anchored" data-anchor-id="적합성-검정-예시"><span class="header-section-number">14.3.4</span> 적합성 검정 예시</h3>
-<ul>
-<li>주사위 공정성</li>
-<li>범주 비율 검증</li>
-<li>샘플링 결과 검증</li>
-</ul>
-</section>
-</section>
-<section id="독립성-검정-test-of-independence" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="독립성-검정-test-of-independence"><span class="header-section-number">14.4</span> 독립성 검정 (Test of Independence)</h2>
-<section id="개념-1" class="level3" data-number="14.4.1">
-<h3 data-number="14.4.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">14.4.1</span> 개념</h3>
-<p><strong>두 범주형 변수가 서로 독립적인가?</strong></p>
-<p>즉,</p>
-<ul>
-<li>하나를 알면</li>
-<li>다른 하나의 분포가 바뀌는가?</li>
-</ul>
-</section>
-<section id="가설-설정-1" class="level3" data-number="14.4.2">
-<h3 data-number="14.4.2" class="anchored" data-anchor-id="가설-설정-1"><span class="header-section-number">14.4.2</span> 가설 설정</h3>
-<ul>
-<li>(H_0): 두 변수는 독립</li>
-<li>(H_1): 두 변수는 독립이 아님</li>
-</ul>
-</section>
-<section id="예제-1" class="level3" data-number="14.4.3">
-<h3 data-number="14.4.3" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">14.4.3</span> 예제</h3>
-<p>species와 sex는 독립일까?</p>
-</section>
-<section id="교차표-생성" class="level3" data-number="14.4.4">
-<h3 data-number="14.4.4" class="anchored" data-anchor-id="교차표-생성"><span class="header-section-number">14.4.4</span> 교차표 생성</h3>
-<div id="4d357f25" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"sex"</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>contingency_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare, chi2_contingency, f</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">범주형 변수:"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>, <span class="st">'category'</span>]).columns.tolist())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
 
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+범주형 변수:
+['species', 'island', 'sex']</code></pre>
+</div>
+</div>
+<section id="검정-유형과-적용-시점" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="검정-유형과-적용-시점"><span class="header-section-number">14.1</span> 검정 유형과 적용 시점</h2>
+<p>적합성 검정과 독립성 검정은 다음과 같은 질문에 답한다.</p>
+<p><strong>검정 유형별 질문</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 26%">
+</colgroup>
 <thead>
 <tr class="header">
-<th data-quarto-table-cell-role="th">sex</th>
-<th data-quarto-table-cell-role="th">Female</th>
-<th data-quarto-table-cell-role="th">Male</th>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">species</th>
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
+<th>검정 유형</th>
+<th>핵심 질문</th>
+<th>변수 개수</th>
+<th>비교 대상</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Adelie</th>
-<td>73</td>
-<td>73</td>
+<td>적합성 검정</td>
+<td>이 데이터는 내가 기대한 분포를 따르는가?</td>
+<td>1개</td>
+<td>관측 분포 vs 이론 분포</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">Chinstrap</th>
-<td>34</td>
-<td>34</td>
+<td>독립성 검정</td>
+<td>두 범주형 변수는 서로 관련이 있는가?</td>
+<td>2개</td>
+<td>변수 간 연관성</td>
 </tr>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">Gentoo</th>
-<td>58</td>
-<td>61</td>
+<td>동질성 검정</td>
+<td>여러 집단의 분포가 같은가?</td>
+<td>2개</td>
+<td>집단 간 분포</td>
 </tr>
 </tbody>
 </table>
+<p>이러한 검정은 평균이 아니라 <strong>빈도와 구조</strong>를 파악하기 위해 수행하며, t-검정이나 ANOVA와는 다른 목적으로 사용된다.</p>
+<p><strong>검정 적용 시점</strong></p>
+<ul>
+<li>범주형 변수의 분포를 이론적 분포와 비교할 때</li>
+<li>두 범주형 변수 간 관계를 탐색할 때</li>
+<li>샘플링이 모집단을 대표하는지 확인할 때</li>
+<li>실험 설계의 균형성을 검증할 때</li>
+</ul>
+</section>
+<section id="카이제곱χ²-검정의-기본-원리" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="카이제곱χ²-검정의-기본-원리"><span class="header-section-number">14.2</span> 카이제곱(χ²) 검정의 기본 원리</h2>
+<p>모든 카이제곱 검정은 관측 빈도와 기대 빈도의 차이를 측정한다.</p>
+<p><strong>카이제곱 검정 통계량</strong></p>
+<p><span class="math display">\[
+\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
+\]</span></p>
+<p>여기서: - <span class="math inline">\(O_i\)</span>: 관측 빈도(Observed frequency) - <span class="math inline">\(E_i\)</span>: 기대 빈도(Expected frequency) - <span class="math inline">\(k\)</span>: 범주의 개수</p>
+<p><strong>검정 통계량의 의미</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>χ² 값</th>
+<th>의미</th>
+<th>결론</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0에 가까움</td>
+<td>관측값 ≈ 기대값</td>
+<td>귀무가설 지지</td>
+</tr>
+<tr class="even">
+<td>큼</td>
+<td>관측값 ≠ 기대값</td>
+<td>대립가설 지지</td>
+</tr>
+</tbody>
+</table>
+<p>χ² 값이 클수록 관측 데이터가 기대 분포에서 벗어난 정도가 크다.</p>
+</section>
+<section id="적합성-검정-goodness-of-fit-test" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="적합성-검정-goodness-of-fit-test"><span class="header-section-number">14.3</span> 적합성 검정 (Goodness-of-Fit Test)</h2>
+<p>적합성 검정은 관측된 범주 빈도가 미리 정해진 이론적 분포와 일치하는지 확인하는 검정이다.</p>
+<p><strong>가설 설정</strong></p>
+<ul>
+<li>H₀ (귀무가설): 관측 분포 = 기대 분포 (데이터가 이론 분포를 따름)</li>
+<li>H₁ (대립가설): 관측 분포 ≠ 기대 분포 (데이터가 이론 분포를 따르지 않음)</li>
+</ul>
+<section id="균등-분포-검정" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="균등-분포-검정"><span class="header-section-number">14.3.1</span> 균등 분포 검정</h3>
+<p>가장 기본적인 적합성 검정은 모든 범주가 동일한 비율로 나타나는지 확인하는 것이다.</p>
+<p><strong>예제: 종 분포가 균등한가?</strong></p>
+<div id="d8ac8700" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 관측 빈도</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>observed <span class="op">=</span> df[<span class="st">"species"</span>].value_counts().sort_index()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 관측 빈도 ==="</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(observed)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">총 개체 수: </span><span class="sc">{</span>observed<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 균등 분포 기대 빈도</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> [observed.<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(observed)] <span class="op">*</span> <span class="bu">len</span>(observed)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 기대 빈도 (균등 분포) ==="</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> species, exp <span class="kw">in</span> <span class="bu">zip</span>(observed.index, expected):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>species<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>exp<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 관측 빈도 ===
+species
+Adelie       146
+Chinstrap     68
+Gentoo       119
+Name: count, dtype: int64
 
+총 개체 수: 333
+
+=== 기대 빈도 (균등 분포) ===
+Adelie: 111.00
+Chinstrap: 111.00
+Gentoo: 111.00</code></pre>
+</div>
+</div>
+<p><strong>예제: 카이제곱 적합성 검정</strong></p>
+<div id="26805af5" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 적합성 검정</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 카이제곱 적합성 검정 ==="</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"χ² 통계량: </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"균등 분포를 따른다고 볼 수 있음 (H₀ 채택)"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"균등 분포가 아님 (H₀ 기각)"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 관측 빈도</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].bar(observed.index, observed.values, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Observed Frequencies"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 관측 vs 기대 비교</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(observed))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.35</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, observed.values, width, label<span class="op">=</span><span class="st">'Observed'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, expected, width, label<span class="op">=</span><span class="st">'Expected (Uniform)'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Observed vs Expected"</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticks(x)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels(observed.index)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 카이제곱 적합성 검정 ===
+χ² 통계량: 28.2703
+p-value: 0.0000
+
+유의수준 0.05 기준: 균등 분포가 아님 (H₀ 기각)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 적합성 및 독립성 검정_files/figure-html/cell-4-output-2.png" width="1334" height="470" class="figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
 </section>
-<section id="카이제곱-독립성-검정" class="level3" data-number="14.4.5">
-<h3 data-number="14.4.5" class="anchored" data-anchor-id="카이제곱-독립성-검정"><span class="header-section-number">14.4.5</span> 카이제곱 독립성 검정</h3>
-<div id="43ce1372" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>chi2, p_value, dof, expected <span class="op">=</span> chi2_contingency(contingency_table)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>chi2, p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>(np.float64(0.04860717014078318), np.float64(0.9759893689765846))</code></pre>
+<section id="특정-비율-검정" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="특정-비율-검정"><span class="header-section-number">14.3.2</span> 특정 비율 검정</h3>
+<p>이론적으로 특정 비율이 예상되는 경우, 그 비율과 관측 데이터를 비교할 수 있다.</p>
+<p><strong>예제: 특정 비율 검정</strong></p>
+<div id="c20d29fd" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이론적 비율 설정 (예: 4:3:3)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>theoretical_ratio <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> observed.<span class="bu">sum</span>()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 비율에 맞는 기대 빈도 계산</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>expected_ratio <span class="op">=</span> [total <span class="op">*</span> r <span class="op">/</span> <span class="bu">sum</span>(theoretical_ratio) <span class="cf">for</span> r <span class="kw">in</span> theoretical_ratio]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 특정 비율 검정 (4:3:3) ==="</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"기대 비율: </span><span class="sc">{</span>theoretical_ratio<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">기대 빈도:"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> species, exp <span class="kw">in</span> <span class="bu">zip</span>(observed.index, expected_ratio):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>species<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>exp<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 검정</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>stat, p_value <span class="op">=</span> chisquare(f_obs<span class="op">=</span>observed, f_exp<span class="op">=</span>expected_ratio)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">χ² 통계량: </span><span class="sc">{</span>stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"이론적 비율과 일치 (H₀ 채택)"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"이론적 비율과 다름 (H₀ 기각)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 특정 비율 검정 (4:3:3) ===
+기대 비율: [4, 3, 3]
+
+기대 빈도:
+Adelie: 133.20
+Chinstrap: 99.90
+Gentoo: 99.90
+
+χ² 통계량: 15.0681
+p-value: 0.0005
+
+유의수준 0.05 기준: 이론적 비율과 다름 (H₀ 기각)</code></pre>
 </div>
 </div>
-<p>판단</p>
+</section>
+<section id="적합성-검정의-활용-사례" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="적합성-검정의-활용-사례"><span class="header-section-number">14.3.3</span> 적합성 검정의 활용 사례</h3>
+<p><strong>적용 분야</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>분야</th>
+<th>질문</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>품질 관리</td>
+<td>제품 불량률이 기준치인가?</td>
+<td>불량품 5% 예상 vs 실제 관측</td>
+</tr>
+<tr class="even">
+<td>유전학</td>
+<td>멘델의 법칙을 따르는가?</td>
+<td>3:1 비율 검정</td>
+</tr>
+<tr class="odd">
+<td>게임</td>
+<td>주사위가 공정한가?</td>
+<td>각 면이 1/6 확률</td>
+</tr>
+<tr class="even">
+<td>샘플링</td>
+<td>표본이 모집단을 대표하는가?</td>
+<td>성별/연령 분포 비교</td>
+</tr>
+<tr class="odd">
+<td>마케팅</td>
+<td>광고 효과가 균등한가?</td>
+<td>요일별 방문자 수</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="독립성-검정-test-of-independence" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="독립성-검정-test-of-independence"><span class="header-section-number">14.4</span> 독립성 검정 (Test of Independence)</h2>
+<p>독립성 검정은 두 범주형 변수가 서로 독립적인지, 즉 하나의 변수를 알았을 때 다른 변수의 분포가 변하는지를 확인하는 검정이다.</p>
+<p><strong>가설 설정</strong></p>
 <ul>
-<li>p ≥ 0.05 → 독립</li>
-<li>p &lt; 0.05 → 관련 있음</li>
+<li>H₀ (귀무가설): 두 변수는 독립이다 (관련이 없다)</li>
+<li>H₁ (대립가설): 두 변수는 독립이 아니다 (관련이 있다)</li>
 </ul>
-</section>
-<section id="기대-빈도-확인" class="level3" data-number="14.4.6">
-<h3 data-number="14.4.6" class="anchored" data-anchor-id="기대-빈도-확인"><span class="header-section-number">14.4.6</span> 기대 빈도 확인</h3>
-<div id="e2429b20" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>expected</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>array([[72.34234234, 73.65765766],
-       [33.69369369, 34.30630631],
-       [58.96396396, 60.03603604]])</code></pre>
+<p><strong>독립의 의미</strong></p>
+<p>두 변수 A와 B가 독립이라는 것은 다음을 의미한다.</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) \times P(B)
+\]</span></p>
+<p>즉, A와 B가 동시에 일어날 확률이 각각의 확률의 곱과 같다.</p>
+<section id="교차표-contingency-table" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="교차표-contingency-table"><span class="header-section-number">14.4.1</span> 교차표 (Contingency Table)</h3>
+<p>독립성 검정은 교차표를 기반으로 수행한다.</p>
+<p><strong>예제: 종과 성별의 교차표</strong></p>
+<div id="2cc8ef3b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표 생성</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="op">=</span> pd.crosstab(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"sex"</span>],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    margins<span class="op">=</span><span class="va">True</span>  <span class="co"># 합계 포함</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 교차표: 종 × 성별 ==="</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(contingency_table)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 비율로 변환 (행 기준)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>contingency_pct <span class="op">=</span> pd.crosstab(</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>],</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"sex"</span>],</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    normalize<span class="op">=</span><span class="st">'index'</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 종별 성별 비율 (%) ==="</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(contingency_pct.<span class="bu">round</span>(<span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 교차표: 종 × 성별 ===
+sex        Female  Male  All
+species                     
+Adelie         73    73  146
+Chinstrap      34    34   68
+Gentoo         58    61  119
+All           165   168  333
+
+=== 종별 성별 비율 (%) ===
+sex        Female  Male
+species                
+Adelie       50.0  50.0
+Chinstrap    50.0  50.0
+Gentoo       48.7  51.3</code></pre>
 </div>
 </div>
-<p>주의</p>
-<ul>
-<li>기대 빈도 &lt; 5 인 셀이 많으면 → 카이제곱 신뢰도 ↓</li>
-</ul>
+<p><strong>예제: 교차표 시각화</strong></p>
+<div id="b235253a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표 시각화 (합계 제외)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>contingency_no_margin <span class="op">=</span> pd.crosstab(df[<span class="st">"species"</span>], df[<span class="st">"sex"</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 히트맵</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sns.heatmap(contingency_no_margin, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Contingency Table: Species × Sex"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sex"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Species"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 그룹화 막대 그래프</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>contingency_no_margin.plot(kind<span class="op">=</span><span class="st">'bar'</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Species and Sex Distribution"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Species"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Sex"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 적합성 및 독립성 검정_files/figure-html/cell-7-output-1.png" width="611" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 적합성 및 독립성 검정_files/figure-html/cell-7-output-2.png" width="950" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="카이제곱-독립성-검정" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="카이제곱-독립성-검정"><span class="header-section-number">14.4.2</span> 카이제곱 독립성 검정</h3>
+<p><strong>예제: 독립성 검정 수행</strong></p>
+<div id="263c9d3c" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립성 검정 (합계 제외)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>chi2, p_value, dof, expected_freq <span class="op">=</span> chi2_contingency(contingency_no_margin)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 카이제곱 독립성 검정 ==="</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"χ² 통계량: </span><span class="sc">{</span>chi2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"자유도(df): </span><span class="sc">{</span>dof<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"두 변수는 독립이다 (관련 없음, H₀ 채택)"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"두 변수는 독립이 아니다 (관련 있음, H₀ 기각)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 카이제곱 독립성 검정 ===
+χ² 통계량: 0.0486
+자유도(df): 2
+p-value: 0.9760
+
+유의수준 0.05 기준: 두 변수는 독립이다 (관련 없음, H₀ 채택)</code></pre>
+</div>
+</div>
+</section>
+<section id="기대-빈도-확인" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="기대-빈도-확인"><span class="header-section-number">14.4.3</span> 기대 빈도 확인</h3>
+<p>카이제곱 검정의 신뢰도는 기대 빈도에 의존한다.</p>
+<p><strong>예제: 기대 빈도 확인</strong></p>
+<div id="f45a02bf" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기대 빈도 출력</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>expected_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    expected_freq,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>contingency_no_margin.index,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>contingency_no_margin.columns</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 기대 빈도 ==="</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(expected_df.<span class="bu">round</span>(<span class="dv">2</span>))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 기대 빈도 &lt; 5인 셀 확인</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>low_expected <span class="op">=</span> (expected_df <span class="op">&lt;</span> <span class="dv">5</span>).<span class="bu">sum</span>().<span class="bu">sum</span>()</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>total_cells <span class="op">=</span> expected_df.size</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">기대 빈도 &lt; 5인 셀: </span><span class="sc">{</span>low_expected<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>total_cells<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> low_expected <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"⚠️ 주의: 기대 빈도가 5 미만인 셀이 있으면 카이제곱 검정 신뢰도 저하"</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"   → 범주 통합 또는 Fisher의 정확 검정 고려"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"✓ 모든 셀의 기대 빈도가 5 이상으로 검정 신뢰도 양호"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 기대 빈도 ===
+sex        Female   Male
+species                 
+Adelie      72.34  73.66
+Chinstrap   33.69  34.31
+Gentoo      58.96  60.04
+
+기대 빈도 &lt; 5인 셀: 0/6
+✓ 모든 셀의 기대 빈도가 5 이상으로 검정 신뢰도 양호</code></pre>
+</div>
+</div>
+<p><strong>기대 빈도 조건</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>조건</th>
+<th>권장 조치</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모든 셀의 기대 빈도 ≥ 5</td>
+<td>카이제곱 검정 사용 가능</td>
+</tr>
+<tr class="even">
+<td>20% 이상의 셀이 기대 빈도 &lt; 5</td>
+<td>범주 통합 또는 Fisher 정확 검정</td>
+</tr>
+<tr class="odd">
+<td>2×2 표에서 기대 빈도 &lt; 5</td>
+<td>Yates 연속성 수정 또는 Fisher 정확 검정</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="연관성의-강도-측정" class="level3" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="연관성의-강도-측정"><span class="header-section-number">14.4.4</span> 연관성의 강도 측정</h3>
+<p>카이제곱 검정은 연관성의 존재 여부만 알려주므로, 연관성의 강도를 측정하려면 추가 지표가 필요하다.</p>
+<p><strong>예제: Cramér’s V 계산</strong></p>
+<div id="1d921a0c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cramér's V 계산</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> contingency_no_margin.<span class="bu">sum</span>().<span class="bu">sum</span>()</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>min_dim <span class="op">=</span> <span class="bu">min</span>(contingency_no_margin.shape[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">1</span>, contingency_no_margin.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>cramers_v <span class="op">=</span> np.sqrt(chi2 <span class="op">/</span> (n <span class="op">*</span> min_dim))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== 연관성 강도 ==="</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cramér's V: </span><span class="sc">{</span>cramers_v<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 해석</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> cramers_v <span class="op">&lt;</span> <span class="fl">0.1</span>:</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    strength <span class="op">=</span> <span class="st">"매우 약함"</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> cramers_v <span class="op">&lt;</span> <span class="fl">0.3</span>:</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    strength <span class="op">=</span> <span class="st">"약함"</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> cramers_v <span class="op">&lt;</span> <span class="fl">0.5</span>:</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    strength <span class="op">=</span> <span class="st">"중간"</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    strength <span class="op">=</span> <span class="st">"강함"</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"연관성 강도: </span><span class="sc">{</span>strength<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 연관성 강도 ===
+Cramér's V: 0.0121
+연관성 강도: 매우 약함</code></pre>
+</div>
+</div>
+<p><strong>Cramér’s V 해석</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cramér’s V</th>
+<th>연관성 강도</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.00 ~ 0.10</td>
+<td>매우 약함</td>
+</tr>
+<tr class="even">
+<td>0.10 ~ 0.30</td>
+<td>약함</td>
+</tr>
+<tr class="odd">
+<td>0.30 ~ 0.50</td>
+<td>중간</td>
+</tr>
+<tr class="even">
+<td>0.50 이상</td>
+<td>강함</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
-<section id="f-검정" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="f-검정"><span class="header-section-number">14.5</span> F 검정</h2>
-<section id="f-검정의-의미" class="level3" data-number="14.5.1">
-<h3 data-number="14.5.1" class="anchored" data-anchor-id="f-검정의-의미"><span class="header-section-number">14.5.1</span> F 검정의 의미</h3>
-<p><strong>두 집단의 분산이 같은가?</strong></p>
+<section id="f-검정-분산-비교" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="f-검정-분산-비교"><span class="header-section-number">14.5</span> F 검정 (분산 비교)</h2>
+<p>F 검정은 두 집단의 분산이 같은지 확인하는 검정이다. 등분산성 검정의 가장 기본적인 형태이지만, 정규성에 매우 민감하여 실무에서는 Levene 검정을 더 많이 사용한다.</p>
+<p><strong>F 통계량</strong></p>
 <p><span class="math display">\[
 F = \frac{s_1^2}{s_2^2}
 \]</span></p>
-<ul>
-<li>등분산성의 가장 기본적 형태</li>
-<li>하지만 정규성에 매우 민감</li>
-</ul>
+<p>여기서 <span class="math inline">\(s_1^2\)</span>와 <span class="math inline">\(s_2^2\)</span>는 각 집단의 표본 분산이다.</p>
+<p><strong>예제: F 검정</strong></p>
+<div id="70b04980" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 종 선택</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>].dropna()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"body_mass_g"</span>].dropna()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># F 통계량 계산</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>f_stat <span class="op">=</span> group1.var() <span class="op">/</span> group2.var()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== F 검정: Adelie vs Chinstrap ==="</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Adelie 분산: </span><span class="sc">{</span>group1<span class="sc">.</span>var()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Chinstrap 분산: </span><span class="sc">{</span>group2<span class="sc">.</span>var()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">F 통계량: </span><span class="sc">{</span>f_stat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 자유도</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="bu">len</span>(group1) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> <span class="bu">len</span>(group2) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value 계산 (양측 검정)</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">min</span>(f.cdf(f_stat, df1, df2), <span class="dv">1</span> <span class="op">-</span> f.cdf(f_stat, df1, df2))</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">유의수준 0.05 기준: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&gt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"등분산 (H₀ 채택)"</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"이분산 (H₀ 기각)"</span>)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">⚠️ 주의: F 검정은 정규성에 매우 민감"</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"   → 실무에서는 Levene 검정 권장"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== F 검정: Adelie vs Chinstrap ===
+
+Adelie 분산: 210332.43
+Chinstrap 분산: 147713.45
+
+F 통계량: 1.4239
+p-value: 0.1047
+
+유의수준 0.05 기준: 등분산 (H₀ 채택)
+
+⚠️ 주의: F 검정은 정규성에 매우 민감
+   → 실무에서는 Levene 검정 권장</code></pre>
+</div>
+</div>
+<p><strong>F 검정 vs Levene 검정</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>F 검정</th>
+<th>Levene 검정</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>가정</td>
+<td>정규성 필요</td>
+<td>정규성 불필요</td>
+</tr>
+<tr class="even">
+<td>강건성</td>
+<td>정규성 위배 시 부정확</td>
+<td>안정적</td>
+</tr>
+<tr class="odd">
+<td>용도</td>
+<td>이론 설명용</td>
+<td>실무 권장</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="예제-2" class="level3" data-number="14.5.2">
-<h3 data-number="14.5.2" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">14.5.2</span> 예제</h3>
-<div id="1e9f2af1" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"body_mass_g"</span>]</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>][<span class="st">"body_mass_g"</span>]</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>f_stat <span class="op">=</span> group1.var() <span class="op">/</span> group2.var()</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>f_stat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>np.float64(1.4239219323005283)</code></pre>
-</div>
-</div>
-<p>p-value 계산</p>
-<div id="4f204f4d" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> <span class="bu">len</span>(group1) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> <span class="bu">len</span>(group2) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> f.cdf(f_stat, df1, df2)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>np.float64(0.052342183408140563)</code></pre>
-</div>
-</div>
-<p>주의</p>
-<ul>
-<li>Levene 검정이 훨씬 안전</li>
-<li>F 검정은 <strong>이론 설명용</strong></li>
-</ul>
-</section>
-</section>
-<section id="검정별-예시" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="검정별-예시"><span class="header-section-number">14.6</span> 검정별 예시</h2>
+<section id="검정-방법-종합-비교" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="검정-방법-종합-비교"><span class="header-section-number">14.6</span> 검정 방법 종합 비교</h2>
+<p><strong>검정 유형별 정리</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>목적</th>
 <th>데이터 유형</th>
-<th>검정</th>
+<th>변수 개수</th>
+<th>검정 방법</th>
+<th>주요 사용</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>분포 적합성</td>
-<td>범주 1개</td>
-<td>χ² 적합성</td>
+<td>범주형</td>
+<td>1개</td>
+<td>χ² 적합성 검정</td>
+<td>이론 분포와 비교</td>
 </tr>
 <tr class="even">
 <td>변수 관계</td>
-<td>범주 × 범주</td>
-<td>χ² 독립성</td>
+<td>범주형 × 범주형</td>
+<td>2개</td>
+<td>χ² 독립성 검정</td>
+<td>범주 간 연관성</td>
 </tr>
 <tr class="odd">
-<td>분산 비교</td>
-<td>연속</td>
+<td>분산 비교 (이론)</td>
+<td>연속형</td>
+<td>2개</td>
 <td>F 검정</td>
+<td>교육 목적</td>
 </tr>
 <tr class="even">
-<td>실무 등분산</td>
-<td>연속</td>
-<td>Levene</td>
+<td>분산 비교 (실무)</td>
+<td>연속형</td>
+<td>2개 이상</td>
+<td>Levene 검정</td>
+<td>등분산성 검정</td>
+</tr>
+<tr class="odd">
+<td>평균 비교</td>
+<td>연속형</td>
+<td>2개</td>
+<td>t-검정</td>
+<td>그룹 간 평균 차이</td>
+</tr>
+<tr class="even">
+<td>평균 비교</td>
+<td>연속형</td>
+<td>3개 이상</td>
+<td>ANOVA</td>
+<td>다집단 평균 비교</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="자주-하는-오해" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="자주-하는-오해"><span class="header-section-number">14.7</span> 자주 하는 오해</h2>
-<ul>
-<li><p>“p &lt; 0.05 → 강한 관계” &gt; 관계 <strong>존재 여부만 판단</strong></p></li>
-<li><p>“카이제곱은 평균 비교” &gt; 빈도 기반 검정</p></li>
-<li><p>“카이제곱은 다 쓸 수 있다” &gt; 표본 크기·기대빈도 조건 중요</p></li>
-</ul>
+<section id="자주-하는-오해와-주의사항" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="자주-하는-오해와-주의사항"><span class="header-section-number">14.7</span> 자주 하는 오해와 주의사항</h2>
+<p><strong>흔한 오해</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>오해</th>
+<th>진실</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“p &lt; 0.05이면 강한 관계”</td>
+<td>p-value는 관계의 존재 여부만 판단, 강도는 별도 측정 필요</td>
+</tr>
+<tr class="even">
+<td>“카이제곱은 평균을 비교한다”</td>
+<td>카이제곱은 빈도를 비교하는 검정</td>
+</tr>
+<tr class="odd">
+<td>“카이제곱은 모든 데이터에 적용 가능”</td>
+<td>표본 크기와 기대 빈도 조건이 중요</td>
+</tr>
+<tr class="even">
+<td>“독립성 검정에서 귀무가설 채택 = 변수가 독립”</td>
+<td>귀무가설 기각 실패 ≠ 독립 증명</td>
+</tr>
+</tbody>
+</table>
+<p><strong>주의사항</strong></p>
+<ol type="1">
+<li><strong>기대 빈도 확인</strong>: 기대 빈도가 5 미만인 셀이 많으면 검정 신뢰도 저하</li>
+<li><strong>표본 크기</strong>: 표본이 너무 크면 실무적으로 의미 없는 차이도 유의하게 나옴</li>
+<li><strong>연관성 강도</strong>: p-value만으로 연관성 강도를 판단하지 말 것</li>
+<li><strong>인과관계</strong>: 독립성 검정은 상관관계만 확인, 인과관계는 아님</li>
+<li><strong>다중 비교</strong>: 여러 검정을 동시에 수행하면 1종 오류 증가</li>
+</ol>
 </section>
-<section id="정리" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="정리"><span class="header-section-number">14.8</span> 정리</h2>
+<section id="요약" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">14.8</span> 요약</h2>
+<p>이 장에서는 범주형 데이터의 빈도와 구조를 분석하는 카이제곱 검정을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>검정 유형별 요약</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 31%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>검정</th>
+<th>목적</th>
+<th>비교 대상</th>
+<th>주요 사용</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>적합성 검정</td>
+<td>분포가 이론과 일치하는가?</td>
+<td>관측 분포 vs 이론 분포</td>
+<td>샘플링 검증, 품질 관리</td>
+</tr>
+<tr class="even">
+<td>독립성 검정</td>
+<td>두 변수가 관련 있는가?</td>
+<td>변수 간 연관성</td>
+<td>변수 관계 탐색</td>
+</tr>
+<tr class="odd">
+<td>F 검정</td>
+<td>두 분산이 같은가?</td>
+<td>집단 간 분산</td>
+<td>이론 학습 (실무는 Levene)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>카이제곱 검정 핵심</strong></p>
 <ul>
-<li>적합성 검정 → <strong>분포 자체를 비교</strong></li>
-<li>독립성 검정 → <strong>범주 간 관계</strong></li>
-<li>카이제곱은 빈도의 언어 → <strong>분산 비교</strong></li>
-<li>평균 비교 전에 구조부터 확인하자</li>
+<li><strong>원리</strong>: 관측 빈도와 기대 빈도의 차이를 측정</li>
+<li><strong>통계량</strong>: <span class="math inline">\(\chi^2 = \sum \frac{(O - E)^2}{E}\)</span></li>
+<li><strong>조건</strong>: 기대 빈도가 모든 셀에서 5 이상 권장</li>
+<li><strong>해석</strong>: p-value는 관계 존재 여부, 강도는 Cramér’s V 등으로 측정</li>
 </ul>
+<p><strong>실무 체크리스트</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">범주형 데이터인가?</label></li>
+<li><label><input type="checkbox">표본 크기가 충분한가?</label></li>
+<li><label><input type="checkbox">기대 빈도가 5 이상인가?</label></li>
+<li><label><input type="checkbox">검정 목적이 명확한가? (적합성 vs 독립성)</label></li>
+<li><label><input type="checkbox">연관성 강도도 측정했는가?</label></li>
+<li><label><input type="checkbox">결과를 시각화했는가?</label></li>
+</ul>
+<p><strong>다음 단계</strong></p>
+<ul>
+<li>적합성 검정 → 분포의 이론적 타당성 확인</li>
+<li>독립성 검정 → 변수 간 관계 파악 후 추가 분석</li>
+<li>평균 비교 전 → 구조적 패턴 먼저 확인</li>
+</ul>
+<p>카이제곱 검정은 범주형 데이터 분석의 기초이다. 빈도와 구조를 먼저 파악한 후, 필요에 따라 평균 비교나 회귀 분석 등의 고급 기법으로 진행하는 것이 바람직하다. 다음 장에서는 평균 비교를 위한 t-검정과 ANOVA를 학습할 것이다.</p>
 
 
 </section>
