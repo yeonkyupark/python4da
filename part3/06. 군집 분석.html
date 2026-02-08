@@ -375,41 +375,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#군집-분석-개요" id="toc-군집-분석-개요" class="nav-link active" data-scroll-target="#군집-분석-개요"><span class="header-section-number">24.1</span> 군집 분석 개요</a></li>
-  <li><a href="#군집-분석의-주요-가정" id="toc-군집-분석의-주요-가정" class="nav-link" data-scroll-target="#군집-분석의-주요-가정"><span class="header-section-number">24.2</span> 군집 분석의 주요 가정</a></li>
-  <li><a href="#분할-기반-군집" id="toc-분할-기반-군집" class="nav-link" data-scroll-target="#분할-기반-군집"><span class="header-section-number">24.3</span> 분할 기반 군집</a>
+  <li><a href="#군집-분석의-개념" id="toc-군집-분석의-개념" class="nav-link active" data-scroll-target="#군집-분석의-개념"><span class="header-section-number">24.1</span> 군집 분석의 개념</a></li>
+  <li><a href="#데이터-준비" id="toc-데이터-준비" class="nav-link" data-scroll-target="#데이터-준비"><span class="header-section-number">24.2</span> 데이터 준비</a></li>
+  <li><a href="#분할-기반-군집-k-means" id="toc-분할-기반-군집-k-means" class="nav-link" data-scroll-target="#분할-기반-군집-k-means"><span class="header-section-number">24.3</span> 분할 기반 군집: K-Means</a>
   <ul>
-  <li><a href="#k-means" id="toc-k-means" class="nav-link" data-scroll-target="#k-means"><span class="header-section-number">24.3.1</span> K-Means</a>
-  <ul class="collapse">
-  <li><a href="#핵심-아이디어" id="toc-핵심-아이디어" class="nav-link" data-scroll-target="#핵심-아이디어"><span class="header-section-number">24.3.1.1</span> 핵심 아이디어</a></li>
-  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">24.3.1.2</span> 특징</a></li>
-  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">24.3.1.3</span> 예제</a></li>
+  <li><a href="#k-means-실습" id="toc-k-means-실습" class="nav-link" data-scroll-target="#k-means-실습"><span class="header-section-number">24.3.1</span> K-Means 실습</a></li>
+  <li><a href="#최적-k-값-선택" id="toc-최적-k-값-선택" class="nav-link" data-scroll-target="#최적-k-값-선택"><span class="header-section-number">24.3.2</span> 최적 K 값 선택</a></li>
+  <li><a href="#군집-시각화" id="toc-군집-시각화" class="nav-link" data-scroll-target="#군집-시각화"><span class="header-section-number">24.3.3</span> 군집 시각화</a></li>
   </ul></li>
-  <li><a href="#k-선택-방법" id="toc-k-선택-방법" class="nav-link" data-scroll-target="#k-선택-방법"><span class="header-section-number">24.3.2</span> K 선택 방법</a></li>
-  </ul></li>
-  <li><a href="#밀도-기반-군집" id="toc-밀도-기반-군집" class="nav-link" data-scroll-target="#밀도-기반-군집"><span class="header-section-number">24.4</span> 밀도 기반 군집</a>
+  <li><a href="#밀도-기반-군집-dbscan" id="toc-밀도-기반-군집-dbscan" class="nav-link" data-scroll-target="#밀도-기반-군집-dbscan"><span class="header-section-number">24.4</span> 밀도 기반 군집: DBSCAN</a>
   <ul>
-  <li><a href="#dbscan" id="toc-dbscan" class="nav-link" data-scroll-target="#dbscan"><span class="header-section-number">24.4.1</span> DBSCAN</a>
-  <ul class="collapse">
-  <li><a href="#핵심-아이디어-1" id="toc-핵심-아이디어-1" class="nav-link" data-scroll-target="#핵심-아이디어-1"><span class="header-section-number">24.4.1.1</span> 핵심 아이디어</a></li>
-  <li><a href="#주요-파라미터" id="toc-주요-파라미터" class="nav-link" data-scroll-target="#주요-파라미터"><span class="header-section-number">24.4.1.2</span> 주요 파라미터</a></li>
-  <li><a href="#특징-1" id="toc-특징-1" class="nav-link" data-scroll-target="#특징-1"><span class="header-section-number">24.4.1.3</span> 특징</a></li>
-  <li><a href="#예제-1" id="toc-예제-1" class="nav-link" data-scroll-target="#예제-1"><span class="header-section-number">24.4.1.4</span> 예제</a></li>
+  <li><a href="#dbscan-실습" id="toc-dbscan-실습" class="nav-link" data-scroll-target="#dbscan-실습"><span class="header-section-number">24.4.1</span> DBSCAN 실습</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#혼합-모델-군집" id="toc-혼합-모델-군집" class="nav-link" data-scroll-target="#혼합-모델-군집"><span class="header-section-number">24.5</span> 혼합 모델 군집</a>
+  <li><a href="#모델-기반-군집-gaussian-mixture-model-gmm" id="toc-모델-기반-군집-gaussian-mixture-model-gmm" class="nav-link" data-scroll-target="#모델-기반-군집-gaussian-mixture-model-gmm"><span class="header-section-number">24.5</span> 모델 기반 군집: Gaussian Mixture Model (GMM)</a>
   <ul>
-  <li><a href="#gaussian-mixture-model-gmm" id="toc-gaussian-mixture-model-gmm" class="nav-link" data-scroll-target="#gaussian-mixture-model-gmm"><span class="header-section-number">24.5.1</span> Gaussian Mixture Model (GMM)</a>
-  <ul class="collapse">
-  <li><a href="#핵심-아이디어-2" id="toc-핵심-아이디어-2" class="nav-link" data-scroll-target="#핵심-아이디어-2"><span class="header-section-number">24.5.1.1</span> 핵심 아이디어</a></li>
-  <li><a href="#특징-2" id="toc-특징-2" class="nav-link" data-scroll-target="#특징-2"><span class="header-section-number">24.5.1.2</span> 특징</a></li>
-  <li><a href="#예제-2" id="toc-예제-2" class="nav-link" data-scroll-target="#예제-2"><span class="header-section-number">24.5.1.3</span> 예제</a></li>
-  <li><a href="#확률-기반-해석" id="toc-확률-기반-해석" class="nav-link" data-scroll-target="#확률-기반-해석"><span class="header-section-number">24.5.1.4</span> 확률 기반 해석</a></li>
+  <li><a href="#gmm-실습" id="toc-gmm-실습" class="nav-link" data-scroll-target="#gmm-실습"><span class="header-section-number">24.5.1</span> GMM 실습</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#알고리즘-비교-정리" id="toc-알고리즘-비교-정리" class="nav-link" data-scroll-target="#알고리즘-비교-정리"><span class="header-section-number">24.6</span> 알고리즘 비교 정리</a></li>
-  <li><a href="#선택-가이드" id="toc-선택-가이드" class="nav-link" data-scroll-target="#선택-가이드"><span class="header-section-number">24.7</span> 선택 가이드</a></li>
-  <li><a href="#군집-결과-평가" id="toc-군집-결과-평가" class="nav-link" data-scroll-target="#군집-결과-평가"><span class="header-section-number">24.8</span> 군집 결과 평가</a></li>
+  <li><a href="#알고리즘-종합-비교" id="toc-알고리즘-종합-비교" class="nav-link" data-scroll-target="#알고리즘-종합-비교"><span class="header-section-number">24.6</span> 알고리즘 종합 비교</a></li>
+  <li><a href="#군집-결과-평가" id="toc-군집-결과-평가" class="nav-link" data-scroll-target="#군집-결과-평가"><span class="header-section-number">24.7</span> 군집 결과 평가</a></li>
+  <li><a href="#모델-선택-가이드" id="toc-모델-선택-가이드" class="nav-link" data-scroll-target="#모델-선택-가이드"><span class="header-section-number">24.8</span> 모델 선택 가이드</a></li>
+  <li><a href="#실무-체크리스트" id="toc-실무-체크리스트" class="nav-link" data-scroll-target="#실무-체크리스트"><span class="header-section-number">24.9</span> 실무 체크리스트</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">24.10</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/06. 군집 분석.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -441,195 +427,748 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="군집-분석-개요" class="level2" data-number="24.1">
-<h2 data-number="24.1" class="anchored" data-anchor-id="군집-분석-개요"><span class="header-section-number">24.1</span> 군집 분석 개요</h2>
-<p><strong>군집 분석</strong>(Clustering)은 라벨이 없는 데이터에서 <strong>유사한 데이터끼리 묶는 비지도 학습 기법</strong>이다.</p>
-<p>주요 목적은 다음과 같다.</p>
-<ul>
-<li>데이터 구조 탐색</li>
-<li>패턴 및 그룹 발견</li>
-<li>이후 모델링을 위한 전처리 또는 특성 생성</li>
-</ul>
-<p>penguins 데이터처럼</p>
-<blockquote class="blockquote">
-<p>“종(species)을 모른다고 가정하고도 묶일까?” 를 실험하기에 매우 적합하다.</p>
-</blockquote>
-</section>
-<section id="군집-분석의-주요-가정" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="군집-분석의-주요-가정"><span class="header-section-number">24.2</span> 군집 분석의 주요 가정</h2>
-<p>군집 알고리즘마다 전제가 다르다.</p>
-<ul>
-<li>거리 기반인가?</li>
-<li>밀도를 가정하는가?</li>
-<li>분포를 가정하는가?</li>
-</ul>
-<p><strong>알고리즘 선택 = 데이터 가정 선택</strong></p>
-</section>
-<section id="분할-기반-군집" class="level2" data-number="24.3">
-<h2 data-number="24.3" class="anchored" data-anchor-id="분할-기반-군집"><span class="header-section-number">24.3</span> 분할 기반 군집</h2>
-<p>분할 기반 군집(Partition-based Clustering)의 대표적인 알고리즘으로 K-Means가 있다.</p>
-<section id="k-means" class="level3" data-number="24.3.1">
-<h3 data-number="24.3.1" class="anchored" data-anchor-id="k-means"><span class="header-section-number">24.3.1</span> K-Means</h3>
-<section id="핵심-아이디어" class="level4" data-number="24.3.1.1">
-<h4 data-number="24.3.1.1" class="anchored" data-anchor-id="핵심-아이디어"><span class="header-section-number">24.3.1.1</span> 핵심 아이디어</h4>
-<ul>
-<li>K개의 군집 중심(centroid)을 미리 정함</li>
-<li>각 데이터 → 가장 가까운 중심에 할당</li>
-<li>중심 재계산 → 반복</li>
-</ul>
-</section>
-<section id="특징" class="level4" data-number="24.3.1.2">
-<h4 data-number="24.3.1.2" class="anchored" data-anchor-id="특징"><span class="header-section-number">24.3.1.2</span> 특징</h4>
-<ul>
-<li>빠르고 구현이 단순</li>
-<li>군집 수 K를 사전에 지정해야 함</li>
-<li>구형(spherical) 군집에 적합</li>
-<li>이상치에 민감</li>
-</ul>
-</section>
-<section id="예제" class="level4" data-number="24.3.1.3">
-<h4 data-number="24.3.1.3" class="anchored" data-anchor-id="예제"><span class="header-section-number">24.3.1.3</span> 예제</h4>
-<div id="324a8658" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> seaborn <span class="im">import</span> load_dataset</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_dataset(<span class="st">'penguins'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X_cluster <span class="op">=</span> df[</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>].dropna()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X_cluster)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>labels_kmeans <span class="op">=</span> kmeans.fit_predict(X_scaled)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>labels_kmeans</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>array([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-       1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2,
-       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1,
-       1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-       1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], dtype=int32)</code></pre>
+<p>군집 분석(Clustering)은 라벨이 없는 데이터에서 유사한 데이터끼리 자동으로 묶는 비지도 학습 기법이다. 정답이 주어지지 않은 상태에서 데이터의 내재된 구조를 발견하고 패턴을 파악하는 것이 목적이다. 군집 분석은 데이터 탐색, 세분화, 이상치 탐지, 전처리 등 다양한 분야에서 활용된다. 이 장에서는 K-Means, DBSCAN, GMM 등 주요 군집 알고리즘의 원리와 실무 활용법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="580134f1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 군집 분석용 특성 선택 (연속형 변수만)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X_cluster <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 실제 종 정보 (평가용)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> df[<span class="st">"species"</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, X_cluster.shape)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">특성 변수:"</span>, X_cluster.columns.tolist())</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">실제 종 분포:"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_true.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 4)
+
+특성 변수: ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']
+
+실제 종 분포:
+species
+Adelie       146
+Gentoo       119
+Chinstrap     68
+Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<p>결과 해석</p>
-<ul>
-<li><p>n_clusters=3</p>
-<ul>
-<li>penguins의 실제 종 개수와 일치</li>
-</ul></li>
-<li><p>하지만 군집 ≠ 실제 라벨</p></li>
-<li><p><strong>구조적 유사성</strong>만 반영</p></li>
-</ul>
-</section>
-</section>
-<section id="k-선택-방법" class="level3" data-number="24.3.2">
-<h3 data-number="24.3.2" class="anchored" data-anchor-id="k-선택-방법"><span class="header-section-number">24.3.2</span> K 선택 방법</h3>
-<ul>
-<li>Elbow Method</li>
-<li>Silhouette Score</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>silhouette_score(X_scaled, labels_kmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="밀도-기반-군집" class="level2" data-number="24.4">
-<h2 data-number="24.4" class="anchored" data-anchor-id="밀도-기반-군집"><span class="header-section-number">24.4</span> 밀도 기반 군집</h2>
-<p>대표적인 밀도 기반 군집(Density-based Clustering) 알고리즘으로 DBSCAN이 있다.</p>
-<section id="dbscan" class="level3" data-number="24.4.1">
-<h3 data-number="24.4.1" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">24.4.1</span> DBSCAN</h3>
-<section id="핵심-아이디어-1" class="level4" data-number="24.4.1.1">
-<h4 data-number="24.4.1.1" class="anchored" data-anchor-id="핵심-아이디어-1"><span class="header-section-number">24.4.1.1</span> 핵심 아이디어</h4>
-<ul>
-<li>데이터가 <strong>빽빽한 영역</strong>을 군집으로 간주</li>
-<li>밀도가 낮은 영역은 <strong>노이즈(-1)</strong> 처리</li>
-</ul>
-</section>
-<section id="주요-파라미터" class="level4" data-number="24.4.1.2">
-<h4 data-number="24.4.1.2" class="anchored" data-anchor-id="주요-파라미터"><span class="header-section-number">24.4.1.2</span> 주요 파라미터</h4>
-<ul>
-<li>eps: 이웃으로 간주할 거리</li>
-<li>min_samples: 최소 이웃 수</li>
-</ul>
-</section>
-<section id="특징-1" class="level4" data-number="24.4.1.3">
-<h4 data-number="24.4.1.3" class="anchored" data-anchor-id="특징-1"><span class="header-section-number">24.4.1.3</span> 특징</h4>
-<ul>
-<li>군집 개수 자동 결정</li>
-<li>이상치 탐지 가능</li>
-<li>비구형 군집 탐지 가능</li>
-<li>밀도 차이가 크면 성능 저하</li>
-</ul>
-</section>
-<section id="예제-1" class="level4" data-number="24.4.1.4">
-<h4 data-number="24.4.1.4" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">24.4.1.4</span> 예제</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dbscan <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="fl">0.8</span>, min_samples<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>labels_dbscan <span class="op">=</span> dbscan.fit_predict(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>결과 해석</strong></p>
-<ul>
-<li><p>label = -1</p>
-<ul>
-<li>군집에 속하지 않는 이상치</li>
-</ul></li>
-<li><p>군집 수는 eps에 따라 크게 변함</p></li>
-</ul>
-<p>DBSCAN은 <strong>시각화 + 반복 실험 필수</strong></p>
-</section>
-</section>
-</section>
-<section id="혼합-모델-군집" class="level2" data-number="24.5">
-<h2 data-number="24.5" class="anchored" data-anchor-id="혼합-모델-군집"><span class="header-section-number">24.5</span> 혼합 모델 군집</h2>
-<p>밀도, 거리 등을 혼합한 혼합 모델 군집(Model-based Clustering)도 있다.</p>
-<section id="gaussian-mixture-model-gmm" class="level3" data-number="24.5.1">
-<h3 data-number="24.5.1" class="anchored" data-anchor-id="gaussian-mixture-model-gmm"><span class="header-section-number">24.5.1</span> Gaussian Mixture Model (GMM)</h3>
-<section id="핵심-아이디어-2" class="level4" data-number="24.5.1.1">
-<h4 data-number="24.5.1.1" class="anchored" data-anchor-id="핵심-아이디어-2"><span class="header-section-number">24.5.1.1</span> 핵심 아이디어</h4>
-<ul>
-<li>데이터가 여러 개의 <strong>가우시안 분포 혼합</strong>으로 생성되었다고 가정</li>
-<li>각 데이터는 군집에 <strong>확률적으로 속함</strong></li>
-</ul>
-</section>
-<section id="특징-2" class="level4" data-number="24.5.1.2">
-<h4 data-number="24.5.1.2" class="anchored" data-anchor-id="특징-2"><span class="header-section-number">24.5.1.2</span> 특징</h4>
-<ul>
-<li>타원형 군집 가능</li>
-<li>소프트 군집 (확률)</li>
-<li>분포 가정이 맞지 않으면 성능 저하</li>
-</ul>
-</section>
-<section id="예제-2" class="level4" data-number="24.5.1.3">
-<h4 data-number="24.5.1.3" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">24.5.1.3</span> 예제</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>gmm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>labels_gmm <span class="op">=</span> gmm.fit_predict(X_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="확률-기반-해석" class="level4" data-number="24.5.1.4">
-<h4 data-number="24.5.1.4" class="anchored" data-anchor-id="확률-기반-해석"><span class="header-section-number">24.5.1.4</span> 확률 기반 해석</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> gmm.predict_proba(X_scaled)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>probs[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>“이 데이터는 군집 1에 70% 속한다”</p>
-</section>
-</section>
-</section>
-<section id="알고리즘-비교-정리" class="level2" data-number="24.6">
-<h2 data-number="24.6" class="anchored" data-anchor-id="알고리즘-비교-정리"><span class="header-section-number">24.6</span> 알고리즘 비교 정리</h2>
+<section id="군집-분석의-개념" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="군집-분석의-개념"><span class="header-section-number">24.1</span> 군집 분석의 개념</h2>
+<p>군집 분석은 비지도 학습으로, 타겟 변수 없이 데이터의 구조를 발견한다.</p>
+<p><strong>군집 분석 vs 분류</strong></p>
 <table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>군집 분석 (Clustering)</th>
+<th>분류 (Classification)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>학습 유형</td>
+<td>비지도 학습</td>
+<td>지도 학습</td>
+</tr>
+<tr class="even">
+<td>타겟</td>
+<td>없음</td>
+<td>있음 (라벨)</td>
+</tr>
+<tr class="odd">
+<td>목적</td>
+<td>구조 발견</td>
+<td>예측</td>
+</tr>
+<tr class="even">
+<td>평가</td>
+<td>내재적 지표, 시각화</td>
+<td>정확도, F1 등</td>
+</tr>
+<tr class="odd">
+<td>예시</td>
+<td>고객 세분화, 패턴 발견</td>
+<td>종 분류, 질병 진단</td>
+</tr>
+</tbody>
+</table>
+<p><strong>군집 분석의 목적</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>목적</th>
+<th>설명</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>데이터 탐색</td>
+<td>구조와 패턴 파악</td>
+<td>신규 데이터 이해</td>
+</tr>
+<tr class="even">
+<td>세분화</td>
+<td>유사 그룹 생성</td>
+<td>고객 세그먼트</td>
+</tr>
+<tr class="odd">
+<td>이상치 탐지</td>
+<td>군집에 속하지 않는 점 발견</td>
+<td>이상 거래 탐지</td>
+</tr>
+<tr class="even">
+<td>전처리</td>
+<td>군집을 새로운 특성으로 사용</td>
+<td>군집 ID를 범주형 변수로</td>
+</tr>
+<tr class="odd">
+<td>차원 축소 보조</td>
+<td>시각화 전 그룹 파악</td>
+<td>PCA + 군집</td>
+</tr>
+</tbody>
+</table>
+<p><strong>군집 분석의 가정</strong></p>
+<p>알고리즘마다 데이터에 대한 가정이 다르다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>알고리즘</th>
+<th>가정</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>K-Means</td>
+<td>구형(spherical) 군집, 유사한 크기</td>
+</tr>
+<tr class="even">
+<td>DBSCAN</td>
+<td>밀도 기반 군집, 밀도 차이 적음</td>
+</tr>
+<tr class="odd">
+<td>GMM</td>
+<td>가우시안 분포 혼합</td>
+</tr>
+<tr class="even">
+<td>계층적 군집</td>
+<td>트리 구조 가능</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="데이터-준비" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="데이터-준비"><span class="header-section-number">24.2</span> 데이터 준비</h2>
+<p><strong>예제: 데이터 표준화</strong></p>
+<div id="2b1a15a9" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 표준화 (군집은 거리 기반이므로 필수)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X_cluster)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 표준화 전후 비교 ==="</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"원본 데이터 범위:"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_cluster.describe().loc[[<span class="st">'min'</span>, <span class="st">'max'</span>]])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">표준화 후 데이터 범위:"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(X_scaled, columns<span class="op">=</span>X_cluster.columns).describe().loc[[<span class="st">'min'</span>, <span class="st">'max'</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 표준화 전후 비교 ===
+원본 데이터 범위:
+     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+min            32.1           13.1              172.0       2700.0
+max            59.6           21.5              231.0       6300.0
+
+표준화 후 데이터 범위:
+     bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+min       -2.177987      -2.067291          -2.069852    -1.874435
+max        2.858227       2.204743           2.146028     2.603144</code></pre>
+</div>
+</div>
+<p><strong>표준화의 중요성</strong></p>
+<ul>
+<li>거리 기반 알고리즘에서 필수</li>
+<li>스케일이 큰 변수가 군집을 지배하는 것 방지</li>
+<li>K-Means, DBSCAN에서 특히 중요</li>
+</ul>
+</section>
+<section id="분할-기반-군집-k-means" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="분할-기반-군집-k-means"><span class="header-section-number">24.3</span> 분할 기반 군집: K-Means</h2>
+<p>K-Means는 가장 널리 사용되는 군집 알고리즘으로, 데이터를 K개의 군집으로 분할한다.</p>
+<p><strong>K-Means 알고리즘 작동 원리</strong></p>
+<ol type="1">
+<li>K개의 초기 중심점(centroid) 무작위 선택</li>
+<li>각 데이터를 가장 가까운 중심점에 할당</li>
+<li>각 군집의 중심점을 새로 계산 (평균)</li>
+<li>중심점 변화가 없을 때까지 2-3 반복</li>
+</ol>
+<p><strong>K-Means 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>군집 수</td>
+<td>사전에 K 지정 필요</td>
+</tr>
+<tr class="even">
+<td>군집 형태</td>
+<td>구형(spherical) 가정</td>
+</tr>
+<tr class="odd">
+<td>계산 속도</td>
+<td>빠름 (대용량 적합)</td>
+</tr>
+<tr class="even">
+<td>이상치 민감</td>
+<td>평균 사용으로 민감</td>
+</tr>
+<tr class="odd">
+<td>결정론적</td>
+<td>초기값에 따라 결과 다름</td>
+</tr>
+<tr class="even">
+<td>하드 할당</td>
+<td>각 데이터는 하나의 군집만</td>
+</tr>
+</tbody>
+</table>
+<section id="k-means-실습" class="level3" data-number="24.3.1">
+<h3 data-number="24.3.1" class="anchored" data-anchor-id="k-means-실습"><span class="header-section-number">24.3.1</span> K-Means 실습</h3>
+<p><strong>예제: K-Means 군집 분석</strong></p>
+<div id="1cd20a2e" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># K-Means 군집 (K=3, 실제 종 개수와 동일)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>labels_kmeans <span class="op">=</span> kmeans.fit_predict(X_scaled)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== K-Means 결과 ==="</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"군집 개수: </span><span class="sc">{</span>kmeans<span class="sc">.</span>n_clusters<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"반복 횟수: </span><span class="sc">{</span>kmeans<span class="sc">.</span>n_iter_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">군집별 샘플 수:"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.Series(labels_kmeans).value_counts().sort_index())</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 실제 종과 비교</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'True Species'</span>: y_true,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'K-Means Cluster'</span>: labels_kmeans</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 실제 종 vs 군집 ==="</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.crosstab(comparison_df[<span class="st">'True Species'</span>], comparison_df[<span class="st">'K-Means Cluster'</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== K-Means 결과 ===
+군집 개수: 3
+반복 횟수: 8
+
+군집별 샘플 수:
+0    129
+1    119
+2     85
+Name: count, dtype: int64
+
+=== 실제 종 vs 군집 ===
+K-Means Cluster    0    1   2
+True Species                 
+Adelie           124    0  22
+Chinstrap          5    0  63
+Gentoo             0  119   0</code></pre>
+</div>
+</div>
+<p><strong>예제: 중심점 확인</strong></p>
+<div id="207240f1" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 군집 중심점 (표준화된 공간)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>centroids <span class="op">=</span> kmeans.cluster_centers_</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 군집 중심점 ==="</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>centroids_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    centroids,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>X_cluster.columns,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="ss">f'Cluster </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(centroids_df.<span class="bu">round</span>(<span class="dv">2</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 원래 스케일로 역변환</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>centroids_original <span class="op">=</span> scaler.inverse_transform(centroids)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>centroids_original_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    centroids_original,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>X_cluster.columns,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="ss">f'Cluster </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 군집 중심점 (원본 스케일) ==="</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(centroids_original_df.<span class="bu">round</span>(<span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 군집 중심점 ===
+           bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+Cluster 0           -1.05           0.49              -0.88        -0.76
+Cluster 1            0.65          -1.10               1.16         1.10
+Cluster 2            0.67           0.81              -0.29        -0.38
+
+=== 군집 중심점 (원본 스케일) ===
+           bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
+Cluster 0           38.28          18.12             188.63      3593.80
+Cluster 1           47.57          15.00             217.24      5092.44
+Cluster 2           47.66          18.75             196.92      3898.24</code></pre>
+</div>
+</div>
+</section>
+<section id="최적-k-값-선택" class="level3" data-number="24.3.2">
+<h3 data-number="24.3.2" class="anchored" data-anchor-id="최적-k-값-선택"><span class="header-section-number">24.3.2</span> 최적 K 값 선택</h3>
+<p><strong>방법 1: Elbow Method</strong></p>
+<div id="fa833964" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 K 값으로 실험</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>inertias <span class="op">=</span> []</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>K_range <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">11</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> K_range:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    kmeans_temp <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    kmeans_temp.fit(X_scaled)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    inertias.append(kmeans_temp.inertia_)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Elbow Plot</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.plot(K_range, inertias, marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Clusters (K)'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Inertia (Within-cluster Sum of Squares)'</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Elbow Method for Optimal K'</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(K_range)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-6-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>방법 2: Silhouette Score</strong></p>
+<div id="ce40740a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score, silhouette_samples</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Silhouette Score 계산</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>silhouette_scores <span class="op">=</span> []</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> K_range:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    kmeans_temp <span class="op">=</span> KMeans(n_clusters<span class="op">=</span>k, random_state<span class="op">=</span><span class="dv">42</span>, n_init<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> kmeans_temp.fit_predict(X_scaled)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> silhouette_score(X_scaled, labels)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    silhouette_scores.append(score)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.plot(K_range, silhouette_scores, marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Clusters (K)'</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Silhouette Score'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Silhouette Score for Optimal K'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span>np.<span class="bu">max</span>(silhouette_scores), color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Max at K=</span><span class="sc">{</span>K_range[np.argmax(silhouette_scores)]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(K_range)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 K (Silhouette): </span><span class="sc">{</span>K_range[np.argmax(silhouette_scores)]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최대 Silhouette Score: </span><span class="sc">{</span><span class="bu">max</span>(silhouette_scores)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-7-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>최적 K (Silhouette): 2
+최대 Silhouette Score: 0.5308</code></pre>
+</div>
+</div>
+<p><strong>Silhouette Score 해석</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>점수 범위</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.71 ~ 1.0</td>
+<td>강한 구조</td>
+</tr>
+<tr class="even">
+<td>0.51 ~ 0.70</td>
+<td>합리적 구조</td>
+</tr>
+<tr class="odd">
+<td>0.26 ~ 0.50</td>
+<td>약한 구조</td>
+</tr>
+<tr class="even">
+<td>&lt; 0.25</td>
+<td>구조 없음</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="군집-시각화" class="level3" data-number="24.3.3">
+<h3 data-number="24.3.3" class="anchored" data-anchor-id="군집-시각화"><span class="header-section-number">24.3.3</span> 군집 시각화</h3>
+<p><strong>예제: PCA로 2D 시각화</strong></p>
+<div id="1cd2aecc" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PCA로 2차원으로 축소</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.fit_transform(X_scaled)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># K-Means 군집 결과 시각화</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># K-Means 군집</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>scatter1 <span class="op">=</span> axes[<span class="dv">0</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_kmeans, </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(pca.transform(centroids)[:, <span class="dv">0</span>], pca.transform(centroids)[:, <span class="dv">1</span>],</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'X'</span>, s<span class="op">=</span><span class="dv">200</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                label<span class="op">=</span><span class="st">'Centroids'</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'K-Means Clustering (K=3)'</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="ss">f'PC1 (</span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_[<span class="dv">0</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="ss">f'PC2 (</span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_[<span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.colorbar(scatter1, ax<span class="op">=</span>axes[<span class="dv">0</span>], label<span class="op">=</span><span class="st">'Cluster'</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 실제 종</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="op">=</span> axes[<span class="dv">1</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], </span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                           c<span class="op">=</span>y_true.astype(<span class="st">'category'</span>).cat.codes,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'True Species'</span>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="ss">f'PC1 (</span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_[<span class="dv">0</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="ss">f'PC2 (</span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_[<span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>plt.colorbar(scatter2, ax<span class="op">=</span>axes[<span class="dv">1</span>], label<span class="op">=</span><span class="st">'Species'</span>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-8-output-1.png" width="1503" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="밀도-기반-군집-dbscan" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="밀도-기반-군집-dbscan"><span class="header-section-number">24.4</span> 밀도 기반 군집: DBSCAN</h2>
+<p>DBSCAN(Density-Based Spatial Clustering of Applications with Noise)은 밀도가 높은 영역을 군집으로 간주하는 알고리즘이다.</p>
+<p><strong>DBSCAN 핵심 개념</strong></p>
+<ul>
+<li><strong>Core Point</strong>: 반경 eps 내에 min_samples 이상의 이웃이 있는 점</li>
+<li><strong>Border Point</strong>: Core Point의 이웃이지만 자신은 Core가 아닌 점</li>
+<li><strong>Noise Point</strong>: Core도 Border도 아닌 점 (라벨 -1)</li>
+</ul>
+<p><strong>DBSCAN 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>군집 수</td>
+<td>자동 결정 (K 지정 불필요)</td>
+</tr>
+<tr class="even">
+<td>군집 형태</td>
+<td>비구형, 복잡한 형태 가능</td>
+</tr>
+<tr class="odd">
+<td>이상치 처리</td>
+<td>노이즈 자동 탐지 (-1)</td>
+</tr>
+<tr class="even">
+<td>밀도 가정</td>
+<td>밀도가 비슷해야 함</td>
+</tr>
+<tr class="odd">
+<td>파라미터 민감</td>
+<td>eps, min_samples 튜닝 중요</td>
+</tr>
+</tbody>
+</table>
+<p><strong>주요 하이퍼파라미터</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>파라미터</th>
+<th>설명</th>
+<th>설정 가이드</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>eps</td>
+<td>이웃 거리 임계값</td>
+<td>데이터 분포에 따라 실험</td>
+</tr>
+<tr class="even">
+<td>min_samples</td>
+<td>최소 이웃 수</td>
+<td>일반적으로 차원 수 + 1 또는 5~10</td>
+</tr>
+</tbody>
+</table>
+<section id="dbscan-실습" class="level3" data-number="24.4.1">
+<h3 data-number="24.4.1" class="anchored" data-anchor-id="dbscan-실습"><span class="header-section-number">24.4.1</span> DBSCAN 실습</h3>
+<p><strong>예제: DBSCAN 군집 분석</strong></p>
+<div id="5a7b725f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> DBSCAN</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># DBSCAN 군집</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>dbscan <span class="op">=</span> DBSCAN(eps<span class="op">=</span><span class="fl">0.8</span>, min_samples<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>labels_dbscan <span class="op">=</span> dbscan.fit_predict(X_scaled)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== DBSCAN 결과 ==="</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"군집 개수 (노이즈 제외): </span><span class="sc">{</span><span class="bu">len</span>(<span class="bu">set</span>(labels_dbscan)) <span class="op">-</span> (<span class="dv">1</span> <span class="cf">if</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">in</span> labels_dbscan <span class="cf">else</span> <span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"노이즈 포인트 수: </span><span class="sc">{</span>(labels_dbscan <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">군집별 샘플 수:"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.Series(labels_dbscan).value_counts().sort_index())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== DBSCAN 결과 ===
+군집 개수 (노이즈 제외): 2
+노이즈 포인트 수: 5
+
+군집별 샘플 수:
+-1      5
+ 0    211
+ 1    117
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<p><strong>예제: eps 값에 따른 군집 변화</strong></p>
+<div id="19b32802" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 eps 값으로 실험</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>eps_values <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="fl">1.0</span>, <span class="fl">1.2</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">12</span>))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.ravel()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, eps <span class="kw">in</span> <span class="bu">enumerate</span>(eps_values):</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    dbscan_temp <span class="op">=</span> DBSCAN(eps<span class="op">=</span>eps, min_samples<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    labels_temp <span class="op">=</span> dbscan_temp.fit_predict(X_scaled)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    n_clusters <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(labels_temp)) <span class="op">-</span> (<span class="dv">1</span> <span class="cf">if</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">in</span> labels_temp <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    n_noise <span class="op">=</span> (labels_temp <span class="op">==</span> <span class="op">-</span><span class="dv">1</span>).<span class="bu">sum</span>()</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> axes[idx].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_temp,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                               cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_title(<span class="ss">f'DBSCAN (eps=</span><span class="sc">{</span>eps<span class="sc">}</span><span class="ss">)</span><span class="ch">\n</span><span class="ss">Clusters: </span><span class="sc">{</span>n_clusters<span class="sc">}</span><span class="ss">, Noise: </span><span class="sc">{</span>n_noise<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    axes[idx].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 마지막 subplot은 실제 종</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> axes[<span class="dv">5</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                         c<span class="op">=</span>y_true.astype(<span class="st">'category'</span>).cat.codes,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                         cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">5</span>].set_title(<span class="st">'True Species'</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">5</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">5</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-10-output-1.png" width="1718" height="1143" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="모델-기반-군집-gaussian-mixture-model-gmm" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="모델-기반-군집-gaussian-mixture-model-gmm"><span class="header-section-number">24.5</span> 모델 기반 군집: Gaussian Mixture Model (GMM)</h2>
+<p>GMM은 데이터가 여러 개의 가우시안 분포 혼합으로 생성되었다고 가정하는 확률적 군집 방법이다.</p>
+<p><strong>GMM 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>소프트 할당</td>
+<td>각 데이터가 군집에 속할 확률 제공</td>
+</tr>
+<tr class="even">
+<td>타원형 군집</td>
+<td>공분산 고려로 다양한 형태</td>
+</tr>
+<tr class="odd">
+<td>분포 가정</td>
+<td>가우시안 분포 혼합</td>
+</tr>
+<tr class="even">
+<td>군집 수</td>
+<td>사전 지정 필요</td>
+</tr>
+<tr class="odd">
+<td>확률 기반</td>
+<td>불확실성 정량화 가능</td>
+</tr>
+</tbody>
+</table>
+<p><strong>K-Means vs GMM</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>K-Means</th>
+<th>GMM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>할당 방식</td>
+<td>하드 (0 또는 1)</td>
+<td>소프트 (확률)</td>
+</tr>
+<tr class="even">
+<td>군집 형태</td>
+<td>구형</td>
+<td>타원형</td>
+</tr>
+<tr class="odd">
+<td>기반</td>
+<td>거리</td>
+<td>확률</td>
+</tr>
+<tr class="even">
+<td>불확실성</td>
+<td>없음</td>
+<td>확률로 표현</td>
+</tr>
+</tbody>
+</table>
+<section id="gmm-실습" class="level3" data-number="24.5.1">
+<h3 data-number="24.5.1" class="anchored" data-anchor-id="gmm-실습"><span class="header-section-number">24.5.1</span> GMM 실습</h3>
+<p><strong>예제: GMM 군집 분석</strong></p>
+<div id="95c50ae5" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.mixture <span class="im">import</span> GaussianMixture</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># GMM 군집</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>gmm <span class="op">=</span> GaussianMixture(n_components<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>labels_gmm <span class="op">=</span> gmm.fit_predict(X_scaled)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>probs_gmm <span class="op">=</span> gmm.predict_proba(X_scaled)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== GMM 결과 ==="</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"군집 개수: </span><span class="sc">{</span>gmm<span class="sc">.</span>n_components<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">군집별 샘플 수:"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.Series(labels_gmm).value_counts().sort_index())</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 확률 출력 (처음 5개)</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 군집 소속 확률 (처음 5개) ==="</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>probs_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    probs_gmm[:<span class="dv">5</span>],</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="ss">f'Cluster </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>)]</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>probs_df[<span class="st">'Assigned'</span>] <span class="op">=</span> labels_gmm[:<span class="dv">5</span>]</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(probs_df.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== GMM 결과 ===
+군집 개수: 3
+
+군집별 샘플 수:
+0    147
+1    119
+2     67
+Name: count, dtype: int64
+
+=== 군집 소속 확률 (처음 5개) ===
+   Cluster 0  Cluster 1  Cluster 2  Assigned
+0      1.000        0.0      0.000         0
+1      0.999        0.0      0.001         0
+2      0.967        0.0      0.033         0
+3      1.000        0.0      0.000         0
+4      1.000        0.0      0.000         0</code></pre>
+</div>
+</div>
+<p><strong>예제: 불확실성 분석</strong></p>
+<div id="43bccc25" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 최대 확률 (확신도)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>max_probs <span class="op">=</span> probs_gmm.<span class="bu">max</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 불확실성이 높은 샘플 (확신도 낮음)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>uncertain_mask <span class="op">=</span> max_probs <span class="op">&lt;</span> <span class="fl">0.7</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== 불확실성 분석 ==="</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"확신도 &gt; 0.9: </span><span class="sc">{</span>(max_probs <span class="op">&gt;</span> <span class="fl">0.9</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">개 (</span><span class="sc">{</span>(max_probs <span class="op">&gt;</span> <span class="fl">0.9</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="op">/</span><span class="bu">len</span>(max_probs)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"확신도 &lt; 0.7: </span><span class="sc">{</span>uncertain_mask<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">개 (</span><span class="sc">{</span>uncertain_mask<span class="sc">.</span><span class="bu">sum</span>()<span class="op">/</span><span class="bu">len</span>(max_probs)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%)"</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># GMM 군집</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>scatter1 <span class="op">=</span> axes[<span class="dv">0</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_gmm,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'GMM Clustering'</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.colorbar(scatter1, ax<span class="op">=</span>axes[<span class="dv">0</span>], label<span class="op">=</span><span class="st">'Cluster'</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 확신도 시각화</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="op">=</span> axes[<span class="dv">1</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>max_probs,</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'RdYlGn'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>, vmin<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'GMM Confidence (Max Probability)'</span>)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.colorbar(scatter2, ax<span class="op">=</span>axes[<span class="dv">1</span>], label<span class="op">=</span><span class="st">'Confidence'</span>)</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 불확실성 분석 ===
+확신도 &gt; 0.9: 327개 (98.2%)
+확신도 &lt; 0.7: 2개 (0.6%)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-12-output-2.png" width="1494" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="알고리즘-종합-비교" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="알고리즘-종합-비교"><span class="header-section-number">24.6</span> 알고리즘 종합 비교</h2>
+<p><strong>군집 알고리즘 비교</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 32%">
+<col style="width: 28%">
+<col style="width: 17%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>구분</th>
@@ -648,48 +1187,297 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>군집 형태</td>
 <td>구형</td>
-<td>자유</td>
-<td>타원</td>
+<td>자유 (비구형)</td>
+<td>타원형</td>
 </tr>
 <tr class="odd">
-<td>이상치 처리</td>
-<td>약함</td>
-<td>강함</td>
-<td>약함</td>
+<td>할당 방식</td>
+<td>하드</td>
+<td>하드</td>
+<td>소프트 (확률)</td>
 </tr>
 <tr class="even">
-<td>소프트 할당</td>
-<td>X</td>
-<td>X</td>
-<td>O</td>
+<td>이상치 처리</td>
+<td>약함</td>
+<td>강함 (노이즈 탐지)</td>
+<td>약함</td>
 </tr>
 <tr class="odd">
-<td>계산 비용</td>
-<td>낮음</td>
+<td>계산 속도</td>
+<td>빠름</td>
 <td>중간</td>
-<td>중간</td>
+<td>느림</td>
+</tr>
+<tr class="even">
+<td>스케일 민감도</td>
+<td>높음</td>
+<td>높음</td>
+<td>높음</td>
+</tr>
+<tr class="odd">
+<td>파라미터 튜닝</td>
+<td>K</td>
+<td>eps, min_samples</td>
+<td>n_components</td>
+</tr>
+<tr class="even">
+<td>적용 상황</td>
+<td>일반적, 빠른 탐색</td>
+<td>이상치 탐지, 복잡한 형태</td>
+<td>확률 필요, 타원형 군집</td>
 </tr>
 </tbody>
 </table>
+<p><strong>예제: 세 가지 알고리즘 비교</strong></p>
+<div id="784f2ed7" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 세 가지 알고리즘 결과 비교</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># K-Means</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>scatter1 <span class="op">=</span> axes[<span class="dv">0</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_kmeans,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="ss">f'K-Means (K=3)</span><span class="ch">\n</span><span class="ss">Silhouette: </span><span class="sc">{</span>silhouette_score(X_scaled, labels_kmeans)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DBSCAN</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="op">=</span> axes[<span class="dv">1</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_dbscan,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>n_clusters_db <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(labels_dbscan)) <span class="op">-</span> (<span class="dv">1</span> <span class="cf">if</span> <span class="op">-</span><span class="dv">1</span> <span class="kw">in</span> labels_dbscan <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="ss">f'DBSCAN (eps=0.8)</span><span class="ch">\n</span><span class="ss">Clusters: </span><span class="sc">{</span>n_clusters_db<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co"># GMM</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>scatter3 <span class="op">=</span> axes[<span class="dv">2</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>labels_gmm,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="ss">f'GMM (n=3)</span><span class="ch">\n</span><span class="ss">Silhouette: </span><span class="sc">{</span>silhouette_score(X_scaled, labels_gmm)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 실제 종</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>scatter4 <span class="op">=</span> axes[<span class="dv">3</span>].scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>],</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>                           c<span class="op">=</span>y_true.astype(<span class="st">'category'</span>).cat.codes,</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>                           cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_title(<span class="st">'True Species'</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xlabel(<span class="st">'PC1'</span>)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_ylabel(<span class="st">'PC2'</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06. 군집 분석_files/figure-html/cell-13-output-1.png" width="1910" height="471" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="선택-가이드" class="level2" data-number="24.7">
-<h2 data-number="24.7" class="anchored" data-anchor-id="선택-가이드"><span class="header-section-number">24.7</span> 선택 가이드</h2>
-<ul>
-<li>빠른 탐색, 기준선 모델 → K-Means</li>
-<li>이상치 탐지, 비구형 구조 → DBSCAN</li>
-<li>분포 기반 해석, 확률 필요 → GMM</li>
-</ul>
-<p>한 가지로 끝내지 말고 <strong>여러 군집 결과 비교</strong></p>
+<section id="군집-결과-평가" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="군집-결과-평가"><span class="header-section-number">24.7</span> 군집 결과 평가</h2>
+<p>군집 분석은 정답이 없으므로, 평가 방법이 분류와 다르다.</p>
+<p><strong>평가 지표 종류</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>타입</th>
+<th>설명</th>
+<th>범위</th>
+<th>해석</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Silhouette Score</td>
+<td>내재적</td>
+<td>군집 응집도와 분리도</td>
+<td>-1 ~ 1</td>
+<td>높을수록 좋음</td>
+</tr>
+<tr class="even">
+<td>Davies-Bouldin Index</td>
+<td>내재적</td>
+<td>군집 간 거리와 군집 내 분산</td>
+<td>0 ~ ∞</td>
+<td>낮을수록 좋음</td>
+</tr>
+<tr class="odd">
+<td>Calinski-Harabasz</td>
+<td>내재적</td>
+<td>군집 간/내 분산 비율</td>
+<td>0 ~ ∞</td>
+<td>높을수록 좋음</td>
+</tr>
+<tr class="even">
+<td>Adjusted Rand Index</td>
+<td>외재적</td>
+<td>실제 라벨과 비교</td>
+<td>-1 ~ 1</td>
+<td>1에 가까울수록 좋음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 평가 지표 계산</strong></p>
+<div id="1ad8e886" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (silhouette_score, davies_bouldin_score, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                              calinski_harabasz_score, adjusted_rand_score)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 알고리즘별 평가</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>algorithms <span class="op">=</span> {</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'K-Means'</span>: labels_kmeans,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'DBSCAN'</span>: labels_dbscan,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GMM'</span>: labels_gmm</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, labels <span class="kw">in</span> algorithms.items():</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># DBSCAN 노이즈 제거 (평가 시)</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">'DBSCAN'</span>:</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        mask <span class="op">=</span> labels <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        X_eval <span class="op">=</span> X_scaled[mask]</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        labels_eval <span class="op">=</span> labels[mask]</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        X_eval <span class="op">=</span> X_scaled</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        labels_eval <span class="op">=</span> labels</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 군집이 1개 이하면 평가 불가</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>(labels_eval)) <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    silhouette <span class="op">=</span> silhouette_score(X_eval, labels_eval)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    davies_bouldin <span class="op">=</span> davies_bouldin_score(X_eval, labels_eval)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    calinski <span class="op">=</span> calinski_harabasz_score(X_eval, labels_eval)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 실제 라벨과 비교 (참고용)</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">'DBSCAN'</span>:</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>        ari <span class="op">=</span> adjusted_rand_score(y_true[mask], labels_eval)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        ari <span class="op">=</span> adjusted_rand_score(y_true, labels_eval)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>    results.append({</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Algorithm'</span>: name,</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Silhouette'</span>: silhouette,</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Davies-Bouldin'</span>: davies_bouldin,</span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Calinski-Harabasz'</span>: calinski,</span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">'ARI (vs True)'</span>: ari</span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(results)</span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 군집 평가 결과 ==="</span>)</span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 군집 평가 결과 ===
+  Algorithm  Silhouette  Davies-Bouldin  Calinski-Harabasz  ARI (vs True)
+0   K-Means       0.446           0.942            427.773          0.799
+1    DBSCAN       0.535           0.706            472.374          0.651
+2       GMM       0.453           0.899            413.159          0.959</code></pre>
+</div>
+</div>
 </section>
-<section id="군집-결과-평가" class="level2" data-number="24.8">
-<h2 data-number="24.8" class="anchored" data-anchor-id="군집-결과-평가"><span class="header-section-number">24.8</span> 군집 결과 평가</h2>
-<p><strong>군집에는 “정답”이 없다</strong>. 따라서 평가 기준도 다르다.</p>
-<ul>
-<li>Silhouette Score</li>
-<li>Davies–Bouldin Index</li>
-<li>시각적 해석 (PCA, t-SNE)</li>
+<section id="모델-선택-가이드" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="모델-선택-가이드"><span class="header-section-number">24.8</span> 모델 선택 가이드</h2>
+<p><strong>상황별 알고리즘 선택</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>권장 알고리즘</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>빠른 탐색, 기준선</td>
+<td>K-Means</td>
+<td>빠르고 간단</td>
+</tr>
+<tr class="even">
+<td>군집 수 모름</td>
+<td>DBSCAN</td>
+<td>자동 결정</td>
+</tr>
+<tr class="odd">
+<td>이상치 탐지 필요</td>
+<td>DBSCAN</td>
+<td>노이즈 분리</td>
+</tr>
+<tr class="even">
+<td>비구형 군집</td>
+<td>DBSCAN</td>
+<td>형태 자유</td>
+</tr>
+<tr class="odd">
+<td>확률 필요</td>
+<td>GMM</td>
+<td>소프트 할당</td>
+</tr>
+<tr class="even">
+<td>타원형 군집</td>
+<td>GMM</td>
+<td>공분산 고려</td>
+</tr>
+<tr class="odd">
+<td>대용량 데이터</td>
+<td>K-Means, Mini-Batch K-Means</td>
+<td>속도</td>
+</tr>
+</tbody>
+</table>
+<p><strong>의사결정 흐름</strong></p>
+<pre><code>군집 수를 알고 있는가?
+├─ Yes → 확률이 필요한가?
+│         ├─ Yes → GMM
+│         └─ No → K-Means
+└─ No → 이상치 탐지가 중요한가?
+          ├─ Yes → DBSCAN
+          └─ No → Elbow/Silhouette로 K 찾기 → K-Means</code></pre>
+</section>
+<section id="실무-체크리스트" class="level2" data-number="24.9">
+<h2 data-number="24.9" class="anchored" data-anchor-id="실무-체크리스트"><span class="header-section-number">24.9</span> 실무 체크리스트</h2>
+<p><strong>군집 분석 수행 시 확인사항</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">데이터 표준화 수행</label></li>
+<li><label><input type="checkbox">적절한 알고리즘 선택 (목적에 맞게)</label></li>
+<li><label><input type="checkbox">하이퍼파라미터 튜닝 (K, eps 등)</label></li>
+<li><label><input type="checkbox">여러 평가 지표로 검증</label></li>
+<li><label><input type="checkbox">시각화로 결과 확인 (PCA, t-SNE)</label></li>
+<li><label><input type="checkbox">실무적 해석 가능성 검토</label></li>
+<li><label><input type="checkbox">다른 알고리즘과 비교</label></li>
+<li><label><input type="checkbox">군집 프로파일링 (각 군집 특성 분석)</label></li>
 </ul>
-<p>군집은 <strong>수치 + 해석을 함께 봐야 한다</strong></p>
+</section>
+<section id="요약" class="level2" data-number="24.10">
+<h2 data-number="24.10" class="anchored" data-anchor-id="요약"><span class="header-section-number">24.10</span> 요약</h2>
+<p>이 장에서는 비지도 학습의 핵심인 군집 분석을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>군집 알고리즘 핵심</strong></p>
+<ul>
+<li><strong>K-Means</strong>: 빠르고 간단, 구형 군집, K 사전 지정</li>
+<li><strong>DBSCAN</strong>: 밀도 기반, 이상치 탐지, 비구형 가능</li>
+<li><strong>GMM</strong>: 확률 기반, 소프트 할당, 타원형 군집</li>
+</ul>
+<p><strong>평가 및 선택</strong></p>
+<ul>
+<li><strong>평가</strong>: Silhouette, Davies-Bouldin 등 내재적 지표</li>
+<li><strong>시각화</strong>: PCA/t-SNE로 2D 투영 후 확인</li>
+<li><strong>비교</strong>: 여러 알고리즘 결과 종합 판단</li>
+</ul>
+<p><strong>주의사항</strong></p>
+<ul>
+<li>군집에는 절대적 정답이 없음</li>
+<li>수치 평가와 시각적 해석 모두 중요</li>
+<li>실무적 의미 있는 군집인지 확인 필수</li>
+<li>하이퍼파라미터에 결과가 크게 좌우됨</li>
+</ul>
+<p>군집 분석은 데이터의 숨겨진 구조를 발견하는 강력한 도구이다. 알고리즘의 가정과 특성을 이해하고, 목적에 맞는 방법을 선택하며, 다양한 평가 방법으로 검증하는 것이 중요하다.</p>
 
 
 </section>
