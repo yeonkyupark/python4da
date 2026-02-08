@@ -1,231 +1,563 @@
 # 분류 모델
 
-## 분류 모델 개요
+분류 모델(Classification Models)은 입력 변수(X)를 기반으로 범주형 타겟 변수(y)를 예측하는 지도 학습 모델이다. 회귀와 달리 출력이 이산적인 클래스이며, 새로운 데이터가 어느 범주에 속하는지 판단한다. 이 장에서는 로지스틱 회귀, k-NN, 결정 트리, 랜덤 포레스트 등 주요 분류 모델의 원리와 실무 활용법을 학습한다.
 
-**분류 모델**(Classification Models)은 입력 변수(X)를 기반으로 **범주형 타깃 변수(y)** 를 예측하는 모델이다.
-
-* 출력: 이산적인 클래스
-* 예: 펭귄 종(species) 분류
-
-penguins 데이터셋에서는 다음이 대표적인 분류 문제다.
-
-* 타깃 변수: `species`
-* 입력 변수: 부리 길이, 부리 깊이, 날개 길이, 체중 등
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
 import pandas as pd
-
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
+# 데이터 로드
 df = sns.load_dataset("penguins").dropna()
 
-X = df[[
-    "bill_length_mm",
-    "bill_depth_mm",
-    "flipper_length_mm",
-    "body_mass_g"
-]]
-
+# 특성과 타겟 준비
+X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
 y = df["species"]
 
+print("데이터 크기:", df.shape)
+print("\n특성 변수:", X.columns.tolist())
+print("타겟 변수: species (범주형)")
+print("\n클래스 분포:")
+print(y.value_counts())
+print(f"\n클래스 개수: {y.nunique()}")
+```
+
+## 분류의 개념
+
+분류는 입력 데이터를 사전에 정의된 범주 중 하나로 할당하는 문제이다.
+
+**회귀 vs 분류 비교**
+
+| 구분 | 회귀 (Regression) | 분류 (Classification) |
+|------|------------------|---------------------|
+| 출력 타입 | 연속형 (수치) | 범주형 (클래스) |
+| 예측값 | 실수 값 | 클래스 라벨 또는 확률 |
+| 예시 | 체중, 가격, 온도 | 종, 합격/불합격, 질병 유무 |
+| 평가 지표 | MSE, MAE, R² | 정확도, 정밀도, 재현율, F1 |
+| 대표 모델 | 선형 회귀, Ridge, Lasso | 로지스틱 회귀, SVM, 결정 트리 |
+
+**분류 문제의 유형**
+
+| 유형 | 설명 | 예시 |
+|------|------|------|
+| 이진 분류 | 2개 클래스 | 합격/불합격, 스팸/정상 |
+| 다중 클래스 분류 | 3개 이상 클래스 | 펭귄 종(3개), 손글씨 숫자(10개) |
+| 다중 레이블 분류 | 여러 클래스 동시 예측 | 영화 장르(액션+코미디) |
+
+**분류 문제 예시**
+
+| 분야 | 입력 변수 | 출력 변수 (클래스) |
+|------|----------|------------------|
+| 의료 | 증상, 나이, 검사 결과 | 질병 유무 |
+| 금융 | 신용 점수, 소득, 채무 | 대출 승인/거부 |
+| 마케팅 | 구매 이력, 방문 빈도 | 이탈 여부 |
+| 생물학 | 부리 크기, 날개 길이 | 종(species) |
+
+## 데이터 준비
+
+**예제: 학습/테스트 분할**
+
+```{python}
+from sklearn.pipeline import Pipeline
+
+# 데이터 분할 (stratify로 클래스 비율 유지)
 X_train, X_test, y_train, y_test = train_test_split(
     X, y,
     test_size=0.2,
     random_state=42,
-    stratify=y
+    stratify=y  # 클래스 비율 유지 (분류에서 매우 중요)
 )
+
+print("=== 데이터 분할 ===")
+print(f"학습 데이터: {X_train.shape}")
+print(f"테스트 데이터: {X_test.shape}")
+
+# 클래스 비율 확인
+print("\n=== 클래스 비율 비교 ===")
+print("전체 데이터:")
+print((y.value_counts() / len(y) * 100).round(1))
+print("\n학습 데이터:")
+print((y_train.value_counts() / len(y_train) * 100).round(1))
+print("\n테스트 데이터:")
+print((y_test.value_counts() / len(y_test) * 100).round(1))
 ```
 
-`stratify=y`
+**Stratify의 중요성**
 
-* 클래스 비율 유지 (분류 문제에서 매우 중요)
+- 클래스 불균형 데이터에서 필수
+- 학습/테스트셋의 클래스 비율 유지
+- 편향된 평가 방지
 
-## 선형 분류 모델
+## 선형 분류 모델: 로지스틱 회귀
 
-### 로지스틱 회귀 
+로지스틱 회귀(Logistic Regression)는 이름은 회귀지만 분류 모델로, 선형 결정 경계를 사용한다.
 
-로지스틱 회귀(Logistic Regression)의 이름은 회귀지만 **분류 모델**이다.
+**로지스틱 회귀의 핵심**
 
-* 선형 결정 경계
-* 확률 기반 예측
-* 이진 분류, 다중 분류 모두 가능
+- 선형 결합 → 시그모이드 함수 → 확률
+- 출력을 0~1 사이 확률로 변환
+- 확률이 0.5 이상이면 양성 클래스
 
-### 개념 요약
+**로지스틱 회귀 특징**
 
-* 선형 결합 결과 → 시그모이드 함수
-* 출력값을 확률로 해석
-* 가장 확률이 높은 클래스를 예측값으로 선택
+| 특징 | 설명 |
+|------|------|
+| 선형 결정 경계 | 직선/평면으로 클래스 구분 |
+| 확률 출력 | 각 클래스에 속할 확률 제공 |
+| 해석 가능 | 계수로 변수 영향도 파악 |
+| 고차원 적합 | 변수 많아도 안정적 |
+| 다중 클래스 지원 | One-vs-Rest 또는 Multinomial |
+| 스케일 민감 | 표준화 필요 |
 
-### 로지스틱 회귀 예제
+### 로지스틱 회귀 실습
 
-```python
+**예제: 로지스틱 회귀 학습**
+
+```{python}
 from sklearn.linear_model import LogisticRegression
 
+# 파이프라인 구성 (스케일링 + 모델)
 pipe_lr = Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", LogisticRegression(max_iter=1000))
+    ('scaler', StandardScaler()),
+    ('model', LogisticRegression(max_iter=1000, random_state=42))
 ])
 
+# 학습
 pipe_lr.fit(X_train, y_train)
 
-pipe_lr.score(X_test, y_test)
+# 예측
+y_pred_lr = pipe_lr.predict(X_test)
+y_proba_lr = pipe_lr.predict_proba(X_test)
+
+# 평가
+accuracy = accuracy_score(y_test, y_pred_lr)
+print("=== 로지스틱 회귀 성능 ===")
+print(f"정확도: {accuracy:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_lr))
 ```
 
-### 특징
+**예제: 혼동 행렬 시각화**
 
-* 해석 가능성 높음
-* 고차원 데이터에 강함
-* 비선형 경계 표현에는 한계
+```{python}
+import seaborn as sns
 
-## 거리 기반 모델
+# 혼동 행렬
+cm = confusion_matrix(y_test, y_pred_lr)
 
-### k-최근접 이웃 (k-NN)
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=pipe_lr.classes_,
+            yticklabels=pipe_lr.classes_)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Logistic Regression: Confusion Matrix')
+plt.tight_layout()
+plt.show()
+```
 
-가장 직관적인 분류 모델로 새로운 데이터 주변의 **k개 이웃**을 기준으로 분류한다. 거리 기반으로 클래스를 판단한다.
+**예제: 확률 출력 확인**
 
-### 개념 요약
+```{python}
+# 확률 출력 (처음 5개 샘플)
+print("\n=== 예측 확률 (처음 5개) ===")
+proba_df = pd.DataFrame(
+    y_proba_lr[:5],
+    columns=pipe_lr.classes_
+)
+proba_df['Predicted'] = y_pred_lr[:5]
+proba_df['Actual'] = y_test.iloc[:5].values
+print(proba_df.round(3))
+```
 
-* 학습 과정 없음
-* 거리 계산이 핵심
-* 스케일에 매우 민감
+## 거리 기반 모델: k-최근접 이웃 (k-NN)
 
-### k-NN 예제
+k-NN은 새로운 데이터 주변의 k개 이웃을 기준으로 다수결 투표로 분류하는 가장 직관적인 모델이다.
 
-```python
+**k-NN의 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 학습 없음 | 인스턴스 기반 학습 (lazy learning) |
+| 거리 기반 | 유클리드, 맨하탄 등 거리 사용 |
+| 비선형 경계 | 복잡한 경계 표현 가능 |
+| 스케일 민감 | 반드시 표준화 필요 |
+| 예측 느림 | 모든 학습 데이터와 거리 계산 |
+| 해석 어려움 | 이웃 기반이라 직관적이지만 설명 곤란 |
+
+**k 값의 영향**
+
+| k 값 | 효과 | 문제점 |
+|------|------|--------|
+| k = 1 | 가장 가까운 1개만 | 과적합, 노이즈 민감 |
+| k 작음 (3~5) | 세밀한 경계 | 과적합 경향 |
+| k 적절 (5~15) | 균형 잡힌 성능 | 최적값 찾기 |
+| k 큼 | 부드러운 경계 | 과소적합 |
+
+### k-NN 실습
+
+**예제: k-NN 학습**
+
+```{python}
 from sklearn.neighbors import KNeighborsClassifier
 
+# 파이프라인 구성
 pipe_knn = Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", KNeighborsClassifier(n_neighbors=5))
+    ('scaler', StandardScaler()),
+    ('model', KNeighborsClassifier(n_neighbors=5))
 ])
 
+# 학습 및 예측
 pipe_knn.fit(X_train, y_train)
+y_pred_knn = pipe_knn.predict(X_test)
 
-pipe_knn.score(X_test, y_test)
+# 평가
+accuracy_knn = accuracy_score(y_test, y_pred_knn)
+print("=== k-NN 성능 (k=5) ===")
+print(f"정확도: {accuracy_knn:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_knn))
 ```
 
-### k 값의 영향
+**예제: k 값 튜닝**
 
-* k가 작음 → 과적합
-* k가 큼 → 과소적합
+```{python}
+# 다양한 k 값으로 실험
+k_values = range(1, 21)
+accuracies = []
 
-교차 검증으로 선택하는 것이 일반적
+for k in k_values:
+    knn_temp = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', KNeighborsClassifier(n_neighbors=k))
+    ])
+    knn_temp.fit(X_train, y_train)
+    acc = knn_temp.score(X_test, y_test)
+    accuracies.append(acc)
 
-### 거리 기반 모델의 한계
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.plot(k_values, accuracies, marker='o', linewidth=2)
+plt.xlabel('k (Number of Neighbors)')
+plt.ylabel('Accuracy')
+plt.title('k-NN: Optimal k Value')
+plt.grid(True, alpha=0.3)
+plt.axvline(x=k_values[np.argmax(accuracies)], color='r', linestyle='--',
+            label=f'Best k = {k_values[np.argmax(accuracies)]}')
+plt.legend()
+plt.tight_layout()
+plt.show()
 
-* 데이터 수 증가 시 예측 속도 저하
-* 고차원 공간에서 거리 의미 약화
+print(f"최적 k: {k_values[np.argmax(accuracies)]}")
+print(f"최고 정확도: {max(accuracies):.4f}")
+```
 
-## 트리 기반 모델
+## 트리 기반 모델: 결정 트리
 
-### 결정 트리 (Decision Tree)
+결정 트리(Decision Tree)는 질문을 반복하며 데이터를 분기하여 분류하는 사람이 이해하기 쉬운 모델이다.
 
-질문을 반복하며 분기하며, 사람이 이해하기 쉬운 구조를 갖는다.
+**결정 트리의 특징**
 
-### 개념 요약
+| 특징 | 설명 |
+|------|------|
+| 직관적 구조 | if-else 규칙으로 해석 가능 |
+| 비선형 경계 | 복잡한 패턴 표현 가능 |
+| 스케일 불필요 | 표준화 필요 없음 |
+| 범주형 처리 | 범주형 변수 직접 사용 가능 |
+| 변수 중요도 | 각 변수의 기여도 제공 |
+| 과적합 취약 | 깊이 제한 필요 |
 
-* 불순도 감소 기준으로 분기
-* 비선형 경계 표현 가능
-* 스케일링 불필요
+**주요 하이퍼파라미터**
 
-### 결정 트리 예제
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| max_depth | 트리 최대 깊이 | 3~10 |
+| min_samples_split | 분할 위한 최소 샘플 수 | 2~20 |
+| min_samples_leaf | 리프 노드 최소 샘플 수 | 1~10 |
+| max_features | 분할 시 고려할 최대 변수 수 | 'sqrt', 'log2' |
 
-```python
+### 결정 트리 실습
+
+**예제: 결정 트리 학습**
+
+```{python}
 from sklearn.tree import DecisionTreeClassifier
 
+# 결정 트리 (스케일링 불필요)
 tree = DecisionTreeClassifier(
     max_depth=4,
     random_state=42
 )
 
 tree.fit(X_train, y_train)
+y_pred_tree = tree.predict(X_test)
 
-tree.score(X_test, y_test)
+# 평가
+accuracy_tree = accuracy_score(y_test, y_pred_tree)
+print("=== 결정 트리 성능 ===")
+print(f"정확도: {accuracy_tree:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_tree))
 ```
 
-### 단점
+**예제: 트리 시각화**
 
-* 과적합에 매우 취약
-* 데이터 변화에 민감
+```{python}
+from sklearn.tree import plot_tree
 
-이를 보완한 것이 **앙상블 모델**
+# 트리 구조 시각화
+plt.figure(figsize=(20, 10))
+plot_tree(tree, 
+          feature_names=X.columns,
+          class_names=tree.classes_,
+          filled=True,
+          rounded=True,
+          fontsize=10)
+plt.title("Decision Tree Structure")
+plt.tight_layout()
+plt.show()
+```
 
-## 3.5.5 앙상블 모델
+**예제: 변수 중요도**
 
-### 랜덤 포레스트 (Random Forest)
+```{python}
+# 변수 중요도
+importance_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': tree.feature_importances_
+}).sort_values('Importance', ascending=False)
 
-여러 결정 트리를 결합한 형태로 배깅(Bagging) 기반 모델이다.
+print("\n=== 변수 중요도 ===")
+print(importance_df)
 
-### 특징
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.barh(importance_df['Feature'], importance_df['Importance'])
+plt.xlabel('Importance')
+plt.title('Decision Tree: Feature Importance')
+plt.tight_layout()
+plt.show()
+```
 
-* 과적합 감소
-* 안정적인 성능
-* 변수 중요도 제공
+**결정 트리의 한계**
 
-### 랜덤 포레스트 예제
+- 과적합에 매우 취약
+- 데이터 작은 변화에 민감 (불안정)
+- 선형 관계 표현에 비효율적
 
-```python
+이를 보완하기 위해 **앙상블 모델**을 사용한다.
+
+## 앙상블 모델: 랜덤 포레스트
+
+랜덤 포레스트(Random Forest)는 여러 결정 트리를 결합한 배깅(Bagging) 기반 앙상블 모델이다.
+
+**랜덤 포레스트의 원리**
+
+1. 부트스트랩 샘플링으로 여러 데이터셋 생성
+2. 각 데이터셋마다 결정 트리 학습
+3. 무작위로 변수 부분집합 선택
+4. 모든 트리의 투표로 최종 예측
+
+**랜덤 포레스트의 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 과적합 감소 | 여러 트리 평균으로 안정화 |
+| 높은 성능 | 실무에서 우수한 성능 |
+| 변수 중요도 | 평균 중요도 제공 |
+| 병렬 처리 | 트리 독립적으로 학습 가능 |
+| 해석 어려움 | 개별 트리보다 복잡 |
+| 하이퍼파라미터 | 튜닝 필요 |
+
+**주요 하이퍼파라미터**
+
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| n_estimators | 트리 개수 | 100~500 |
+| max_depth | 각 트리 최대 깊이 | None 또는 10~30 |
+| max_features | 분할 시 고려 변수 수 | 'sqrt', 'log2' |
+| min_samples_split | 분할 최소 샘플 | 2~10 |
+
+### 랜덤 포레스트 실습
+
+**예제: 랜덤 포레스트 학습**
+
+```{python}
 from sklearn.ensemble import RandomForestClassifier
 
+# 랜덤 포레스트
 rf = RandomForestClassifier(
     n_estimators=200,
-    random_state=42
+    max_depth=10,
+    random_state=42,
+    n_jobs=-1  # 병렬 처리
 )
 
 rf.fit(X_train, y_train)
+y_pred_rf = rf.predict(X_test)
 
-rf.score(X_test, y_test)
+# 평가
+accuracy_rf = accuracy_score(y_test, y_pred_rf)
+print("=== 랜덤 포레스트 성능 ===")
+print(f"정확도: {accuracy_rf:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_rf))
 ```
 
-### 변수 중요도 확인
+**예제: 변수 중요도**
 
-```python
-pd.Series(
-    rf.feature_importances_,
-    index=X.columns
-).sort_values(ascending=False)
+```{python}
+# 변수 중요도
+rf_importance = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': rf.feature_importances_
+}).sort_values('Importance', ascending=False)
+
+print("\n=== 랜덤 포레스트 변수 중요도 ===")
+print(rf_importance)
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.barh(rf_importance['Feature'], rf_importance['Importance'])
+plt.xlabel('Importance')
+plt.title('Random Forest: Feature Importance')
+plt.tight_layout()
+plt.show()
 ```
 
-### 그래디언트 부스팅 계열
+**예제: 트리 개수에 따른 성능**
 
-* 이전 모델의 오류를 보완하며 학습
-* 성능은 좋지만 해석과 튜닝 난이도 ↑
+```{python}
+# n_estimators 영향 확인
+n_trees = [10, 50, 100, 200, 500]
+accuracies_rf = []
 
+for n in n_trees:
+    rf_temp = RandomForestClassifier(n_estimators=n, random_state=42, n_jobs=-1)
+    rf_temp.fit(X_train, y_train)
+    acc = rf_temp.score(X_test, y_test)
+    accuracies_rf.append(acc)
 
-## 모델 비교 요약
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.plot(n_trees, accuracies_rf, marker='o', linewidth=2)
+plt.xlabel('Number of Trees')
+plt.ylabel('Accuracy')
+plt.title('Random Forest: Effect of n_estimators')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
 
-* **로지스틱 회귀**
+## 모델 종합 비교
 
-  * 기준 모델
-  * 해석 용이
-* **k-NN**
+**분류 모델 특성 비교**
 
-  * 직관적
-  * 스케일 중요
-* **결정 트리**
+| 모델 | 선형성 | 스케일 민감 | 해석력 | 학습 속도 | 예측 속도 | 과적합 | 적용 상황 |
+|------|--------|------------|--------|----------|----------|--------|----------|
+| 로지스틱 회귀 | 선형 | 높음 | 높음 | 빠름 | 빠름 | 낮음 | 기준 모델, 해석 중요 |
+| k-NN | 비선형 | 매우 높음 | 중간 | 빠름 | 느림 | 중간 | 소규모 데이터 |
+| 결정 트리 | 비선형 | 낮음 | 높음 | 빠름 | 빠름 | 높음 | 탐색, 설명 |
+| 랜덤 포레스트 | 비선형 | 낮음 | 중간 | 느림 | 중간 | 낮음 | 실무, 성능 우선 |
 
-  * 비선형
-  * 과적합 주의
-* **랜덤 포레스트**
+**예제: 모든 모델 성능 비교**
 
-  * 안정적
-  * 실무 활용도 높음
+```{python}
+# 모든 모델 성능 비교
+models = {
+    'Logistic Regression': pipe_lr,
+    'k-NN (k=5)': pipe_knn,
+    'Decision Tree': tree,
+    'Random Forest': rf
+}
 
-## 선택 가이드
+results = []
+for name, model in models.items():
+    if name == 'Logistic Regression' or name == 'k-NN (k=5)':
+        pred = model.predict(X_test)
+    else:
+        pred = model.predict(X_test)
+    
+    acc = accuracy_score(y_test, pred)
+    results.append({'Model': name, 'Accuracy': acc})
 
-* 빠른 기준선
+results_df = pd.DataFrame(results).sort_values('Accuracy', ascending=False)
+print("=== 모델 성능 비교 ===")
+print(results_df)
 
-  * 로지스틱 회귀
-* 데이터 구조 탐색
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.barh(results_df['Model'], results_df['Accuracy'])
+plt.xlabel('Accuracy')
+plt.title('Classification Models Comparison')
+plt.xlim([0.8, 1.0])
+plt.grid(True, alpha=0.3, axis='x')
+plt.tight_layout()
+plt.show()
+```
 
-  * 결정 트리
-* 성능 우선
+## 모델 선택 가이드
 
-  * 랜덤 포레스트
-* 데이터 수 적음
+**상황별 모델 선택**
 
-  * k-NN (튜닝 필수)
+| 상황 | 권장 모델 | 이유 |
+|------|----------|------|
+| 빠른 기준선 필요 | 로지스틱 회귀 | 학습 빠르고 안정적 |
+| 해석 중요 | 로지스틱 회귀, 결정 트리 | 계수/규칙으로 설명 가능 |
+| 비선형 관계 | 결정 트리, 랜덤 포레스트 | 복잡한 경계 표현 |
+| 성능 최우선 | 랜덤 포레스트, Gradient Boosting | 앙상블로 높은 정확도 |
+| 데이터 적음 | k-NN, 로지스틱 회귀 | 과적합 위험 낮음 |
+| 고차원 데이터 | 로지스틱 회귀 (L1/L2) | 차원 저주 완화 |
 
+**의사결정 흐름**
+
+```
+해석이 필수인가?
+├─ Yes → 선형 관계인가?
+│         ├─ Yes → 로지스틱 회귀
+│         └─ No → 결정 트리
+└─ No → 성능이 최우선인가?
+          ├─ Yes → 랜덤 포레스트
+          └─ No → 데이터 크기는?
+                   ├─ 작음 → k-NN
+                   └─ 큼 → 로지스틱 회귀
+```
+
+## 실무 체크리스트
+
+**분류 모델 적용 시 확인사항**
+
+- [ ] 클래스 불균형 확인 (stratify 사용)
+- [ ] 적절한 평가 지표 선택 (정확도만으로 불충분)
+- [ ] 스케일링 필요 여부 확인 (모델별 다름)
+- [ ] 교차 검증으로 성능 평가
+- [ ] 하이퍼파라미터 튜닝
+- [ ] 혼동 행렬로 오류 패턴 분석
+- [ ] 변수 중요도 확인 (가능한 경우)
+- [ ] 과적합 여부 확인 (학습 vs 테스트 성능)
+
+## 요약
+
+이 장에서는 범주형 예측을 위한 주요 분류 모델을 학습했다. 주요 내용은 다음과 같다.
+
+**분류 모델 핵심**
+
+- **로지스틱 회귀**: 선형, 해석 가능, 기준 모델
+- **k-NN**: 거리 기반, 직관적, 스케일 민감
+- **결정 트리**: 비선형, 해석 용이, 과적합 주의
+- **랜덤 포레스트**: 앙상블, 안정적, 실무 우수
+
+**실무 권장사항**
+
+1. **로지스틱 회귀로 시작**: 빠른 기준선 확보
+2. **랜덤 포레스트로 개선**: 성능 향상
+3. **하이퍼파라미터 튜닝**: GridSearchCV 활용
+4. **앙상블 결합**: 여러 모델 결합 고려
+
+분류 모델은 실무에서 가장 흔한 머신러닝 문제이다. 데이터 특성과 목적에 맞는 모델을 선택하고, 적절한 전처리와 평가를 통해 최적의 성능을 달성하는 것이 중요하다.
