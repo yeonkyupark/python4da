@@ -1,6 +1,6 @@
-# 차원 축소
+# 회귀 모델
 
-차원 축소(Dimensionality Reduction)는 여러 개의 입력 변수(차원)를 더 적은 수의 변수로 변환하는 과정이다. 원본 특성을 그대로 사용하지 않고 새로운 특성(축)을 만들어 데이터를 표현하는 방법으로, 특성 추출(Feature Extraction)을 포함하는 개념이다. 차원 축소는 고차원 데이터의 시각화, 학습 속도 향상, 일반화 성능 개선에 핵심적인 역할을 한다. 이 장에서는 PCA, t-SNE, UMAP 등 주요 차원 축소 기법의 원리와 실무 활용법을 학습한다.
+회귀 모델(Regression Models)은 입력 변수(X)와 연속형 타겟 변수(y) 사이의 관계를 학습하여 새로운 입력에 대한 수치값을 예측하는 지도 학습 모델이다. 예측 대상이 범주가 아닌 수치이며, 관계를 수학적 함수 형태로 모델링한다. 이 장에서는 선형 회귀부터 정규화 회귀(Ridge, Lasso, ElasticNet)까지 주요 회귀 모델의 원리와 실무 활용법을 학습한다.
 
 **예제: 데이터 로드**
 
@@ -9,515 +9,640 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 # 데이터 로드
 df = sns.load_dataset("penguins").dropna()
-X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
-y = df["species"]
 
-print("데이터 크기:", X.shape)
-print("원본 차원:", X.shape[1])
+# 특성과 타겟 준비
+X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]]
+y = df["body_mass_g"]
+
+print("데이터 크기:", df.shape)
+print("\n특성 변수:", X.columns.tolist())
+print("타겟 변수: body_mass_g (연속형)")
+print(f"\n타겟 범위: {y.min():.0f}g ~ {y.max():.0f}g")
 ```
 
-## 차원 축소의 개념과 필요성
+## 회귀의 개념
 
-차원 축소는 고차원 데이터를 저차원으로 변환하여 데이터를 효율적으로 표현하고 분석한다.
+회귀는 입력 변수와 출력 변수 간의 관계를 모델링하여 예측하는 기법이다.
 
-**차원 축소가 필요한 이유**
+**회귀 vs 분류**
 
-| 문제 | 설명 | 차원 축소로 해결 |
-|------|------|----------------|
-| 차원의 저주 | 변수가 많아질수록 필요한 샘플 수 기하급수적 증가 | 핵심 변수만 유지 |
-| 시각화 어려움 | 3차원 이상은 직접 시각화 불가 | 2D/3D로 변환 |
-| 학습 시간 증가 | 변수가 많을수록 계산량 증가 | 연산량 감소 |
-| 다중공선성 | 상관성 높은 변수들이 모델 불안정화 | 독립적인 축 생성 |
-| 노이즈 | 불필요한 변수가 노이즈 포함 | 주요 신호만 추출 |
-| 메모리 사용 | 고차원 데이터는 저장 공간 많이 차지 | 데이터 압축 |
+| 구분 | 회귀 (Regression) | 분류 (Classification) |
+|------|------------------|---------------------|
+| 출력 타입 | 연속형 (수치) | 범주형 (클래스) |
+| 예측값 | 실수 값 | 클래스 라벨 또는 확률 |
+| 예시 | 체중, 가격, 온도 | 종, 합격/불합격, 질병 유무 |
+| 평가 지표 | MSE, MAE, R² | 정확도, 정밀도, 재현율 |
+| 대표 모델 | 선형 회귀, Ridge, Lasso | 로지스틱 회귀, 결정 트리 |
 
-**차원 축소의 기대 효과**
+**회귀 문제의 예**
 
-| 효과 | 설명 |
-|------|------|
-| 데이터 구조 단순화 | 복잡한 데이터를 간결하게 표현 |
-| 학습 속도 향상 | 변수 수 감소로 연산량 감소 |
-| 일반화 성능 개선 | 과적합 위험 감소 |
-| 시각화 가능 | 2D/3D로 변환하여 패턴 파악 |
-| 저장 공간 절약 | 데이터 압축 효과 |
+| 분야 | 입력 변수 | 출력 변수 |
+|------|----------|----------|
+| 부동산 | 면적, 방 개수, 위치 | 주택 가격 |
+| 의료 | 나이, BMI, 혈압 | 혈당 수치 |
+| 마케팅 | 광고비, 계절, 프로모션 | 매출액 |
+| 생물학 | 부리 길이, 날개 길이 | 체중 |
 
-### 특성 선택 vs 차원 축소 (특성 추출)
+## 데이터 준비 및 분할
 
-**특성 선택 vs 차원 축소 비교**
-
-| 구분 | 특성 선택 (Feature Selection) | 차원 축소 (Feature Extraction) |
-|------|------------------------------|------------------------------|
-| 정의 | 기존 변수 중 일부를 선택 | 기존 변수를 변환하여 새로운 변수 생성 |
-| 원본 변수 | 그대로 유지 | 변환/조합 |
-| 변수 의미 | 유지됨 | 해석 어려워짐 |
-| 정보 손실 | 선택 안 된 변수의 정보 손실 | 압축 과정에서 일부 손실 |
-| 예시 | 상관계수로 3개 변수 선택 | PCA로 2개 주성분 생성 |
-| 해석력 | 높음 | 낮음 |
-| 적용 | 도메인 지식 중요 | 데이터 구조 의존 |
-
-**예제: 특성 선택 vs 차원 축소**
+**예제: 학습/테스트 분할**
 
 ```{python}
-from sklearn.feature_selection import SelectKBest, f_classif
-from sklearn.decomposition import PCA
-
-# 데이터 표준화
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# 특성 선택: 원본 변수 중 2개 선택
-selector = SelectKBest(score_func=f_classif, k=2)
-X_selected = selector.fit_transform(X, y)
-selected_features = X.columns[selector.get_support()]
-
-print("=== 특성 선택 ===")
-print(f"선택된 변수: {selected_features.tolist()}")
-print(f"변수 의미: 원본 그대로 유지")
-
-# 차원 축소: 새로운 2개 주성분 생성
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-
-print("\n=== 차원 축소 (PCA) ===")
-print(f"생성된 변수: PC1, PC2")
-print(f"변수 의미: 원본 변수들의 선형 조합")
-print(f"설명 분산: {pca.explained_variance_ratio_}")
-```
-
-## 선형 차원 축소: PCA
-
-PCA(Principal Component Analysis, 주성분 분석)는 가장 널리 사용되는 선형 차원 축소 방법이다.
-
-**PCA의 핵심 아이디어**
-
-- 데이터의 **분산을 가장 잘 설명하는 방향**을 찾음
-- 기존 변수의 **선형 결합**으로 새로운 축 생성
-- 새로운 축을 **주성분(Principal Component)**이라 부름
-- 각 주성분은 서로 **직교(독립)**
-
-**PCA의 작동 원리**
-
-1. 데이터 표준화 (평균 0, 분산 1)
-2. 공분산 행렬 계산
-3. 고유값과 고유벡터 계산
-4. 고유값이 큰 순서로 주성분 선택
-5. 원본 데이터를 새로운 주성분 공간으로 투영
-
-**PCA의 특징**
-
-| 특징 | 설명 |
-|------|------|
-| 선형 변환 | 원본 변수의 선형 조합 |
-| 분산 최대화 | 데이터가 가장 퍼진 방향 찾기 |
-| 직교성 | 주성분들은 서로 독립 |
-| 스케일 민감 | 표준화 필수 |
-| 비지도 학습 | 타겟 정보 사용 안 함 |
-| 해석 가능 | 각 주성분의 기여도 확인 가능 |
-
-### PCA 실습
-
-**예제: PCA 적용**
-
-```{python}
-from sklearn.decomposition import PCA
-
-# 데이터 표준화
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# PCA 적용 (2차원으로 축소)
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-
-print("=== PCA 결과 ===")
-print(f"원본 차원: {X.shape[1]}")
-print(f"축소 차원: {X_pca.shape[1]}")
-print(f"\n각 주성분의 설명 분산 비율:")
-for i, var in enumerate(pca.explained_variance_ratio_, 1):
-    print(f"  PC{i}: {var:.4f} ({var*100:.2f}%)")
-print(f"\n누적 설명 분산: {pca.explained_variance_ratio_.sum():.4f} ({pca.explained_variance_ratio_.sum()*100:.2f}%)")
-```
-
-**예제: 주성분 구성 확인**
-
-```{python}
-# 각 주성분을 구성하는 원본 변수의 기여도
-components_df = pd.DataFrame(
-    pca.components_,
-    columns=X.columns,
-    index=[f'PC{i+1}' for i in range(pca.n_components_)]
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
 )
 
-print("\n=== 주성분 구성 (변수별 기여도) ===")
-print(components_df.round(3))
+print("=== 데이터 분할 ===")
+print(f"학습 데이터: {X_train.shape}")
+print(f"테스트 데이터: {X_test.shape}")
 
-# 시각화
+# 타겟 분포 확인
+print("\n=== 타겟 분포 ===")
+print(f"학습셋 평균: {y_train.mean():.2f}g, 표준편차: {y_train.std():.2f}g")
+print(f"테스트셋 평균: {y_test.mean():.2f}g, 표준편차: {y_test.std():.2f}g")
+```
+
+## 선형 회귀 (Linear Regression)
+
+선형 회귀는 입력 변수와 출력 변수 사이의 관계를 선형 결합으로 표현하는 가장 기본적인 회귀 모델이다.
+
+**선형 회귀 수식**
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
+$$
+
+여기서:
+- $y$: 타겟 변수
+- $x_i$: 입력 변수
+- $\beta_0$: 절편 (intercept)
+- $\beta_i$: 회귀 계수 (coefficient)
+- $\varepsilon$: 오차항
+
+**선형 회귀의 가정**
+
+| 가정 | 설명 | 확인 방법 |
+|------|------|----------|
+| 선형성 | X와 y가 선형 관계 | 잔차 플롯 |
+| 독립성 | 관측치들이 서로 독립 | 실험 설계 확인 |
+| 등분산성 | 오차의 분산이 일정 | 잔차 플롯 |
+| 정규성 | 오차가 정규분포를 따름 | Q-Q plot, 히스토그램 |
+| 다중공선성 없음 | 독립변수들이 서로 독립 | VIF, 상관행렬 |
+
+**현실에서는 완벽히 만족하지 않는 경우가 많지만, 어느 정도 근사하면 사용 가능하다.**
+
+### 선형 회귀 실습
+
+**예제: 선형 회귀 학습**
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+# 모델 생성 및 학습
+lr = LinearRegression()
+lr.fit(X_train, y_train)
+
+# 모델 파라미터 확인
+print("=== 선형 회귀 계수 ===")
+coef_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': lr.coef_
+}).sort_values('Coefficient', key=abs, ascending=False)
+print(coef_df)
+print(f"\n절편 (intercept): {lr.intercept_:.2f}")
+
+# 예측
+y_pred_train = lr.predict(X_train)
+y_pred_test = lr.predict(X_test)
+
+# 평가
+print("\n=== 모델 성능 ===")
+print(f"학습 R²: {r2_score(y_train, y_pred_train):.4f}")
+print(f"테스트 R²: {r2_score(y_test, y_pred_test):.4f}")
+print(f"테스트 RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_test)):.2f}g")
+print(f"테스트 MAE: {mean_absolute_error(y_test, y_pred_test):.2f}g")
+```
+
+**예제: 회귀 계수 시각화**
+
+```{python}
+# 계수 시각화
 plt.figure(figsize=(10, 5))
-sns.heatmap(components_df, annot=True, cmap='coolwarm', center=0, 
-            cbar_kws={'label': 'Contribution'})
-plt.title("PCA Component Loadings")
+plt.barh(coef_df['Feature'], coef_df['Coefficient'])
+plt.xlabel('Coefficient Value')
+plt.title('Linear Regression Coefficients')
+plt.axvline(x=0, color='red', linestyle='--', linewidth=1)
 plt.tight_layout()
 plt.show()
 ```
 
-**예제: 설명 분산 시각화**
+**예제: 예측 vs 실제값**
 
 ```{python}
-# 모든 주성분의 설명 분산
-pca_full = PCA()
-pca_full.fit(X_scaled)
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# 개별 설명 분산
-axes[0].bar(range(1, len(pca_full.explained_variance_ratio_)+1), 
-            pca_full.explained_variance_ratio_)
-axes[0].set_xlabel('Principal Component')
-axes[0].set_ylabel('Explained Variance Ratio')
-axes[0].set_title('Variance Explained by Each Component')
-axes[0].set_xticks(range(1, len(pca_full.explained_variance_ratio_)+1))
-
-# 누적 설명 분산
-cumsum = np.cumsum(pca_full.explained_variance_ratio_)
-axes[1].plot(range(1, len(cumsum)+1), cumsum, 'o-', linewidth=2)
-axes[1].axhline(y=0.95, color='r', linestyle='--', label='95% threshold')
-axes[1].set_xlabel('Number of Components')
-axes[1].set_ylabel('Cumulative Explained Variance')
-axes[1].set_title('Cumulative Variance Explained')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-axes[1].set_xticks(range(1, len(cumsum)+1))
-
-plt.tight_layout()
-plt.show()
-
-print(f"\n95% 분산 설명에 필요한 주성분 수: {np.argmax(cumsum >= 0.95) + 1}")
-```
-
-**예제: PCA 시각화**
-
-```{python}
-# 2D 시각화
+# 예측 vs 실제값 플롯
 plt.figure(figsize=(10, 6))
-scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y.astype('category').cat.codes, 
-                     cmap='viridis', alpha=0.6, edgecolors='k')
-plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
-plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
-plt.title('PCA: 2D Projection')
-plt.colorbar(scatter, label='Species')
-plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
+plt.scatter(y_test, y_pred_test, alpha=0.6, edgecolors='k')
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 
+         'r--', linewidth=2, label='Perfect Prediction')
+plt.xlabel('Actual Body Mass (g)')
+plt.ylabel('Predicted Body Mass (g)')
+plt.title('Linear Regression: Actual vs Predicted')
+plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
+
+# 상관계수
+corr = np.corrcoef(y_test, y_pred_test)[0, 1]
+print(f"예측-실제 상관계수: {corr:.4f}")
 ```
 
-### PCA 적정 차원 수 선택
-
-**차원 수 선택 기준**
-
-| 방법 | 설명 | 기준 |
-|------|------|------|
-| 누적 설명 분산 | 전체 분산의 일정 비율 유지 | 일반적으로 85~95% |
-| Elbow Method | 설명 분산 증가율이 급감하는 지점 | 그래프에서 꺾이는 점 |
-| Kaiser Rule | 고유값 > 1인 주성분 선택 | 표준화 데이터 기준 |
-| 도메인 지식 | 해석 가능한 차원 수 | 실무 목적에 맞게 |
-
-**예제: 적정 차원 수 자동 선택**
+**예제: 잔차 분석**
 
 ```{python}
-# 95% 분산 설명하는 차원 수 자동 선택
-pca_auto = PCA(n_components=0.95)
-X_pca_auto = pca_auto.fit_transform(X_scaled)
+# 잔차 계산
+residuals = y_test - y_pred_test
 
-print(f"=== 자동 차원 선택 (95% 분산) ===")
-print(f"선택된 주성분 수: {pca_auto.n_components_}")
-print(f"실제 설명 분산: {pca_auto.explained_variance_ratio_.sum():.4f}")
-```
-
-## 비선형 차원 축소
-
-선형 변환으로는 복잡한 데이터 구조를 표현하기 어려운 경우 비선형 차원 축소를 사용한다.
-
-**선형 vs 비선형 차원 축소**
-
-| 구분 | 선형 (PCA) | 비선형 (t-SNE, UMAP) |
-|------|-----------|---------------------|
-| 가정 | 데이터가 선형 부분공간에 존재 | 데이터가 비선형 다양체에 존재 |
-| 변환 | 선형 조합 | 비선형 변환 |
-| 전역 구조 | 잘 보존 | 보존 정도 다름 |
-| 국소 구조 | 보존 못할 수 있음 | 잘 보존 |
-| 주 용도 | 전처리, 압축 | 시각화 |
-| 역변환 | 가능 | 불가능 |
-
-### t-SNE
-
-t-SNE(t-Distributed Stochastic Neighbor Embedding)는 데이터 간 이웃 관계를 확률적으로 모델링하는 비선형 차원 축소 방법이다.
-
-**t-SNE의 특징**
-
-| 특징 | 설명 |
-|------|------|
-| 비선형 | 복잡한 구조 표현 가능 |
-| 국소 구조 보존 | 가까운 점들을 가깝게 유지 |
-| 시각화 특화 | 주로 2D/3D 시각화 목적 |
-| 계산 비용 높음 | 대용량 데이터에 느림 |
-| 비결정적 | 초기화에 따라 결과 다름 |
-| 역변환 불가 | 모델 입력용 부적합 |
-
-**t-SNE 하이퍼파라미터**
-
-| 파라미터 | 설명 | 권장값 |
-|---------|------|--------|
-| n_components | 출력 차원 | 2 또는 3 |
-| perplexity | 이웃 수 (5~50) | 30 (기본값) |
-| learning_rate | 학습률 | 200 (기본값) |
-| n_iter | 최적화 반복 횟수 | 1000+ |
-| random_state | 재현성 | 고정값 |
-
-**예제: t-SNE 적용**
-
-```{python}
-from sklearn.manifold import TSNE
-
-# t-SNE 적용
-tsne = TSNE(n_components=2, random_state=42, perplexity=30)
-X_tsne = tsne.fit_transform(X_scaled)
-
-print("=== t-SNE 결과 ===")
-print(f"원본 차원: {X.shape[1]}")
-print(f"축소 차원: {X_tsne.shape[1]}")
-
-# 시각화
-plt.figure(figsize=(10, 6))
-scatter = plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y.astype('category').cat.codes,
-                     cmap='viridis', alpha=0.6, edgecolors='k')
-plt.xlabel('t-SNE Component 1')
-plt.ylabel('t-SNE Component 2')
-plt.title('t-SNE: 2D Projection')
-plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
-plt.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.show()
-```
-
-**예제: Perplexity 영향 확인**
-
-```{python}
-# 다양한 perplexity 값으로 실험
-perplexities = [5, 30, 50]
+# 잔차 플롯
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-for idx, perp in enumerate(perplexities):
-    tsne_temp = TSNE(n_components=2, random_state=42, perplexity=perp)
-    X_tsne_temp = tsne_temp.fit_transform(X_scaled)
-    
-    scatter = axes[idx].scatter(X_tsne_temp[:, 0], X_tsne_temp[:, 1], 
-                               c=y.astype('category').cat.codes,
-                               cmap='viridis', alpha=0.6, edgecolors='k')
-    axes[idx].set_title(f't-SNE (perplexity={perp})')
-    axes[idx].set_xlabel('Component 1')
-    axes[idx].set_ylabel('Component 2')
-    axes[idx].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-```
-
-### UMAP
-
-UMAP(Uniform Manifold Approximation and Projection)은 데이터가 저차원 다양체에 놓여 있다고 가정하고, 전역 구조와 국소 구조를 동시에 보존하려는 비선형 차원 축소 방법이다.
-
-**UMAP의 특징**
-
-| 특징 | 설명 |
-|------|------|
-| t-SNE보다 빠름 | 대규모 데이터 처리 가능 |
-| 전역+국소 구조 보존 | 균형 잡힌 표현 |
-| 재현성 좋음 | 같은 설정에서 일관된 결과 |
-| 다목적 | 시각화 + 전처리 모두 가능 |
-| 하이퍼파라미터 민감 | 튜닝 필요 |
-
-**UMAP 하이퍼파라미터**
-
-| 파라미터 | 설명 | 권장값 |
-|---------|------|--------|
-| n_components | 출력 차원 | 2 또는 3 |
-| n_neighbors | 이웃 수 | 15 (기본값) |
-| min_dist | 점 간 최소 거리 | 0.1 (기본값) |
-| metric | 거리 측정 방법 | 'euclidean' |
-| random_state | 재현성 | 고정값 |
-
-**예제: UMAP 적용**
-
-```{python}
-# UMAP 설치 필요: pip install umap-learn
-try:
-    import umap
-    
-    # UMAP 적용
-    umap_model = umap.UMAP(n_components=2, random_state=42)
-    X_umap = umap_model.fit_transform(X_scaled)
-    
-    print("=== UMAP 결과 ===")
-    print(f"원본 차원: {X.shape[1]}")
-    print(f"축소 차원: {X_umap.shape[1]}")
-    
-    # 시각화
-    plt.figure(figsize=(10, 6))
-    scatter = plt.scatter(X_umap[:, 0], X_umap[:, 1], c=y.astype('category').cat.codes,
-                         cmap='viridis', alpha=0.6, edgecolors='k')
-    plt.xlabel('UMAP Component 1')
-    plt.ylabel('UMAP Component 2')
-    plt.title('UMAP: 2D Projection')
-    plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.show()
-    
-except ImportError:
-    print("UMAP이 설치되지 않았습니다. 설치하려면: pip install umap-learn")
-```
-
-## 방법 간 종합 비교
-
-**PCA vs t-SNE vs UMAP 비교**
-
-| 구분 | PCA | t-SNE | UMAP |
-|------|-----|-------|------|
-| 유형 | 선형 | 비선형 | 비선형 |
-| 속도 | 매우 빠름 | 느림 | 빠름 |
-| 전역 구조 보존 | 우수 | 보통 | 우수 |
-| 국소 구조 보존 | 보통 | 우수 | 우수 |
-| 해석 가능성 | 높음 | 낮음 | 낮음 |
-| 역변환 | 가능 | 불가능 | 불가능 |
-| 재현성 | 완벽 | 낮음 | 높음 |
-| 대용량 데이터 | 적합 | 부적합 | 적합 |
-| 주 용도 | 전처리, 압축, 시각화 | 시각화 | 시각화, 전처리 |
-| 모델 입력 | 가능 | 불가능 | 가능 |
-
-**예제: 세 방법 비교 시각화**
-
-```{python}
-# 세 가지 방법 비교
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-# PCA
-scatter1 = axes[0].scatter(X_pca[:, 0], X_pca[:, 1], c=y.astype('category').cat.codes,
-                           cmap='viridis', alpha=0.6, edgecolors='k')
-axes[0].set_title('PCA (Linear)')
-axes[0].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
-axes[0].set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+# 잔차 vs 예측값
+axes[0].scatter(y_pred_test, residuals, alpha=0.6, edgecolors='k')
+axes[0].axhline(y=0, color='r', linestyle='--', linewidth=2)
+axes[0].set_xlabel('Predicted Values')
+axes[0].set_ylabel('Residuals')
+axes[0].set_title('Residual Plot')
 axes[0].grid(True, alpha=0.3)
 
-# t-SNE
-scatter2 = axes[1].scatter(X_tsne[:, 0], X_tsne[:, 1], c=y.astype('category').cat.codes,
-                           cmap='viridis', alpha=0.6, edgecolors='k')
-axes[1].set_title('t-SNE (Non-linear)')
-axes[1].set_xlabel('Component 1')
-axes[1].set_ylabel('Component 2')
-axes[1].grid(True, alpha=0.3)
+# 잔차 히스토그램
+axes[1].hist(residuals, bins=20, edgecolor='black', alpha=0.7)
+axes[1].axvline(x=0, color='r', linestyle='--', linewidth=2)
+axes[1].set_xlabel('Residuals')
+axes[1].set_ylabel('Frequency')
+axes[1].set_title('Residual Distribution')
 
-# UMAP (설치된 경우)
-try:
-    scatter3 = axes[2].scatter(X_umap[:, 0], X_umap[:, 1], c=y.astype('category').cat.codes,
-                               cmap='viridis', alpha=0.6, edgecolors='k')
-    axes[2].set_title('UMAP (Non-linear)')
-    axes[2].set_xlabel('Component 1')
-    axes[2].set_ylabel('Component 2')
-    axes[2].grid(True, alpha=0.3)
-except:
-    axes[2].text(0.5, 0.5, 'UMAP not installed', 
-                ha='center', va='center', fontsize=14)
-    axes[2].set_title('UMAP (Not Available)')
+# Q-Q plot
+from scipy import stats
+stats.probplot(residuals, dist="norm", plot=axes[2])
+axes[2].set_title('Q-Q Plot of Residuals')
 
 plt.tight_layout()
 plt.show()
 ```
 
-## 실무 활용 가이드
+### 선형 회귀의 한계
 
-**사용 목적별 방법 선택**
+**선형 회귀의 문제점**
 
-| 목적 | 권장 방법 | 이유 |
-|------|----------|------|
-| 모델 학습 전 전처리 | PCA | 빠르고 안정적, 역변환 가능 |
-| 데이터 탐색 및 시각화 | t-SNE 또는 UMAP | 비선형 구조 잘 표현 |
-| 대용량 데이터 시각화 | UMAP | 속도와 품질의 균형 |
-| 노이즈 제거 | PCA | 주요 신호만 추출 |
-| 다중공선성 제거 | PCA | 독립적인 축 생성 |
-| 클러스터링 전처리 | PCA 또는 UMAP | 차원 줄여 효율성 향상 |
+| 문제 | 설명 | 증상 |
+|------|------|------|
+| 다중공선성 | 독립변수 간 높은 상관 | 계수가 불안정, 부호 반전 |
+| 과적합 | 학습 데이터에 과도 최적화 | 학습 성능 >> 테스트 성능 |
+| 고차원 문제 | 변수가 샘플보다 많음 | 해가 무수히 많음 |
+| 이상치 민감 | 극단값에 크게 영향받음 | 계수가 왜곡됨 |
 
-**데이터 크기별 권장**
+이러한 문제를 해결하기 위해 **정규화 회귀(Regularization)**를 사용한다.
 
-| 샘플 수 | 변수 수 | 권장 방법 |
-|---------|---------|----------|
-| < 1,000 | < 50 | PCA, t-SNE, UMAP 모두 가능 |
-| < 10,000 | 50~100 | PCA, UMAP (t-SNE 주의) |
-| > 10,000 | > 100 | PCA, UMAP (t-SNE 피함) |
+## 정규화(Regularization)의 개념
 
-**파이프라인 예제**
+정규화는 모델의 복잡도를 제한하여 과적합을 방지하는 기법이다.
+
+**정규화가 필요한 이유**
+
+- 계수가 너무 커지는 것을 방지
+- 불필요한 변수의 영향 축소
+- 과적합 감소
+- 모델의 일반화 성능 향상
+
+**정규화 손실 함수**
+
+$$
+\text{Loss} = \text{MSE} + \lambda \times \text{Penalty}
+$$
+
+여기서:
+- MSE: 평균제곱오차 (예측 오차)
+- λ (lambda 또는 alpha): 규제 강도
+- Penalty: L1, L2, 또는 둘의 조합
+
+**λ (규제 강도) 효과**
+
+| λ 값 | 효과 |
+|------|------|
+| λ = 0 | 일반 선형 회귀 (규제 없음) |
+| λ 작음 | 약한 규제, 계수 조금 축소 |
+| λ 적절 | 최적의 편향-분산 균형 |
+| λ 큼 | 강한 규제, 과소적합 위험 |
+
+## Ridge 회귀 (L2 정규화)
+
+Ridge 회귀는 계수의 제곱합(L2 norm)에 패널티를 부여하는 방법이다.
+
+**Ridge 손실 함수**
+
+$$
+\text{Loss}_{\text{Ridge}} = \text{MSE} + \alpha \sum_{i=1}^{p} \beta_i^2
+$$
+
+**Ridge의 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 계수 축소 | 모든 계수를 0에 가깝게 만듦 |
+| 변수 유지 | 계수를 0으로 만들지는 않음 |
+| 다중공선성 완화 | 상관 높은 변수들 안정화 |
+| 해석 | 모든 변수가 기여 |
+| 적용 상황 | 변수 간 상관 높을 때 |
+
+**예제: Ridge 회귀**
 
 ```{python}
-from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import Ridge
 
-# PCA + 분류 모델 파이프라인
-pipeline = Pipeline([
-    ('scaler', StandardScaler()),
-    ('pca', PCA(n_components=0.95)),
-    ('classifier', RandomForestClassifier(random_state=42))
-])
+# 데이터 표준화 (Ridge는 스케일에 민감)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-# 교차 검증
-scores = cross_val_score(pipeline, X, y, cv=5)
+# Ridge 회귀
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train_scaled, y_train)
 
-print("=== PCA + RandomForest 파이프라인 ===")
-print(f"교차 검증 정확도: {scores.mean():.4f} ± {scores.std():.4f}")
+# 계수 비교
+print("=== Ridge vs 선형 회귀 계수 비교 ===")
+comparison_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Linear Regression': lr.coef_,
+    'Ridge (α=1.0)': ridge.coef_
+})
+print(comparison_df.round(2))
+
+# 예측 및 평가
+y_pred_ridge = ridge.predict(X_test_scaled)
+print(f"\n=== Ridge 성능 ===")
+print(f"테스트 R²: {r2_score(y_test, y_pred_ridge):.4f}")
+print(f"테스트 RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_ridge)):.2f}g")
 ```
 
-## 주의사항
+**예제: Alpha 값에 따른 계수 변화**
 
-**차원 축소 사용 시 주의점**
+```{python}
+# 다양한 alpha 값으로 실험
+alphas = [0.01, 0.1, 1.0, 10.0, 100.0]
+coefs = []
 
-| 주의사항 | 설명 | 대응 방법 |
-|---------|------|----------|
-| 정보 손실 | 차원 축소 시 일부 정보 손실 불가피 | 설명 분산 비율 확인 |
-| 해석 어려움 | 새로운 변수의 의미 파악 곤란 | PCA 로딩 분석 |
-| 타겟 미반영 | 비지도 학습이라 타겟 고려 안 함 | LDA 등 지도 학습 차원 축소 고려 |
-| 스케일 민감 | 변수 스케일에 따라 결과 달라짐 | 반드시 표준화 |
-| 과적합 위험 | t-SNE 등은 학습 데이터에만 적용 | 테스트셋 변환 시 주의 |
-| 하이퍼파라미터 | 설정에 따라 결과 크게 달라짐 | 여러 값 실험 |
+for alpha in alphas:
+    ridge_temp = Ridge(alpha=alpha)
+    ridge_temp.fit(X_train_scaled, y_train)
+    coefs.append(ridge_temp.coef_)
 
-**체크리스트**
+# 계수 변화 시각화
+coefs_df = pd.DataFrame(coefs, columns=X.columns, index=[f'α={a}' for a in alphas])
 
-- [ ] 데이터 표준화 수행
-- [ ] 적절한 방법 선택 (목적에 맞게)
-- [ ] 설명 분산 또는 재구성 오차 확인
-- [ ] 시각화로 결과 검증
-- [ ] 원본 데이터와 비교
-- [ ] 파이프라인에 통합
+plt.figure(figsize=(12, 6))
+for col in coefs_df.columns:
+    plt.plot(range(len(alphas)), coefs_df[col], marker='o', label=col, linewidth=2)
+
+plt.xlabel('Regularization Strength')
+plt.ylabel('Coefficient Value')
+plt.title('Ridge: Coefficient Path')
+plt.xticks(range(len(alphas)), [f'α={a}' for a in alphas])
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.axhline(y=0, color='black', linestyle='--', linewidth=1)
+plt.tight_layout()
+plt.show()
+```
+
+## Lasso 회귀 (L1 정규화)
+
+Lasso 회귀는 계수의 절댓값 합(L1 norm)에 패널티를 부여하며, 일부 계수를 정확히 0으로 만든다.
+
+**Lasso 손실 함수**
+
+$$
+\text{Loss}_{\text{Lasso}} = \text{MSE} + \alpha \sum_{i=1}^{p} |\beta_i|
+$$
+
+**Lasso의 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 계수 0화 | 일부 계수를 정확히 0으로 만듦 |
+| 자동 변수 선택 | 중요 변수만 남김 |
+| 희소 모델 | 적은 변수로 설명 |
+| 해석 용이 | 선택된 변수만 해석 |
+| 적용 상황 | 변수 선택이 필요할 때 |
+
+**예제: Lasso 회귀**
+
+```{python}
+from sklearn.linear_model import Lasso
+
+# Lasso 회귀
+lasso = Lasso(alpha=0.1)
+lasso.fit(X_train_scaled, y_train)
+
+# 계수 비교
+print("=== Lasso vs Ridge vs 선형 회귀 계수 비교 ===")
+comparison_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Linear Regression': lr.coef_,
+    'Ridge (α=1.0)': ridge.coef_,
+    'Lasso (α=0.1)': lasso.coef_
+})
+print(comparison_df.round(2))
+
+# 0이 아닌 계수 개수
+n_nonzero = np.sum(lasso.coef_ != 0)
+print(f"\nLasso가 선택한 변수 수: {n_nonzero}/{len(X.columns)}")
+
+# 예측 및 평가
+y_pred_lasso = lasso.predict(X_test_scaled)
+print(f"\n=== Lasso 성능 ===")
+print(f"테스트 R²: {r2_score(y_test, y_pred_lasso):.4f}")
+print(f"테스트 RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_lasso)):.2f}g")
+```
+
+**예제: Lasso 변수 선택 시각화**
+
+```{python}
+# 다양한 alpha 값에서 변수 선택
+alphas_lasso = [0.01, 0.1, 1.0, 10.0, 50.0]
+coefs_lasso = []
+n_features = []
+
+for alpha in alphas_lasso:
+    lasso_temp = Lasso(alpha=alpha, max_iter=10000)
+    lasso_temp.fit(X_train_scaled, y_train)
+    coefs_lasso.append(lasso_temp.coef_)
+    n_features.append(np.sum(lasso_temp.coef_ != 0))
+
+# 계수 경로 시각화
+plt.figure(figsize=(12, 6))
+coefs_lasso_df = pd.DataFrame(coefs_lasso, columns=X.columns)
+
+for col in coefs_lasso_df.columns:
+    plt.plot(range(len(alphas_lasso)), coefs_lasso_df[col], marker='o', label=col, linewidth=2)
+
+plt.xlabel('Regularization Strength')
+plt.ylabel('Coefficient Value')
+plt.title('Lasso: Coefficient Path (Automatic Feature Selection)')
+plt.xticks(range(len(alphas_lasso)), [f'α={a}\n({n}개 변수)' for a, n in zip(alphas_lasso, n_features)])
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.axhline(y=0, color='black', linestyle='--', linewidth=1)
+plt.tight_layout()
+plt.show()
+```
+
+## ElasticNet (L1 + L2)
+
+ElasticNet은 Ridge와 Lasso의 패널티를 결합한 방법이다.
+
+**ElasticNet 손실 함수**
+
+$$
+\text{Loss}_{\text{ElasticNet}} = \text{MSE} + \alpha \rho \sum_{i=1}^{p} |\beta_i| + \alpha \frac{1-\rho}{2} \sum_{i=1}^{p} \beta_i^2
+$$
+
+여기서:
+- α (alpha): 전체 규제 강도
+- ρ (l1_ratio): L1 비율 (0~1)
+
+**ElasticNet 하이퍼파라미터**
+
+| 파라미터 | 범위 | 효과 |
+|---------|------|------|
+| alpha | 0 ~ ∞ | 전체 규제 강도 |
+| l1_ratio = 0 | - | Ridge와 동일 |
+| l1_ratio = 1 | - | Lasso와 동일 |
+| l1_ratio = 0.5 | - | 균형 잡힌 규제 |
+
+**ElasticNet의 특징**
+
+- Ridge와 Lasso의 장점 결합
+- 상관 높은 변수들을 함께 선택/제거
+- 고차원 데이터에 적합
+- 변수 수 > 샘플 수인 경우 유용
+
+**예제: ElasticNet**
+
+```{python}
+from sklearn.linear_model import ElasticNet
+
+# ElasticNet
+elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)
+elastic.fit(X_train_scaled, y_train)
+
+# 계수 비교
+print("=== 모든 모델 계수 비교 ===")
+comparison_final = pd.DataFrame({
+    'Feature': X.columns,
+    'Linear': lr.coef_,
+    'Ridge': ridge.coef_,
+    'Lasso': lasso.coef_,
+    'ElasticNet': elastic.coef_
+})
+print(comparison_final.round(2))
+
+# 예측 및 평가
+y_pred_elastic = elastic.predict(X_test_scaled)
+print(f"\n=== ElasticNet 성능 ===")
+print(f"테스트 R²: {r2_score(y_test, y_pred_elastic):.4f}")
+print(f"테스트 RMSE: {np.sqrt(mean_squared_error(y_test, y_pred_elastic)):.2f}g")
+```
+
+## 회귀 모델 종합 비교
+
+**모델 특성 비교**
+
+| 모델 | 패널티 | 변수 선택 | 계수 크기 | 다중공선성 | 적용 상황 |
+|------|--------|----------|----------|-----------|----------|
+| Linear Regression | 없음 | ✗ | 제한 없음 | 취약 | 기준 모델 |
+| Ridge (L2) | 제곱합 | ✗ | 축소 | 완화 | 상관 높은 변수 |
+| Lasso (L1) | 절댓값 | ✓ | 0 포함 | 보통 | 변수 선택 필요 |
+| ElasticNet (L1+L2) | 혼합 | ✓ | 0 포함 | 완화 | 고차원, 복합 상황 |
+
+**예제: 모든 모델 성능 비교**
+
+```{python}
+# 모든 모델 평가
+models = {
+    'Linear Regression': lr,
+    'Ridge': ridge,
+    'Lasso': lasso,
+    'ElasticNet': elastic
+}
+
+results = []
+for name, model in models.items():
+    if name == 'Linear Regression':
+        pred = model.predict(X_test)
+    else:
+        pred = model.predict(X_test_scaled)
+    
+    results.append({
+        'Model': name,
+        'R²': r2_score(y_test, pred),
+        'RMSE': np.sqrt(mean_squared_error(y_test, pred)),
+        'MAE': mean_absolute_error(y_test, pred),
+        'Non-zero Coef': np.sum(model.coef_ != 0)
+    })
+
+results_df = pd.DataFrame(results)
+print("=== 모델 성능 비교 ===")
+print(results_df.round(4))
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# R² 비교
+axes[0].bar(results_df['Model'], results_df['R²'])
+axes[0].set_ylabel('R² Score')
+axes[0].set_title('Model Comparison: R²')
+axes[0].set_xticklabels(results_df['Model'], rotation=45, ha='right')
+
+# RMSE 비교
+axes[1].bar(results_df['Model'], results_df['RMSE'])
+axes[1].set_ylabel('RMSE')
+axes[1].set_title('Model Comparison: RMSE')
+axes[1].set_xticklabels(results_df['Model'], rotation=45, ha='right')
+
+plt.tight_layout()
+plt.show()
+```
+
+## 모델 선택 가이드
+
+**상황별 모델 선택**
+
+| 상황 | 권장 모델 | 이유 |
+|------|----------|------|
+| 변수 수 적고 해석 중요 | Linear Regression | 단순하고 명확 |
+| 변수 간 상관 높음 | Ridge | 다중공선성 완화 |
+| 변수 선택 필요 | Lasso | 자동 변수 선택 |
+| 고차원 데이터 (p > n) | ElasticNet | 안정적 변수 선택 |
+| 예측만 중요 | 교차 검증으로 선택 | 성능 기준 |
+
+**의사결정 흐름**
+
+```
+변수 선택이 필요한가?
+├─ Yes → 변수가 매우 많은가?
+│         ├─ Yes → ElasticNet
+│         └─ No → Lasso
+└─ No → 다중공선성이 문제인가?
+          ├─ Yes → Ridge
+          └─ No → Linear Regression
+```
+
+## 하이퍼파라미터 튜닝
+
+**예제: GridSearchCV로 최적 Alpha 찾기**
+
+```{python}
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
+
+# 파이프라인 구성 (스케일링 + 모델)
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', Ridge())
+])
+
+# 하이퍼파라미터 그리드
+param_grid = {
+    'model__alpha': [0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+}
+
+# GridSearchCV
+grid_search = GridSearchCV(
+    pipeline, param_grid, cv=5, scoring='r2', n_jobs=-1
+)
+grid_search.fit(X_train, y_train)
+
+print("=== GridSearchCV 결과 ===")
+print(f"최적 alpha: {grid_search.best_params_['model__alpha']}")
+print(f"최적 R² (CV): {grid_search.best_score_:.4f}")
+
+# 테스트 성능
+best_model = grid_search.best_estimator_
+y_pred_best = best_model.predict(X_test)
+print(f"테스트 R²: {r2_score(y_test, y_pred_best):.4f}")
+
+# Alpha에 따른 성능 변화
+results_cv = pd.DataFrame(grid_search.cv_results_)
+plt.figure(figsize=(10, 6))
+plt.semilogx(results_cv['param_model__alpha'], results_cv['mean_test_score'], 
+             marker='o', linewidth=2)
+plt.xlabel('Alpha (log scale)')
+plt.ylabel('Mean R² (5-fold CV)')
+plt.title('Ridge: Alpha Tuning')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+## 전처리 주의사항
+
+**정규화 회귀 사용 시 필수 사항**
+
+- ✓ **반드시 표준화**: Ridge, Lasso, ElasticNet은 스케일에 민감
+- ✓ **파이프라인 사용**: 전처리와 모델을 하나로 묶기
+- ✓ **테스트셋 분리**: 전처리는 학습셋 기준으로
+- ✓ **교차 검증**: 하이퍼파라미터 튜닝 시 필수
+
+**예제: 올바른 파이프라인**
+
+```{python}
+# 최종 파이프라인
+final_pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', Ridge(alpha=1.0))
+])
+
+# 학습
+final_pipeline.fit(X_train, y_train)
+
+# 평가
+print("=== 파이프라인 최종 성능 ===")
+print(f"학습 R²: {final_pipeline.score(X_train, y_train):.4f}")
+print(f"테스트 R²: {final_pipeline.score(X_test, y_test):.4f}")
+```
 
 ## 요약
 
-이 장에서는 고차원 데이터를 저차원으로 변환하는 차원 축소 기법을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 연속형 예측을 위한 회귀 모델을 학습했다. 주요 내용은 다음과 같다.
 
-**핵심 요약**
+**회귀 모델 핵심**
 
-- **목적**: 차원의 저주 해결, 시각화, 학습 효율화
-- **PCA**: 선형, 빠름, 해석 가능, 전처리 및 시각화
-- **t-SNE**: 비선형, 시각화 특화, 국소 구조 보존
-- **UMAP**: 비선형, 빠름, 전역+국소 보존, 다목적
+- **선형 회귀**: 기준 모델, 규제 없음
+- **Ridge**: L2 정규화, 다중공선성 완화, 모든 변수 유지
+- **Lasso**: L1 정규화, 자동 변수 선택, 희소 모델
+- **ElasticNet**: L1+L2, 균형 잡힌 접근, 고차원 데이터
 
-**선택 가이드**
+**실무 체크리스트**
 
-- 전처리 목적 → PCA
-- 시각화 목적 (소규모) → t-SNE
-- 시각화 목적 (대규모) → UMAP
-- 균형 잡힌 접근 → PCA로 시작, 필요시 UMAP
+- [ ] 데이터 표준화 수행 (정규화 회귀 필수)
+- [ ] 적절한 모델 선택 (목적에 맞게)
+- [ ] 하이퍼파라미터 튜닝 (GridSearchCV)
+- [ ] 잔차 분석으로 가정 확인
+- [ ] 교차 검증으로 성능 평가
+- [ ] 파이프라인으로 구성
 
-차원 축소는 데이터의 본질적인 구조를 파악하고 효율적으로 분석하는 강력한 도구이다. 데이터 특성과 분석 목적에 맞는 방법을 선택하고, 결과를 시각화하여 검증하는 것이 중요하다.
+**주의사항**
+
+- 정규화 회귀는 반드시 표준화 후 사용
+- 계수 해석 시 원본 스케일 고려
+- 과적합 방지가 최우선 목표
+- 모델 선택보다 전처리가 더 중요할 수 있음
+
+회귀 모델은 연속형 예측의 기본이며, 정규화는 과적합 방지의 핵심이다. 데이터 특성과 목적에 맞는 모델을 선택하고, 적절한 전처리와 하이퍼파라미터 튜닝을 통해 최적의 성능을 달성하는 것이 중요하다.
