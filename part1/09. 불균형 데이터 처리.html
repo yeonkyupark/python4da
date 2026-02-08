@@ -467,7 +467,7 @@ window.Quarto = {
 
 <p>불균형 데이터(Imbalanced Data)는 타겟 클래스 간 샘플 수의 차이가 큰 데이터셋을 의미한다. 예를 들어, 사기 거래 탐지 문제에서 정상 거래가 99%, 사기 거래가 1%인 경우가 대표적이다. 불균형 데이터로 학습된 모델은 다수 클래스에 편향되어 소수 클래스를 제대로 예측하지 못하는 문제가 발생한다. 이 장에서는 불균형 데이터의 문제점을 진단하고, 데이터 수준 처리(언더샘플링, 오버샘플링, SMOTE)와 모델 수준 처리(클래스 가중치 조정) 방법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="32b3cb0f" class="cell" data-execution_count="1">
+<div id="14732d11" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -533,7 +533,7 @@ Length: 3, dtype: str</code></pre>
 <section id="클래스-분포-확인" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="클래스-분포-확인"><span class="header-section-number">9.2.1</span> 클래스 분포 확인</h3>
 <p><strong>예제: 클래스별 샘플 수 확인</strong></p>
-<div id="435715f9" class="cell" data-execution_count="2">
+<div id="214f54bb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스별 샘플 수</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>class_counts <span class="op">=</span> df[<span class="st">"species"</span>].value_counts()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"클래스별 샘플 수:"</span>)</span>
@@ -555,7 +555,7 @@ Name: count, dtype: int64
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="비율로-확인"><span class="header-section-number">9.2.2</span> 비율로 확인</h3>
 <p>절대 개수보다 비율로 확인하면 불균형 정도를 더 명확히 파악할 수 있다.</p>
 <p><strong>예제: 클래스별 비율 확인</strong></p>
-<div id="7283abe9" class="cell" data-execution_count="3">
+<div id="8a34612d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스별 비율</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>class_ratios <span class="op">=</span> df[<span class="st">"species"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"클래스별 비율:"</span>)</span>
@@ -617,7 +617,7 @@ Name: proportion, dtype: float64
 <h3 data-number="9.2.3" class="anchored" data-anchor-id="시각화"><span class="header-section-number">9.2.3</span> 시각화</h3>
 <p>시각적으로 불균형을 확인하면 직관적으로 파악할 수 있다.</p>
 <p><strong>예제: 클래스 분포 시각화</strong></p>
-<div id="c0ca7837" class="cell" data-execution_count="4">
+<div id="d621240e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 막대 그래프</span></span>
@@ -692,7 +692,7 @@ Name: proportion, dtype: float64
 </tbody>
 </table>
 <p><strong>예제: 다양한 평가 지표 사용</strong></p>
-<div id="c1cff472" class="cell" data-execution_count="5">
+<div id="16dda00c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report, confusion_matrix</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -748,7 +748,7 @@ weighted avg       1.00      1.00      1.00        69
 <h3 data-number="9.4.1" class="anchored" data-anchor-id="언더샘플링-under-sampling"><span class="header-section-number">9.4.1</span> 언더샘플링 (Under-sampling)</h3>
 <p>언더샘플링은 다수 클래스의 샘플 일부를 제거하여 클래스 균형을 맞추는 방법이다. 구현이 간단하고 빠르지만, 정보 손실이 발생한다.</p>
 <p><strong>예제: 랜덤 언더샘플링</strong></p>
-<div id="20ca9ece" class="cell" data-execution_count="6">
+<div id="d5ffb62a" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 준비</span></span>
@@ -825,7 +825,7 @@ Name: count, dtype: int64
 <section id="단순-복제-random-over-sampling" class="level4" data-number="9.4.2.1">
 <h4 data-number="9.4.2.1" class="anchored" data-anchor-id="단순-복제-random-over-sampling"><span class="header-section-number">9.4.2.1</span> 단순 복제 (Random Over-sampling)</h4>
 <p><strong>예제: 랜덤 오버샘플링</strong></p>
-<div id="e6d345e9" class="cell" data-execution_count="7">
+<div id="dcece255" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 오버샘플링 적용</span></span>
@@ -873,7 +873,7 @@ Name: count, dtype: int64
 <li>선택된 샘플과의 사이에 새로운 샘플 생성 (보간)</li>
 </ol>
 <p><strong>예제: SMOTE 적용</strong></p>
-<div id="4722cba1" class="cell" data-execution_count="8">
+<div id="56edaedf" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SMOTE 적용</span></span>
@@ -984,7 +984,7 @@ Name: count, dtype: int64
 </tbody>
 </table>
 <p><strong>예제: Borderline-SMOTE</strong></p>
-<div id="c8856e02" class="cell" data-execution_count="9">
+<div id="abda9473" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> BorderlineSMOTE</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Borderline-SMOTE 적용</span></span>
@@ -1003,7 +1003,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p><strong>예제: SMOTE-NC (범주형 포함)</strong></p>
-<div id="2057ef71" class="cell" data-execution_count="10">
+<div id="b195a394" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTENC</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주형 변수가 포함된 경우 (예시)</span></span>
@@ -1024,7 +1024,7 @@ Name: count, dtype: int64</code></pre>
 w_i = \frac{n_{\text{samples}}}{n_{\text{classes}} \times n_{\text{samples}_i}}
 \]</span></p>
 <p><strong>예제: 자동 클래스 가중치</strong></p>
-<div id="b80f4694" class="cell" data-execution_count="11">
+<div id="9788100f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 클래스 가중치 자동 조정</span></span>
@@ -1059,7 +1059,7 @@ weighted avg       1.00      1.00      1.00        69
 <h3 data-number="9.5.2" class="anchored" data-anchor-id="수동-가중치-설정"><span class="header-section-number">9.5.2</span> 수동 가중치 설정</h3>
 <p>도메인 지식에 따라 클래스별 가중치를 수동으로 설정할 수 있다. 특정 클래스의 오분류 비용이 클 때 유용하다.</p>
 <p><strong>예제: 수동 클래스 가중치</strong></p>
-<div id="9003df29" class="cell" data-execution_count="12">
+<div id="86c96f69" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수동 가중치 설정 (중요한 클래스에 더 높은 가중치)</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Adelie"</span>: <span class="fl">1.0</span>,</span>
@@ -1130,7 +1130,7 @@ weighted avg       1.00      1.00      1.00        69
 <h3 data-number="9.6.1" class="anchored" data-anchor-id="balanced-random-forest"><span class="header-section-number">9.6.1</span> Balanced Random Forest</h3>
 <p>각 트리를 학습할 때 다수 클래스를 언더샘플링하여 균형을 맞춘다.</p>
 <p><strong>예제: Balanced Random Forest</strong></p>
-<div id="93ee9be7" class="cell" data-execution_count="13">
+<div id="8e068f12" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> BalancedRandomForestClassifier</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Balanced Random Forest 모델 생성</span></span>
@@ -1165,7 +1165,7 @@ weighted avg       1.00      1.00      1.00        69
 <h3 data-number="9.6.2" class="anchored" data-anchor-id="easyensemble"><span class="header-section-number">9.6.2</span> EasyEnsemble</h3>
 <p>여러 번 언더샘플링하여 다양한 서브셋을 만들고, 각각에 대해 모델을 학습한 후 앙상블한다.</p>
 <p><strong>예제: EasyEnsemble</strong></p>
-<div id="409712d6" class="cell" data-execution_count="14">
+<div id="2774b1e8" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.ensemble <span class="im">import</span> EasyEnsembleClassifier</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># EasyEnsemble 모델 생성</span></span>
@@ -1206,7 +1206,7 @@ weighted avg       0.96      0.96      0.96        69
 <h2 data-number="9.7" class="anchored" data-anchor-id="pipeline으로-안전하게-적용"><span class="header-section-number">9.7</span> Pipeline으로 안전하게 적용</h2>
 <p>샘플링 기법을 적용할 때 가장 중요한 원칙은 <strong>학습 데이터에만 적용</strong>하는 것이다. 테스트 데이터에 샘플링을 적용하면 데이터 누수(data leakage)가 발생하여 성능이 과대평가된다.</p>
 <p><strong>예제: Pipeline을 사용한 안전한 샘플링</strong></p>
-<div id="052f5f9d" class="cell" data-execution_count="15">
+<div id="0c001996" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.pipeline <span class="im">import</span> Pipeline <span class="im">as</span> ImbPipeline</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> SMOTE</span>

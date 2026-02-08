@@ -375,51 +375,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#특성-선택" id="toc-특성-선택" class="nav-link active" data-scroll-target="#특성-선택"><span class="header-section-number">20.1</span> 특성 선택</a>
+  <li><a href="#특성-선택의-개념과-필요성" id="toc-특성-선택의-개념과-필요성" class="nav-link active" data-scroll-target="#특성-선택의-개념과-필요성"><span class="header-section-number">20.1</span> 특성 선택의 개념과 필요성</a>
   <ul>
-  <li><a href="#특성-선택이란" id="toc-특성-선택이란" class="nav-link" data-scroll-target="#특성-선택이란"><span class="header-section-number">20.1.1</span> 특성 선택이란?</a>
-  <ul class="collapse">
-  <li><a href="#특성-선택의-목적" id="toc-특성-선택의-목적" class="nav-link" data-scroll-target="#특성-선택의-목적"><span class="header-section-number">20.1.1.1</span> 특성 선택의 목적</a></li>
+  <li><a href="#특성-선택-vs-특성-추출" id="toc-특성-선택-vs-특성-추출" class="nav-link" data-scroll-target="#특성-선택-vs-특성-추출"><span class="header-section-number">20.1.1</span> 특성 선택 vs 특성 추출</a></li>
   </ul></li>
-  <li><a href="#특성-선택-vs-특성-추출" id="toc-특성-선택-vs-특성-추출" class="nav-link" data-scroll-target="#특성-선택-vs-특성-추출"><span class="header-section-number">20.1.2</span> 특성 선택 vs 특성 추출</a></li>
-  </ul></li>
-  <li><a href="#필터filter-방법" id="toc-필터filter-방법" class="nav-link" data-scroll-target="#필터filter-방법"><span class="header-section-number">20.2</span> 필터(Filter) 방법</a>
+  <li><a href="#특성-선택-방법의-분류" id="toc-특성-선택-방법의-분류" class="nav-link" data-scroll-target="#특성-선택-방법의-분류"><span class="header-section-number">20.2</span> 특성 선택 방법의 분류</a></li>
+  <li><a href="#필터filter-방법" id="toc-필터filter-방법" class="nav-link" data-scroll-target="#필터filter-방법"><span class="header-section-number">20.3</span> 필터(Filter) 방법</a>
   <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">20.2.1</span> 개념</a></li>
-  <li><a href="#주요-특징" id="toc-주요-특징" class="nav-link" data-scroll-target="#주요-특징"><span class="header-section-number">20.2.2</span> 주요 특징</a></li>
-  <li><a href="#대표적인-필터-방법" id="toc-대표적인-필터-방법" class="nav-link" data-scroll-target="#대표적인-필터-방법"><span class="header-section-number">20.2.3</span> 대표적인 필터 방법</a>
-  <ul class="collapse">
-  <li><a href="#분산-기반-선택" id="toc-분산-기반-선택" class="nav-link" data-scroll-target="#분산-기반-선택"><span class="header-section-number">20.2.3.1</span> (1) 분산 기반 선택</a></li>
-  <li><a href="#상관계수-기반-선택" id="toc-상관계수-기반-선택" class="nav-link" data-scroll-target="#상관계수-기반-선택"><span class="header-section-number">20.2.3.2</span> (2) 상관계수 기반 선택</a></li>
-  <li><a href="#통계적-검정" id="toc-통계적-검정" class="nav-link" data-scroll-target="#통계적-검정"><span class="header-section-number">20.2.3.3</span> (3) 통계적 검정</a></li>
+  <li><a href="#분산-기반-선택" id="toc-분산-기반-선택" class="nav-link" data-scroll-target="#분산-기반-선택"><span class="header-section-number">20.3.1</span> 분산 기반 선택</a></li>
+  <li><a href="#상관계수-기반-선택" id="toc-상관계수-기반-선택" class="nav-link" data-scroll-target="#상관계수-기반-선택"><span class="header-section-number">20.3.2</span> 상관계수 기반 선택</a></li>
+  <li><a href="#통계적-검정-selectkbest" id="toc-통계적-검정-selectkbest" class="nav-link" data-scroll-target="#통계적-검정-selectkbest"><span class="header-section-number">20.3.3</span> 통계적 검정 (SelectKBest)</a></li>
   </ul></li>
-  <li><a href="#필터-방법-예제" id="toc-필터-방법-예제" class="nav-link" data-scroll-target="#필터-방법-예제"><span class="header-section-number">20.2.4</span> 필터 방법 예제</a></li>
-  </ul></li>
-  <li><a href="#래퍼wrapper-방법" id="toc-래퍼wrapper-방법" class="nav-link" data-scroll-target="#래퍼wrapper-방법"><span class="header-section-number">20.3</span> 래퍼(Wrapper) 방법</a>
+  <li><a href="#래퍼wrapper-방법" id="toc-래퍼wrapper-방법" class="nav-link" data-scroll-target="#래퍼wrapper-방법"><span class="header-section-number">20.4</span> 래퍼(Wrapper) 방법</a>
   <ul>
-  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">20.3.1</span> 개념</a></li>
-  <li><a href="#주요-특징-1" id="toc-주요-특징-1" class="nav-link" data-scroll-target="#주요-특징-1"><span class="header-section-number">20.3.2</span> 주요 특징</a></li>
-  <li><a href="#대표적인-래퍼-방법" id="toc-대표적인-래퍼-방법" class="nav-link" data-scroll-target="#대표적인-래퍼-방법"><span class="header-section-number">20.3.3</span> 대표적인 래퍼 방법</a>
-  <ul class="collapse">
-  <li><a href="#전진-선택-forward-selection" id="toc-전진-선택-forward-selection" class="nav-link" data-scroll-target="#전진-선택-forward-selection"><span class="header-section-number">20.3.3.1</span> (1) 전진 선택 (Forward Selection)</a></li>
-  <li><a href="#후진-제거-backward-elimination" id="toc-후진-제거-backward-elimination" class="nav-link" data-scroll-target="#후진-제거-backward-elimination"><span class="header-section-number">20.3.3.2</span> (2) 후진 제거 (Backward Elimination)</a></li>
-  <li><a href="#재귀적-특성-제거-rfe" id="toc-재귀적-특성-제거-rfe" class="nav-link" data-scroll-target="#재귀적-특성-제거-rfe"><span class="header-section-number">20.3.3.3</span> (3) 재귀적 특성 제거 (RFE)</a></li>
+  <li><a href="#재귀적-특성-제거-rfe" id="toc-재귀적-특성-제거-rfe" class="nav-link" data-scroll-target="#재귀적-특성-제거-rfe"><span class="header-section-number">20.4.1</span> 재귀적 특성 제거 (RFE)</a></li>
+  <li><a href="#rfecv-교차-검증-포함" id="toc-rfecv-교차-검증-포함" class="nav-link" data-scroll-target="#rfecv-교차-검증-포함"><span class="header-section-number">20.4.2</span> RFECV (교차 검증 포함)</a></li>
+  <li><a href="#순차-특성-선택" id="toc-순차-특성-선택" class="nav-link" data-scroll-target="#순차-특성-선택"><span class="header-section-number">20.4.3</span> 순차 특성 선택</a></li>
   </ul></li>
-  <li><a href="#래퍼-방법-예제" id="toc-래퍼-방법-예제" class="nav-link" data-scroll-target="#래퍼-방법-예제"><span class="header-section-number">20.3.4</span> 래퍼 방법 예제</a></li>
-  </ul></li>
-  <li><a href="#임베디드embedded-방법" id="toc-임베디드embedded-방법" class="nav-link" data-scroll-target="#임베디드embedded-방법"><span class="header-section-number">20.4</span> 3.2.5 임베디드(Embedded) 방법</a>
+  <li><a href="#임베디드embedded-방법" id="toc-임베디드embedded-방법" class="nav-link" data-scroll-target="#임베디드embedded-방법"><span class="header-section-number">20.5</span> 임베디드(Embedded) 방법</a>
   <ul>
-  <li><a href="#개념-2" id="toc-개념-2" class="nav-link" data-scroll-target="#개념-2"><span class="header-section-number">20.4.1</span> 개념</a></li>
-  <li><a href="#주요-특징-2" id="toc-주요-특징-2" class="nav-link" data-scroll-target="#주요-특징-2"><span class="header-section-number">20.4.2</span> 주요 특징</a></li>
-  <li><a href="#대표적인-임베디드-방법" id="toc-대표적인-임베디드-방법" class="nav-link" data-scroll-target="#대표적인-임베디드-방법"><span class="header-section-number">20.4.3</span> 대표적인 임베디드 방법</a>
-  <ul class="collapse">
-  <li><a href="#정규화-기반-방법" id="toc-정규화-기반-방법" class="nav-link" data-scroll-target="#정규화-기반-방법"><span class="header-section-number">20.4.3.1</span> (1) 정규화 기반 방법</a></li>
-  <li><a href="#트리-기반-모델" id="toc-트리-기반-모델" class="nav-link" data-scroll-target="#트리-기반-모델"><span class="header-section-number">20.4.3.2</span> (2) 트리 기반 모델</a></li>
+  <li><a href="#l1-정규화-lasso" id="toc-l1-정규화-lasso" class="nav-link" data-scroll-target="#l1-정규화-lasso"><span class="header-section-number">20.5.1</span> L1 정규화 (Lasso)</a></li>
+  <li><a href="#트리-기반-특성-중요도" id="toc-트리-기반-특성-중요도" class="nav-link" data-scroll-target="#트리-기반-특성-중요도"><span class="header-section-number">20.5.2</span> 트리 기반 특성 중요도</a></li>
   </ul></li>
-  <li><a href="#임베디드-방법-예제" id="toc-임베디드-방법-예제" class="nav-link" data-scroll-target="#임베디드-방법-예제"><span class="header-section-number">20.4.4</span> 임베디드 방법 예제</a></li>
-  </ul></li>
-  <li><a href="#방법별-비교-정리" id="toc-방법별-비교-정리" class="nav-link" data-scroll-target="#방법별-비교-정리"><span class="header-section-number">20.5</span> 방법별 비교 정리</a></li>
-  <li><a href="#활용-전략" id="toc-활용-전략" class="nav-link" data-scroll-target="#활용-전략"><span class="header-section-number">20.6</span> 활용 전략</a></li>
+  <li><a href="#방법별-종합-비교" id="toc-방법별-종합-비교" class="nav-link" data-scroll-target="#방법별-종합-비교"><span class="header-section-number">20.6</span> 방법별 종합 비교</a></li>
+  <li><a href="#실무-적용-전략" id="toc-실무-적용-전략" class="nav-link" data-scroll-target="#실무-적용-전략"><span class="header-section-number">20.7</span> 실무 적용 전략</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">20.8</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/02. 특성 선택.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -451,227 +431,914 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="특성-선택" class="level2" data-number="20.1">
-<h2 data-number="20.1" class="anchored" data-anchor-id="특성-선택"><span class="header-section-number">20.1</span> 특성 선택</h2>
-<section id="특성-선택이란" class="level3" data-number="20.1.1">
-<h3 data-number="20.1.1" class="anchored" data-anchor-id="특성-선택이란"><span class="header-section-number">20.1.1</span> 특성 선택이란?</h3>
-<p><strong>특성 선택(feature selection)</strong>이란 모델 학습에 사용되는 여러 입력 변수(특성) 중에서 <strong>중요한 특성만 선별</strong>하는 과정이다.</p>
+<p>특성 선택(Feature Selection)은 모델 학습에 사용되는 입력 변수 중에서 중요한 특성만 선별하는 과정이다. 모든 변수를 사용하는 것이 항상 최선은 아니며, 불필요하거나 중복된 특성은 오히려 모델 성능을 저하시키고 과적합을 유발할 수 있다. 이 장에서는 필터(Filter), 래퍼(Wrapper), 임베디드(Embedded) 방법의 원리와 실무 적용 전략을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="aaf46fbc" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성과 타겟 준비</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"species"</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"특성 개수:"</span>, X.shape[<span class="dv">1</span>])</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"타겟 클래스:"</span>, y.unique())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
+특성 개수: 4
+타겟 클래스: &lt;StringArray&gt;
+['Adelie', 'Chinstrap', 'Gentoo']
+Length: 3, dtype: str</code></pre>
+</div>
+</div>
+<section id="특성-선택의-개념과-필요성" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="특성-선택의-개념과-필요성"><span class="header-section-number">20.1</span> 특성 선택의 개념과 필요성</h2>
+<p>특성 선택은 데이터의 차원을 줄이고 모델 성능을 향상시키는 핵심 기법이다.</p>
+<p><strong>특성 선택의 목적</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>목적</th>
+<th>설명</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모델 성능 향상</td>
+<td>과적합 감소, 일반화 성능 향상</td>
+<td>테스트 정확도 증가</td>
+</tr>
+<tr class="even">
+<td>학습 시간 단축</td>
+<td>변수 수 감소로 계산량 감소</td>
+<td>실험 속도 향상</td>
+</tr>
+<tr class="odd">
+<td>해석력 향상</td>
+<td>중요 변수만 사용하여 이해 쉬움</td>
+<td>비즈니스 인사이트 도출</td>
+</tr>
+<tr class="even">
+<td>차원의 저주 방지</td>
+<td>고차원 데이터 문제 완화</td>
+<td>샘플 수 대비 변수 수 적절화</td>
+</tr>
+<tr class="odd">
+<td>다중공선성 제거</td>
+<td>상관성 높은 변수 제거</td>
+<td>모델 안정성 향상</td>
+</tr>
+<tr class="even">
+<td>비용 절감</td>
+<td>데이터 수집/저장/처리 비용 감소</td>
+<td>실무 효율성 증가</td>
+</tr>
+</tbody>
+</table>
+<p><strong>특성이 많을 때의 문제</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>차원의 저주</td>
+<td>변수가 많아질수록 필요한 샘플 수가 기하급수적 증가</td>
+</tr>
+<tr class="even">
+<td>과적합</td>
+<td>노이즈 변수가 학습에 포함되어 일반화 실패</td>
+</tr>
+<tr class="odd">
+<td>계산 비용</td>
+<td>학습 시간과 메모리 사용량 증가</td>
+</tr>
+<tr class="even">
+<td>다중공선성</td>
+<td>상관성 높은 변수들이 모델 불안정하게 만듦</td>
+</tr>
+<tr class="odd">
+<td>해석 어려움</td>
+<td>변수가 많아 중요 요인 파악 곤란</td>
+</tr>
+</tbody>
+</table>
+<section id="특성-선택-vs-특성-추출" class="level3" data-number="20.1.1">
+<h3 data-number="20.1.1" class="anchored" data-anchor-id="특성-선택-vs-특성-추출"><span class="header-section-number">20.1.1</span> 특성 선택 vs 특성 추출</h3>
+<p>혼동하기 쉬운 개념을 명확히 구분한다.</p>
+<p><strong>특성 선택 vs 특성 추출 비교</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 43%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>특성 선택 (Feature Selection)</th>
+<th>특성 추출 (Feature Extraction)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>정의</td>
+<td>기존 변수 중 일부를 선택</td>
+<td>기존 변수를 변환하여 새로운 변수 생성</td>
+</tr>
+<tr class="even">
+<td>변수 의미</td>
+<td>유지됨</td>
+<td>변경됨 (조합/변환)</td>
+</tr>
+<tr class="odd">
+<td>해석력</td>
+<td>높음</td>
+<td>낮음</td>
+</tr>
+<tr class="even">
+<td>예시</td>
+<td>100개 중 10개 선택</td>
+<td>PCA로 10개 주성분 생성</td>
+</tr>
+<tr class="odd">
+<td>대표 방법</td>
+<td>상관계수, RFE, Lasso</td>
+<td>PCA, t-SNE, Autoencoder</td>
+</tr>
+<tr class="even">
+<td>원본 변수</td>
+<td>그대로 사용</td>
+<td>변환하여 사용</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 특성 선택 vs 특성 추출</strong></p>
+<div id="386e3b63" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성 선택: 원본 변수 중 k개 선택</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>f_classif, k<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> selector.fit_transform(X, y)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>selected_features <span class="op">=</span> X.columns[selector.get_support()]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 특성 선택 ==="</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수: </span><span class="sc">{</span>selected_features<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"결과 차원: </span><span class="sc">{</span>X_selected<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성 추출: 새로운 변수 생성</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.fit_transform(X)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 특성 추출 (PCA) ==="</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"주성분 변수: PC1, PC2"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"결과 차원: </span><span class="sc">{</span>X_pca<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"설명 분산 비율: </span><span class="sc">{</span>pca<span class="sc">.</span>explained_variance_ratio_<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 특성 선택 ===
+선택된 변수: ['bill_length_mm', 'flipper_length_mm']
+결과 차원: (333, 2)
+
+=== 특성 추출 (PCA) ===
+주성분 변수: PC1, PC2
+결과 차원: (333, 2)
+설명 분산 비율: [9.99893229e-01 7.82232504e-05]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="특성-선택-방법의-분류" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="특성-선택-방법의-분류"><span class="header-section-number">20.2</span> 특성 선택 방법의 분류</h2>
+<p>특성 선택 방법은 크게 세 가지로 분류된다.</p>
+<p><strong>특성 선택 방법 분류</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>모델 사용</th>
+<th>계산 비용</th>
+<th>성능</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>필터 (Filter)</td>
+<td>사용 안 함</td>
+<td>낮음</td>
+<td>중간</td>
+<td>통계량 기반, 빠름</td>
+</tr>
+<tr class="even">
+<td>래퍼 (Wrapper)</td>
+<td>사용함</td>
+<td>매우 높음</td>
+<td>높음</td>
+<td>모델 성능 기반, 느림</td>
+</tr>
+<tr class="odd">
+<td>임베디드 (Embedded)</td>
+<td>사용함</td>
+<td>중간</td>
+<td>높음</td>
+<td>학습 과정에 내장</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="필터filter-방법" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="필터filter-방법"><span class="header-section-number">20.3</span> 필터(Filter) 방법</h2>
+<p>필터 방법은 모델을 사용하지 않고 데이터의 통계적 특성만으로 각 특성을 독립적으로 평가한다.</p>
+<p><strong>필터 방법의 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>계산 속도가 매우 빠름</td>
+<td>변수 간 상호작용 고려 못함</td>
+</tr>
+<tr class="even">
+<td>모델과 무관하게 사용 가능</td>
+<td>모델별 최적화 불가</td>
+</tr>
+<tr class="odd">
+<td>대용량 데이터에 적합</td>
+<td>성능이 래퍼보다 낮을 수 있음</td>
+</tr>
+<tr class="even">
+<td>과적합 위험 낮음</td>
+<td>단순한 선형 관계만 파악</td>
+</tr>
+</tbody>
+</table>
+<section id="분산-기반-선택" class="level3" data-number="20.3.1">
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="분산-기반-선택"><span class="header-section-number">20.3.1</span> 분산 기반 선택</h3>
+<p>분산이 거의 없는 변수는 정보량이 적으므로 제거한다.</p>
+<p><strong>예제: 분산 기반 선택</strong></p>
+<div id="5af9ad87" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터에 분산이 낮은 변수 추가 (예시)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>X_with_low_var <span class="op">=</span> X.copy()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X_with_low_var[<span class="st">'constant_feature'</span>] <span class="op">=</span> <span class="dv">1</span>  <span class="co"># 분산 = 0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>X_with_low_var[<span class="st">'low_variance_feature'</span>] <span class="op">=</span> np.random.uniform(<span class="fl">3.9</span>, <span class="fl">4.1</span>, <span class="bu">len</span>(X))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 분산 확인 ==="</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_with_low_var.var().sort_values())</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 분산 임계값 설정 (분산 &lt; 0.1인 변수 제거)</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>X_high_var <span class="op">=</span> selector.fit_transform(X_with_low_var)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">원본 변수 수: </span><span class="sc">{</span>X_with_low_var<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수 수: </span><span class="sc">{</span>X_high_var<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"제거된 변수: </span><span class="sc">{</span>X_with_low_var<span class="sc">.</span>columns[<span class="op">~</span>selector.get_support()]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 분산 확인 ===
+constant_feature             0.000000
+low_variance_feature         0.003386
+bill_depth_mm                3.877888
+bill_length_mm              29.906333
+flipper_length_mm          196.441677
+body_mass_g             648372.487699
+dtype: float64
+
+원본 변수 수: 6
+선택된 변수 수: 4
+제거된 변수: ['constant_feature', 'low_variance_feature']</code></pre>
+</div>
+</div>
+</section>
+<section id="상관계수-기반-선택" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="상관계수-기반-선택"><span class="header-section-number">20.3.2</span> 상관계수 기반 선택</h3>
+<p>타겟 변수와의 상관관계를 측정하여 중요한 변수를 선택한다.</p>
+<p><strong>예제: 상관계수 기반 선택</strong></p>
+<div id="fad39178" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 분류 문제를 위해 타겟을 수치형으로 변환</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>y_encoded <span class="op">=</span> le.fit_transform(y)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 특성과 타겟 간 상관계수 계산</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>correlations <span class="op">=</span> {}</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> X.columns:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    corr <span class="op">=</span> np.corrcoef(X[col], y_encoded)[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    correlations[col] <span class="op">=</span> <span class="bu">abs</span>(corr)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 상관계수로 정렬</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>corr_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: <span class="bu">list</span>(correlations.keys()),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Correlation'</span>: <span class="bu">list</span>(correlations.values())</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Correlation'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 타겟과의 상관계수 ==="</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(corr_df)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>plt.barh(corr_df[<span class="st">'Feature'</span>], corr_df[<span class="st">'Correlation'</span>])</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Absolute Correlation with Target'</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Feature Correlation with Target'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 타겟과의 상관계수 ===
+             Feature  Correlation
+2  flipper_length_mm     0.850737
+3        body_mass_g     0.750434
+1      bill_depth_mm     0.740346
+0     bill_length_mm     0.730548</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-5-output-2.png" width="949" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="통계적-검정-selectkbest" class="level3" data-number="20.3.3">
+<h3 data-number="20.3.3" class="anchored" data-anchor-id="통계적-검정-selectkbest"><span class="header-section-number">20.3.3</span> 통계적 검정 (SelectKBest)</h3>
+<p>통계적 유의성을 기반으로 상위 k개 변수를 선택한다.</p>
+<p><strong>예제: SelectKBest (ANOVA F-test)</strong></p>
+<div id="b92c2b77" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif, chi2</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA F-test 기반 선택</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>f_classif, k<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> selector.fit_transform(X, y)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 점수 확인</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Score'</span>: selector.scores_</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Score'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== SelectKBest (ANOVA F-test) ==="</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(scores)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[selector.get_support()]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.bar(scores[<span class="st">'Feature'</span>], scores[<span class="st">'Score'</span>])</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature'</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'F-score'</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Feature Importance (ANOVA F-test)'</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== SelectKBest (ANOVA F-test) ===
+             Feature       Score
+2  flipper_length_mm  567.406992
+0     bill_length_mm  397.299437
+1      bill_depth_mm  344.825082
+3        body_mass_g  341.894895
+
+선택된 변수: ['bill_length_mm', 'flipper_length_mm']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-6-output-2.png" width="950" height="469" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>통계적 검정 함수</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>함수</th>
+<th>용도</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>f_classif</td>
+<td>분류</td>
+<td>ANOVA F-통계량</td>
+</tr>
+<tr class="even">
+<td>chi2</td>
+<td>분류 (양수만)</td>
+<td>카이제곱 검정</td>
+</tr>
+<tr class="odd">
+<td>f_regression</td>
+<td>회귀</td>
+<td>F-통계량</td>
+</tr>
+<tr class="even">
+<td>mutual_info_classif</td>
+<td>분류</td>
+<td>상호정보량</td>
+</tr>
+<tr class="odd">
+<td>mutual_info_regression</td>
+<td>회귀</td>
+<td>상호정보량</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="래퍼wrapper-방법" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="래퍼wrapper-방법"><span class="header-section-number">20.4</span> 래퍼(Wrapper) 방법</h2>
+<p>래퍼 방법은 모델의 성능을 기준으로 특성 조합을 평가하여 특정 모델에 최적화된 선택이 가능하다.</p>
+<p><strong>래퍼 방법의 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모델 성능 최적화</td>
+<td>계산 비용 매우 높음</td>
+</tr>
+<tr class="even">
+<td>변수 간 상호작용 고려</td>
+<td>특정 모델에 종속적</td>
+</tr>
+<tr class="odd">
+<td>최적 조합 탐색</td>
+<td>대용량 데이터 부적합</td>
+</tr>
+<tr class="even">
+<td>높은 정확도</td>
+<td>과적합 위험</td>
+</tr>
+</tbody>
+</table>
+<section id="재귀적-특성-제거-rfe" class="level3" data-number="20.4.1">
+<h3 data-number="20.4.1" class="anchored" data-anchor-id="재귀적-특성-제거-rfe"><span class="header-section-number">20.4.1</span> 재귀적 특성 제거 (RFE)</h3>
+<p>RFE는 모델을 학습하고 중요도가 낮은 특성을 재귀적으로 제거하는 방법이다.</p>
+<p><strong>RFE 작동 원리</strong></p>
+<ol type="1">
+<li>모든 특성으로 모델 학습</li>
+<li>특성 중요도 계산</li>
+<li>가장 중요도 낮은 특성 제거</li>
+<li>원하는 특성 개수까지 반복</li>
+</ol>
+<p><strong>예제: RFE</strong></p>
+<div id="03c04c9e" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 정의</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># RFE 수행</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(estimator<span class="op">=</span>model, n_features_to_select<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>X_rfe <span class="op">=</span> rfe.fit_transform(X, y)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 확인</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>rfe_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Selected'</span>: rfe.support_,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ranking'</span>: rfe.ranking_</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Ranking'</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== RFE 결과 ==="</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rfe_df)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[rfe.support_]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'green'</span> <span class="cf">if</span> s <span class="cf">else</span> <span class="st">'red'</span> <span class="cf">for</span> s <span class="kw">in</span> rfe.support_]</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>plt.bar(X.columns, <span class="dv">1</span><span class="op">/</span>rfe.ranking_, color<span class="op">=</span>colors)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature'</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Importance (1/Ranking)'</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'RFE Feature Selection'</span>)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Selected'</span>, <span class="st">'Not Selected'</span>])</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== RFE 결과 ===
+             Feature  Selected  Ranking
+0     bill_length_mm      True        1
+1      bill_depth_mm      True        1
+2  flipper_length_mm     False        2
+3        body_mass_g     False        3
+
+선택된 변수: ['bill_length_mm', 'bill_depth_mm']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-7-output-2.png" width="950" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rfecv-교차-검증-포함" class="level3" data-number="20.4.2">
+<h3 data-number="20.4.2" class="anchored" data-anchor-id="rfecv-교차-검증-포함"><span class="header-section-number">20.4.2</span> RFECV (교차 검증 포함)</h3>
+<p>RFECV는 교차 검증을 통해 최적의 특성 개수를 자동으로 찾는다.</p>
+<p><strong>예제: RFECV</strong></p>
+<div id="3c7a1f8f" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFECV</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RFECV 수행</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>rfecv <span class="op">=</span> RFECV(estimator<span class="op">=</span>model, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'accuracy'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>X_rfecv <span class="op">=</span> rfecv.fit_transform(X, y)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== RFECV 결과 ==="</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 변수 수: </span><span class="sc">{</span>rfecv<span class="sc">.</span>n_features_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[rfecv.support_]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 변수 개수별 성능 시각화</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(rfecv.cv_results_[<span class="st">'mean_test_score'</span>]) <span class="op">+</span> <span class="dv">1</span>), </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>         rfecv.cv_results_[<span class="st">'mean_test_score'</span>], marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.axvline(rfecv.n_features_, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="ss">f'Optimal: </span><span class="sc">{</span>rfecv<span class="sc">.</span>n_features_<span class="sc">}</span><span class="ss"> features'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Features'</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Cross-Validation Score'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'RFECV: Optimal Number of Features'</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== RFECV 결과 ===
+최적 변수 수: 4
+선택된 변수: ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-8-output-2.png" width="950" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="순차-특성-선택" class="level3" data-number="20.4.3">
+<h3 data-number="20.4.3" class="anchored" data-anchor-id="순차-특성-선택"><span class="header-section-number">20.4.3</span> 순차 특성 선택</h3>
+<p><strong>예제: 전진 선택 (Sequential Feature Selector)</strong></p>
+<div id="86de3bc5" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 전진 선택</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>sfs_forward <span class="op">=</span> SequentialFeatureSelector(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    model, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    n_features_to_select<span class="op">=</span><span class="dv">2</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'forward'</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>X_forward <span class="op">=</span> sfs_forward.fit_transform(X, y)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 전진 선택 (Forward Selection) ==="</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[sfs_forward.get_support()]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 후진 제거</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>sfs_backward <span class="op">=</span> SequentialFeatureSelector(</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    model, </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    n_features_to_select<span class="op">=</span><span class="dv">2</span>, </span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span>,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>X_backward <span class="op">=</span> sfs_backward.fit_transform(X, y)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 후진 제거 (Backward Elimination) ==="</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[sfs_backward.get_support()]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 전진 선택 (Forward Selection) ===
+선택된 변수: ['bill_length_mm', 'flipper_length_mm']
+
+=== 후진 제거 (Backward Elimination) ===
+선택된 변수: ['bill_length_mm', 'bill_depth_mm']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="임베디드embedded-방법" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="임베디드embedded-방법"><span class="header-section-number">20.5</span> 임베디드(Embedded) 방법</h2>
+<p>임베디드 방법은 모델 학습 과정 자체에 특성 선택이 포함되어 있어 필터와 래퍼의 중간 성격을 가진다.</p>
+<p><strong>임베디드 방법의 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>계산 효율과 성능의 균형</td>
+<td>특정 알고리즘에 종속</td>
+</tr>
+<tr class="even">
+<td>변수 간 상호작용 고려</td>
+<td>모든 모델에 적용 불가</td>
+</tr>
+<tr class="odd">
+<td>래퍼보다 빠름</td>
+<td>설명력이 필터보다 낮을 수 있음</td>
+</tr>
+<tr class="even">
+<td>모델 학습과 동시 수행</td>
+<td>하이퍼파라미터에 민감</td>
+</tr>
+</tbody>
+</table>
+<section id="l1-정규화-lasso" class="level3" data-number="20.5.1">
+<h3 data-number="20.5.1" class="anchored" data-anchor-id="l1-정규화-lasso"><span class="header-section-number">20.5.1</span> L1 정규화 (Lasso)</h3>
+<p>L1 정규화는 중요하지 않은 특성의 계수를 정확히 0으로 만들어 자동 선택한다.</p>
+<p><strong>예제: Lasso 기반 선택</strong></p>
+<div id="a5a17651" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LassoCV</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 표준화 (Lasso는 스케일에 민감)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasso (회귀이므로 타겟을 연속형으로 변환)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 분류 문제이므로 LogisticRegression with L1 사용</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>lasso <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="st">'l1'</span>, solver<span class="op">=</span><span class="st">'saga'</span>, C<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>lasso.fit(X_scaled, y)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 확인</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Coefficient'</span>: np.<span class="bu">abs</span>(lasso.coef_[<span class="dv">0</span>])</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Coefficient'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Lasso (L1 정규화) ==="</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef_df)</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">0이 아닌 계수: </span><span class="sc">{</span>(coef_df[<span class="st">'Coefficient'</span>] <span class="op">&gt;</span> <span class="fl">0.01</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">개"</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>plt.barh(coef_df[<span class="st">'Feature'</span>], coef_df[<span class="st">'Coefficient'</span>])</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Absolute Coefficient'</span>)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lasso Feature Importance'</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Lasso (L1 정규화) ===
+             Feature  Coefficient
+0     bill_length_mm     4.994319
+1      bill_depth_mm     1.984614
+2  flipper_length_mm     0.000000
+3        body_mass_g     0.000000
+
+0이 아닌 계수: 2개</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-10-output-2.png" width="949" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="트리-기반-특성-중요도" class="level3" data-number="20.5.2">
+<h3 data-number="20.5.2" class="anchored" data-anchor-id="트리-기반-특성-중요도"><span class="header-section-number">20.5.2</span> 트리 기반 특성 중요도</h3>
+<p>결정트리, 랜덤 포레스트, Gradient Boosting 등은 특성 중요도를 자동으로 제공한다.</p>
+<p><strong>예제: 랜덤 포레스트 특성 중요도</strong></p>
+<div id="4a4b1598" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 랜덤 포레스트 학습</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>rf.fit(X, y)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성 중요도</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Importance'</span>: rf.feature_importances_</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 랜덤 포레스트 특성 중요도 ==="</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(importance_df)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.barh(importance_df[<span class="st">'Feature'</span>], importance_df[<span class="st">'Importance'</span>])</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Feature Importance'</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Random Forest Feature Importance'</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 랜덤 포레스트 특성 중요도 ===
+             Feature  Importance
+0     bill_length_mm    0.407645
+2  flipper_length_mm    0.323960
+1      bill_depth_mm    0.192569
+3        body_mass_g    0.075826</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02. 특성 선택_files/figure-html/cell-11-output-2.png" width="949" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>예제: SelectFromModel</strong></p>
+<div id="b427d416" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 중요도 기반 자동 선택</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectFromModel(rf, threshold<span class="op">=</span><span class="st">'median'</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>X_important <span class="op">=</span> selector.fit_transform(X, y)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">선택된 변수 수: </span><span class="sc">{</span>X_important<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"선택된 변수: </span><span class="sc">{</span>X<span class="sc">.</span>columns[selector.get_support()]<span class="sc">.</span>tolist()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+선택된 변수 수: 2
+선택된 변수: ['bill_length_mm', 'flipper_length_mm']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="방법별-종합-비교" class="level2" data-number="20.6">
+<h2 data-number="20.6" class="anchored" data-anchor-id="방법별-종합-비교"><span class="header-section-number">20.6</span> 방법별 종합 비교</h2>
+<p><strong>특성 선택 방법 종합 비교</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방법</th>
+<th>계산 비용</th>
+<th>성능</th>
+<th>해석력</th>
+<th>모델 의존성</th>
+<th>적용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>필터</td>
+<td>낮음</td>
+<td>중간</td>
+<td>높음</td>
+<td>낮음</td>
+<td>대용량, 빠른 탐색</td>
+</tr>
+<tr class="even">
+<td>래퍼</td>
+<td>매우 높음</td>
+<td>높음</td>
+<td>중간</td>
+<td>높음</td>
+<td>소규모, 성능 중시</td>
+</tr>
+<tr class="odd">
+<td>임베디드</td>
+<td>중간</td>
+<td>높음</td>
+<td>중간</td>
+<td>중간</td>
+<td>일반적 상황 (권장)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>방법 선택 가이드</strong></p>
+<pre><code>데이터 크기
+├─ 대용량 (변수 100+) → 필터 방법
+│                      ↓
+│                     임베디드 방법으로 정제
+└─ 소규모 (변수 &lt; 50) → 래퍼 또는 임베디드
+
+목적
+├─ 빠른 탐색 → 필터 (상관계수, SelectKBest)
+├─ 최고 성능 → 래퍼 (RFECV)
+└─ 균형 잡힌 접근 → 임베디드 (Lasso, 트리 중요도)</code></pre>
+</section>
+<section id="실무-적용-전략" class="level2" data-number="20.7">
+<h2 data-number="20.7" class="anchored" data-anchor-id="실무-적용-전략"><span class="header-section-number">20.7</span> 실무 적용 전략</h2>
+<p><strong>단계별 특성 선택 전략</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>단계</th>
+<th>방법</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1단계 (거름망)</td>
+<td>분산 기반</td>
+<td>분산 없는 변수 제거</td>
+</tr>
+<tr class="even">
+<td>2단계 (예비 선택)</td>
+<td>필터 (상관계수)</td>
+<td>명백히 무관한 변수 제거</td>
+</tr>
+<tr class="odd">
+<td>3단계 (정제)</td>
+<td>임베디드 (트리 중요도)</td>
+<td>중요 변수 추출</td>
+</tr>
+<tr class="even">
+<td>4단계 (최적화)</td>
+<td>래퍼 (RFECV)</td>
+<td>최종 조합 선택</td>
+</tr>
+<tr class="odd">
+<td>5단계 (검증)</td>
+<td>교차 검증</td>
+<td>성능 확인</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 종합 파이프라인</strong></p>
+<div id="7cf8cf34" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 분산 제거</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>var_threshold <span class="op">=</span> VarianceThreshold(threshold<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. SelectKBest (상위 3개)</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>select_k <span class="op">=</span> SelectKBest(f_classif, k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 모델</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>model_final <span class="op">=</span> LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프라인 구성</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'variance'</span>, var_threshold),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'select'</span>, select_k),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, model_final)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습 및 평가</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>pipeline.fit(X_train, y_train)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 파이프라인 결과 ==="</span>)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"학습 정확도: </span><span class="sc">{</span>pipeline<span class="sc">.</span>score(X_train, y_train)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 정확도: </span><span class="sc">{</span>pipeline<span class="sc">.</span>score(X_test, y_test)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 파이프라인 결과 ===
+학습 정확도: 0.9887
+테스트 정확도: 1.0000</code></pre>
+</div>
+</div>
+</section>
+<section id="요약" class="level2" data-number="20.8">
+<h2 data-number="20.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">20.8</span> 요약</h2>
+<p>이 장에서는 특성 선택의 개념과 세 가지 주요 방법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>특성 선택 핵심 요약</strong></p>
 <ul>
-<li>모든 변수를 사용하는 것이 항상 좋은 것은 아님</li>
-<li>불필요하거나 중복된 특성은 오히려 성능을 저하시킬 수 있음</li>
+<li><strong>목적</strong>: 과적합 방지, 성능 향상, 해석력 증대, 비용 절감</li>
+<li><strong>필터</strong>: 통계량 기반, 빠르지만 상호작용 고려 못함</li>
+<li><strong>래퍼</strong>: 모델 성능 기반, 정확하지만 느림</li>
+<li><strong>임베디드</strong>: 학습 과정에 통합, 균형 잡힌 접근</li>
 </ul>
-<section id="특성-선택의-목적" class="level4" data-number="20.1.1.1">
-<h4 data-number="20.1.1.1" class="anchored" data-anchor-id="특성-선택의-목적"><span class="header-section-number">20.1.1.1</span> 특성 선택의 목적</h4>
+<p><strong>실무 권장사항</strong></p>
+<ol type="1">
+<li><strong>대용량 데이터</strong>: 필터 → 임베디드 순서로 적용</li>
+<li><strong>소규모 데이터</strong>: 임베디드 또는 래퍼 사용</li>
+<li><strong>해석 중요</strong>: 필터 또는 Lasso 선호</li>
+<li><strong>성능 우선</strong>: RFECV 또는 트리 중요도 사용</li>
+<li><strong>파이프라인 구성</strong>: 여러 방법을 순차적으로 조합</li>
+</ol>
+<p><strong>주의사항</strong></p>
 <ul>
-<li>모델 성능 향상 (과적합 감소)</li>
-<li>학습 시간 단축</li>
-<li>모델 해석력 향상</li>
-<li>데이터 수집 및 관리 비용 감소</li>
+<li>특성 선택은 데이터 분할 후 학습셋으로만 수행</li>
+<li>교차 검증으로 안정성 확인</li>
+<li>도메인 지식과 통계적 방법 결합</li>
+<li>제거된 변수도 문서화하여 추후 검토</li>
 </ul>
-</section>
-</section>
-<section id="특성-선택-vs-특성-추출" class="level3" data-number="20.1.2">
-<h3 data-number="20.1.2" class="anchored" data-anchor-id="특성-선택-vs-특성-추출"><span class="header-section-number">20.1.2</span> 특성 선택 vs 특성 추출</h3>
-<p>혼동하기 쉬운 개념이므로 먼저 구분한다.</p>
-<ul>
-<li><p><strong>특성 선택</strong></p>
-<ul>
-<li>기존 변수 중 일부를 선택</li>
-<li>변수의 의미가 유지됨</li>
-</ul></li>
-<li><p><strong>특성 추출</strong></p>
-<ul>
-<li>기존 변수를 변환하여 새로운 변수 생성</li>
-<li>예: PCA</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="필터filter-방법" class="level2" data-number="20.2">
-<h2 data-number="20.2" class="anchored" data-anchor-id="필터filter-방법"><span class="header-section-number">20.2</span> 필터(Filter) 방법</h2>
-<section id="개념" class="level3" data-number="20.2.1">
-<h3 data-number="20.2.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">20.2.1</span> 개념</h3>
-<p><strong>모델을 사용하지 않고</strong> 데이터의 통계적 특성만으로 특성을 평가하는 방법이다. 각 특성을 <strong>독립적으로</strong> 평가한다.</p>
-</section>
-<section id="주요-특징" class="level3" data-number="20.2.2">
-<h3 data-number="20.2.2" class="anchored" data-anchor-id="주요-특징"><span class="header-section-number">20.2.2</span> 주요 특징</h3>
-<ul>
-<li>계산 속도가 빠름</li>
-<li>모델과 무관</li>
-<li>변수 간 상호작용은 고려하지 못함</li>
-</ul>
-</section>
-<section id="대표적인-필터-방법" class="level3" data-number="20.2.3">
-<h3 data-number="20.2.3" class="anchored" data-anchor-id="대표적인-필터-방법"><span class="header-section-number">20.2.3</span> 대표적인 필터 방법</h3>
-<section id="분산-기반-선택" class="level4" data-number="20.2.3.1">
-<h4 data-number="20.2.3.1" class="anchored" data-anchor-id="분산-기반-선택"><span class="header-section-number">20.2.3.1</span> (1) 분산 기반 선택</h4>
-<ul>
-<li>분산이 거의 없는 변수는 정보량이 적음</li>
-<li>예: 대부분 값이 동일한 변수 제거</li>
-</ul>
-</section>
-<section id="상관계수-기반-선택" class="level4" data-number="20.2.3.2">
-<h4 data-number="20.2.3.2" class="anchored" data-anchor-id="상관계수-기반-선택"><span class="header-section-number">20.2.3.2</span> (2) 상관계수 기반 선택</h4>
-<ul>
-<li>입력 변수와 타깃 변수 간 상관관계 측정</li>
-<li>Pearson, Spearman, Kendall 등 활용 가능</li>
-<li>절댓값이 큰 변수일수록 중요</li>
-</ul>
-</section>
-<section id="통계적-검정" class="level4" data-number="20.2.3.3">
-<h4 data-number="20.2.3.3" class="anchored" data-anchor-id="통계적-검정"><span class="header-section-number">20.2.3.3</span> (3) 통계적 검정</h4>
-<ul>
-<li><p>분류 문제</p>
-<ul>
-<li>카이제곱 검정</li>
-</ul></li>
-<li><p>회귀 문제</p>
-<ul>
-<li>F-test</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="필터-방법-예제" class="level3" data-number="20.2.4">
-<h3 data-number="20.2.4" class="anchored" data-anchor-id="필터-방법-예제"><span class="header-section-number">20.2.4</span> 필터 방법 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>f_classif, k<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> selector.fit_transform(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="래퍼wrapper-방법" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="래퍼wrapper-방법"><span class="header-section-number">20.3</span> 래퍼(Wrapper) 방법</h2>
-<section id="개념-1" class="level3" data-number="20.3.1">
-<h3 data-number="20.3.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">20.3.1</span> 개념</h3>
-<p><strong>모델의 성능을 기준</strong>으로 특성 조합을 평가하는 방법으로 특정 모델에 최적화된 특성 선택이 가능하다.</p>
-</section>
-<section id="주요-특징-1" class="level3" data-number="20.3.2">
-<h3 data-number="20.3.2" class="anchored" data-anchor-id="주요-특징-1"><span class="header-section-number">20.3.2</span> 주요 특징</h3>
-<ul>
-<li>성능은 좋지만 계산 비용이 큼</li>
-<li>모델에 종속적</li>
-</ul>
-</section>
-<section id="대표적인-래퍼-방법" class="level3" data-number="20.3.3">
-<h3 data-number="20.3.3" class="anchored" data-anchor-id="대표적인-래퍼-방법"><span class="header-section-number">20.3.3</span> 대표적인 래퍼 방법</h3>
-<section id="전진-선택-forward-selection" class="level4" data-number="20.3.3.1">
-<h4 data-number="20.3.3.1" class="anchored" data-anchor-id="전진-선택-forward-selection"><span class="header-section-number">20.3.3.1</span> (1) 전진 선택 (Forward Selection)</h4>
-<ul>
-<li>특성이 없는 상태에서 시작</li>
-<li>하나씩 추가하면서 성능 개선 여부 평가</li>
-</ul>
-</section>
-<section id="후진-제거-backward-elimination" class="level4" data-number="20.3.3.2">
-<h4 data-number="20.3.3.2" class="anchored" data-anchor-id="후진-제거-backward-elimination"><span class="header-section-number">20.3.3.2</span> (2) 후진 제거 (Backward Elimination)</h4>
-<ul>
-<li>모든 특성으로 시작</li>
-<li>하나씩 제거하면서 성능 변화 확인</li>
-</ul>
-</section>
-<section id="재귀적-특성-제거-rfe" class="level4" data-number="20.3.3.3">
-<h4 data-number="20.3.3.3" class="anchored" data-anchor-id="재귀적-특성-제거-rfe"><span class="header-section-number">20.3.3.3</span> (3) 재귀적 특성 제거 (RFE)</h4>
-<ul>
-<li>모델 학습 → 중요도 낮은 특성 제거 반복</li>
-</ul>
-</section>
-</section>
-<section id="래퍼-방법-예제" class="level3" data-number="20.3.4">
-<h3 data-number="20.3.4" class="anchored" data-anchor-id="래퍼-방법-예제"><span class="header-section-number">20.3.4</span> 래퍼 방법 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(model, n_features_to_select<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>X_selected <span class="op">=</span> rfe.fit_transform(X, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="임베디드embedded-방법" class="level2" data-number="20.4">
-<h2 data-number="20.4" class="anchored" data-anchor-id="임베디드embedded-방법"><span class="header-section-number">20.4</span> 3.2.5 임베디드(Embedded) 방법</h2>
-<section id="개념-2" class="level3" data-number="20.4.1">
-<h3 data-number="20.4.1" class="anchored" data-anchor-id="개념-2"><span class="header-section-number">20.4.1</span> 개념</h3>
-<p><strong>모델 학습 과정 자체에</strong> 특성 선택이 포함된 방법이다. 필터와 래퍼의 중간 성격을 가진다.</p>
-</section>
-<section id="주요-특징-2" class="level3" data-number="20.4.2">
-<h3 data-number="20.4.2" class="anchored" data-anchor-id="주요-특징-2"><span class="header-section-number">20.4.2</span> 주요 특징</h3>
-<ul>
-<li>계산 효율과 성능의 균형</li>
-<li>특정 모델에 내장된 방식</li>
-</ul>
-</section>
-<section id="대표적인-임베디드-방법" class="level3" data-number="20.4.3">
-<h3 data-number="20.4.3" class="anchored" data-anchor-id="대표적인-임베디드-방법"><span class="header-section-number">20.4.3</span> 대표적인 임베디드 방법</h3>
-<section id="정규화-기반-방법" class="level4" data-number="20.4.3.1">
-<h4 data-number="20.4.3.1" class="anchored" data-anchor-id="정규화-기반-방법"><span class="header-section-number">20.4.3.1</span> (1) 정규화 기반 방법</h4>
-<ul>
-<li><p>L1 정규화 (Lasso)</p>
-<ul>
-<li>중요하지 않은 특성의 계수를 0으로 만듦</li>
-</ul></li>
-<li><p>L2 정규화 (Ridge)</p>
-<ul>
-<li>계수 크기를 줄이지만 제거하지는 않음</li>
-</ul></li>
-</ul>
-</section>
-<section id="트리-기반-모델" class="level4" data-number="20.4.3.2">
-<h4 data-number="20.4.3.2" class="anchored" data-anchor-id="트리-기반-모델"><span class="header-section-number">20.4.3.2</span> (2) 트리 기반 모델</h4>
-<ul>
-<li>결정트리</li>
-<li>랜덤 포레스트</li>
-<li>Gradient Boosting</li>
-</ul>
-<p>→ 특성 중요도(feature importance) 제공</p>
-</section>
-</section>
-<section id="임베디드-방법-예제" class="level3" data-number="20.4.4">
-<h3 data-number="20.4.4" class="anchored" data-anchor-id="임베디드-방법-예제"><span class="header-section-number">20.4.4</span> 임베디드 방법 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> RandomForestClassifier()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>importances <span class="op">=</span> model.feature_importances_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="방법별-비교-정리" class="level2" data-number="20.5">
-<h2 data-number="20.5" class="anchored" data-anchor-id="방법별-비교-정리"><span class="header-section-number">20.5</span> 방법별 비교 정리</h2>
-<ul>
-<li><p><strong>필터 방법</strong></p>
-<ul>
-<li>빠름</li>
-<li>모델 독립적</li>
-<li>상호작용 고려 어려움</li>
-</ul></li>
-<li><p><strong>래퍼 방법</strong></p>
-<ul>
-<li>성능 우수</li>
-<li>계산 비용 큼</li>
-<li>모델 의존적</li>
-</ul></li>
-<li><p><strong>임베디드 방법</strong></p>
-<ul>
-<li>효율과 성능의 균형</li>
-<li>특정 알고리즘에 종속</li>
-</ul></li>
-</ul>
-</section>
-<section id="활용-전략" class="level2" data-number="20.6">
-<h2 data-number="20.6" class="anchored" data-anchor-id="활용-전략"><span class="header-section-number">20.6</span> 활용 전략</h2>
-<ul>
-<li><p>데이터가 크고 특성이 많을 때</p>
-<ul>
-<li>필터 → 임베디드 순서</li>
-</ul></li>
-<li><p>모델 성능이 중요한 경우</p>
-<ul>
-<li>래퍼 또는 임베디드</li>
-</ul></li>
-<li><p>해석이 중요한 경우</p>
-<ul>
-<li>필터 또는 Lasso 기반 접근</li>
-</ul></li>
-</ul>
+<p>특성 선택은 모델 성능과 해석력을 동시에 향상시키는 강력한 도구이다. 데이터 특성과 목적에 맞는 방법을 선택하고, 여러 방법을 조합하여 최적의 변수 집합을 찾는 것이 중요하다.</p>
 
 
 </section>

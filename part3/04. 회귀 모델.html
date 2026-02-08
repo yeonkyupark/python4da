@@ -404,47 +404,22 @@ window.Quarto = {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#회귀-모델" id="toc-회귀-모델" class="nav-link active" data-scroll-target="#회귀-모델"><span class="header-section-number">22.1</span> 회귀 모델</a>
+  <li><a href="#회귀의-개념" id="toc-회귀의-개념" class="nav-link active" data-scroll-target="#회귀의-개념"><span class="header-section-number">22.1</span> 회귀의 개념</a></li>
+  <li><a href="#데이터-준비-및-분할" id="toc-데이터-준비-및-분할" class="nav-link" data-scroll-target="#데이터-준비-및-분할"><span class="header-section-number">22.2</span> 데이터 준비 및 분할</a></li>
+  <li><a href="#선형-회귀-linear-regression" id="toc-선형-회귀-linear-regression" class="nav-link" data-scroll-target="#선형-회귀-linear-regression"><span class="header-section-number">22.3</span> 선형 회귀 (Linear Regression)</a>
   <ul>
-  <li><a href="#회귀-모델-1" id="toc-회귀-모델-1" class="nav-link" data-scroll-target="#회귀-모델-1"><span class="header-section-number">22.1.1</span> 회귀 모델</a></li>
-  <li><a href="#회귀-vs-분류" id="toc-회귀-vs-분류" class="nav-link" data-scroll-target="#회귀-vs-분류"><span class="header-section-number">22.1.2</span> 회귀 vs 분류</a></li>
+  <li><a href="#선형-회귀-실습" id="toc-선형-회귀-실습" class="nav-link" data-scroll-target="#선형-회귀-실습"><span class="header-section-number">22.3.1</span> 선형 회귀 실습</a></li>
+  <li><a href="#선형-회귀의-한계" id="toc-선형-회귀의-한계" class="nav-link" data-scroll-target="#선형-회귀의-한계"><span class="header-section-number">22.3.2</span> 선형 회귀의 한계</a></li>
   </ul></li>
-  <li><a href="#선형-회귀" id="toc-선형-회귀" class="nav-link" data-scroll-target="#선형-회귀"><span class="header-section-number">22.2</span> 선형 회귀</a>
-  <ul>
-  <li><a href="#기본-개념" id="toc-기본-개념" class="nav-link" data-scroll-target="#기본-개념"><span class="header-section-number">22.2.1</span> 기본 개념</a>
-  <ul class="collapse">
-  <li><a href="#수식-형태" id="toc-수식-형태" class="nav-link" data-scroll-target="#수식-형태"><span class="header-section-number">22.2.1.1</span> 수식 형태</a></li>
-  </ul></li>
-  <li><a href="#선형-회귀의-가정" id="toc-선형-회귀의-가정" class="nav-link" data-scroll-target="#선형-회귀의-가정"><span class="header-section-number">22.2.2</span> 선형 회귀의 가정</a></li>
-  <li><a href="#선형-회귀-예제" id="toc-선형-회귀-예제" class="nav-link" data-scroll-target="#선형-회귀-예제"><span class="header-section-number">22.2.3</span> 선형 회귀 예제</a></li>
-  <li><a href="#선형-회귀의-한계" id="toc-선형-회귀의-한계" class="nav-link" data-scroll-target="#선형-회귀의-한계"><span class="header-section-number">22.2.4</span> 선형 회귀의 한계</a></li>
-  </ul></li>
-  <li><a href="#정규화-개념" id="toc-정규화-개념" class="nav-link" data-scroll-target="#정규화-개념"><span class="header-section-number">22.3</span> 정규화 개념</a>
-  <ul>
-  <li><a href="#왜-정규화가-필요한가" id="toc-왜-정규화가-필요한가" class="nav-link" data-scroll-target="#왜-정규화가-필요한가"><span class="header-section-number">22.3.1</span> 왜 정규화가 필요한가?</a></li>
-  <li><a href="#일반적인-손실-함수-구조" id="toc-일반적인-손실-함수-구조" class="nav-link" data-scroll-target="#일반적인-손실-함수-구조"><span class="header-section-number">22.3.2</span> 일반적인 손실 함수 구조</a></li>
-  </ul></li>
-  <li><a href="#ridge-회귀-l2-정규화" id="toc-ridge-회귀-l2-정규화" class="nav-link" data-scroll-target="#ridge-회귀-l2-정규화"><span class="header-section-number">22.4</span> Ridge 회귀 (L2 정규화)</a>
-  <ul>
-  <li><a href="#개념" id="toc-개념" class="nav-link" data-scroll-target="#개념"><span class="header-section-number">22.4.1</span> 개념</a></li>
-  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">22.4.2</span> 특징</a></li>
-  <li><a href="#ridge-예제" id="toc-ridge-예제" class="nav-link" data-scroll-target="#ridge-예제"><span class="header-section-number">22.4.3</span> Ridge 예제</a></li>
-  </ul></li>
-  <li><a href="#lasso-회귀-l1-정규화" id="toc-lasso-회귀-l1-정규화" class="nav-link" data-scroll-target="#lasso-회귀-l1-정규화"><span class="header-section-number">22.5</span> Lasso 회귀 (L1 정규화)</a>
-  <ul>
-  <li><a href="#개념-1" id="toc-개념-1" class="nav-link" data-scroll-target="#개념-1"><span class="header-section-number">22.5.1</span> 개념</a></li>
-  <li><a href="#특징-1" id="toc-특징-1" class="nav-link" data-scroll-target="#특징-1"><span class="header-section-number">22.5.2</span> 특징</a></li>
-  <li><a href="#lasso-예제" id="toc-lasso-예제" class="nav-link" data-scroll-target="#lasso-예제"><span class="header-section-number">22.5.3</span> Lasso 예제</a></li>
-  </ul></li>
-  <li><a href="#elasticnet-l1-l2" id="toc-elasticnet-l1-l2" class="nav-link" data-scroll-target="#elasticnet-l1-l2"><span class="header-section-number">22.6</span> ElasticNet (L1 + L2)</a>
-  <ul>
-  <li><a href="#개념-2" id="toc-개념-2" class="nav-link" data-scroll-target="#개념-2"><span class="header-section-number">22.6.1</span> 개념</a></li>
-  <li><a href="#하이퍼파라미터" id="toc-하이퍼파라미터" class="nav-link" data-scroll-target="#하이퍼파라미터"><span class="header-section-number">22.6.2</span> 하이퍼파라미터</a></li>
-  <li><a href="#elasticnet-예제" id="toc-elasticnet-예제" class="nav-link" data-scroll-target="#elasticnet-예제"><span class="header-section-number">22.6.3</span> ElasticNet 예제</a></li>
-  </ul></li>
-  <li><a href="#회귀-모델-비교-요약" id="toc-회귀-모델-비교-요약" class="nav-link" data-scroll-target="#회귀-모델-비교-요약"><span class="header-section-number">22.7</span> 회귀 모델 비교 요약</a></li>
-  <li><a href="#선택-가이드" id="toc-선택-가이드" class="nav-link" data-scroll-target="#선택-가이드"><span class="header-section-number">22.8</span> 선택 가이드</a></li>
-  <li><a href="#전처리-주의-사항" id="toc-전처리-주의-사항" class="nav-link" data-scroll-target="#전처리-주의-사항"><span class="header-section-number">22.9</span> 전처리 주의 사항</a></li>
+  <li><a href="#정규화regularization의-개념" id="toc-정규화regularization의-개념" class="nav-link" data-scroll-target="#정규화regularization의-개념"><span class="header-section-number">22.4</span> 정규화(Regularization)의 개념</a></li>
+  <li><a href="#ridge-회귀-l2-정규화" id="toc-ridge-회귀-l2-정규화" class="nav-link" data-scroll-target="#ridge-회귀-l2-정규화"><span class="header-section-number">22.5</span> Ridge 회귀 (L2 정규화)</a></li>
+  <li><a href="#lasso-회귀-l1-정규화" id="toc-lasso-회귀-l1-정규화" class="nav-link" data-scroll-target="#lasso-회귀-l1-정규화"><span class="header-section-number">22.6</span> Lasso 회귀 (L1 정규화)</a></li>
+  <li><a href="#elasticnet-l1-l2" id="toc-elasticnet-l1-l2" class="nav-link" data-scroll-target="#elasticnet-l1-l2"><span class="header-section-number">22.7</span> ElasticNet (L1 + L2)</a></li>
+  <li><a href="#회귀-모델-종합-비교" id="toc-회귀-모델-종합-비교" class="nav-link" data-scroll-target="#회귀-모델-종합-비교"><span class="header-section-number">22.8</span> 회귀 모델 종합 비교</a></li>
+  <li><a href="#모델-선택-가이드" id="toc-모델-선택-가이드" class="nav-link" data-scroll-target="#모델-선택-가이드"><span class="header-section-number">22.9</span> 모델 선택 가이드</a></li>
+  <li><a href="#하이퍼파라미터-튜닝" id="toc-하이퍼파라미터-튜닝" class="nav-link" data-scroll-target="#하이퍼파라미터-튜닝"><span class="header-section-number">22.10</span> 하이퍼파라미터 튜닝</a></li>
+  <li><a href="#전처리-주의사항" id="toc-전처리-주의사항" class="nav-link" data-scroll-target="#전처리-주의사항"><span class="header-section-number">22.11</span> 전처리 주의사항</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">22.12</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/04. 회귀 모델.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -476,249 +451,986 @@ window.Quarto = {
 </header>
 
 
-<section id="회귀-모델" class="level2" data-number="22.1">
-<h2 data-number="22.1" class="anchored" data-anchor-id="회귀-모델"><span class="header-section-number">22.1</span> 회귀 모델</h2>
-<section id="회귀-모델-1" class="level3" data-number="22.1.1">
-<h3 data-number="22.1.1" class="anchored" data-anchor-id="회귀-모델-1"><span class="header-section-number">22.1.1</span> 회귀 모델</h3>
-<p><strong>회귀 모델</strong>(Regression Models)은 입력 변수(X)와 <strong>연속형 타깃 변수(y)</strong> 사이의 관계를 학습하여 새로운 입력에 대한 <strong>수치값을 예측</strong>하는 모델이다.</p>
-<ul>
-<li>예측 대상이 수치형</li>
-<li>관계를 함수 형태로 모델링</li>
-</ul>
+<p>회귀 모델(Regression Models)은 입력 변수(X)와 연속형 타겟 변수(y) 사이의 관계를 학습하여 새로운 입력에 대한 수치값을 예측하는 지도 학습 모델이다. 예측 대상이 범주가 아닌 수치이며, 관계를 수학적 함수 형태로 모델링한다. 이 장에서는 선형 회귀부터 정규화 회귀(Ridge, Lasso, ElasticNet)까지 주요 회귀 모델의 원리와 실무 활용법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="182accd6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score, mean_absolute_error</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성과 타겟 준비</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"body_mass_g"</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">특성 변수:"</span>, X.columns.tolist())</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"타겟 변수: body_mass_g (연속형)"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">타겟 범위: </span><span class="sc">{</span>y<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.0f}</span><span class="ss">g ~ </span><span class="sc">{</span>y<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.0f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
+
+특성 변수: ['bill_length_mm', 'bill_depth_mm', 'flipper_length_mm']
+타겟 변수: body_mass_g (연속형)
+
+타겟 범위: 2700g ~ 6300g</code></pre>
+</div>
+</div>
+<section id="회귀의-개념" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="회귀의-개념"><span class="header-section-number">22.1</span> 회귀의 개념</h2>
+<p>회귀는 입력 변수와 출력 변수 간의 관계를 모델링하여 예측하는 기법이다.</p>
+<p><strong>회귀 vs 분류</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>구분</th>
+<th>회귀 (Regression)</th>
+<th>분류 (Classification)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>출력 타입</td>
+<td>연속형 (수치)</td>
+<td>범주형 (클래스)</td>
+</tr>
+<tr class="even">
+<td>예측값</td>
+<td>실수 값</td>
+<td>클래스 라벨 또는 확률</td>
+</tr>
+<tr class="odd">
+<td>예시</td>
+<td>체중, 가격, 온도</td>
+<td>종, 합격/불합격, 질병 유무</td>
+</tr>
+<tr class="even">
+<td>평가 지표</td>
+<td>MSE, MAE, R²</td>
+<td>정확도, 정밀도, 재현율</td>
+</tr>
+<tr class="odd">
+<td>대표 모델</td>
+<td>선형 회귀, Ridge, Lasso</td>
+<td>로지스틱 회귀, 결정 트리</td>
+</tr>
+</tbody>
+</table>
+<p><strong>회귀 문제의 예</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>분야</th>
+<th>입력 변수</th>
+<th>출력 변수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>부동산</td>
+<td>면적, 방 개수, 위치</td>
+<td>주택 가격</td>
+</tr>
+<tr class="even">
+<td>의료</td>
+<td>나이, BMI, 혈압</td>
+<td>혈당 수치</td>
+</tr>
+<tr class="odd">
+<td>마케팅</td>
+<td>광고비, 계절, 프로모션</td>
+<td>매출액</td>
+</tr>
+<tr class="even">
+<td>생물학</td>
+<td>부리 길이, 날개 길이</td>
+<td>체중</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="회귀-vs-분류" class="level3" data-number="22.1.2">
-<h3 data-number="22.1.2" class="anchored" data-anchor-id="회귀-vs-분류"><span class="header-section-number">22.1.2</span> 회귀 vs 분류</h3>
-<ul>
-<li><p>회귀</p>
-<ul>
-<li>출력: 연속형 값</li>
-<li>예: 체중 예측, 매출 예측</li>
-</ul></li>
-<li><p>분류</p>
-<ul>
-<li>출력: 범주</li>
-<li>예: 종 분류, 합격/불합격</li>
-</ul></li>
-</ul>
+<section id="데이터-준비-및-분할" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="데이터-준비-및-분할"><span class="header-section-number">22.2</span> 데이터 준비 및 분할</h2>
+<p><strong>예제: 학습/테스트 분할</strong></p>
+<div id="5a01958d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 데이터 분할 ==="</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"학습 데이터: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 데이터: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 타겟 분포 확인</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 타겟 분포 ==="</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"학습셋 평균: </span><span class="sc">{</span>y_train<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">g, 표준편차: </span><span class="sc">{</span>y_train<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">g"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트셋 평균: </span><span class="sc">{</span>y_test<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">g, 표준편차: </span><span class="sc">{</span>y_test<span class="sc">.</span>std()<span class="sc">:.2f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 데이터 분할 ===
+학습 데이터: (266, 3)
+테스트 데이터: (67, 3)
+
+=== 타겟 분포 ===
+학습셋 평균: 4214.76g, 표준편차: 807.92g
+테스트셋 평균: 4176.49g, 표준편차: 799.68g</code></pre>
+</div>
+</div>
 </section>
-</section>
-<section id="선형-회귀" class="level2" data-number="22.2">
-<h2 data-number="22.2" class="anchored" data-anchor-id="선형-회귀"><span class="header-section-number">22.2</span> 선형 회귀</h2>
-<section id="기본-개념" class="level3" data-number="22.2.1">
-<h3 data-number="22.2.1" class="anchored" data-anchor-id="기본-개념"><span class="header-section-number">22.2.1</span> 기본 개념</h3>
-<p>선형 회귀(Linear Regression)는 입력 변수와 출력 변수 사이의 관계를 <strong>선형 결합</strong>으로 표현한다.</p>
-<section id="수식-형태" class="level4" data-number="22.2.1.1">
-<h4 data-number="22.2.1.1" class="anchored" data-anchor-id="수식-형태"><span class="header-section-number">22.2.1.1</span> 수식 형태</h4>
+<section id="선형-회귀-linear-regression" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="선형-회귀-linear-regression"><span class="header-section-number">22.3</span> 선형 회귀 (Linear Regression)</h2>
+<p>선형 회귀는 입력 변수와 출력 변수 사이의 관계를 선형 결합으로 표현하는 가장 기본적인 회귀 모델이다.</p>
+<p><strong>선형 회귀 수식</strong></p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 \]</span></p>
-<ul>
-<li><span class="math inline">\(\beta\)</span>: 회귀 계수</li>
-<li><span class="math inline">\(\varepsilon\)</span>: 오차항</li>
-</ul>
-</section>
-</section>
-<section id="선형-회귀의-가정" class="level3" data-number="22.2.2">
-<h3 data-number="22.2.2" class="anchored" data-anchor-id="선형-회귀의-가정"><span class="header-section-number">22.2.2</span> 선형 회귀의 가정</h3>
-<ul>
-<li>선형성</li>
-<li>독립성</li>
-<li>등분산성</li>
-<li>정규성 (오차)</li>
-</ul>
-<p>현실 데이터에서는 <strong>완벽히 만족하지 않는 경우가 많음</strong></p>
-</section>
-<section id="선형-회귀-예제" class="level3" data-number="22.2.3">
-<h3 data-number="22.2.3" class="anchored" data-anchor-id="선형-회귀-예제"><span class="header-section-number">22.2.3</span> 선형 회귀 예제</h3>
-<div id="6be9c535" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"body_mass_g"</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>model.coef_, model.intercept_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>(array([ 3.85768347, 10.05813347, 50.24725463]),
- np.float64(-6227.688410615796))</code></pre>
+<p>여기서: - <span class="math inline">\(y\)</span>: 타겟 변수 - <span class="math inline">\(x_i\)</span>: 입력 변수 - <span class="math inline">\(\beta_0\)</span>: 절편 (intercept) - <span class="math inline">\(\beta_i\)</span>: 회귀 계수 (coefficient) - <span class="math inline">\(\varepsilon\)</span>: 오차항</p>
+<p><strong>선형 회귀의 가정</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>가정</th>
+<th>설명</th>
+<th>확인 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>선형성</td>
+<td>X와 y가 선형 관계</td>
+<td>잔차 플롯</td>
+</tr>
+<tr class="even">
+<td>독립성</td>
+<td>관측치들이 서로 독립</td>
+<td>실험 설계 확인</td>
+</tr>
+<tr class="odd">
+<td>등분산성</td>
+<td>오차의 분산이 일정</td>
+<td>잔차 플롯</td>
+</tr>
+<tr class="even">
+<td>정규성</td>
+<td>오차가 정규분포를 따름</td>
+<td>Q-Q plot, 히스토그램</td>
+</tr>
+<tr class="odd">
+<td>다중공선성 없음</td>
+<td>독립변수들이 서로 독립</td>
+<td>VIF, 상관행렬</td>
+</tr>
+</tbody>
+</table>
+<p><strong>현실에서는 완벽히 만족하지 않는 경우가 많지만, 어느 정도 근사하면 사용 가능하다.</strong></p>
+<section id="선형-회귀-실습" class="level3" data-number="22.3.1">
+<h3 data-number="22.3.1" class="anchored" data-anchor-id="선형-회귀-실습"><span class="header-section-number">22.3.1</span> 선형 회귀 실습</h3>
+<p><strong>예제: 선형 회귀 학습</strong></p>
+<div id="63db4ef8" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 생성 및 학습</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>lr.fit(X_train, y_train)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 파라미터 확인</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 선형 회귀 계수 ==="</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Coefficient'</span>: lr.coef_</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">'Coefficient'</span>, key<span class="op">=</span><span class="bu">abs</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef_df)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">절편 (intercept): </span><span class="sc">{</span>lr<span class="sc">.</span>intercept_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>y_pred_train <span class="op">=</span> lr.predict(X_train)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>y_pred_test <span class="op">=</span> lr.predict(X_test)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 모델 성능 ==="</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"학습 R²: </span><span class="sc">{</span>r2_score(y_train, y_pred_train)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>r2_score(y_test, y_pred_test)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, y_pred_test))<span class="sc">:.2f}</span><span class="ss">g"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 MAE: </span><span class="sc">{</span>mean_absolute_error(y_test, y_pred_test)<span class="sc">:.2f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 선형 회귀 계수 ===
+             Feature  Coefficient
+2  flipper_length_mm    50.247255
+1      bill_depth_mm    10.058133
+0     bill_length_mm     3.857683
+
+절편 (intercept): -6227.69
+
+=== 모델 성능 ===
+학습 R²: 0.7551
+테스트 R²: 0.7981
+테스트 RMSE: 356.65g
+테스트 MAE: 289.69g</code></pre>
 </div>
 </div>
+<p><strong>예제: 회귀 계수 시각화</strong></p>
+<div id="37342055" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 시각화</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.barh(coef_df[<span class="st">'Feature'</span>], coef_df[<span class="st">'Coefficient'</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Coefficient Value'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Linear Regression Coefficients'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-5-output-1.png" width="949" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>예제: 예측 vs 실제값</strong></p>
+<div id="f3bd51b6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 vs 실제값 플롯</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(y_test, y_pred_test, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.plot([y_test.<span class="bu">min</span>(), y_test.<span class="bu">max</span>()], [y_test.<span class="bu">min</span>(), y_test.<span class="bu">max</span>()], </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">'r--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Perfect Prediction'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Actual Body Mass (g)'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Body Mass (g)'</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Linear Regression: Actual vs Predicted'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 상관계수</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> np.corrcoef(y_test, y_pred_test)[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"예측-실제 상관계수: </span><span class="sc">{</span>corr<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-6-output-1.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>예측-실제 상관계수: 0.8943</code></pre>
+</div>
+</div>
+<p><strong>예제: 잔차 분석</strong></p>
+<div id="eeb71f16" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 계산</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_test <span class="op">-</span> y_pred_test</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 플롯</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">5</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 vs 예측값</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(y_pred_test, residuals, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Predicted Values'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Residual Plot'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 히스토그램</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(residuals, bins<span class="op">=</span><span class="dv">20</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axvline(x<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Residual Distribution'</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q plot</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>stats.probplot(residuals, dist<span class="op">=</span><span class="st">"norm"</span>, plot<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="st">'Q-Q Plot of Residuals'</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-7-output-1.png" width="1718" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="선형-회귀의-한계" class="level3" data-number="22.2.4">
-<h3 data-number="22.2.4" class="anchored" data-anchor-id="선형-회귀의-한계"><span class="header-section-number">22.2.4</span> 선형 회귀의 한계</h3>
-<ul>
-<li>다중공선성 문제</li>
-<li>과적합 위험</li>
-<li>변수 수가 많을수록 불안정</li>
-</ul>
-<p>이를 해결하기 위한 방법이 <strong>정규화 회귀</strong></p>
+<section id="선형-회귀의-한계" class="level3" data-number="22.3.2">
+<h3 data-number="22.3.2" class="anchored" data-anchor-id="선형-회귀의-한계"><span class="header-section-number">22.3.2</span> 선형 회귀의 한계</h3>
+<p><strong>선형 회귀의 문제점</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>설명</th>
+<th>증상</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>다중공선성</td>
+<td>독립변수 간 높은 상관</td>
+<td>계수가 불안정, 부호 반전</td>
+</tr>
+<tr class="even">
+<td>과적합</td>
+<td>학습 데이터에 과도 최적화</td>
+<td>학습 성능 &gt;&gt; 테스트 성능</td>
+</tr>
+<tr class="odd">
+<td>고차원 문제</td>
+<td>변수가 샘플보다 많음</td>
+<td>해가 무수히 많음</td>
+</tr>
+<tr class="even">
+<td>이상치 민감</td>
+<td>극단값에 크게 영향받음</td>
+<td>계수가 왜곡됨</td>
+</tr>
+</tbody>
+</table>
+<p>이러한 문제를 해결하기 위해 <strong>정규화 회귀(Regularization)</strong>를 사용한다.</p>
 </section>
 </section>
-<section id="정규화-개념" class="level2" data-number="22.3">
-<h2 data-number="22.3" class="anchored" data-anchor-id="정규화-개념"><span class="header-section-number">22.3</span> 정규화 개념</h2>
-<section id="왜-정규화가-필요한가" class="level3" data-number="22.3.1">
-<h3 data-number="22.3.1" class="anchored" data-anchor-id="왜-정규화가-필요한가"><span class="header-section-number">22.3.1</span> 왜 정규화가 필요한가?</h3>
-<p>정규화(Regularization)가 필요한 이유는 다음과 같다.</p>
+<section id="정규화regularization의-개념" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="정규화regularization의-개념"><span class="header-section-number">22.4</span> 정규화(Regularization)의 개념</h2>
+<p>정규화는 모델의 복잡도를 제한하여 과적합을 방지하는 기법이다.</p>
+<p><strong>정규화가 필요한 이유</strong></p>
 <ul>
 <li>계수가 너무 커지는 것을 방지</li>
-<li>불필요한 변수 영향 축소</li>
+<li>불필요한 변수의 영향 축소</li>
 <li>과적합 감소</li>
+<li>모델의 일반화 성능 향상</li>
 </ul>
-<p><strong>손실 함수에 패널티 항을 추가</strong></p>
-</section>
-<section id="일반적인-손실-함수-구조" class="level3" data-number="22.3.2">
-<h3 data-number="22.3.2" class="anchored" data-anchor-id="일반적인-손실-함수-구조"><span class="header-section-number">22.3.2</span> 일반적인 손실 함수 구조</h3>
+<p><strong>정규화 손실 함수</strong></p>
 <p><span class="math display">\[
-\text{Loss} = \text{오차} + \lambda \times \text{패널티}
+\text{Loss} = \text{MSE} + \lambda \times \text{Penalty}
 \]</span></p>
+<p>여기서: - MSE: 평균제곱오차 (예측 오차) - λ (lambda 또는 alpha): 규제 강도 - Penalty: L1, L2, 또는 둘의 조합</p>
+<p><strong>λ (규제 강도) 효과</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>λ 값</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>λ = 0</td>
+<td>일반 선형 회귀 (규제 없음)</td>
+</tr>
+<tr class="even">
+<td>λ 작음</td>
+<td>약한 규제, 계수 조금 축소</td>
+</tr>
+<tr class="odd">
+<td>λ 적절</td>
+<td>최적의 편향-분산 균형</td>
+</tr>
+<tr class="even">
+<td>λ 큼</td>
+<td>강한 규제, 과소적합 위험</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ridge-회귀-l2-정규화" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="ridge-회귀-l2-정규화"><span class="header-section-number">22.5</span> Ridge 회귀 (L2 정규화)</h2>
+<p>Ridge 회귀는 계수의 제곱합(L2 norm)에 패널티를 부여하는 방법이다.</p>
+<p><strong>Ridge 손실 함수</strong></p>
+<p><span class="math display">\[
+\text{Loss}_{\text{Ridge}} = \text{MSE} + \alpha \sum_{i=1}^{p} \beta_i^2
+\]</span></p>
+<p><strong>Ridge의 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>계수 축소</td>
+<td>모든 계수를 0에 가깝게 만듦</td>
+</tr>
+<tr class="even">
+<td>변수 유지</td>
+<td>계수를 0으로 만들지는 않음</td>
+</tr>
+<tr class="odd">
+<td>다중공선성 완화</td>
+<td>상관 높은 변수들 안정화</td>
+</tr>
+<tr class="even">
+<td>해석</td>
+<td>모든 변수가 기여</td>
+</tr>
+<tr class="odd">
+<td>적용 상황</td>
+<td>변수 간 상관 높을 때</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: Ridge 회귀</strong></p>
+<div id="f137f360" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 표준화 (Ridge는 스케일에 민감)</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>X_test_scaled <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ridge 회귀</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ridge.fit(X_train_scaled, y_train)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 비교</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Ridge vs 선형 회귀 계수 비교 ==="</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear Regression'</span>: lr.coef_,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ridge (α=1.0)'</span>: ridge.coef_</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(comparison_df.<span class="bu">round</span>(<span class="dv">2</span>))</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 및 평가</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>y_pred_ridge <span class="op">=</span> ridge.predict(X_test_scaled)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== Ridge 성능 ==="</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>r2_score(y_test, y_pred_ridge)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, y_pred_ridge))<span class="sc">:.2f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Ridge vs 선형 회귀 계수 비교 ===
+             Feature  Linear Regression  Ridge (α=1.0)
+0     bill_length_mm               3.86          24.89
+1      bill_depth_mm              10.06          16.44
+2  flipper_length_mm              50.25         690.57
+
+=== Ridge 성능 ===
+테스트 R²: 0.7977
+테스트 RMSE: 356.98g</code></pre>
+</div>
+</div>
+<p><strong>예제: Alpha 값에 따른 계수 변화</strong></p>
+<div id="34338f7d" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 alpha 값으로 실험</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> []</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> alpha <span class="kw">in</span> alphas:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    ridge_temp <span class="op">=</span> Ridge(alpha<span class="op">=</span>alpha)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ridge_temp.fit(X_train_scaled, y_train)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    coefs.append(ridge_temp.coef_)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 변화 시각화</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>coefs_df <span class="op">=</span> pd.DataFrame(coefs, columns<span class="op">=</span>X.columns, index<span class="op">=</span>[<span class="ss">f'α=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> a <span class="kw">in</span> alphas])</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> coefs_df.columns:</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(alphas)), coefs_df[col], marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span>col, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Regularization Strength'</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Coefficient Value'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Ridge: Coefficient Path'</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">range</span>(<span class="bu">len</span>(alphas)), [<span class="ss">f'α=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> a <span class="kw">in</span> alphas])</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-9-output-1.png" width="1142" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lasso-회귀-l1-정규화" class="level2" data-number="22.6">
+<h2 data-number="22.6" class="anchored" data-anchor-id="lasso-회귀-l1-정규화"><span class="header-section-number">22.6</span> Lasso 회귀 (L1 정규화)</h2>
+<p>Lasso 회귀는 계수의 절댓값 합(L1 norm)에 패널티를 부여하며, 일부 계수를 정확히 0으로 만든다.</p>
+<p><strong>Lasso 손실 함수</strong></p>
+<p><span class="math display">\[
+\text{Loss}_{\text{Lasso}} = \text{MSE} + \alpha \sum_{i=1}^{p} |\beta_i|
+\]</span></p>
+<p><strong>Lasso의 특징</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>특징</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>계수 0화</td>
+<td>일부 계수를 정확히 0으로 만듦</td>
+</tr>
+<tr class="even">
+<td>자동 변수 선택</td>
+<td>중요 변수만 남김</td>
+</tr>
+<tr class="odd">
+<td>희소 모델</td>
+<td>적은 변수로 설명</td>
+</tr>
+<tr class="even">
+<td>해석 용이</td>
+<td>선택된 변수만 해석</td>
+</tr>
+<tr class="odd">
+<td>적용 상황</td>
+<td>변수 선택이 필요할 때</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: Lasso 회귀</strong></p>
+<div id="f62d6865" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasso 회귀</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>lasso <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>lasso.fit(X_train_scaled, y_train)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 비교</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Lasso vs Ridge vs 선형 회귀 계수 비교 ==="</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear Regression'</span>: lr.coef_,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ridge (α=1.0)'</span>: ridge.coef_,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Lasso (α=0.1)'</span>: lasso.coef_</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(comparison_df.<span class="bu">round</span>(<span class="dv">2</span>))</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 0이 아닌 계수 개수</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>n_nonzero <span class="op">=</span> np.<span class="bu">sum</span>(lasso.coef_ <span class="op">!=</span> <span class="dv">0</span>)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Lasso가 선택한 변수 수: </span><span class="sc">{</span>n_nonzero<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="bu">len</span>(X.columns)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 및 평가</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>y_pred_lasso <span class="op">=</span> lasso.predict(X_test_scaled)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== Lasso 성능 ==="</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>r2_score(y_test, y_pred_lasso)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, y_pred_lasso))<span class="sc">:.2f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== Lasso vs Ridge vs 선형 회귀 계수 비교 ===
+             Feature  Linear Regression  Ridge (α=1.0)  Lasso (α=0.1)
+0     bill_length_mm               3.86          24.89          20.83
+1      bill_depth_mm              10.06          16.44          19.63
+2  flipper_length_mm              50.25         690.57         697.66
+
+Lasso가 선택한 변수 수: 3/3
+
+=== Lasso 성능 ===
+테스트 R²: 0.7980
+테스트 RMSE: 356.68g</code></pre>
+</div>
+</div>
+<p><strong>예제: Lasso 변수 선택 시각화</strong></p>
+<div id="7b835f14" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 alpha 값에서 변수 선택</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>alphas_lasso <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">50.0</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>coefs_lasso <span class="op">=</span> []</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>n_features <span class="op">=</span> []</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> alpha <span class="kw">in</span> alphas_lasso:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    lasso_temp <span class="op">=</span> Lasso(alpha<span class="op">=</span>alpha, max_iter<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    lasso_temp.fit(X_train_scaled, y_train)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    coefs_lasso.append(lasso_temp.coef_)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    n_features.append(np.<span class="bu">sum</span>(lasso_temp.coef_ <span class="op">!=</span> <span class="dv">0</span>))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 경로 시각화</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>coefs_lasso_df <span class="op">=</span> pd.DataFrame(coefs_lasso, columns<span class="op">=</span>X.columns)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> coefs_lasso_df.columns:</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(alphas_lasso)), coefs_lasso_df[col], marker<span class="op">=</span><span class="st">'o'</span>, label<span class="op">=</span>col, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Regularization Strength'</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Coefficient Value'</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Lasso: Coefficient Path (Automatic Feature Selection)'</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">range</span>(<span class="bu">len</span>(alphas_lasso)), [<span class="ss">f'α=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ch">\n</span><span class="ss">(</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">개 변수)'</span> <span class="cf">for</span> a, n <span class="kw">in</span> <span class="bu">zip</span>(alphas_lasso, n_features)])</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-11-output-1.png" width="1142" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="elasticnet-l1-l2" class="level2" data-number="22.7">
+<h2 data-number="22.7" class="anchored" data-anchor-id="elasticnet-l1-l2"><span class="header-section-number">22.7</span> ElasticNet (L1 + L2)</h2>
+<p>ElasticNet은 Ridge와 Lasso의 패널티를 결합한 방법이다.</p>
+<p><strong>ElasticNet 손실 함수</strong></p>
+<p><span class="math display">\[
+\text{Loss}_{\text{ElasticNet}} = \text{MSE} + \alpha \rho \sum_{i=1}^{p} |\beta_i| + \alpha \frac{1-\rho}{2} \sum_{i=1}^{p} \beta_i^2
+\]</span></p>
+<p>여기서: - α (alpha): 전체 규제 강도 - ρ (l1_ratio): L1 비율 (0~1)</p>
+<p><strong>ElasticNet 하이퍼파라미터</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>파라미터</th>
+<th>범위</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>alpha</td>
+<td>0 ~ ∞</td>
+<td>전체 규제 강도</td>
+</tr>
+<tr class="even">
+<td>l1_ratio = 0</td>
+<td>-</td>
+<td>Ridge와 동일</td>
+</tr>
+<tr class="odd">
+<td>l1_ratio = 1</td>
+<td>-</td>
+<td>Lasso와 동일</td>
+</tr>
+<tr class="even">
+<td>l1_ratio = 0.5</td>
+<td>-</td>
+<td>균형 잡힌 규제</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ElasticNet의 특징</strong></p>
 <ul>
-<li><span class="math inline">\(\lambda\)</span>: 규제 강도</li>
-<li>값이 클수록 규제 강함</li>
+<li>Ridge와 Lasso의 장점 결합</li>
+<li>상관 높은 변수들을 함께 선택/제거</li>
+<li>고차원 데이터에 적합</li>
+<li>변수 수 &gt; 샘플 수인 경우 유용</li>
 </ul>
+<p><strong>예제: ElasticNet</strong></p>
+<div id="c185df22" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> ElasticNet</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ElasticNet</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>elastic <span class="op">=</span> ElasticNet(alpha<span class="op">=</span><span class="fl">0.1</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>elastic.fit(X_train_scaled, y_train)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 비교</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 모든 모델 계수 비교 ==="</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>comparison_final <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear'</span>: lr.coef_,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ridge'</span>: ridge.coef_,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Lasso'</span>: lasso.coef_,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ElasticNet'</span>: elastic.coef_</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(comparison_final.<span class="bu">round</span>(<span class="dv">2</span>))</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 및 평가</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>y_pred_elastic <span class="op">=</span> elastic.predict(X_test_scaled)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== ElasticNet 성능 ==="</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>r2_score(y_test, y_pred_elastic)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, y_pred_elastic))<span class="sc">:.2f}</span><span class="ss">g"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 모든 모델 계수 비교 ===
+             Feature  Linear   Ridge   Lasso  ElasticNet
+0     bill_length_mm    3.86   24.89   20.83       64.22
+1      bill_depth_mm   10.06   16.44   19.63      -17.30
+2  flipper_length_mm   50.25  690.57  697.66      616.16
+
+=== ElasticNet 성능 ===
+테스트 R²: 0.7891
+테스트 RMSE: 364.47g</code></pre>
+</div>
+</div>
 </section>
+<section id="회귀-모델-종합-비교" class="level2" data-number="22.8">
+<h2 data-number="22.8" class="anchored" data-anchor-id="회귀-모델-종합-비교"><span class="header-section-number">22.8</span> 회귀 모델 종합 비교</h2>
+<p><strong>모델 특성 비교</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>모델</th>
+<th>패널티</th>
+<th>변수 선택</th>
+<th>계수 크기</th>
+<th>다중공선성</th>
+<th>적용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear Regression</td>
+<td>없음</td>
+<td>✗</td>
+<td>제한 없음</td>
+<td>취약</td>
+<td>기준 모델</td>
+</tr>
+<tr class="even">
+<td>Ridge (L2)</td>
+<td>제곱합</td>
+<td>✗</td>
+<td>축소</td>
+<td>완화</td>
+<td>상관 높은 변수</td>
+</tr>
+<tr class="odd">
+<td>Lasso (L1)</td>
+<td>절댓값</td>
+<td>✓</td>
+<td>0 포함</td>
+<td>보통</td>
+<td>변수 선택 필요</td>
+</tr>
+<tr class="even">
+<td>ElasticNet (L1+L2)</td>
+<td>혼합</td>
+<td>✓</td>
+<td>0 포함</td>
+<td>완화</td>
+<td>고차원, 복합 상황</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 모든 모델 성능 비교</strong></p>
+<div id="35a09b3b" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 모델 평가</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear Regression'</span>: lr,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ridge'</span>: ridge,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Lasso'</span>: lasso,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ElasticNet'</span>: elastic</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> []</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> models.items():</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">'Linear Regression'</span>:</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> model.predict(X_test_scaled)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    results.append({</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Model'</span>: name,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'R²'</span>: r2_score(y_test, pred),</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RMSE'</span>: np.sqrt(mean_squared_error(y_test, pred)),</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MAE'</span>: mean_absolute_error(y_test, pred),</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Non-zero Coef'</span>: np.<span class="bu">sum</span>(model.coef_ <span class="op">!=</span> <span class="dv">0</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(results)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 모델 성능 비교 ==="</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_df.<span class="bu">round</span>(<span class="dv">4</span>))</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="co"># R² 비교</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].bar(results_df[<span class="st">'Model'</span>], results_df[<span class="st">'R²'</span>])</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'R² Score'</span>)</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Model Comparison: R²'</span>)</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels(results_df[<span class="st">'Model'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE 비교</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar(results_df[<span class="st">'Model'</span>], results_df[<span class="st">'RMSE'</span>])</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'RMSE'</span>)</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Model Comparison: RMSE'</span>)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels(results_df[<span class="st">'Model'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 모델 성능 비교 ===
+               Model      R²      RMSE       MAE  Non-zero Coef
+0  Linear Regression  0.7981  356.6518  289.6890              3
+1              Ridge  0.7977  356.9827  290.2179              3
+2              Lasso  0.7980  356.6800  289.7059              3
+3         ElasticNet  0.7891  364.4700  297.0190              3</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-13-output-2.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="ridge-회귀-l2-정규화" class="level2" data-number="22.4">
-<h2 data-number="22.4" class="anchored" data-anchor-id="ridge-회귀-l2-정규화"><span class="header-section-number">22.4</span> Ridge 회귀 (L2 정규화)</h2>
-<section id="개념" class="level3" data-number="22.4.1">
-<h3 data-number="22.4.1" class="anchored" data-anchor-id="개념"><span class="header-section-number">22.4.1</span> 개념</h3>
-<p>계수의 <strong>제곱합(L2)</strong>에 패널티 부여하여 모든 변수를 유지하되 계수 크기를 줄이는 방식이다.</p>
+<section id="모델-선택-가이드" class="level2" data-number="22.9">
+<h2 data-number="22.9" class="anchored" data-anchor-id="모델-선택-가이드"><span class="header-section-number">22.9</span> 모델 선택 가이드</h2>
+<p><strong>상황별 모델 선택</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>권장 모델</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>변수 수 적고 해석 중요</td>
+<td>Linear Regression</td>
+<td>단순하고 명확</td>
+</tr>
+<tr class="even">
+<td>변수 간 상관 높음</td>
+<td>Ridge</td>
+<td>다중공선성 완화</td>
+</tr>
+<tr class="odd">
+<td>변수 선택 필요</td>
+<td>Lasso</td>
+<td>자동 변수 선택</td>
+</tr>
+<tr class="even">
+<td>고차원 데이터 (p &gt; n)</td>
+<td>ElasticNet</td>
+<td>안정적 변수 선택</td>
+</tr>
+<tr class="odd">
+<td>예측만 중요</td>
+<td>교차 검증으로 선택</td>
+<td>성능 기준</td>
+</tr>
+</tbody>
+</table>
+<p><strong>의사결정 흐름</strong></p>
+<pre><code>변수 선택이 필요한가?
+├─ Yes → 변수가 매우 많은가?
+│         ├─ Yes → ElasticNet
+│         └─ No → Lasso
+└─ No → 다중공선성이 문제인가?
+          ├─ Yes → Ridge
+          └─ No → Linear Regression</code></pre>
 </section>
-<section id="특징" class="level3" data-number="22.4.2">
-<h3 data-number="22.4.2" class="anchored" data-anchor-id="특징"><span class="header-section-number">22.4.2</span> 특징</h3>
+<section id="하이퍼파라미터-튜닝" class="level2" data-number="22.10">
+<h2 data-number="22.10" class="anchored" data-anchor-id="하이퍼파라미터-튜닝"><span class="header-section-number">22.10</span> 하이퍼파라미터 튜닝</h2>
+<p><strong>예제: GridSearchCV로 최적 Alpha 찾기</strong></p>
+<div id="184ba040" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프라인 구성 (스케일링 + 모델)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, Ridge())</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 하이퍼파라미터 그리드</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'model__alpha'</span>: [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># GridSearchCV</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>grid_search <span class="op">=</span> GridSearchCV(</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'r2'</span>, n_jobs<span class="op">=-</span><span class="dv">1</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>grid_search.fit(X_train, y_train)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== GridSearchCV 결과 ==="</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 alpha: </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_params_[<span class="st">'model__alpha'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 R² (CV): </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_score_<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 테스트 성능</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>best_model <span class="op">=</span> grid_search.best_estimator_</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>y_pred_best <span class="op">=</span> best_model.predict(X_test)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>r2_score(y_test, y_pred_best)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Alpha에 따른 성능 변화</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>results_cv <span class="op">=</span> pd.DataFrame(grid_search.cv_results_)</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>plt.semilogx(results_cv[<span class="st">'param_model__alpha'</span>], results_cv[<span class="st">'mean_test_score'</span>], </span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>             marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Alpha (log scale)'</span>)</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Mean R² (5-fold CV)'</span>)</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Ridge: Alpha Tuning'</span>)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== GridSearchCV 결과 ===
+최적 alpha: 1.0
+최적 R² (CV): 0.7450
+테스트 R²: 0.7977</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04. 회귀 모델_files/figure-html/cell-14-output-2.png" width="950" height="564" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="전처리-주의사항" class="level2" data-number="22.11">
+<h2 data-number="22.11" class="anchored" data-anchor-id="전처리-주의사항"><span class="header-section-number">22.11</span> 전처리 주의사항</h2>
+<p><strong>정규화 회귀 사용 시 필수 사항</strong></p>
 <ul>
-<li>다중공선성 완화</li>
-<li>변수 선택은 하지 않음</li>
-<li>계수를 0에 가깝게 만듦</li>
+<li>✓ <strong>반드시 표준화</strong>: Ridge, Lasso, ElasticNet은 스케일에 민감</li>
+<li>✓ <strong>파이프라인 사용</strong>: 전처리와 모델을 하나로 묶기</li>
+<li>✓ <strong>테스트셋 분리</strong>: 전처리는 학습셋 기준으로</li>
+<li>✓ <strong>교차 검증</strong>: 하이퍼파라미터 튜닝 시 필수</li>
 </ul>
+<p><strong>예제: 올바른 파이프라인</strong></p>
+<div id="0f2f1d7c" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 최종 파이프라인</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>final_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>))</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>final_pipeline.fit(X_train, y_train)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 파이프라인 최종 성능 ==="</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"학습 R²: </span><span class="sc">{</span>final_pipeline<span class="sc">.</span>score(X_train, y_train)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 R²: </span><span class="sc">{</span>final_pipeline<span class="sc">.</span>score(X_test, y_test)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 파이프라인 최종 성능 ===
+학습 R²: 0.7551
+테스트 R²: 0.7977</code></pre>
+</div>
+</div>
 </section>
-<section id="ridge-예제" class="level3" data-number="22.4.3">
-<h3 data-number="22.4.3" class="anchored" data-anchor-id="ridge-예제"><span class="header-section-number">22.4.3</span> Ridge 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ridge.fit(X_train, y_train)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ridge.coef_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="lasso-회귀-l1-정규화" class="level2" data-number="22.5">
-<h2 data-number="22.5" class="anchored" data-anchor-id="lasso-회귀-l1-정규화"><span class="header-section-number">22.5</span> Lasso 회귀 (L1 정규화)</h2>
-<section id="개념-1" class="level3" data-number="22.5.1">
-<h3 data-number="22.5.1" class="anchored" data-anchor-id="개념-1"><span class="header-section-number">22.5.1</span> 개념</h3>
-<p>계수의 <strong>절댓값 합(L1)</strong>에 패널티 부여 일부 계수를 <strong>0으로 만든다</strong>.</p>
-</section>
-<section id="특징-1" class="level3" data-number="22.5.2">
-<h3 data-number="22.5.2" class="anchored" data-anchor-id="특징-1"><span class="header-section-number">22.5.2</span> 특징</h3>
+<section id="요약" class="level2" data-number="22.12">
+<h2 data-number="22.12" class="anchored" data-anchor-id="요약"><span class="header-section-number">22.12</span> 요약</h2>
+<p>이 장에서는 연속형 예측을 위한 회귀 모델을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>회귀 모델 핵심</strong></p>
 <ul>
-<li>자동 변수 선택 효과</li>
-<li>해석이 쉬움</li>
-<li>변수 수가 많을 때 유리</li>
+<li><strong>선형 회귀</strong>: 기준 모델, 규제 없음</li>
+<li><strong>Ridge</strong>: L2 정규화, 다중공선성 완화, 모든 변수 유지</li>
+<li><strong>Lasso</strong>: L1 정규화, 자동 변수 선택, 희소 모델</li>
+<li><strong>ElasticNet</strong>: L1+L2, 균형 잡힌 접근, 고차원 데이터</li>
 </ul>
-</section>
-<section id="lasso-예제" class="level3" data-number="22.5.3">
-<h3 data-number="22.5.3" class="anchored" data-anchor-id="lasso-예제"><span class="header-section-number">22.5.3</span> Lasso 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lasso <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>lasso.fit(X_train, y_train)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>lasso.coef_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="elasticnet-l1-l2" class="level2" data-number="22.6">
-<h2 data-number="22.6" class="anchored" data-anchor-id="elasticnet-l1-l2"><span class="header-section-number">22.6</span> ElasticNet (L1 + L2)</h2>
-<section id="개념-2" class="level3" data-number="22.6.1">
-<h3 data-number="22.6.1" class="anchored" data-anchor-id="개념-2"><span class="header-section-number">22.6.1</span> 개념</h3>
-<p>Ridge + Lasso의 혼합 방법으로 두 패널티의 장점 결합한 형태이다.</p>
-</section>
-<section id="하이퍼파라미터" class="level3" data-number="22.6.2">
-<h3 data-number="22.6.2" class="anchored" data-anchor-id="하이퍼파라미터"><span class="header-section-number">22.6.2</span> 하이퍼파라미터</h3>
-<ul>
-<li>alpha: 전체 규제 강도</li>
-<li>l1_ratio: L1 비율</li>
+<p><strong>실무 체크리스트</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">데이터 표준화 수행 (정규화 회귀 필수)</label></li>
+<li><label><input type="checkbox">적절한 모델 선택 (목적에 맞게)</label></li>
+<li><label><input type="checkbox">하이퍼파라미터 튜닝 (GridSearchCV)</label></li>
+<li><label><input type="checkbox">잔차 분석으로 가정 확인</label></li>
+<li><label><input type="checkbox">교차 검증으로 성능 평가</label></li>
+<li><label><input type="checkbox">파이프라인으로 구성</label></li>
 </ul>
-</section>
-<section id="elasticnet-예제" class="level3" data-number="22.6.3">
-<h3 data-number="22.6.3" class="anchored" data-anchor-id="elasticnet-예제"><span class="header-section-number">22.6.3</span> ElasticNet 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> ElasticNet</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>elastic <span class="op">=</span> ElasticNet(alpha<span class="op">=</span><span class="fl">0.1</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>elastic.fit(X_train, y_train)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>elastic.coef_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="회귀-모델-비교-요약" class="level2" data-number="22.7">
-<h2 data-number="22.7" class="anchored" data-anchor-id="회귀-모델-비교-요약"><span class="header-section-number">22.7</span> 회귀 모델 비교 요약</h2>
+<p><strong>주의사항</strong></p>
 <ul>
-<li><p><strong>선형 회귀</strong></p>
-<ul>
-<li>기준 모델</li>
-<li>규제 없음</li>
-</ul></li>
-<li><p><strong>Ridge</strong></p>
-<ul>
-<li>안정적인 계수</li>
-<li>다중공선성 대응</li>
-</ul></li>
-<li><p><strong>Lasso</strong></p>
-<ul>
-<li>변수 선택</li>
-<li>해석 용이</li>
-</ul></li>
-<li><p><strong>ElasticNet</strong></p>
-<ul>
-<li>복합적인 상황에 적합</li>
-</ul></li>
+<li>정규화 회귀는 반드시 표준화 후 사용</li>
+<li>계수 해석 시 원본 스케일 고려</li>
+<li>과적합 방지가 최우선 목표</li>
+<li>모델 선택보다 전처리가 더 중요할 수 있음</li>
 </ul>
-</section>
-<section id="선택-가이드" class="level2" data-number="22.8">
-<h2 data-number="22.8" class="anchored" data-anchor-id="선택-가이드"><span class="header-section-number">22.8</span> 선택 가이드</h2>
-<ul>
-<li><p>변수 수 적고 해석 중요</p>
-<ul>
-<li>선형 회귀</li>
-</ul></li>
-<li><p>변수 간 상관 높음</p>
-<ul>
-<li>Ridge</li>
-</ul></li>
-<li><p>변수 선택 필요</p>
-<ul>
-<li>Lasso</li>
-</ul></li>
-<li><p>고차원 데이터</p>
-<ul>
-<li>ElasticNet</li>
-</ul></li>
-</ul>
-</section>
-<section id="전처리-주의-사항" class="level2" data-number="22.9">
-<h2 data-number="22.9" class="anchored" data-anchor-id="전처리-주의-사항"><span class="header-section-number">22.9</span> 전처리 주의 사항</h2>
-<ul>
-<li>정규화 회귀는 <strong>스케일에 민감</strong></li>
-<li>반드시 <strong>표준화 후 적용</strong></li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>pipe.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>회귀 모델은 연속형 예측의 기본이고 정규화는 과적합 방지의 핵심이다. 모델 선택보다 <strong>전처리 + 하이퍼파라미터 튜닝</strong>이 더 중요할 수 있다.</p>
+<p>회귀 모델은 연속형 예측의 기본이며, 정규화는 과적합 방지의 핵심이다. 데이터 특성과 목적에 맞는 모델을 선택하고, 적절한 전처리와 하이퍼파라미터 튜닝을 통해 최적의 성능을 달성하는 것이 중요하다.</p>
 
 
 </section>
