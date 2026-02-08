@@ -1,183 +1,537 @@
 # 특성 선택
 
-## 특성 선택
+특성 선택(Feature Selection)은 모델 학습에 사용되는 입력 변수 중에서 중요한 특성만 선별하는 과정이다. 모든 변수를 사용하는 것이 항상 최선은 아니며, 불필요하거나 중복된 특성은 오히려 모델 성능을 저하시키고 과적합을 유발할 수 있다. 이 장에서는 필터(Filter), 래퍼(Wrapper), 임베디드(Embedded) 방법의 원리와 실무 적용 전략을 학습한다.
 
-### 특성 선택이란?
+**예제: 데이터 로드**
 
-**특성 선택(feature selection)**이란 모델 학습에 사용되는 여러 입력 변수(특성) 중에서 **중요한 특성만 선별**하는 과정이다.
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
-* 모든 변수를 사용하는 것이 항상 좋은 것은 아님
-* 불필요하거나 중복된 특성은 오히려 성능을 저하시킬 수 있음
+# 데이터 로드
+df = sns.load_dataset("penguins").dropna()
 
-#### 특성 선택의 목적
+# 특성과 타겟 준비
+X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y = df["species"]
 
-* 모델 성능 향상 (과적합 감소)
-* 학습 시간 단축
-* 모델 해석력 향상
-* 데이터 수집 및 관리 비용 감소
+print("데이터 크기:", df.shape)
+print("특성 개수:", X.shape[1])
+print("타겟 클래스:", y.unique())
+```
+
+## 특성 선택의 개념과 필요성
+
+특성 선택은 데이터의 차원을 줄이고 모델 성능을 향상시키는 핵심 기법이다.
+
+**특성 선택의 목적**
+
+| 목적 | 설명 | 효과 |
+|------|------|------|
+| 모델 성능 향상 | 과적합 감소, 일반화 성능 향상 | 테스트 정확도 증가 |
+| 학습 시간 단축 | 변수 수 감소로 계산량 감소 | 실험 속도 향상 |
+| 해석력 향상 | 중요 변수만 사용하여 이해 쉬움 | 비즈니스 인사이트 도출 |
+| 차원의 저주 방지 | 고차원 데이터 문제 완화 | 샘플 수 대비 변수 수 적절화 |
+| 다중공선성 제거 | 상관성 높은 변수 제거 | 모델 안정성 향상 |
+| 비용 절감 | 데이터 수집/저장/처리 비용 감소 | 실무 효율성 증가 |
+
+**특성이 많을 때의 문제**
+
+| 문제 | 설명 |
+|------|------|
+| 차원의 저주 | 변수가 많아질수록 필요한 샘플 수가 기하급수적 증가 |
+| 과적합 | 노이즈 변수가 학습에 포함되어 일반화 실패 |
+| 계산 비용 | 학습 시간과 메모리 사용량 증가 |
+| 다중공선성 | 상관성 높은 변수들이 모델 불안정하게 만듦 |
+| 해석 어려움 | 변수가 많아 중요 요인 파악 곤란 |
 
 ### 특성 선택 vs 특성 추출
 
-혼동하기 쉬운 개념이므로 먼저 구분한다.
+혼동하기 쉬운 개념을 명확히 구분한다.
 
-* **특성 선택**
+**특성 선택 vs 특성 추출 비교**
 
-  * 기존 변수 중 일부를 선택
-  * 변수의 의미가 유지됨
-* **특성 추출**
+| 구분 | 특성 선택 (Feature Selection) | 특성 추출 (Feature Extraction) |
+|------|----------------------------|------------------------------|
+| 정의 | 기존 변수 중 일부를 선택 | 기존 변수를 변환하여 새로운 변수 생성 |
+| 변수 의미 | 유지됨 | 변경됨 (조합/변환) |
+| 해석력 | 높음 | 낮음 |
+| 예시 | 100개 중 10개 선택 | PCA로 10개 주성분 생성 |
+| 대표 방법 | 상관계수, RFE, Lasso | PCA, t-SNE, Autoencoder |
+| 원본 변수 | 그대로 사용 | 변환하여 사용 |
 
-  * 기존 변수를 변환하여 새로운 변수 생성
-  * 예: PCA
+**예제: 특성 선택 vs 특성 추출**
+
+```{python}
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import SelectKBest, f_classif
+
+# 특성 선택: 원본 변수 중 k개 선택
+selector = SelectKBest(score_func=f_classif, k=2)
+X_selected = selector.fit_transform(X, y)
+selected_features = X.columns[selector.get_support()]
+
+print("=== 특성 선택 ===")
+print(f"선택된 변수: {selected_features.tolist()}")
+print(f"결과 차원: {X_selected.shape}")
+
+# 특성 추출: 새로운 변수 생성
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+print("\n=== 특성 추출 (PCA) ===")
+print(f"주성분 변수: PC1, PC2")
+print(f"결과 차원: {X_pca.shape}")
+print(f"설명 분산 비율: {pca.explained_variance_ratio_}")
+```
+
+## 특성 선택 방법의 분류
+
+특성 선택 방법은 크게 세 가지로 분류된다.
+
+**특성 선택 방법 분류**
+
+| 방법 | 모델 사용 | 계산 비용 | 성능 | 특징 |
+|------|----------|---------|------|------|
+| 필터 (Filter) | 사용 안 함 | 낮음 | 중간 | 통계량 기반, 빠름 |
+| 래퍼 (Wrapper) | 사용함 | 매우 높음 | 높음 | 모델 성능 기반, 느림 |
+| 임베디드 (Embedded) | 사용함 | 중간 | 높음 | 학습 과정에 내장 |
 
 ## 필터(Filter) 방법
 
-### 개념
+필터 방법은 모델을 사용하지 않고 데이터의 통계적 특성만으로 각 특성을 독립적으로 평가한다.
 
-**모델을 사용하지 않고** 데이터의 통계적 특성만으로 특성을 평가하는 방법이다. 각 특성을 **독립적으로** 평가한다.
+**필터 방법의 특징**
 
-### 주요 특징
+| 장점 | 단점 |
+|------|------|
+| 계산 속도가 매우 빠름 | 변수 간 상호작용 고려 못함 |
+| 모델과 무관하게 사용 가능 | 모델별 최적화 불가 |
+| 대용량 데이터에 적합 | 성능이 래퍼보다 낮을 수 있음 |
+| 과적합 위험 낮음 | 단순한 선형 관계만 파악 |
 
-* 계산 속도가 빠름
-* 모델과 무관
-* 변수 간 상호작용은 고려하지 못함
+### 분산 기반 선택
 
-### 대표적인 필터 방법
+분산이 거의 없는 변수는 정보량이 적으므로 제거한다.
 
-#### (1) 분산 기반 선택
+**예제: 분산 기반 선택**
 
-* 분산이 거의 없는 변수는 정보량이 적음
-* 예: 대부분 값이 동일한 변수 제거
+```{python}
+from sklearn.feature_selection import VarianceThreshold
 
-#### (2) 상관계수 기반 선택
+# 데이터에 분산이 낮은 변수 추가 (예시)
+X_with_low_var = X.copy()
+X_with_low_var['constant_feature'] = 1  # 분산 = 0
+X_with_low_var['low_variance_feature'] = np.random.uniform(3.9, 4.1, len(X))
 
-* 입력 변수와 타깃 변수 간 상관관계 측정
-* Pearson, Spearman, Kendall 등 활용 가능
-* 절댓값이 큰 변수일수록 중요
+print("=== 분산 확인 ===")
+print(X_with_low_var.var().sort_values())
 
-#### (3) 통계적 검정
+# 분산 임계값 설정 (분산 < 0.1인 변수 제거)
+selector = VarianceThreshold(threshold=0.1)
+X_high_var = selector.fit_transform(X_with_low_var)
 
-* 분류 문제
-
-  * 카이제곱 검정
-* 회귀 문제
-
-  * F-test
-
-### 필터 방법 예제
-
-```python
-from sklearn.feature_selection import SelectKBest, f_classif
-
-selector = SelectKBest(score_func=f_classif, k=3)
-X_selected = selector.fit_transform(X, y)
+print(f"\n원본 변수 수: {X_with_low_var.shape[1]}")
+print(f"선택된 변수 수: {X_high_var.shape[1]}")
+print(f"제거된 변수: {X_with_low_var.columns[~selector.get_support()].tolist()}")
 ```
+
+### 상관계수 기반 선택
+
+타겟 변수와의 상관관계를 측정하여 중요한 변수를 선택한다.
+
+**예제: 상관계수 기반 선택**
+
+```{python}
+# 분류 문제를 위해 타겟을 수치형으로 변환
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+y_encoded = le.fit_transform(y)
+
+# 각 특성과 타겟 간 상관계수 계산
+correlations = {}
+for col in X.columns:
+    corr = np.corrcoef(X[col], y_encoded)[0, 1]
+    correlations[col] = abs(corr)
+
+# 상관계수로 정렬
+corr_df = pd.DataFrame({
+    'Feature': list(correlations.keys()),
+    'Correlation': list(correlations.values())
+}).sort_values('Correlation', ascending=False)
+
+print("=== 타겟과의 상관계수 ===")
+print(corr_df)
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.barh(corr_df['Feature'], corr_df['Correlation'])
+plt.xlabel('Absolute Correlation with Target')
+plt.title('Feature Correlation with Target')
+plt.tight_layout()
+plt.show()
+```
+
+### 통계적 검정 (SelectKBest)
+
+통계적 유의성을 기반으로 상위 k개 변수를 선택한다.
+
+**예제: SelectKBest (ANOVA F-test)**
+
+```{python}
+from sklearn.feature_selection import SelectKBest, f_classif, chi2
+
+# ANOVA F-test 기반 선택
+selector = SelectKBest(score_func=f_classif, k=2)
+X_selected = selector.fit_transform(X, y)
+
+# 점수 확인
+scores = pd.DataFrame({
+    'Feature': X.columns,
+    'Score': selector.scores_
+}).sort_values('Score', ascending=False)
+
+print("=== SelectKBest (ANOVA F-test) ===")
+print(scores)
+print(f"\n선택된 변수: {X.columns[selector.get_support()].tolist()}")
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.bar(scores['Feature'], scores['Score'])
+plt.xlabel('Feature')
+plt.ylabel('F-score')
+plt.title('Feature Importance (ANOVA F-test)')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.show()
+```
+
+**통계적 검정 함수**
+
+| 함수 | 용도 | 설명 |
+|------|------|------|
+| f_classif | 분류 | ANOVA F-통계량 |
+| chi2 | 분류 (양수만) | 카이제곱 검정 |
+| f_regression | 회귀 | F-통계량 |
+| mutual_info_classif | 분류 | 상호정보량 |
+| mutual_info_regression | 회귀 | 상호정보량 |
 
 ## 래퍼(Wrapper) 방법
 
-### 개념
+래퍼 방법은 모델의 성능을 기준으로 특성 조합을 평가하여 특정 모델에 최적화된 선택이 가능하다.
 
-**모델의 성능을 기준**으로 특성 조합을 평가하는 방법으로 특정 모델에 최적화된 특성 선택이 가능하다.
+**래퍼 방법의 특징**
 
-### 주요 특징
+| 장점 | 단점 |
+|------|------|
+| 모델 성능 최적화 | 계산 비용 매우 높음 |
+| 변수 간 상호작용 고려 | 특정 모델에 종속적 |
+| 최적 조합 탐색 | 대용량 데이터 부적합 |
+| 높은 정확도 | 과적합 위험 |
 
-* 성능은 좋지만 계산 비용이 큼
-* 모델에 종속적
+### 재귀적 특성 제거 (RFE)
 
-### 대표적인 래퍼 방법
+RFE는 모델을 학습하고 중요도가 낮은 특성을 재귀적으로 제거하는 방법이다.
 
-#### (1) 전진 선택 (Forward Selection)
+**RFE 작동 원리**
 
-* 특성이 없는 상태에서 시작
-* 하나씩 추가하면서 성능 개선 여부 평가
+1. 모든 특성으로 모델 학습
+2. 특성 중요도 계산
+3. 가장 중요도 낮은 특성 제거
+4. 원하는 특성 개수까지 반복
 
-#### (2) 후진 제거 (Backward Elimination)
+**예제: RFE**
 
-* 모든 특성으로 시작
-* 하나씩 제거하면서 성능 변화 확인
-
-#### (3) 재귀적 특성 제거 (RFE)
-
-* 모델 학습 → 중요도 낮은 특성 제거 반복
-
-### 래퍼 방법 예제
-
-```python
+```{python}
 from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 
-model = LogisticRegression()
-rfe = RFE(model, n_features_to_select=3)
-X_selected = rfe.fit_transform(X, y)
+# 모델 정의
+model = LogisticRegression(max_iter=1000)
+
+# RFE 수행
+rfe = RFE(estimator=model, n_features_to_select=2)
+X_rfe = rfe.fit_transform(X, y)
+
+# 결과 확인
+rfe_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Selected': rfe.support_,
+    'Ranking': rfe.ranking_
+}).sort_values('Ranking')
+
+print("=== RFE 결과 ===")
+print(rfe_df)
+print(f"\n선택된 변수: {X.columns[rfe.support_].tolist()}")
+
+# 시각화
+plt.figure(figsize=(10, 5))
+colors = ['green' if s else 'red' for s in rfe.support_]
+plt.bar(X.columns, 1/rfe.ranking_, color=colors)
+plt.xlabel('Feature')
+plt.ylabel('Importance (1/Ranking)')
+plt.title('RFE Feature Selection')
+plt.legend(['Selected', 'Not Selected'])
+plt.tight_layout()
+plt.show()
 ```
 
-## 3.2.5 임베디드(Embedded) 방법
+### RFECV (교차 검증 포함)
 
-### 개념
+RFECV는 교차 검증을 통해 최적의 특성 개수를 자동으로 찾는다.
 
-**모델 학습 과정 자체에** 특성 선택이 포함된 방법이다. 필터와 래퍼의 중간 성격을 가진다.
+**예제: RFECV**
 
-### 주요 특징
+```{python}
+from sklearn.feature_selection import RFECV
 
-* 계산 효율과 성능의 균형
-* 특정 모델에 내장된 방식
+# RFECV 수행
+rfecv = RFECV(estimator=model, cv=5, scoring='accuracy')
+X_rfecv = rfecv.fit_transform(X, y)
 
-### 대표적인 임베디드 방법
+print("=== RFECV 결과 ===")
+print(f"최적 변수 수: {rfecv.n_features_}")
+print(f"선택된 변수: {X.columns[rfecv.support_].tolist()}")
 
-#### (1) 정규화 기반 방법
+# 변수 개수별 성능 시각화
+plt.figure(figsize=(10, 5))
+plt.plot(range(1, len(rfecv.cv_results_['mean_test_score']) + 1), 
+         rfecv.cv_results_['mean_test_score'], marker='o')
+plt.axvline(rfecv.n_features_, color='r', linestyle='--', 
+            label=f'Optimal: {rfecv.n_features_} features')
+plt.xlabel('Number of Features')
+plt.ylabel('Cross-Validation Score')
+plt.title('RFECV: Optimal Number of Features')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
 
-* L1 정규화 (Lasso)
+### 순차 특성 선택
 
-  * 중요하지 않은 특성의 계수를 0으로 만듦
-* L2 정규화 (Ridge)
+**예제: 전진 선택 (Sequential Feature Selector)**
 
-  * 계수 크기를 줄이지만 제거하지는 않음
+```{python}
+from sklearn.feature_selection import SequentialFeatureSelector
 
-#### (2) 트리 기반 모델
+# 전진 선택
+sfs_forward = SequentialFeatureSelector(
+    model, 
+    n_features_to_select=2, 
+    direction='forward',
+    cv=5
+)
+X_forward = sfs_forward.fit_transform(X, y)
 
-* 결정트리
-* 랜덤 포레스트
-* Gradient Boosting
+print("=== 전진 선택 (Forward Selection) ===")
+print(f"선택된 변수: {X.columns[sfs_forward.get_support()].tolist()}")
 
-→ 특성 중요도(feature importance) 제공
+# 후진 제거
+sfs_backward = SequentialFeatureSelector(
+    model, 
+    n_features_to_select=2, 
+    direction='backward',
+    cv=5
+)
+X_backward = sfs_backward.fit_transform(X, y)
 
-### 임베디드 방법 예제
+print("\n=== 후진 제거 (Backward Elimination) ===")
+print(f"선택된 변수: {X.columns[sfs_backward.get_support()].tolist()}")
+```
 
-```python
+## 임베디드(Embedded) 방법
+
+임베디드 방법은 모델 학습 과정 자체에 특성 선택이 포함되어 있어 필터와 래퍼의 중간 성격을 가진다.
+
+**임베디드 방법의 특징**
+
+| 장점 | 단점 |
+|------|------|
+| 계산 효율과 성능의 균형 | 특정 알고리즘에 종속 |
+| 변수 간 상호작용 고려 | 모든 모델에 적용 불가 |
+| 래퍼보다 빠름 | 설명력이 필터보다 낮을 수 있음 |
+| 모델 학습과 동시 수행 | 하이퍼파라미터에 민감 |
+
+### L1 정규화 (Lasso)
+
+L1 정규화는 중요하지 않은 특성의 계수를 정확히 0으로 만들어 자동 선택한다.
+
+**예제: Lasso 기반 선택**
+
+```{python}
+from sklearn.linear_model import LassoCV
+from sklearn.preprocessing import StandardScaler
+
+# 데이터 표준화 (Lasso는 스케일에 민감)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Lasso (회귀이므로 타겟을 연속형으로 변환)
+# 분류 문제이므로 LogisticRegression with L1 사용
+from sklearn.linear_model import LogisticRegression
+
+lasso = LogisticRegression(penalty='l1', solver='liblinear', C=1.0)
+lasso.fit(X_scaled, y)
+
+# 계수 확인
+coef_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Coefficient': np.abs(lasso.coef_[0])
+}).sort_values('Coefficient', ascending=False)
+
+print("=== Lasso (L1 정규화) ===")
+print(coef_df)
+print(f"\n0이 아닌 계수: {(coef_df['Coefficient'] > 0.01).sum()}개")
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.barh(coef_df['Feature'], coef_df['Coefficient'])
+plt.xlabel('Absolute Coefficient')
+plt.title('Lasso Feature Importance')
+plt.tight_layout()
+plt.show()
+```
+
+### 트리 기반 특성 중요도
+
+결정트리, 랜덤 포레스트, Gradient Boosting 등은 특성 중요도를 자동으로 제공한다.
+
+**예제: 랜덤 포레스트 특성 중요도**
+
+```{python}
 from sklearn.ensemble import RandomForestClassifier
 
-model = RandomForestClassifier()
-model.fit(X, y)
+# 랜덤 포레스트 학습
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X, y)
 
-importances = model.feature_importances_
+# 특성 중요도
+importance_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': rf.feature_importances_
+}).sort_values('Importance', ascending=False)
+
+print("=== 랜덤 포레스트 특성 중요도 ===")
+print(importance_df)
+
+# 시각화
+plt.figure(figsize=(10, 5))
+plt.barh(importance_df['Feature'], importance_df['Importance'])
+plt.xlabel('Feature Importance')
+plt.title('Random Forest Feature Importance')
+plt.tight_layout()
+plt.show()
 ```
 
-## 방법별 비교 정리
+**예제: SelectFromModel**
 
-* **필터 방법**
+```{python}
+from sklearn.feature_selection import SelectFromModel
 
-  * 빠름
-  * 모델 독립적
-  * 상호작용 고려 어려움
+# 중요도 기반 자동 선택
+selector = SelectFromModel(rf, threshold='median')
+X_important = selector.fit_transform(X, y)
 
-* **래퍼 방법**
+print(f"\n선택된 변수 수: {X_important.shape[1]}")
+print(f"선택된 변수: {X.columns[selector.get_support()].tolist()}")
+```
 
-  * 성능 우수
-  * 계산 비용 큼
-  * 모델 의존적
+## 방법별 종합 비교
 
-* **임베디드 방법**
+**특성 선택 방법 종합 비교**
 
-  * 효율과 성능의 균형
-  * 특정 알고리즘에 종속
+| 방법 | 계산 비용 | 성능 | 해석력 | 모델 의존성 | 적용 상황 |
+|------|----------|------|--------|-----------|----------|
+| 필터 | 낮음 | 중간 | 높음 | 낮음 | 대용량, 빠른 탐색 |
+| 래퍼 | 매우 높음 | 높음 | 중간 | 높음 | 소규모, 성능 중시 |
+| 임베디드 | 중간 | 높음 | 중간 | 중간 | 일반적 상황 (권장) |
 
-## 활용 전략
+**방법 선택 가이드**
 
-* 데이터가 크고 특성이 많을 때
+```
+데이터 크기
+├─ 대용량 (변수 100+) → 필터 방법
+│                      ↓
+│                     임베디드 방법으로 정제
+└─ 소규모 (변수 < 50) → 래퍼 또는 임베디드
 
-  * 필터 → 임베디드 순서
-* 모델 성능이 중요한 경우
+목적
+├─ 빠른 탐색 → 필터 (상관계수, SelectKBest)
+├─ 최고 성능 → 래퍼 (RFECV)
+└─ 균형 잡힌 접근 → 임베디드 (Lasso, 트리 중요도)
+```
 
-  * 래퍼 또는 임베디드
-* 해석이 중요한 경우
+## 실무 적용 전략
 
-  * 필터 또는 Lasso 기반 접근
+**단계별 특성 선택 전략**
+
+| 단계 | 방법 | 목적 |
+|------|------|------|
+| 1단계 (거름망) | 분산 기반 | 분산 없는 변수 제거 |
+| 2단계 (예비 선택) | 필터 (상관계수) | 명백히 무관한 변수 제거 |
+| 3단계 (정제) | 임베디드 (트리 중요도) | 중요 변수 추출 |
+| 4단계 (최적화) | 래퍼 (RFECV) | 최종 조합 선택 |
+| 5단계 (검증) | 교차 검증 | 성능 확인 |
+
+**예제: 종합 파이프라인**
+
+```{python}
+from sklearn.pipeline import Pipeline
+
+# 1. 분산 제거
+var_threshold = VarianceThreshold(threshold=0.01)
+
+# 2. SelectKBest (상위 3개)
+select_k = SelectKBest(f_classif, k=3)
+
+# 3. 모델
+model_final = LogisticRegression(max_iter=1000)
+
+# 파이프라인 구성
+pipeline = Pipeline([
+    ('variance', var_threshold),
+    ('select', select_k),
+    ('model', model_final)
+])
+
+# 학습 및 평가
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+pipeline.fit(X_train, y_train)
+
+print("=== 파이프라인 결과 ===")
+print(f"학습 정확도: {pipeline.score(X_train, y_train):.4f}")
+print(f"테스트 정확도: {pipeline.score(X_test, y_test):.4f}")
+```
+
+## 요약
+
+이 장에서는 특성 선택의 개념과 세 가지 주요 방법을 학습했다. 주요 내용은 다음과 같다.
+
+**특성 선택 핵심 요약**
+
+- **목적**: 과적합 방지, 성능 향상, 해석력 증대, 비용 절감
+- **필터**: 통계량 기반, 빠르지만 상호작용 고려 못함
+- **래퍼**: 모델 성능 기반, 정확하지만 느림
+- **임베디드**: 학습 과정에 통합, 균형 잡힌 접근
+
+**실무 권장사항**
+
+1. **대용량 데이터**: 필터 → 임베디드 순서로 적용
+2. **소규모 데이터**: 임베디드 또는 래퍼 사용
+3. **해석 중요**: 필터 또는 Lasso 선호
+4. **성능 우선**: RFECV 또는 트리 중요도 사용
+5. **파이프라인 구성**: 여러 방법을 순차적으로 조합
+
+**주의사항**
+
+- 특성 선택은 데이터 분할 후 학습셋으로만 수행
+- 교차 검증으로 안정성 확인
+- 도메인 지식과 통계적 방법 결합
+- 제거된 변수도 문서화하여 추후 검토
+
+특성 선택은 모델 성능과 해석력을 동시에 향상시키는 강력한 도구이다. 데이터 특성과 목적에 맞는 방법을 선택하고, 여러 방법을 조합하여 최적의 변수 집합을 찾는 것이 중요하다.
