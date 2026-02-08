@@ -425,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>데이터 분할(Data Splitting)과 검증(Validation)은 머신러닝 모델의 일반화 성능을 평가하는 핵심 과정이다. 모델의 성능은 알고리즘 자체보다 데이터를 어떻게 나누고 검증했는지에 더 크게 좌우된다. 잘못된 데이터 분할은 과적합을 발견하지 못하고 모델 성능을 과대평가하게 만든다. 이 장에서는 올바른 데이터 분할 방법과 교차 검증 기법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="cecbff43" class="cell" data-execution_count="1">
+<div id="849904e7" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -579,7 +579,7 @@ Name: count, dtype: int64</code></pre>
 <section id="학습테스트-분할" class="level3" data-number="19.3.1">
 <h3 data-number="19.3.1" class="anchored" data-anchor-id="학습테스트-분할"><span class="header-section-number">19.3.1</span> 학습/테스트 분할</h3>
 <p><strong>예제: 데이터 준비</strong></p>
-<div id="c89609e2" class="cell" data-execution_count="2">
+<div id="dfb6b3aa" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성과 타겟 분리</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_ml[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_ml[<span class="st">"species"</span>]</span>
@@ -610,7 +610,7 @@ Name: count, dtype: float64</code></pre>
 </div>
 </div>
 <p><strong>예제: 학습/테스트 분할</strong></p>
-<div id="9c44a4a2" class="cell" data-execution_count="3">
+<div id="8b2fb78f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 분할 (80/20)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    X, y,</span>
@@ -698,7 +698,7 @@ Name: count, dtype: float64</code></pre>
 <h3 data-number="19.3.2" class="anchored" data-anchor-id="학습검증테스트-분할"><span class="header-section-number">19.3.2</span> 학습/검증/테스트 분할</h3>
 <p>하이퍼파라미터 튜닝이 필요한 경우 3-way 분할을 수행한다.</p>
 <p><strong>예제: 3-way 분할</strong></p>
-<div id="ac816359" class="cell" data-execution_count="4">
+<div id="403a1363" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1단계: 학습+검증 vs 테스트 (80/20)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_temp, X_test, y_temp, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    X, y,</span>
@@ -850,7 +850,7 @@ Fold 5: [Train] [Train] [Train] [Train] [Validation]
 
 → K번 학습 후 평균 성능 계산</code></pre>
 <p><strong>예제: K-Fold 교차 검증</strong></p>
-<div id="beeb3d2a" class="cell" data-execution_count="5">
+<div id="7fdf9bb5" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold, cross_val_score</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -885,7 +885,7 @@ Fold 5: [Train] [Train] [Train] [Train] [Validation]
 </div>
 </div>
 <p><strong>예제: 폴드별 성능 시각화</strong></p>
-<div id="f8835723" class="cell" data-execution_count="6">
+<div id="f6a300cf" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 폴드별 성능 시각화</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(scores)<span class="op">+</span><span class="dv">1</span>), scores, <span class="st">'o-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
@@ -917,7 +917,7 @@ Fold 5: [Train] [Train] [Train] [Train] [Validation]
 <p><strong>왜 필요한가?</strong></p>
 <p>일반 K-Fold는 클래스를 고려하지 않으므로: - 한 폴드에 특정 클래스가 몰릴 수 있음 - 폴드 간 성능 차이가 클래스 불균형 때문일 수 있음 - 소수 클래스가 일부 폴드에 없을 수 있음</p>
 <p><strong>예제: Stratified K-Fold</strong></p>
-<div id="94929175" class="cell" data-execution_count="7">
+<div id="e6d62ac4" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stratified K-Fold 설정</span></span>
@@ -955,7 +955,7 @@ Stratified K-Fold: 평균 = 0.9850, 표준편차 = 0.0094</code></pre>
 </div>
 </div>
 <p><strong>예제: 폴드별 클래스 분포 확인</strong></p>
-<div id="fdd45a7f" class="cell" data-execution_count="8">
+<div id="fca1b4d7" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 폴드별 클래스 분포 확인</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 각 폴드의 클래스 분포 ==="</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fold_idx, (train_idx, val_idx) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X, y), <span class="dv">1</span>):</span>
@@ -1053,7 +1053,7 @@ Fold 5:
 <h3 data-number="19.7.1" class="anchored" data-anchor-id="time-series-split-시계열-교차-검증"><span class="header-section-number">19.7.1</span> Time Series Split (시계열 교차 검증)</h3>
 <p>시계열 데이터는 미래를 예측하므로, 학습 데이터가 검증 데이터보다 과거여야 한다.</p>
 <p><strong>예제: Time Series Split</strong></p>
-<div id="27fd5c40" class="cell" data-execution_count="9">
+<div id="3546db6e" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TimeSeriesSplit</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Time Series Split 설정</span></span>
