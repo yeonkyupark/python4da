@@ -454,7 +454,7 @@ window.Quarto = {
 <p>상관 분석(Correlation Analysis)은 두 연속형 변수 간의 관계 방향과 강도를 수치로 표현하는 통계적 방법이다. 상관계수는 두 변수가 함께 변하는 패턴을 -1에서 +1 사이의 값으로 나타내며, 변수 간 관계를 탐색하고 이해하는 데 필수적인 도구이다. 이 장에서는 Pearson, Spearman, Kendall 상관계수의 개념과 차이, 그리고 실무 적용 방법을 학습한다.</p>
 <p><strong>중요</strong>: 상관관계는 두 변수 간 연관성만을 나타내며, 인과관계를 의미하지 않는다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="f551d583" class="cell" data-execution_count="1">
+<div id="9cfa5a4b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -602,7 +602,7 @@ r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i
 <section id="예제-부리-길이와-깊이의-상관관계" class="level3" data-number="18.2.1">
 <h3 data-number="18.2.1" class="anchored" data-anchor-id="예제-부리-길이와-깊이의-상관관계"><span class="header-section-number">18.2.1</span> 예제: 부리 길이와 깊이의 상관관계</h3>
 <p><strong>예제: 데이터 준비</strong></p>
-<div id="c7323116" class="cell" data-execution_count="2">
+<div id="c6a95e44" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치 제거</span></span>
@@ -629,7 +629,7 @@ max         59.600000      21.500000</code></pre>
 </div>
 </div>
 <p><strong>예제: Pearson 상관계수 계산</strong></p>
-<div id="c368e7ff" class="cell" data-execution_count="3">
+<div id="8e4bca94" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pearson 상관계수</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>r, p_value <span class="op">=</span> pearsonr(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df_corr[<span class="st">"bill_length_mm"</span>],</span>
@@ -672,7 +672,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>예제: 산점도 시각화</strong></p>
-<div id="e34a5229" class="cell" data-execution_count="4">
+<div id="19d7132a" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 산점도와 회귀선</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -715,7 +715,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>Simpson’s Paradox 확인</strong></p>
-<div id="a87e0d72" class="cell" data-execution_count="5">
+<div id="77f415a3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 상관계수</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 종별 Pearson 상관계수 ==="</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> species <span class="kw">in</span> df[<span class="st">"species"</span>].unique():</span>
@@ -783,7 +783,7 @@ Gentoo      : r =  0.643, p = 0.0000
 <section id="예제-spearman-상관계수" class="level3" data-number="18.3.1">
 <h3 data-number="18.3.1" class="anchored" data-anchor-id="예제-spearman-상관계수"><span class="header-section-number">18.3.1</span> 예제: Spearman 상관계수</h3>
 <p><strong>예제: Spearman 상관 분석</strong></p>
-<div id="39e3a06a" class="cell" data-execution_count="6">
+<div id="34e292f5" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> spearmanr</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Spearman 순위 상관계수</span></span>
@@ -903,7 +903,7 @@ Spearman ρ: -0.2217 (p = 0.0000)
 <section id="예제-kendall-상관계수" class="level3" data-number="18.4.1">
 <h3 data-number="18.4.1" class="anchored" data-anchor-id="예제-kendall-상관계수"><span class="header-section-number">18.4.1</span> 예제: Kendall 상관계수</h3>
 <p><strong>예제: Kendall τ 계산</strong></p>
-<div id="9154fb9c" class="cell" data-execution_count="7">
+<div id="5cf7eab9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kendalltau</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Kendall τ 계산</span></span>
@@ -1007,7 +1007,7 @@ Kendall τ:  -0.1229 (p = 0.0008)
 <h2 data-number="18.5" class="anchored" data-anchor-id="상관-행렬-correlation-matrix"><span class="header-section-number">18.5</span> 상관 행렬 (Correlation Matrix)</h2>
 <p>여러 변수 간의 상관관계를 한눈에 파악할 수 있는 행렬이다.</p>
 <p><strong>예제: 상관 행렬 계산</strong></p>
-<div id="328b8e18" class="cell" data-execution_count="8">
+<div id="3b0cd105" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수치형 변수 선택</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1032,7 +1032,7 @@ body_mass_g              1.000  </code></pre>
 </div>
 </div>
 <p><strong>예제: 상관 행렬 히트맵</strong></p>
-<div id="29c07ec8" class="cell" data-execution_count="9">
+<div id="6dbdc2ae" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 히트맵 시각화</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1060,7 +1060,7 @@ body_mass_g              1.000  </code></pre>
 </div>
 </div>
 <p><strong>예제: 상관계수 p-value 확인</strong></p>
-<div id="217efa1f" class="cell" data-execution_count="10">
+<div id="bcad3681" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상관계수와 p-value를 함께 표시</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> correlation_with_pvalue(df, method<span class="op">=</span><span class="st">'pearson'</span>):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""상관계수와 p-value를 함께 계산"""</span></span>

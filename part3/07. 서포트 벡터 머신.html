@@ -375,42 +375,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#svm-개요" id="toc-svm-개요" class="nav-link active" data-scroll-target="#svm-개요"><span class="header-section-number">25.1</span> SVM 개요</a></li>
-  <li><a href="#마진과-서포트-벡터" id="toc-마진과-서포트-벡터" class="nav-link" data-scroll-target="#마진과-서포트-벡터"><span class="header-section-number">25.2</span> 마진과 서포트 벡터</a>
-  <ul>
-  <li><a href="#마진margin" id="toc-마진margin" class="nav-link" data-scroll-target="#마진margin"><span class="header-section-number">25.2.1</span> 마진(Margin)</a></li>
-  <li><a href="#서포트-벡터" id="toc-서포트-벡터" class="nav-link" data-scroll-target="#서포트-벡터"><span class="header-section-number">25.2.2</span> 서포트 벡터</a></li>
-  </ul></li>
-  <li><a href="#하드-마진-vs-소프트-마진" id="toc-하드-마진-vs-소프트-마진" class="nav-link" data-scroll-target="#하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</a>
-  <ul>
-  <li><a href="#하드-마진" id="toc-하드-마진" class="nav-link" data-scroll-target="#하드-마진"><span class="header-section-number">25.3.1</span> 하드 마진</a></li>
-  <li><a href="#소프트-마진" id="toc-소프트-마진" class="nav-link" data-scroll-target="#소프트-마진"><span class="header-section-number">25.3.2</span> 소프트 마진</a></li>
-  <li><a href="#c-파라미터의-의미" id="toc-c-파라미터의-의미" class="nav-link" data-scroll-target="#c-파라미터의-의미"><span class="header-section-number">25.3.3</span> C 파라미터의 의미</a></li>
-  </ul></li>
+  <li><a href="#svm의-핵심-개념" id="toc-svm의-핵심-개념" class="nav-link active" data-scroll-target="#svm의-핵심-개념"><span class="header-section-number">25.1</span> SVM의 핵심 개념</a></li>
+  <li><a href="#마진과-서포트-벡터" id="toc-마진과-서포트-벡터" class="nav-link" data-scroll-target="#마진과-서포트-벡터"><span class="header-section-number">25.2</span> 마진과 서포트 벡터</a></li>
+  <li><a href="#하드-마진-vs-소프트-마진" id="toc-하드-마진-vs-소프트-마진" class="nav-link" data-scroll-target="#하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</a></li>
   <li><a href="#선형-svm" id="toc-선형-svm" class="nav-link" data-scroll-target="#선형-svm"><span class="header-section-number">25.4</span> 선형 SVM</a>
   <ul>
-  <li><a href="#특징" id="toc-특징" class="nav-link" data-scroll-target="#특징"><span class="header-section-number">25.4.1</span> 특징</a></li>
-  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">25.4.2</span> 예제</a></li>
+  <li><a href="#선형-svm-실습" id="toc-선형-svm-실습" class="nav-link" data-scroll-target="#선형-svm-실습"><span class="header-section-number">25.4.1</span> 선형 SVM 실습</a></li>
   </ul></li>
-  <li><a href="#비선형-svm과-커널-트릭" id="toc-비선형-svm과-커널-트릭" class="nav-link" data-scroll-target="#비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</a>
+  <li><a href="#비선형-svm과-커널-트릭" id="toc-비선형-svm과-커널-트릭" class="nav-link" data-scroll-target="#비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</a></li>
+  <li><a href="#rbf-커널과-하이퍼파라미터" id="toc-rbf-커널과-하이퍼파라미터" class="nav-link" data-scroll-target="#rbf-커널과-하이퍼파라미터"><span class="header-section-number">25.6</span> RBF 커널과 하이퍼파라미터</a>
   <ul>
-  <li><a href="#커널-트릭-개념" id="toc-커널-트릭-개념" class="nav-link" data-scroll-target="#커널-트릭-개념"><span class="header-section-number">25.5.1</span> 커널 트릭 개념</a></li>
-  <li><a href="#대표적인-커널" id="toc-대표적인-커널" class="nav-link" data-scroll-target="#대표적인-커널"><span class="header-section-number">25.5.2</span> 대표적인 커널</a></li>
+  <li><a href="#rbf-svm-실습" id="toc-rbf-svm-실습" class="nav-link" data-scroll-target="#rbf-svm-실습"><span class="header-section-number">25.6.1</span> RBF SVM 실습</a></li>
   </ul></li>
-  <li><a href="#rbf-커널과-γ-gamma" id="toc-rbf-커널과-γ-gamma" class="nav-link" data-scroll-target="#rbf-커널과-γ-gamma"><span class="header-section-number">25.6</span> RBF 커널과 γ (gamma)</a>
-  <ul>
-  <li><a href="#gamma의-의미" id="toc-gamma의-의미" class="nav-link" data-scroll-target="#gamma의-의미"><span class="header-section-number">25.6.1</span> gamma의 의미</a></li>
-  <li><a href="#gamma-값의-영향" id="toc-gamma-값의-영향" class="nav-link" data-scroll-target="#gamma-값의-영향"><span class="header-section-number">25.6.2</span> gamma 값의 영향</a></li>
-  <li><a href="#예제-rbf-svm" id="toc-예제-rbf-svm" class="nav-link" data-scroll-target="#예제-rbf-svm"><span class="header-section-number">25.6.3</span> 예제 (RBF SVM)</a></li>
-  </ul></li>
-  <li><a href="#다중-분류에서의-svm" id="toc-다중-분류에서의-svm" class="nav-link" data-scroll-target="#다중-분류에서의-svm"><span class="header-section-number">25.7</span> 다중 분류에서의 SVM</a></li>
-  <li><a href="#svm의-장단점" id="toc-svm의-장단점" class="nav-link" data-scroll-target="#svm의-장단점"><span class="header-section-number">25.8</span> SVM의 장단점</a>
-  <ul>
-  <li><a href="#장점" id="toc-장점" class="nav-link" data-scroll-target="#장점"><span class="header-section-number">25.8.1</span> 장점</a></li>
-  <li><a href="#단점" id="toc-단점" class="nav-link" data-scroll-target="#단점"><span class="header-section-number">25.8.2</span> 단점</a></li>
-  </ul></li>
-  <li><a href="#로지스틱-회귀-vs-svm" id="toc-로지스틱-회귀-vs-svm" class="nav-link" data-scroll-target="#로지스틱-회귀-vs-svm"><span class="header-section-number">25.9</span> 로지스틱 회귀 vs SVM</a></li>
+  <li><a href="#다중-클래스-분류" id="toc-다중-클래스-분류" class="nav-link" data-scroll-target="#다중-클래스-분류"><span class="header-section-number">25.7</span> 다중 클래스 분류</a></li>
+  <li><a href="#커널-비교" id="toc-커널-비교" class="nav-link" data-scroll-target="#커널-비교"><span class="header-section-number">25.8</span> 커널 비교</a></li>
+  <li><a href="#모델-비교" id="toc-모델-비교" class="nav-link" data-scroll-target="#모델-비교"><span class="header-section-number">25.9</span> 모델 비교</a></li>
   <li><a href="#활용-가이드" id="toc-활용-가이드" class="nav-link" data-scroll-target="#활용-가이드"><span class="header-section-number">25.10</span> 활용 가이드</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">25.11</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/07. 서포트 벡터 머신.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -442,189 +423,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="svm-개요" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="svm-개요"><span class="header-section-number">25.1</span> SVM 개요</h2>
-<p><strong>서포트 벡터 머신(Support Vector Machine, SVM)</strong> 은 클래스를 가장 잘 구분하는 <strong>결정 경계(초평면)</strong> 를 찾는 분류 모델이다.</p>
-<p>핵심 아이디어는 단순하다.</p>
+<p>서포트 벡터 머신(Support Vector Machine, SVM)은 클래스를 가장 잘 구분하는 최적의 결정 경계(초평면)를 찾는 강력한 분류 모델이다. 핵심 아이디어는 클래스 간 마진(margin)을 최대화하는 것이며, 경계에 가장 가까운 일부 데이터(서포트 벡터)만 사용하여 모델을 결정한다. SVM은 특히 고차원 데이터와 비선형 분류에서 우수한 성능을 보인다. 이 장에서는 선형 SVM부터 커널 트릭을 사용한 비선형 SVM까지 원리와 실무 활용법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="291369d5" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, classification_report, confusion_matrix</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 특성과 타겟 준비</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">"species"</span>]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, X.shape)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"클래스:"</span>, y.unique())</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">클래스 분포:"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y.value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 4)
+클래스: &lt;StringArray&gt;
+['Adelie', 'Chinstrap', 'Gentoo']
+Length: 3, dtype: str
+
+클래스 분포:
+species
+Adelie       146
+Gentoo       119
+Chinstrap     68
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<section id="svm의-핵심-개념" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="svm의-핵심-개념"><span class="header-section-number">25.1</span> SVM의 핵심 개념</h2>
+<p>SVM은 클래스 간의 마진을 최대화하는 최적의 결정 경계를 찾는다.</p>
+<p><strong>SVM의 핵심 아이디어</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>개념</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>결정 경계 (Decision Boundary)</td>
+<td>클래스를 구분하는 초평면</td>
+</tr>
+<tr class="even">
+<td>마진 (Margin)</td>
+<td>결정 경계와 가장 가까운 데이터 사이의 거리</td>
+</tr>
+<tr class="odd">
+<td>서포트 벡터 (Support Vectors)</td>
+<td>마진 경계에 위치한 핵심 데이터</td>
+</tr>
+<tr class="even">
+<td>마진 최대화</td>
+<td>일반화 성능 향상 목표</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SVM의 장점</strong></p>
 <ul>
-<li>클래스 간 <strong>마진(margin)</strong> 을 최대화</li>
-<li>경계에 가장 가까운 데이터만 학습에 사용</li>
+<li>일반화 성능 우수 (마진 최대화)</li>
+<li>고차원 데이터에 효과적</li>
+<li>커널 트릭으로 비선형 문제 해결</li>
+<li>소수의 서포트 벡터만 사용 (메모리 효율적)</li>
+<li>이상치에 비교적 강건</li>
 </ul>
-<p>이 “경계에 가장 가까운 데이터”를 <strong>서포트 벡터</strong>라고 부른다.</p>
+<p><strong>SVM의 단점</strong></p>
+<ul>
+<li>대규모 데이터셋에서 학습 시간 오래 걸림 (O(n²~n³))</li>
+<li>하이퍼파라미터 튜닝 필요 (C, gamma)</li>
+<li>확률 출력 기본 제공 안 함</li>
+<li>모델 해석 어려움</li>
+<li>다중 클래스 분류는 내부적으로 여러 이진 분류기 조합</li>
+</ul>
 </section>
 <section id="마진과-서포트-벡터" class="level2" data-number="25.2">
 <h2 data-number="25.2" class="anchored" data-anchor-id="마진과-서포트-벡터"><span class="header-section-number">25.2</span> 마진과 서포트 벡터</h2>
-<section id="마진margin" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="마진margin"><span class="header-section-number">25.2.1</span> 마진(Margin)</h3>
+<p><strong>마진(Margin)</strong></p>
 <ul>
 <li>결정 경계와 가장 가까운 데이터 사이의 거리</li>
-<li>SVM은 <strong>마진이 최대가 되도록</strong> 경계를 찾는다</li>
+<li>마진이 클수록 일반화 성능 향상</li>
+<li>SVM은 마진을 최대화하는 초평면 찾기</li>
 </ul>
-<p>노이즈에 강하고 일반화 성능이 좋음</p>
-</section>
-<section id="서포트-벡터" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="서포트-벡터"><span class="header-section-number">25.2.2</span> 서포트 벡터</h3>
+<p><strong>서포트 벡터(Support Vectors)</strong></p>
 <ul>
-<li>결정 경계를 결정하는 핵심 데이터</li>
-<li>전체 데이터 중 <strong>일부만 모델을 결정</strong></li>
+<li>마진 경계에 위치한 핵심 데이터 포인트</li>
+<li>결정 경계를 실제로 결정하는 데이터</li>
+<li>전체 데이터의 일부만 사용 (효율적)</li>
+<li>나머지 데이터는 모델에 영향 없음</li>
 </ul>
-<p>즉, SVM은</p>
-<blockquote class="blockquote">
-<p>“모든 데이터를 쓰지 않는다”</p>
-</blockquote>
-</section>
-</section>
-<section id="하드-마진-vs-소프트-마진" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</h2>
-<section id="하드-마진" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="하드-마진"><span class="header-section-number">25.3.1</span> 하드 마진</h3>
-<ul>
-<li>모든 데이터를 완벽히 분리</li>
-<li>현실 데이터에서는 거의 불가능</li>
-</ul>
-</section>
-<section id="소프트-마진" class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="소프트-마진"><span class="header-section-number">25.3.2</span> 소프트 마진</h3>
-<ul>
-<li>일부 오분류 허용</li>
-<li><strong>C 파라미터</strong>로 허용 정도 조절</li>
-</ul>
-</section>
-<section id="c-파라미터의-의미" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="c-파라미터의-의미"><span class="header-section-number">25.3.3</span> C 파라미터의 의미</h3>
-<ul>
-<li><p>C ↑</p>
-<ul>
-<li>오분류 허용 ↓</li>
-<li>과적합 위험 ↑</li>
-</ul></li>
-<li><p>C ↓</p>
-<ul>
-<li>마진 넓어짐</li>
-<li>과소적합 가능성 ↑</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="선형-svm" class="level2" data-number="25.4">
-<h2 data-number="25.4" class="anchored" data-anchor-id="선형-svm"><span class="header-section-number">25.4</span> 선형 SVM</h2>
-<section id="특징" class="level3" data-number="25.4.1">
-<h3 data-number="25.4.1" class="anchored" data-anchor-id="특징"><span class="header-section-number">25.4.1</span> 특징</h3>
-<ul>
-<li>선형 결정 경계</li>
-<li>고차원 데이터에 강함</li>
-<li>로지스틱 회귀와 비교 대상</li>
-</ul>
-</section>
-<section id="예제" class="level3" data-number="25.4.2">
-<h3 data-number="25.4.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">25.4.2</span> 예제</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear <span class="op">=</span> Pipeline([</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, SVC(kernel<span class="op">=</span><span class="st">"linear"</span>, C<span class="op">=</span><span class="fl">1.0</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear.fit(X_train, y_train)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>SVM은 <strong>스케일링 필수</strong></p>
-</section>
-</section>
-<section id="비선형-svm과-커널-트릭" class="level2" data-number="25.5">
-<h2 data-number="25.5" class="anchored" data-anchor-id="비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</h2>
-<p>현실 데이터는 선형으로 분리되지 않는 경우가 많다. 이때 사용하는 것이 <strong>커널 함수(kernel)</strong>이다.</p>
-<section id="커널-트릭-개념" class="level3" data-number="25.5.1">
-<h3 data-number="25.5.1" class="anchored" data-anchor-id="커널-트릭-개념"><span class="header-section-number">25.5.1</span> 커널 트릭 개념</h3>
-<ul>
-<li>원래 공간에서는 비선형</li>
-<li>고차원 공간으로 변환하면 선형 분리 가능</li>
-<li>실제로 변환을 계산하지 않고 <strong>내적만 계산</strong></li>
-</ul>
-</section>
-<section id="대표적인-커널" class="level3" data-number="25.5.2">
-<h3 data-number="25.5.2" class="anchored" data-anchor-id="대표적인-커널"><span class="header-section-number">25.5.2</span> 대표적인 커널</h3>
-<ul>
-<li>Linear</li>
-<li>Polynomial</li>
-<li>RBF (Gaussian), 가장 많이 사용</li>
-<li>Sigmoid</li>
-</ul>
-</section>
-</section>
-<section id="rbf-커널과-γ-gamma" class="level2" data-number="25.6">
-<h2 data-number="25.6" class="anchored" data-anchor-id="rbf-커널과-γ-gamma"><span class="header-section-number">25.6</span> RBF 커널과 γ (gamma)</h2>
-<section id="gamma의-의미" class="level3" data-number="25.6.1">
-<h3 data-number="25.6.1" class="anchored" data-anchor-id="gamma의-의미"><span class="header-section-number">25.6.1</span> gamma의 의미</h3>
-<ul>
-<li>하나의 데이터가 미치는 영향 범위</li>
-</ul>
-</section>
-<section id="gamma-값의-영향" class="level3" data-number="25.6.2">
-<h3 data-number="25.6.2" class="anchored" data-anchor-id="gamma-값의-영향"><span class="header-section-number">25.6.2</span> gamma 값의 영향</h3>
-<ul>
-<li><p>gamma ↑</p>
-<ul>
-<li>영향 범위 좁음</li>
-<li>결정 경계 복잡</li>
-<li>과적합 위험 ↑</li>
-</ul></li>
-<li><p>gamma ↓</p>
-<ul>
-<li>영향 범위 넓음</li>
-<li>단순한 경계</li>
-<li>과소적합 가능성 ↑</li>
-</ul></li>
-</ul>
-</section>
-<section id="예제-rbf-svm" class="level3" data-number="25.6.3">
-<h3 data-number="25.6.3" class="anchored" data-anchor-id="예제-rbf-svm"><span class="header-section-number">25.6.3</span> 예제 (RBF SVM)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf <span class="op">=</span> Pipeline([</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"model"</span>, SVC(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        kernel<span class="op">=</span><span class="st">"rbf"</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        C<span class="op">=</span><span class="fl">1.0</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        gamma<span class="op">=</span><span class="st">"scale"</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ))</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf.fit(X_train, y_train)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf.score(X_test, y_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="다중-분류에서의-svm" class="level2" data-number="25.7">
-<h2 data-number="25.7" class="anchored" data-anchor-id="다중-분류에서의-svm"><span class="header-section-number">25.7</span> 다중 분류에서의 SVM</h2>
-<p>SVM은 본래 <strong>이진 분류 모델</strong>이나 다중 클래스에서는 내부적으로 다음 방식을 사용한다.</p>
-<ul>
-<li>One-vs-Rest (OvR)</li>
-<li>One-vs-One (OvO, 기본값)</li>
-</ul>
-<p>scikit-learn에서는 자동 처리된다.</p>
-</section>
-<section id="svm의-장단점" class="level2" data-number="25.8">
-<h2 data-number="25.8" class="anchored" data-anchor-id="svm의-장단점"><span class="header-section-number">25.8</span> SVM의 장단점</h2>
-<section id="장점" class="level3" data-number="25.8.1">
-<h3 data-number="25.8.1" class="anchored" data-anchor-id="장점"><span class="header-section-number">25.8.1</span> 장점</h3>
-<ul>
-<li>일반화 성능 우수</li>
-<li>고차원 데이터에 강함</li>
-<li>커널을 통한 강력한 비선형 표현</li>
-</ul>
-</section>
-<section id="단점" class="level3" data-number="25.8.2">
-<h3 data-number="25.8.2" class="anchored" data-anchor-id="단점"><span class="header-section-number">25.8.2</span> 단점</h3>
-<ul>
-<li>대규모 데이터에서 학습 비용 큼</li>
-<li>파라미터(C, gamma) 튜닝 필요</li>
-<li>모델 해석 어려움</li>
-</ul>
-</section>
-</section>
-<section id="로지스틱-회귀-vs-svm" class="level2" data-number="25.9">
-<h2 data-number="25.9" class="anchored" data-anchor-id="로지스틱-회귀-vs-svm"><span class="header-section-number">25.9</span> 로지스틱 회귀 vs SVM</h2>
+<p><strong>SVM vs 로지스틱 회귀</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -635,42 +537,786 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>결정 기준</td>
-<td>확률 최대화</td>
+<td>목적 함수</td>
+<td>확률 최대화 (로그 우도)</td>
 <td>마진 최대화</td>
 </tr>
 <tr class="even">
 <td>출력</td>
-<td>확률</td>
-<td>클래스</td>
+<td>확률 (0~1)</td>
+<td>클래스 (확률은 옵션)</td>
+</tr>
+<tr class="odd">
+<td>결정 경계</td>
+<td>확률 기반</td>
+<td>마진 기반</td>
+</tr>
+<tr class="even">
+<td>영향 데이터</td>
+<td>모든 데이터</td>
+<td>서포트 벡터만</td>
 </tr>
 <tr class="odd">
 <td>해석</td>
-<td>쉬움</td>
+<td>쉬움 (계수)</td>
 <td>어려움</td>
 </tr>
 <tr class="even">
 <td>비선형</td>
-<td>제한적</td>
-<td>커널 사용</td>
+<td>다항식 특성 추가</td>
+<td>커널 트릭</td>
+</tr>
+<tr class="odd">
+<td>대규모 데이터</td>
+<td>적합</td>
+<td>부적합</td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="하드-마진-vs-소프트-마진" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="하드-마진-vs-소프트-마진"><span class="header-section-number">25.3</span> 하드 마진 vs 소프트 마진</h2>
+<p><strong>하드 마진 SVM</strong></p>
+<ul>
+<li>모든 데이터를 완벽히 분리</li>
+<li>오분류 허용 안 함</li>
+<li>현실 데이터에서는 거의 불가능</li>
+<li>노이즈나 이상치에 매우 민감</li>
+</ul>
+<p><strong>소프트 마진 SVM</strong></p>
+<ul>
+<li>일부 오분류 허용</li>
+<li>C 파라미터로 허용 정도 조절</li>
+<li>실무에서 주로 사용</li>
+<li>과적합 방지</li>
+</ul>
+<p><strong>C 파라미터의 의미</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>C 값</th>
+<th>효과</th>
+<th>마진</th>
+<th>과적합 위험</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C ↑ (큼)</td>
+<td>오분류 엄격히 금지</td>
+<td>좁음</td>
+<td>높음</td>
+</tr>
+<tr class="even">
+<td>C = 1</td>
+<td>균형 (기본값)</td>
+<td>중간</td>
+<td>중간</td>
+</tr>
+<tr class="odd">
+<td>C ↓ (작음)</td>
+<td>오분류 허용 많음</td>
+<td>넓음</td>
+<td>낮음 (과소적합 가능)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="선형-svm" class="level2" data-number="25.4">
+<h2 data-number="25.4" class="anchored" data-anchor-id="선형-svm"><span class="header-section-number">25.4</span> 선형 SVM</h2>
+<p>선형 SVM은 선형 결정 경계로 클래스를 구분한다.</p>
+<p><strong>선형 SVM 특징</strong></p>
+<ul>
+<li>선형 초평면으로 분리</li>
+<li>고차원 데이터에 효과적</li>
+<li>계산 효율적</li>
+<li>로지스틱 회귀의 강력한 대안</li>
+</ul>
+<section id="선형-svm-실습" class="level3" data-number="25.4.1">
+<h3 data-number="25.4.1" class="anchored" data-anchor-id="선형-svm-실습"><span class="header-section-number">25.4.1</span> 선형 SVM 실습</h3>
+<p><strong>예제: 선형 SVM 학습</strong></p>
+<div id="b8707ce8" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 선형 SVM 파이프라인 (스케일링 필수)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear <span class="op">=</span> Pipeline([</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="fl">1.0</span>, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>pipe_svm_linear.fit(X_train, y_train)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>y_pred_linear <span class="op">=</span> pipe_svm_linear.predict(X_test)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>accuracy_linear <span class="op">=</span> accuracy_score(y_test, y_pred_linear)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 선형 SVM 성능 ==="</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"정확도: </span><span class="sc">{</span>accuracy_linear<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">분류 리포트:"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_linear))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 서포트 벡터 개수</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> pipe_svm_linear.named_steps[<span class="st">'model'</span>]</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">서포트 벡터 개수: </span><span class="sc">{</span>svm_model<span class="sc">.</span>n_support_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"전체 학습 데이터 대비: </span><span class="sc">{</span>svm_model<span class="sc">.</span>n_support_<span class="sc">.</span><span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(X_train) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 선형 SVM 성능 ===
+정확도: 1.0000
+
+분류 리포트:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        29
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        24
+
+    accuracy                           1.00        67
+   macro avg       1.00      1.00      1.00        67
+weighted avg       1.00      1.00      1.00        67
+
+
+서포트 벡터 개수: [12 10  4]
+전체 학습 데이터 대비: 9.8%</code></pre>
+</div>
+</div>
+<p><strong>예제: C 값에 따른 성능 변화</strong></p>
+<div id="11248171" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 C 값으로 실험</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>C_values <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>accuracies <span class="op">=</span> []</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>n_support_vectors <span class="op">=</span> []</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> C <span class="kw">in</span> C_values:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    svm_temp <span class="op">=</span> Pipeline([</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'model'</span>, SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span>C, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    svm_temp.fit(X_train, y_train)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> svm_temp.score(X_test, y_test)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    n_sv <span class="op">=</span> svm_temp.named_steps[<span class="st">'model'</span>].n_support_.<span class="bu">sum</span>()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    accuracies.append(acc)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    n_support_vectors.append(n_sv)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 정확도</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].semilogx(C_values, accuracies, marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'C (Regularization)'</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Linear SVM: C vs Accuracy'</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 서포트 벡터 수</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].semilogx(C_values, n_support_vectors, marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'orange'</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'C (Regularization)'</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Number of Support Vectors'</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Linear SVM: C vs Support Vectors'</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== C 값별 결과 ==="</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> C, acc, n_sv <span class="kw">in</span> <span class="bu">zip</span>(C_values, accuracies, n_support_vectors):</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"C=</span><span class="sc">{</span>C<span class="sc">:6.2f}</span><span class="ss">: Accuracy=</span><span class="sc">{</span>acc<span class="sc">:.4f}</span><span class="ss">, Support Vectors=</span><span class="sc">{</span>n_sv<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-4-output-1.png" width="1334" height="468" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== C 값별 결과 ===
+C=  0.01: Accuracy=0.9254, Support Vectors=149
+C=  0.10: Accuracy=1.0000, Support Vectors=61
+C=  1.00: Accuracy=1.0000, Support Vectors=26
+C= 10.00: Accuracy=1.0000, Support Vectors=18
+C=100.00: Accuracy=1.0000, Support Vectors=12</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="비선형-svm과-커널-트릭" class="level2" data-number="25.5">
+<h2 data-number="25.5" class="anchored" data-anchor-id="비선형-svm과-커널-트릭"><span class="header-section-number">25.5</span> 비선형 SVM과 커널 트릭</h2>
+<p>현실 데이터는 선형으로 분리되지 않는 경우가 많다. 커널 함수를 사용하면 비선형 경계를 만들 수 있다.</p>
+<p><strong>커널 트릭의 개념</strong></p>
+<ol type="1">
+<li>원래 공간에서는 선형 분리 불가능</li>
+<li>고차원 공간으로 매핑하면 선형 분리 가능</li>
+<li>실제로 고차원 변환을 계산하지 않음</li>
+<li>내적만 계산 (커널 함수) → 효율적</li>
+</ol>
+<p><strong>주요 커널 함수</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>커널</th>
+<th>수식</th>
+<th>특징</th>
+<th>사용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear</td>
+<td>K(x, y) = x·y</td>
+<td>선형 경계</td>
+<td>선형 분리 가능</td>
+</tr>
+<tr class="even">
+<td>Polynomial</td>
+<td>K(x, y) = (γx·y + r)ᵈ</td>
+<td>d차 다항식 경계</td>
+<td>중간 복잡도</td>
+</tr>
+<tr class="odd">
+<td>RBF (Gaussian)</td>
+<td>K(x, y) = exp(-γ‖x-y‖²)</td>
+<td>무한 차원, 유연</td>
+<td>일반적 상황 (가장 많이 사용)</td>
+</tr>
+<tr class="even">
+<td>Sigmoid</td>
+<td>K(x, y) = tanh(γx·y + r)</td>
+<td>신경망 유사</td>
+<td>특수 상황</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rbf-커널과-하이퍼파라미터" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="rbf-커널과-하이퍼파라미터"><span class="header-section-number">25.6</span> RBF 커널과 하이퍼파라미터</h2>
+<p>RBF(Radial Basis Function) 커널은 가장 널리 사용되는 비선형 커널이다.</p>
+<p><strong>RBF 커널 특징</strong></p>
+<ul>
+<li>가우시안 함수 기반</li>
+<li>무한 차원 특성 공간으로 매핑</li>
+<li>매우 유연한 결정 경계</li>
+<li>대부분의 비선형 문제에 효과적</li>
+</ul>
+<p><strong>gamma (γ) 파라미터</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>gamma 값</th>
+<th>영향 범위</th>
+<th>결정 경계</th>
+<th>과적합 위험</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gamma ↑ (큼)</td>
+<td>좁음</td>
+<td>복잡, 구불구불</td>
+<td>높음</td>
+</tr>
+<tr class="even">
+<td>gamma = ‘scale’ (기본)</td>
+<td>적절</td>
+<td>균형</td>
+<td>중간</td>
+</tr>
+<tr class="odd">
+<td>gamma ↓ (작음)</td>
+<td>넓음</td>
+<td>단순, 부드러움</td>
+<td>낮음 (과소적합 가능)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>C와 gamma의 조합 효과</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>C &nbsp;gamma</th>
+<th>gamma 큼</th>
+<th>gamma 작음</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C 큼</td>
+<td>과적합 (복잡한 경계)</td>
+<td>적절</td>
+</tr>
+<tr class="even">
+<td>C 작음</td>
+<td>적절</td>
+<td>과소적합 (단순한 경계)</td>
+</tr>
+</tbody>
+</table>
+<section id="rbf-svm-실습" class="level3" data-number="25.6.1">
+<h3 data-number="25.6.1" class="anchored" data-anchor-id="rbf-svm-실습"><span class="header-section-number">25.6.1</span> RBF SVM 실습</h3>
+<p><strong>예제: RBF SVM 학습</strong></p>
+<div id="c01ec10b" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RBF SVM 파이프라인</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf <span class="op">=</span> Pipeline([</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="fl">1.0</span>, gamma<span class="op">=</span><span class="st">'scale'</span>, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf.fit(X_train, y_train)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>y_pred_rbf <span class="op">=</span> pipe_svm_rbf.predict(X_test)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>accuracy_rbf <span class="op">=</span> accuracy_score(y_test, y_pred_rbf)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== RBF SVM 성능 ==="</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"정확도: </span><span class="sc">{</span>accuracy_rbf<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">분류 리포트:"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_rbf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== RBF SVM 성능 ===
+정확도: 1.0000
+
+분류 리포트:
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        29
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        24
+
+    accuracy                           1.00        67
+   macro avg       1.00      1.00      1.00        67
+weighted avg       1.00      1.00      1.00        67
+</code></pre>
+</div>
+</div>
+<p><strong>예제: gamma 값에 따른 성능 변화</strong></p>
+<div id="9e169e1f" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 gamma 값으로 실험</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gamma_values <span class="op">=</span> [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>accuracies_gamma <span class="op">=</span> []</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gamma <span class="kw">in</span> gamma_values:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    svm_temp <span class="op">=</span> Pipeline([</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'model'</span>, SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="fl">1.0</span>, gamma<span class="op">=</span>gamma, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    svm_temp.fit(X_train, y_train)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> svm_temp.score(X_test, y_test)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    accuracies_gamma.append(acc)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.semilogx(gamma_values, accuracies_gamma, marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'gamma'</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'RBF SVM: gamma vs Accuracy (C=1.0)'</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== gamma 값별 결과 ==="</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gamma, acc <span class="kw">in</span> <span class="bu">zip</span>(gamma_values, accuracies_gamma):</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"gamma=</span><span class="sc">{</span>gamma<span class="sc">:6.3f}</span><span class="ss">: Accuracy=</span><span class="sc">{</span>acc<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-6-output-1.png" width="950" height="564" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== gamma 값별 결과 ===
+gamma= 0.001: Accuracy=0.7910
+gamma= 0.010: Accuracy=0.9701
+gamma= 0.100: Accuracy=1.0000
+gamma= 1.000: Accuracy=1.0000
+gamma=10.000: Accuracy=0.9104</code></pre>
+</div>
+</div>
+<p><strong>예제: GridSearchCV로 최적 하이퍼파라미터 찾기</strong></p>
+<div id="7616c5cc" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 파라미터 그리드</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'model__C'</span>: [<span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'model__gamma'</span>: [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GridSearchCV</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>grid_search <span class="op">=</span> GridSearchCV(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    pipe_svm_rbf,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    param_grid,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">'accuracy'</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    verbose<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>grid_search.fit(X_train, y_train)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== GridSearchCV 결과 ==="</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 파라미터: </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_params_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"최적 교차 검증 점수: </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_score_<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"테스트 점수: </span><span class="sc">{</span>grid_search<span class="sc">.</span>score(X_test, y_test)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 최적 모델</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>best_svm <span class="op">=</span> grid_search.best_estimator_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting 5 folds for each of 16 candidates, totalling 80 fits
+=== GridSearchCV 결과 ===
+최적 파라미터: {'model__C': 100.0, 'model__gamma': 0.01}
+최적 교차 검증 점수: 0.9774
+테스트 점수: 1.0000</code></pre>
+</div>
+</div>
+<p><strong>예제: C-gamma 히트맵</strong></p>
+<div id="00bf12ee" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C-gamma 조합별 성능</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(grid_search.cv_results_)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pivot_table <span class="op">=</span> results.pivot_table(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'mean_test_score'</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'param_model__gamma'</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'param_model__C'</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 히트맵</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>sns.heatmap(pivot_table, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.3f'</span>, cmap<span class="op">=</span><span class="st">'YlGnBu'</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'C'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'gamma'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'RBF SVM: C vs gamma (Cross-Validation Accuracy)'</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-8-output-1.png" width="881" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="다중-클래스-분류" class="level2" data-number="25.7">
+<h2 data-number="25.7" class="anchored" data-anchor-id="다중-클래스-분류"><span class="header-section-number">25.7</span> 다중 클래스 분류</h2>
+<p>SVM은 본래 이진 분류 모델이지만, 다중 클래스에도 적용 가능하다.</p>
+<p><strong>다중 클래스 전략</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 24%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>전략</th>
+<th>설명</th>
+<th>분류기 수</th>
+<th>scikit-learn 기본값</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One-vs-Rest (OvR)</td>
+<td>각 클래스 vs 나머지</td>
+<td>k개 (k=클래스 수)</td>
+<td>LinearSVC</td>
+</tr>
+<tr class="even">
+<td>One-vs-One (OvO)</td>
+<td>모든 클래스 쌍 비교</td>
+<td>k(k-1)/2개</td>
+<td>SVC</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 다중 클래스 확인</strong></p>
+<div id="9d5f0a5f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다중 클래스 SVM (자동 처리)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>svm_multiclass <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="fl">1.0</span>, gamma<span class="op">=</span><span class="st">'scale'</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>X_test_scaled <span class="op">=</span> scaler.transform(X_test)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>svm_multiclass.fit(X_train_scaled, y_train)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 다중 클래스 SVM ==="</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"클래스 수: </span><span class="sc">{</span><span class="bu">len</span>(svm_multiclass.classes_)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"클래스: </span><span class="sc">{</span>svm_multiclass<span class="sc">.</span>classes_<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"이진 분류기 수 (OvO): </span><span class="sc">{</span><span class="bu">len</span>(svm_multiclass.classes_) <span class="op">*</span> (<span class="bu">len</span>(svm_multiclass.classes_) <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> <span class="dv">2</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 혼동 행렬</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> svm_multiclass.predict(X_test_scaled)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span>svm_multiclass.classes_,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>            yticklabels<span class="op">=</span>svm_multiclass.classes_)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Actual'</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SVM Multiclass: Confusion Matrix'</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 다중 클래스 SVM ===
+클래스 수: 3
+클래스: ['Adelie' 'Chinstrap' 'Gentoo']
+이진 분류기 수 (OvO): 3</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-9-output-2.png" width="704" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="커널-비교" class="level2" data-number="25.8">
+<h2 data-number="25.8" class="anchored" data-anchor-id="커널-비교"><span class="header-section-number">25.8</span> 커널 비교</h2>
+<p><strong>예제: 다양한 커널 비교</strong></p>
+<div id="763b5f31" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 커널로 학습</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>kernels <span class="op">=</span> [<span class="st">'linear'</span>, <span class="st">'poly'</span>, <span class="st">'rbf'</span>, <span class="st">'sigmoid'</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>results_kernel <span class="op">=</span> []</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> kernel <span class="kw">in</span> kernels:</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    pipe_temp <span class="op">=</span> Pipeline([</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'model'</span>, SVC(kernel<span class="op">=</span>kernel, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    pipe_temp.fit(X_train, y_train)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> pipe_temp.score(X_test, y_test)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    n_sv <span class="op">=</span> pipe_temp.named_steps[<span class="st">'model'</span>].n_support_.<span class="bu">sum</span>()</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    results_kernel.append({</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Kernel'</span>: kernel,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Accuracy'</span>: acc,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Support Vectors'</span>: n_sv</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>results_kernel_df <span class="op">=</span> pd.DataFrame(results_kernel)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 커널별 성능 비교 ==="</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_kernel_df)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].bar(results_kernel_df[<span class="st">'Kernel'</span>], results_kernel_df[<span class="st">'Accuracy'</span>])</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Kernel Comparison: Accuracy'</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylim([<span class="fl">0.8</span>, <span class="fl">1.0</span>])</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar(results_kernel_df[<span class="st">'Kernel'</span>], results_kernel_df[<span class="st">'Support Vectors'</span>])</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Number of Support Vectors'</span>)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Kernel Comparison: Support Vectors'</span>)</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 커널별 성능 비교 ===
+    Kernel  Accuracy  Support Vectors
+0   linear  1.000000               26
+1     poly  0.985075               75
+2      rbf  1.000000               46
+3  sigmoid  1.000000               52</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-10-output-2.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="모델-비교" class="level2" data-number="25.9">
+<h2 data-number="25.9" class="anchored" data-anchor-id="모델-비교"><span class="header-section-number">25.9</span> 모델 비교</h2>
+<p><strong>예제: 로지스틱 회귀 vs SVM</strong></p>
+<div id="e06fa5e5" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 로지스틱 회귀</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>pipe_lr <span class="op">=</span> Pipeline([</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>pipe_lr.fit(X_train, y_train)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 성능 비교</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Logistic Regression'</span>: pipe_lr,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear SVM'</span>: pipe_svm_linear,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'RBF SVM'</span>: best_svm</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>comparison_results <span class="op">=</span> []</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, model <span class="kw">in</span> models.items():</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> model.score(X_test, y_test)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    comparison_results.append({<span class="st">'Model'</span>: name, <span class="st">'Accuracy'</span>: acc})</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>comparison_df <span class="op">=</span> pd.DataFrame(comparison_results)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 모델 성능 비교 ==="</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(comparison_df)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.bar(comparison_df[<span class="st">'Model'</span>], comparison_df[<span class="st">'Accuracy'</span>])</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy'</span>)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Model Comparison'</span>)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">0.9</span>, <span class="fl">1.0</span>])</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">15</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 모델 성능 비교 ===
+                 Model  Accuracy
+0  Logistic Regression       1.0
+1           Linear SVM       1.0
+2              RBF SVM       1.0</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07. 서포트 벡터 머신_files/figure-html/cell-11-output-2.png" width="950" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="활용-가이드" class="level2" data-number="25.10">
 <h2 data-number="25.10" class="anchored" data-anchor-id="활용-가이드"><span class="header-section-number">25.10</span> 활용 가이드</h2>
+<p><strong>SVM 사용이 적합한 경우</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>고차원 데이터</td>
+<td>차원의 저주에 강함</td>
+</tr>
+<tr class="even">
+<td>명확한 마진</td>
+<td>클래스 간 분리가 뚜렷</td>
+</tr>
+<tr class="odd">
+<td>소~중규모 데이터</td>
+<td>효율적 학습 가능</td>
+</tr>
+<tr class="even">
+<td>비선형 경계 필요</td>
+<td>커널 트릭 활용</td>
+</tr>
+<tr class="odd">
+<td>이상치 존재</td>
+<td>서포트 벡터만 사용</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SVM 사용이 부적합한 경우</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>대안</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>대규모 데이터 (100만+ 샘플)</td>
+<td>로지스틱 회귀, SGDClassifier</td>
+</tr>
+<tr class="even">
+<td>확률 출력 필수</td>
+<td>로지스틱 회귀, RandomForest</td>
+</tr>
+<tr class="odd">
+<td>모델 해석 중요</td>
+<td>로지스틱 회귀, 결정 트리</td>
+</tr>
+<tr class="even">
+<td>실시간 예측 중요</td>
+<td>경량 모델 (나이브 베이즈)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>하이퍼파라미터 튜닝 가이드</strong></p>
+<ol type="1">
+<li><strong>커널 선택</strong>: linear → RBF 순서로 시도</li>
+<li><strong>C 튜닝</strong>: 0.1, 1, 10, 100 범위에서 시작</li>
+<li><strong>gamma 튜닝</strong> (RBF): ‘scale’, ‘auto’, 또는 0.001~10 범위</li>
+<li><strong>GridSearchCV</strong>: 교차 검증으로 최적값 찾기</li>
+<li><strong>스케일링</strong>: 항상 표준화 수행</li>
+</ol>
+</section>
+<section id="요약" class="level2" data-number="25.11">
+<h2 data-number="25.11" class="anchored" data-anchor-id="요약"><span class="header-section-number">25.11</span> 요약</h2>
+<p>이 장에서는 강력한 분류 모델인 SVM을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>SVM 핵심 개념</strong></p>
 <ul>
-<li>데이터 수가 많지 않음</li>
-<li>특성 차원이 높음</li>
-<li>명확한 결정 경계 필요</li>
+<li><strong>마진 최대화</strong>: 일반화 성능 향상</li>
+<li><strong>서포트 벡터</strong>: 일부 핵심 데이터만 사용</li>
+<li><strong>소프트 마진</strong>: C로 오분류 허용 조절</li>
+<li><strong>커널 트릭</strong>: 비선형 문제 해결</li>
 </ul>
-<p>이런 경우 <strong>SVM은 매우 강력한 선택</strong></p>
-<p>반면,</p>
-<ul>
-<li>데이터가 매우 큼</li>
-<li>모델 해석이 중요</li>
+<p><strong>주요 하이퍼파라미터</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>파라미터</th>
+<th>역할</th>
+<th>조정 방향</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C</td>
+<td>오분류 허용 정도</td>
+<td>큼 → 엄격, 작음 → 관대</td>
+</tr>
+<tr class="even">
+<td>gamma (RBF)</td>
+<td>영향 범위</td>
+<td>큼 → 좁음, 작음 → 넓음</td>
+</tr>
+<tr class="odd">
+<td>kernel</td>
+<td>결정 경계 형태</td>
+<td>linear, rbf, poly</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실무 체크리스트</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">데이터 스케일링 수행 (필수)</label></li>
+<li><label><input type="checkbox">적절한 커널 선택 (linear → rbf)</label></li>
+<li><label><input type="checkbox">GridSearchCV로 C, gamma 튜닝</label></li>
+<li><label><input type="checkbox">교차 검증으로 성능 평가</label></li>
+<li><label><input type="checkbox">서포트 벡터 수 확인</label></li>
+<li><label><input type="checkbox">다른 모델과 비교</label></li>
+<li><label><input type="checkbox">계산 시간 고려 (대규모 데이터)</label></li>
 </ul>
-<p>트리 계열 또는 로지스틱 회귀 고려</p>
+<p>SVM은 마진 최대화를 통해 우수한 일반화 성능을 달성하는 강력한 분류 모델이다. 특히 고차원 데이터와 비선형 문제에서 효과적이며, 적절한 하이퍼파라미터 튜닝을 통해 최적의 성능을 얻을 수 있다.</p>
 
 
 </section>
