@@ -1,191 +1,610 @@
 # 군집 분석
 
-## 군집 분석 개요
+군집 분석(Clustering)은 라벨이 없는 데이터에서 유사한 데이터끼리 자동으로 묶는 비지도 학습 기법이다. 정답이 주어지지 않은 상태에서 데이터의 내재된 구조를 발견하고 패턴을 파악하는 것이 목적이다. 군집 분석은 데이터 탐색, 세분화, 이상치 탐지, 전처리 등 다양한 분야에서 활용된다. 이 장에서는 K-Means, DBSCAN, GMM 등 주요 군집 알고리즘의 원리와 실무 활용법을 학습한다.
 
-**군집 분석**(Clustering)은 라벨이 없는 데이터에서 **유사한 데이터끼리 묶는 비지도 학습 기법**이다.
-
-주요 목적은 다음과 같다.
-
-* 데이터 구조 탐색
-* 패턴 및 그룹 발견
-* 이후 모델링을 위한 전처리 또는 특성 생성
-
-penguins 데이터처럼
-
-> “종(species)을 모른다고 가정하고도 묶일까?”
-> 를 실험하기에 매우 적합하다.
-
-## 군집 분석의 주요 가정
-
-군집 알고리즘마다 전제가 다르다.
-
-* 거리 기반인가?
-* 밀도를 가정하는가?
-* 분포를 가정하는가?
-
-**알고리즘 선택 = 데이터 가정 선택**
-
-## 분할 기반 군집 
-
-분할 기반 군집(Partition-based Clustering)의 대표적인 알고리즘으로 K-Means가 있다.
-
-### K-Means
-
-#### 핵심 아이디어
-
-* K개의 군집 중심(centroid)을 미리 정함
-* 각 데이터 → 가장 가까운 중심에 할당
-* 중심 재계산 → 반복
-
-#### 특징
-
-* 빠르고 구현이 단순
-* 군집 수 K를 사전에 지정해야 함
-* 구형(spherical) 군집에 적합
-* 이상치에 민감
-
-#### 예제 
+**예제: 데이터 로드**
 
 ```{python}
-from sklearn.cluster import KMeans
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
-from seaborn import load_dataset
+from sklearn.decomposition import PCA
 
-df = load_dataset('penguins')
-X_cluster = df[
-    ["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]
-].dropna()
+# 데이터 로드
+df = sns.load_dataset("penguins").dropna()
 
+# 군집 분석용 특성 선택 (연속형 변수만)
+X_cluster = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+
+# 실제 종 정보 (평가용)
+y_true = df["species"]
+
+print("데이터 크기:", X_cluster.shape)
+print("\n특성 변수:", X_cluster.columns.tolist())
+print("\n실제 종 분포:")
+print(y_true.value_counts())
+```
+
+## 군집 분석의 개념
+
+군집 분석은 비지도 학습으로, 타겟 변수 없이 데이터의 구조를 발견한다.
+
+**군집 분석 vs 분류**
+
+| 구분 | 군집 분석 (Clustering) | 분류 (Classification) |
+|------|----------------------|---------------------|
+| 학습 유형 | 비지도 학습 | 지도 학습 |
+| 타겟 | 없음 | 있음 (라벨) |
+| 목적 | 구조 발견 | 예측 |
+| 평가 | 내재적 지표, 시각화 | 정확도, F1 등 |
+| 예시 | 고객 세분화, 패턴 발견 | 종 분류, 질병 진단 |
+
+**군집 분석의 목적**
+
+| 목적 | 설명 | 예시 |
+|------|------|------|
+| 데이터 탐색 | 구조와 패턴 파악 | 신규 데이터 이해 |
+| 세분화 | 유사 그룹 생성 | 고객 세그먼트 |
+| 이상치 탐지 | 군집에 속하지 않는 점 발견 | 이상 거래 탐지 |
+| 전처리 | 군집을 새로운 특성으로 사용 | 군집 ID를 범주형 변수로 |
+| 차원 축소 보조 | 시각화 전 그룹 파악 | PCA + 군집 |
+
+**군집 분석의 가정**
+
+알고리즘마다 데이터에 대한 가정이 다르다.
+
+| 알고리즘 | 가정 |
+|---------|------|
+| K-Means | 구형(spherical) 군집, 유사한 크기 |
+| DBSCAN | 밀도 기반 군집, 밀도 차이 적음 |
+| GMM | 가우시안 분포 혼합 |
+| 계층적 군집 | 트리 구조 가능 |
+
+## 데이터 준비
+
+**예제: 데이터 표준화**
+
+```{python}
+# 표준화 (군집은 거리 기반이므로 필수)
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_cluster)
 
-kmeans = KMeans(n_clusters=3, random_state=42)
+print("=== 표준화 전후 비교 ===")
+print("원본 데이터 범위:")
+print(X_cluster.describe().loc[['min', 'max']])
+print("\n표준화 후 데이터 범위:")
+print(pd.DataFrame(X_scaled, columns=X_cluster.columns).describe().loc[['min', 'max']])
+```
+
+**표준화의 중요성**
+
+- 거리 기반 알고리즘에서 필수
+- 스케일이 큰 변수가 군집을 지배하는 것 방지
+- K-Means, DBSCAN에서 특히 중요
+
+## 분할 기반 군집: K-Means
+
+K-Means는 가장 널리 사용되는 군집 알고리즘으로, 데이터를 K개의 군집으로 분할한다.
+
+**K-Means 알고리즘 작동 원리**
+
+1. K개의 초기 중심점(centroid) 무작위 선택
+2. 각 데이터를 가장 가까운 중심점에 할당
+3. 각 군집의 중심점을 새로 계산 (평균)
+4. 중심점 변화가 없을 때까지 2-3 반복
+
+**K-Means 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 군집 수 | 사전에 K 지정 필요 |
+| 군집 형태 | 구형(spherical) 가정 |
+| 계산 속도 | 빠름 (대용량 적합) |
+| 이상치 민감 | 평균 사용으로 민감 |
+| 결정론적 | 초기값에 따라 결과 다름 |
+| 하드 할당 | 각 데이터는 하나의 군집만 |
+
+### K-Means 실습
+
+**예제: K-Means 군집 분석**
+
+```{python}
+from sklearn.cluster import KMeans
+
+# K-Means 군집 (K=3, 실제 종 개수와 동일)
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
 labels_kmeans = kmeans.fit_predict(X_scaled)
-labels_kmeans
+
+print("=== K-Means 결과 ===")
+print(f"군집 개수: {kmeans.n_clusters}")
+print(f"반복 횟수: {kmeans.n_iter_}")
+print("\n군집별 샘플 수:")
+print(pd.Series(labels_kmeans).value_counts().sort_index())
+
+# 실제 종과 비교
+comparison_df = pd.DataFrame({
+    'True Species': y_true,
+    'K-Means Cluster': labels_kmeans
+})
+print("\n=== 실제 종 vs 군집 ===")
+print(pd.crosstab(comparison_df['True Species'], comparison_df['K-Means Cluster']))
 ```
 
-결과 해석
+**예제: 중심점 확인**
 
-* n_clusters=3
+```{python}
+# 군집 중심점 (표준화된 공간)
+centroids = kmeans.cluster_centers_
 
-  * penguins의 실제 종 개수와 일치
-* 하지만 군집 ≠ 실제 라벨
-* **구조적 유사성**만 반영
+print("\n=== 군집 중심점 ===")
+centroids_df = pd.DataFrame(
+    centroids,
+    columns=X_cluster.columns,
+    index=[f'Cluster {i}' for i in range(3)]
+)
+print(centroids_df.round(2))
 
-### K 선택 방법
-
-* Elbow Method
-* Silhouette Score
-
-```python
-from sklearn.metrics import silhouette_score
-
-silhouette_score(X_scaled, labels_kmeans)
+# 원래 스케일로 역변환
+centroids_original = scaler.inverse_transform(centroids)
+centroids_original_df = pd.DataFrame(
+    centroids_original,
+    columns=X_cluster.columns,
+    index=[f'Cluster {i}' for i in range(3)]
+)
+print("\n=== 군집 중심점 (원본 스케일) ===")
+print(centroids_original_df.round(2))
 ```
 
+### 최적 K 값 선택
 
-## 밀도 기반 군집 
-대표적인 밀도 기반 군집(Density-based Clustering) 알고리즘으로 DBSCAN이 있다. 
+**방법 1: Elbow Method**
 
-### DBSCAN
+```{python}
+# 다양한 K 값으로 실험
+inertias = []
+K_range = range(2, 11)
 
-#### 핵심 아이디어
+for k in K_range:
+    kmeans_temp = KMeans(n_clusters=k, random_state=42, n_init=10)
+    kmeans_temp.fit(X_scaled)
+    inertias.append(kmeans_temp.inertia_)
 
-* 데이터가 **빽빽한 영역**을 군집으로 간주
-* 밀도가 낮은 영역은 **노이즈(-1)** 처리
+# Elbow Plot
+plt.figure(figsize=(10, 6))
+plt.plot(K_range, inertias, marker='o', linewidth=2, markersize=8)
+plt.xlabel('Number of Clusters (K)')
+plt.ylabel('Inertia (Within-cluster Sum of Squares)')
+plt.title('Elbow Method for Optimal K')
+plt.grid(True, alpha=0.3)
+plt.xticks(K_range)
+plt.tight_layout()
+plt.show()
+```
 
-#### 주요 파라미터
+**방법 2: Silhouette Score**
 
-* eps: 이웃으로 간주할 거리
-* min_samples: 최소 이웃 수
+```{python}
+from sklearn.metrics import silhouette_score, silhouette_samples
 
-#### 특징
+# Silhouette Score 계산
+silhouette_scores = []
 
-* 군집 개수 자동 결정
-* 이상치 탐지 가능
-* 비구형 군집 탐지 가능
-* 밀도 차이가 크면 성능 저하
+for k in K_range:
+    kmeans_temp = KMeans(n_clusters=k, random_state=42, n_init=10)
+    labels = kmeans_temp.fit_predict(X_scaled)
+    score = silhouette_score(X_scaled, labels)
+    silhouette_scores.append(score)
 
-#### 예제
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.plot(K_range, silhouette_scores, marker='o', linewidth=2, markersize=8)
+plt.xlabel('Number of Clusters (K)')
+plt.ylabel('Silhouette Score')
+plt.title('Silhouette Score for Optimal K')
+plt.grid(True, alpha=0.3)
+plt.axhline(y=np.max(silhouette_scores), color='r', linestyle='--',
+            label=f'Max at K={K_range[np.argmax(silhouette_scores)]}')
+plt.legend()
+plt.xticks(K_range)
+plt.tight_layout()
+plt.show()
 
-```python
+print(f"최적 K (Silhouette): {K_range[np.argmax(silhouette_scores)]}")
+print(f"최대 Silhouette Score: {max(silhouette_scores):.4f}")
+```
+
+**Silhouette Score 해석**
+
+| 점수 범위 | 해석 |
+|----------|------|
+| 0.71 ~ 1.0 | 강한 구조 |
+| 0.51 ~ 0.70 | 합리적 구조 |
+| 0.26 ~ 0.50 | 약한 구조 |
+| < 0.25 | 구조 없음 |
+
+### 군집 시각화
+
+**예제: PCA로 2D 시각화**
+
+```{python}
+# PCA로 2차원으로 축소
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+# K-Means 군집 결과 시각화
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# K-Means 군집
+scatter1 = axes[0].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_kmeans, 
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[0].scatter(pca.transform(centroids)[:, 0], pca.transform(centroids)[:, 1],
+                c='red', marker='X', s=200, edgecolors='black', linewidths=2,
+                label='Centroids')
+axes[0].set_title('K-Means Clustering (K=3)')
+axes[0].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
+axes[0].set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+axes[0].legend()
+plt.colorbar(scatter1, ax=axes[0], label='Cluster')
+
+# 실제 종
+scatter2 = axes[1].scatter(X_pca[:, 0], X_pca[:, 1], 
+                           c=y_true.astype('category').cat.codes,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[1].set_title('True Species')
+axes[1].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
+axes[1].set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+plt.colorbar(scatter2, ax=axes[1], label='Species')
+
+plt.tight_layout()
+plt.show()
+```
+
+## 밀도 기반 군집: DBSCAN
+
+DBSCAN(Density-Based Spatial Clustering of Applications with Noise)은 밀도가 높은 영역을 군집으로 간주하는 알고리즘이다.
+
+**DBSCAN 핵심 개념**
+
+- **Core Point**: 반경 eps 내에 min_samples 이상의 이웃이 있는 점
+- **Border Point**: Core Point의 이웃이지만 자신은 Core가 아닌 점
+- **Noise Point**: Core도 Border도 아닌 점 (라벨 -1)
+
+**DBSCAN 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 군집 수 | 자동 결정 (K 지정 불필요) |
+| 군집 형태 | 비구형, 복잡한 형태 가능 |
+| 이상치 처리 | 노이즈 자동 탐지 (-1) |
+| 밀도 가정 | 밀도가 비슷해야 함 |
+| 파라미터 민감 | eps, min_samples 튜닝 중요 |
+
+**주요 하이퍼파라미터**
+
+| 파라미터 | 설명 | 설정 가이드 |
+|---------|------|------------|
+| eps | 이웃 거리 임계값 | 데이터 분포에 따라 실험 |
+| min_samples | 최소 이웃 수 | 일반적으로 차원 수 + 1 또는 5~10 |
+
+### DBSCAN 실습
+
+**예제: DBSCAN 군집 분석**
+
+```{python}
 from sklearn.cluster import DBSCAN
 
+# DBSCAN 군집
 dbscan = DBSCAN(eps=0.8, min_samples=5)
 labels_dbscan = dbscan.fit_predict(X_scaled)
+
+print("=== DBSCAN 결과 ===")
+print(f"군집 개수 (노이즈 제외): {len(set(labels_dbscan)) - (1 if -1 in labels_dbscan else 0)}")
+print(f"노이즈 포인트 수: {(labels_dbscan == -1).sum()}")
+print("\n군집별 샘플 수:")
+print(pd.Series(labels_dbscan).value_counts().sort_index())
 ```
 
-**결과 해석**
+**예제: eps 값에 따른 군집 변화**
 
-* label = -1
+```{python}
+# 다양한 eps 값으로 실험
+eps_values = [0.4, 0.6, 0.8, 1.0, 1.2]
 
-  * 군집에 속하지 않는 이상치
-* 군집 수는 eps에 따라 크게 변함
+fig, axes = plt.subplots(2, 3, figsize=(18, 12))
+axes = axes.ravel()
 
-DBSCAN은 **시각화 + 반복 실험 필수**
+for idx, eps in enumerate(eps_values):
+    dbscan_temp = DBSCAN(eps=eps, min_samples=5)
+    labels_temp = dbscan_temp.fit_predict(X_scaled)
+    
+    n_clusters = len(set(labels_temp)) - (1 if -1 in labels_temp else 0)
+    n_noise = (labels_temp == -1).sum()
+    
+    scatter = axes[idx].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_temp,
+                               cmap='viridis', alpha=0.6, edgecolors='k')
+    axes[idx].set_title(f'DBSCAN (eps={eps})\nClusters: {n_clusters}, Noise: {n_noise}')
+    axes[idx].set_xlabel('PC1')
+    axes[idx].set_ylabel('PC2')
 
-## 혼합 모델 군집
-밀도, 거리 등을 혼합한 혼합 모델 군집(Model-based Clustering)도 있다.
+# 마지막 subplot은 실제 종
+scatter = axes[5].scatter(X_pca[:, 0], X_pca[:, 1], 
+                         c=y_true.astype('category').cat.codes,
+                         cmap='viridis', alpha=0.6, edgecolors='k')
+axes[5].set_title('True Species')
+axes[5].set_xlabel('PC1')
+axes[5].set_ylabel('PC2')
 
-### Gaussian Mixture Model (GMM)
+plt.tight_layout()
+plt.show()
+```
 
-#### 핵심 아이디어
+## 모델 기반 군집: Gaussian Mixture Model (GMM)
 
-* 데이터가 여러 개의 **가우시안 분포 혼합**으로 생성되었다고 가정
-* 각 데이터는 군집에 **확률적으로 속함**
+GMM은 데이터가 여러 개의 가우시안 분포 혼합으로 생성되었다고 가정하는 확률적 군집 방법이다.
 
-#### 특징
+**GMM 특징**
 
-* 타원형 군집 가능
-* 소프트 군집 (확률)
-* 분포 가정이 맞지 않으면 성능 저하
+| 특징 | 설명 |
+|------|------|
+| 소프트 할당 | 각 데이터가 군집에 속할 확률 제공 |
+| 타원형 군집 | 공분산 고려로 다양한 형태 |
+| 분포 가정 | 가우시안 분포 혼합 |
+| 군집 수 | 사전 지정 필요 |
+| 확률 기반 | 불확실성 정량화 가능 |
 
-#### 예제
+**K-Means vs GMM**
 
-```python
+| 구분 | K-Means | GMM |
+|------|---------|-----|
+| 할당 방식 | 하드 (0 또는 1) | 소프트 (확률) |
+| 군집 형태 | 구형 | 타원형 |
+| 기반 | 거리 | 확률 |
+| 불확실성 | 없음 | 확률로 표현 |
+
+### GMM 실습
+
+**예제: GMM 군집 분석**
+
+```{python}
 from sklearn.mixture import GaussianMixture
 
+# GMM 군집
 gmm = GaussianMixture(n_components=3, random_state=42)
 labels_gmm = gmm.fit_predict(X_scaled)
+probs_gmm = gmm.predict_proba(X_scaled)
+
+print("=== GMM 결과 ===")
+print(f"군집 개수: {gmm.n_components}")
+print("\n군집별 샘플 수:")
+print(pd.Series(labels_gmm).value_counts().sort_index())
+
+# 확률 출력 (처음 5개)
+print("\n=== 군집 소속 확률 (처음 5개) ===")
+probs_df = pd.DataFrame(
+    probs_gmm[:5],
+    columns=[f'Cluster {i}' for i in range(3)]
+)
+probs_df['Assigned'] = labels_gmm[:5]
+print(probs_df.round(3))
 ```
 
-#### 확률 기반 해석
+**예제: 불확실성 분석**
 
-```python
-probs = gmm.predict_proba(X_scaled)
-probs[:5]
+```{python}
+# 최대 확률 (확신도)
+max_probs = probs_gmm.max(axis=1)
+
+# 불확실성이 높은 샘플 (확신도 낮음)
+uncertain_mask = max_probs < 0.7
+
+print(f"\n=== 불확실성 분석 ===")
+print(f"확신도 > 0.9: {(max_probs > 0.9).sum()}개 ({(max_probs > 0.9).sum()/len(max_probs)*100:.1f}%)")
+print(f"확신도 < 0.7: {uncertain_mask.sum()}개 ({uncertain_mask.sum()/len(max_probs)*100:.1f}%)")
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# GMM 군집
+scatter1 = axes[0].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_gmm,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[0].set_title('GMM Clustering')
+axes[0].set_xlabel('PC1')
+axes[0].set_ylabel('PC2')
+plt.colorbar(scatter1, ax=axes[0], label='Cluster')
+
+# 확신도 시각화
+scatter2 = axes[1].scatter(X_pca[:, 0], X_pca[:, 1], c=max_probs,
+                           cmap='RdYlGn', alpha=0.6, edgecolors='k', vmin=0, vmax=1)
+axes[1].set_title('GMM Confidence (Max Probability)')
+axes[1].set_xlabel('PC1')
+axes[1].set_ylabel('PC2')
+plt.colorbar(scatter2, ax=axes[1], label='Confidence')
+
+plt.tight_layout()
+plt.show()
 ```
 
-“이 데이터는 군집 1에 70% 속한다”
+## 알고리즘 종합 비교
 
-## 알고리즘 비교 정리
+**군집 알고리즘 비교**
 
-| 구분     | K-Means | DBSCAN | GMM   |
-| ------ | ------- | ------ | ----- |
-| 군집 수   | 사전 지정   | 자동     | 사전 지정 |
-| 군집 형태  | 구형      | 자유     | 타원    |
-| 이상치 처리 | 약함      | 강함     | 약함    |
-| 소프트 할당 | X       | X      | O     |
-| 계산 비용  | 낮음      | 중간     | 중간    |
+| 구분 | K-Means | DBSCAN | GMM |
+|------|---------|--------|-----|
+| 군집 수 | 사전 지정 | 자동 | 사전 지정 |
+| 군집 형태 | 구형 | 자유 (비구형) | 타원형 |
+| 할당 방식 | 하드 | 하드 | 소프트 (확률) |
+| 이상치 처리 | 약함 | 강함 (노이즈 탐지) | 약함 |
+| 계산 속도 | 빠름 | 중간 | 느림 |
+| 스케일 민감도 | 높음 | 높음 | 높음 |
+| 파라미터 튜닝 | K | eps, min_samples | n_components |
+| 적용 상황 | 일반적, 빠른 탐색 | 이상치 탐지, 복잡한 형태 | 확률 필요, 타원형 군집 |
 
-## 선택 가이드
+**예제: 세 가지 알고리즘 비교**
 
-* 빠른 탐색, 기준선 모델
-  → K-Means
-* 이상치 탐지, 비구형 구조
-  → DBSCAN
-* 분포 기반 해석, 확률 필요
-  → GMM
+```{python}
+# 세 가지 알고리즘 결과 비교
+fig, axes = plt.subplots(1, 4, figsize=(20, 5))
 
-한 가지로 끝내지 말고 **여러 군집 결과 비교**
+# K-Means
+scatter1 = axes[0].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_kmeans,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[0].set_title(f'K-Means (K=3)\nSilhouette: {silhouette_score(X_scaled, labels_kmeans):.3f}')
+axes[0].set_xlabel('PC1')
+axes[0].set_ylabel('PC2')
+
+# DBSCAN
+scatter2 = axes[1].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_dbscan,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+n_clusters_db = len(set(labels_dbscan)) - (1 if -1 in labels_dbscan else 0)
+axes[1].set_title(f'DBSCAN (eps=0.8)\nClusters: {n_clusters_db}')
+axes[1].set_xlabel('PC1')
+axes[1].set_ylabel('PC2')
+
+# GMM
+scatter3 = axes[2].scatter(X_pca[:, 0], X_pca[:, 1], c=labels_gmm,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[2].set_title(f'GMM (n=3)\nSilhouette: {silhouette_score(X_scaled, labels_gmm):.3f}')
+axes[2].set_xlabel('PC1')
+axes[2].set_ylabel('PC2')
+
+# 실제 종
+scatter4 = axes[3].scatter(X_pca[:, 0], X_pca[:, 1],
+                           c=y_true.astype('category').cat.codes,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[3].set_title('True Species')
+axes[3].set_xlabel('PC1')
+axes[3].set_ylabel('PC2')
+
+plt.tight_layout()
+plt.show()
+```
 
 ## 군집 결과 평가
 
-**군집에는 “정답”이 없다**. 따라서 평가 기준도 다르다.
+군집 분석은 정답이 없으므로, 평가 방법이 분류와 다르다.
 
-* Silhouette Score
-* Davies–Bouldin Index
-* 시각적 해석 (PCA, t-SNE)
+**평가 지표 종류**
 
-군집은 **수치 + 해석을 함께 봐야 한다**
+| 지표 | 타입 | 설명 | 범위 | 해석 |
+|------|------|------|------|------|
+| Silhouette Score | 내재적 | 군집 응집도와 분리도 | -1 ~ 1 | 높을수록 좋음 |
+| Davies-Bouldin Index | 내재적 | 군집 간 거리와 군집 내 분산 | 0 ~ ∞ | 낮을수록 좋음 |
+| Calinski-Harabasz | 내재적 | 군집 간/내 분산 비율 | 0 ~ ∞ | 높을수록 좋음 |
+| Adjusted Rand Index | 외재적 | 실제 라벨과 비교 | -1 ~ 1 | 1에 가까울수록 좋음 |
 
+**예제: 평가 지표 계산**
+
+```{python}
+from sklearn.metrics import (silhouette_score, davies_bouldin_score, 
+                              calinski_harabasz_score, adjusted_rand_score)
+
+# 각 알고리즘별 평가
+algorithms = {
+    'K-Means': labels_kmeans,
+    'DBSCAN': labels_dbscan,
+    'GMM': labels_gmm
+}
+
+results = []
+for name, labels in algorithms.items():
+    # DBSCAN 노이즈 제거 (평가 시)
+    if name == 'DBSCAN':
+        mask = labels != -1
+        X_eval = X_scaled[mask]
+        labels_eval = labels[mask]
+    else:
+        X_eval = X_scaled
+        labels_eval = labels
+    
+    # 군집이 1개 이하면 평가 불가
+    if len(set(labels_eval)) <= 1:
+        continue
+    
+    silhouette = silhouette_score(X_eval, labels_eval)
+    davies_bouldin = davies_bouldin_score(X_eval, labels_eval)
+    calinski = calinski_harabasz_score(X_eval, labels_eval)
+    
+    # 실제 라벨과 비교 (참고용)
+    if name == 'DBSCAN':
+        ari = adjusted_rand_score(y_true[mask], labels_eval)
+    else:
+        ari = adjusted_rand_score(y_true, labels_eval)
+    
+    results.append({
+        'Algorithm': name,
+        'Silhouette': silhouette,
+        'Davies-Bouldin': davies_bouldin,
+        'Calinski-Harabasz': calinski,
+        'ARI (vs True)': ari
+    })
+
+results_df = pd.DataFrame(results)
+print("=== 군집 평가 결과 ===")
+print(results_df.round(3))
+```
+
+## 모델 선택 가이드
+
+**상황별 알고리즘 선택**
+
+| 상황 | 권장 알고리즘 | 이유 |
+|------|-------------|------|
+| 빠른 탐색, 기준선 | K-Means | 빠르고 간단 |
+| 군집 수 모름 | DBSCAN | 자동 결정 |
+| 이상치 탐지 필요 | DBSCAN | 노이즈 분리 |
+| 비구형 군집 | DBSCAN | 형태 자유 |
+| 확률 필요 | GMM | 소프트 할당 |
+| 타원형 군집 | GMM | 공분산 고려 |
+| 대용량 데이터 | K-Means, Mini-Batch K-Means | 속도 |
+
+**의사결정 흐름**
+
+```
+군집 수를 알고 있는가?
+├─ Yes → 확률이 필요한가?
+│         ├─ Yes → GMM
+│         └─ No → K-Means
+└─ No → 이상치 탐지가 중요한가?
+          ├─ Yes → DBSCAN
+          └─ No → Elbow/Silhouette로 K 찾기 → K-Means
+```
+
+## 실무 체크리스트
+
+**군집 분석 수행 시 확인사항**
+
+- [ ] 데이터 표준화 수행
+- [ ] 적절한 알고리즘 선택 (목적에 맞게)
+- [ ] 하이퍼파라미터 튜닝 (K, eps 등)
+- [ ] 여러 평가 지표로 검증
+- [ ] 시각화로 결과 확인 (PCA, t-SNE)
+- [ ] 실무적 해석 가능성 검토
+- [ ] 다른 알고리즘과 비교
+- [ ] 군집 프로파일링 (각 군집 특성 분석)
+
+## 요약
+
+이 장에서는 비지도 학습의 핵심인 군집 분석을 학습했다. 주요 내용은 다음과 같다.
+
+**군집 알고리즘 핵심**
+
+- **K-Means**: 빠르고 간단, 구형 군집, K 사전 지정
+- **DBSCAN**: 밀도 기반, 이상치 탐지, 비구형 가능
+- **GMM**: 확률 기반, 소프트 할당, 타원형 군집
+
+**평가 및 선택**
+
+- **평가**: Silhouette, Davies-Bouldin 등 내재적 지표
+- **시각화**: PCA/t-SNE로 2D 투영 후 확인
+- **비교**: 여러 알고리즘 결과 종합 판단
+
+**주의사항**
+
+- 군집에는 절대적 정답이 없음
+- 수치 평가와 시각적 해석 모두 중요
+- 실무적 의미 있는 군집인지 확인 필수
+- 하이퍼파라미터에 결과가 크게 좌우됨
+
+군집 분석은 데이터의 숨겨진 구조를 발견하는 강력한 도구이다. 알고리즘의 가정과 특성을 이해하고, 목적에 맞는 방법을 선택하며, 다양한 평가 방법으로 검증하는 것이 중요하다.
