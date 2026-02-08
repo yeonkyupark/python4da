@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="keywords" content="python, 전처리, 통계, 기계학습, 회귀, 분류, 군집">
+<meta name="keywords" content="python, 전처리, 통계, 가설검정, 기계학습, 회귀, 분류, 군집, 모델 학습, 모델 평가">
 
 <title>28&nbsp; 모델 해석 – 파이썬 데이터 분석</title>
 <style>
@@ -456,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
   <div class="keywords">
     <div class="block-title">Keywords</div>
-    <p>python, 전처리, 통계, 기계학습, 회귀, 분류, 군집</p>
+    <p>python, 전처리, 통계, 가설검정, 기계학습, 회귀, 분류, 군집, 모델 학습, 모델 평가</p>
   </div>
 </div>
 
@@ -506,7 +506,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="28.4" class="anchored" data-anchor-id="트리-기반-모델의-특성-중요도"><span class="header-section-number">28.4</span> 트리 기반 모델의 특성 중요도</h2>
 <section id="penguins-데이터-준비" class="level3" data-number="28.4.1">
 <h3 data-number="28.4.1" class="anchored" data-anchor-id="penguins-데이터-준비"><span class="header-section-number">28.4.1</span> penguins 데이터 준비</h3>
-<div id="2506fd73" class="cell" data-execution_count="1">
+<div id="b718aec1" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -523,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="randomforest-학습" class="level3" data-number="28.4.2">
 <h3 data-number="28.4.2" class="anchored" data-anchor-id="randomforest-학습"><span class="header-section-number">28.4.2</span> RandomForest 학습</h3>
-<div id="7ca4577c" class="cell" data-execution_count="2">
+<div id="2ac44512" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(</span>
@@ -1488,7 +1488,7 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="특성-중요도-확인" class="level3" data-number="28.4.3">
 <h3 data-number="28.4.3" class="anchored" data-anchor-id="특성-중요도-확인"><span class="header-section-number">28.4.3</span> 특성 중요도 확인</h3>
-<div id="30ea31eb" class="cell" data-execution_count="3">
+<div id="72f15c28" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>importance <span class="op">=</span> pd.Series(</span>
@@ -1527,7 +1527,7 @@ dtype: float64</code></pre>
 </section>
 <section id="예제" class="level3" data-number="28.5.2">
 <h3 data-number="28.5.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">28.5.2</span> 예제</h3>
-<div id="e8e4f856" class="cell" data-execution_count="4">
+<div id="136ffad3" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> permutation_importance(</span>
@@ -1708,7 +1708,7 @@ dtype: float64</code></pre>
 </section>
 <section id="예제-1" class="level4" data-number="28.13.1.3">
 <h4 data-number="28.13.1.3" class="anchored" data-anchor-id="예제-1"><span class="header-section-number">28.13.1.3</span> 예제</h4>
-<div id="543cb198" class="cell" data-execution_count="5">
+<div id="39999e83" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1768,7 +1768,7 @@ dtype: float64</code></pre>
 </section>
 <section id="예제-2" class="level4" data-number="28.13.2.3">
 <h4 data-number="28.13.2.3" class="anchored" data-anchor-id="예제-2"><span class="header-section-number">28.13.2.3</span> 예제</h4>
-<div id="ae6a1f9e" class="cell" data-execution_count="6">
+<div id="d86f1f93" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> PartialDependenceDisplay</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
