@@ -426,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>차원 축소(Dimensionality Reduction)는 여러 개의 입력 변수(차원)를 더 적은 수의 변수로 변환하는 과정이다. 원본 특성을 그대로 사용하지 않고 새로운 특성(축)을 만들어 데이터를 표현하는 방법으로, 특성 추출(Feature Extraction)을 포함하는 개념이다. 차원 축소는 고차원 데이터의 시각화, 학습 속도 향상, 일반화 성능 개선에 핵심적인 역할을 한다. 이 장에서는 PCA, t-SNE, UMAP 등 주요 차원 축소 기법의 원리와 실무 활용법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="144fc54e" class="cell" data-execution_count="1">
+<div id="b1528272" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -581,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>예제: 특성 선택 vs 차원 축소</strong></p>
-<div id="3858d927" class="cell" data-execution_count="2">
+<div id="33967dba" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -675,7 +675,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pca-실습" class="level3" data-number="21.2.1">
 <h3 data-number="21.2.1" class="anchored" data-anchor-id="pca-실습"><span class="header-section-number">21.2.1</span> PCA 실습</h3>
 <p><strong>예제: PCA 적용</strong></p>
-<div id="29b3ebf1" class="cell" data-execution_count="3">
+<div id="b47547b8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 표준화</span></span>
@@ -706,7 +706,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>예제: 주성분 구성 확인</strong></p>
-<div id="612d9786" class="cell" data-execution_count="4">
+<div id="88e5bad7" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 주성분을 구성하는 원본 변수의 기여도</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>components_df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    pca.components_,</span>
@@ -740,7 +740,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </div>
 </div>
 <p><strong>예제: 설명 분산 시각화</strong></p>
-<div id="bef05b43" class="cell" data-execution_count="5">
+<div id="0e801a62" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 주성분의 설명 분산</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pca_full <span class="op">=</span> PCA()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pca_full.fit(X_scaled)</span>
@@ -783,7 +783,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </div>
 </div>
 <p><strong>예제: PCA 시각화</strong></p>
-<div id="2ca6da0c" class="cell" data-execution_count="6">
+<div id="625c0206" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D 시각화</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> plt.scatter(X_pca[:, <span class="dv">0</span>], X_pca[:, <span class="dv">1</span>], c<span class="op">=</span>y.astype(<span class="st">'category'</span>).cat.codes, </span>
@@ -845,7 +845,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </tbody>
 </table>
 <p><strong>예제: 적정 차원 수 자동 선택</strong></p>
-<div id="47116502" class="cell" data-execution_count="7">
+<div id="fb4c149c" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% 분산 설명하는 차원 수 자동 선택</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pca_auto <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="fl">0.95</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X_pca_auto <span class="op">=</span> pca_auto.fit_transform(X_scaled)</span>
@@ -982,7 +982,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </tbody>
 </table>
 <p><strong>예제: t-SNE 적용</strong></p>
-<div id="c6ab0877" class="cell" data-execution_count="8">
+<div id="7d3031bd" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># t-SNE 적용</span></span>
@@ -1018,7 +1018,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </div>
 </div>
 <p><strong>예제: Perplexity 영향 확인</strong></p>
-<div id="8489149c" class="cell" data-execution_count="9">
+<div id="18049f8b" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 perplexity 값으로 실험</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>perplexities <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">30</span>, <span class="dv">50</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">5</span>))</span>
@@ -1118,7 +1118,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </tbody>
 </table>
 <p><strong>예제: UMAP 적용</strong></p>
-<div id="cd48cff7" class="cell" data-execution_count="10">
+<div id="8efa9ae7" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># UMAP 설치 필요: pip install umap-learn</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> umap</span>
@@ -1227,7 +1227,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </tbody>
 </table>
 <p><strong>예제: 세 방법 비교 시각화</strong></p>
-<div id="c36ecce6" class="cell" data-execution_count="11">
+<div id="482aba3e" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 세 가지 방법 비교</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">5</span>))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1343,7 +1343,7 @@ PC2           0.600          0.796              0.006        0.076</code></pre>
 </tbody>
 </table>
 <p><strong>파이프라인 예제</strong></p>
-<div id="451c7b24" class="cell" data-execution_count="12">
+<div id="acc4b0a7" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>

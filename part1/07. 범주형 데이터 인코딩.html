@@ -436,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>범주형 데이터 인코딩(Categorical Encoding)은 범주형 변수를 머신러닝 모델이 처리할 수 있는 수치형으로 변환하는 과정이다. 대부분의 머신러닝 알고리즘은 수치형 데이터만 입력으로 받을 수 있으므로, 범주형 변수를 적절히 인코딩하는 것은 필수적이다. 인코딩 방법의 선택은 데이터의 특성과 사용할 모델에 따라 달라지며, 잘못된 선택은 모델 성능을 크게 저하시킬 수 있다. 이 장에서는 Label Encoding, One-Hot Encoding, Ordinal Encoding, Target Encoding, Frequency Encoding 등 주요 인코딩 기법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="850e37d8" class="cell" data-execution_count="1">
+<div id="9f422a72" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -489,7 +489,7 @@ dtype: int64</code></pre>
 <section id="예제-코드" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="예제-코드"><span class="header-section-number">7.1.1</span> 예제 코드</h3>
 <p><strong>예제: Label Encoding 적용</strong></p>
-<div id="30091f44" class="cell" data-execution_count="2">
+<div id="b1e21694" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Label Encoder 생성</span></span>
@@ -578,7 +578,7 @@ Gentoo → 2</code></pre>
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="pandas-방식"><span class="header-section-number">7.2.1</span> pandas 방식</h3>
 <p>pandas의 <code>get_dummies</code> 함수를 사용하면 간단하게 One-Hot Encoding을 수행할 수 있다.</p>
 <p><strong>예제: One-Hot Encoding 적용</strong></p>
-<div id="4bc231c4" class="cell" data-execution_count="3">
+<div id="17831b4e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One-Hot Encoding (모든 범주 유지)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_ohe <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df,</span>
@@ -629,7 +629,7 @@ Gentoo → 2</code></pre>
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="drop_first-옵션"><span class="header-section-number">7.2.2</span> drop_first 옵션</h3>
 <p><code>drop_first=True</code>로 설정하면 첫 번째 더미 변수를 제거하여 다중공선성(multicollinearity)을 방지할 수 있다. 예를 들어, 3개의 종이 있으면 2개의 컬럼만으로도 모든 정보를 표현할 수 있다.</p>
 <p><strong>예제: drop_first 옵션 사용</strong></p>
-<div id="c43d404a" class="cell" data-execution_count="4">
+<div id="bd48c736" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 첫 번째 더미 변수 제거</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_ohe_drop <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df,</span>
@@ -710,7 +710,7 @@ Gentoo → 2</code></pre>
 <section id="예제-코드-1" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="예제-코드-1"><span class="header-section-number">7.3.1</span> 예제 코드</h3>
 <p><strong>예제: Ordinal Encoding 적용</strong></p>
-<div id="dc9b5cce" class="cell" data-execution_count="5">
+<div id="0d9e0fb0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 순서 정의 (작은 것부터 큰 것 순서)</span></span>
@@ -783,7 +783,7 @@ Gentoo → 2</code></pre>
 <section id="예제-코드-2" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="예제-코드-2"><span class="header-section-number">7.4.1</span> 예제 코드</h3>
 <p><strong>예제: Target Encoding 적용</strong></p>
-<div id="6f0d7da1" class="cell" data-execution_count="6">
+<div id="e1228339" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 복사</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_te <span class="op">=</span> df.copy()</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -833,7 +833,7 @@ Target Encoding 결과:
 <li><strong>스무딩(Smoothing)</strong>: 샘플 수가 적은 범주는 전체 평균에 가깝게 조정</li>
 </ol>
 <p><strong>예제: 안전한 Target Encoding (학습/테스트 분리)</strong></p>
-<div id="f3976633" class="cell" data-execution_count="7">
+<div id="fd309339" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 분리</span></span>
@@ -923,7 +923,7 @@ Name: species, dtype: float64</code></pre>
 <section id="예제-코드-3" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="예제-코드-3"><span class="header-section-number">7.5.1</span> 예제 코드</h3>
 <p><strong>예제: Frequency Encoding 적용</strong></p>
-<div id="e54f9ee6" class="cell" data-execution_count="8">
+<div id="8c87274e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주별 빈도 계산 (비율로 정규화)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>freq_map <span class="op">=</span> df[<span class="st">"island"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -996,7 +996,7 @@ Frequency Encoding 결과:
 <section id="one-hot-encoding-여러-컬럼" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="one-hot-encoding-여러-컬럼"><span class="header-section-number">7.6.1</span> One-Hot Encoding (여러 컬럼)</h3>
 <p><strong>예제: 여러 컬럼 One-Hot Encoding</strong></p>
-<div id="5fcd3b0f" class="cell" data-execution_count="9">
+<div id="050908d2" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 인코딩할 범주형 컬럼 목록</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span>]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1023,7 +1023,7 @@ Frequency Encoding 결과:
 <section id="label-encoding-여러-컬럼" class="level3" data-number="7.6.2">
 <h3 data-number="7.6.2" class="anchored" data-anchor-id="label-encoding-여러-컬럼"><span class="header-section-number">7.6.2</span> Label Encoding (여러 컬럼)</h3>
 <p><strong>예제: 여러 컬럼 Label Encoding</strong></p>
-<div id="704cc9a2" class="cell" data-execution_count="10">
+<div id="fcedf62d" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 복사</span></span>
@@ -1055,7 +1055,7 @@ Frequency Encoding 결과:
 <h3 data-number="7.6.3" class="anchored" data-anchor-id="sklearn-columntransformer-사용"><span class="header-section-number">7.6.3</span> sklearn ColumnTransformer 사용</h3>
 <p>여러 인코딩 방법을 조합하여 사용하는 경우 <code>ColumnTransformer</code>를 사용하면 깔끔하게 처리할 수 있다.</p>
 <p><strong>예제: ColumnTransformer로 여러 인코딩 조합</strong></p>
-<div id="71910b0b" class="cell" data-execution_count="11">
+<div id="94cc04fc" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder, LabelEncoder</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
