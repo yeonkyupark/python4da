@@ -375,7 +375,7 @@ X_scaled = scaler.fit_transform(X)
 # 분류 문제이므로 LogisticRegression with L1 사용
 from sklearn.linear_model import LogisticRegression
 
-lasso = LogisticRegression(penalty='l1', solver='liblinear', C=1.0)
+lasso = LogisticRegression(penalty='l1', solver='saga', C=1.0)
 lasso.fit(X_scaled, y)
 
 # 계수 확인
