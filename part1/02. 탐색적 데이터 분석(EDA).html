@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.1" class="anchored" data-anchor-id="라이브러리-로드-및-데이터-불러오기"><span class="header-section-number">2.1</span> 라이브러리 로드 및 데이터 불러오기</h2>
 <p>EDA를 수행하기 위해서는 데이터 처리를 위한 pandas, 시각화를 위한 seaborn과 matplotlib 라이브러리가 필요하다. 여기서는 seaborn에 내장된 penguins 데이터셋을 사용한다.</p>
 <p><strong>예제: 필수 라이브러리 로드 및 데이터 불러오기</strong></p>
-<div id="86312cc1" class="cell" data-execution_count="1">
+<div id="7d7f7008" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -528,7 +528,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.2" class="anchored" data-anchor-id="데이터-구조-확인"><span class="header-section-number">2.2</span> 데이터 구조 확인</h2>
 <p>데이터 분석의 첫 단계는 전체 데이터의 구조를 파악하는 것이다. 데이터의 크기, 각 컬럼의 데이터 타입, 결측치 존재 여부 등을 확인하여 데이터의 전반적인 특성을 이해할 수 있다.</p>
 <p><strong>예제: 데이터 크기 확인</strong></p>
-<div id="e8ea47f6" class="cell" data-execution_count="2">
+<div id="c63e0b93" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 행과 열의 개수 확인</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -536,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>예제: 데이터 상세 정보 확인</strong></p>
-<div id="65aa10dd" class="cell" data-execution_count="3">
+<div id="dc24636e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 컬럼별 데이터 타입 및 결측치 정보</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -591,7 +591,7 @@ memory usage: 18.9 KB</code></pre>
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="수치형-변수-요약"><span class="header-section-number">2.3.1</span> 수치형 변수 요약</h3>
 <p>수치형 변수는 평균, 표준편차, 최솟값, 최댓값, 사분위수 등의 통계량으로 요약할 수 있다.</p>
 <p><strong>예제: 수치형 변수 기술 통계량</strong></p>
-<div id="3ec8a040" class="cell" data-execution_count="4">
+<div id="d6908166" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수치형 컬럼의 기술 통계량</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -676,7 +676,7 @@ memory usage: 18.9 KB</code></pre>
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="범주형-변수-요약"><span class="header-section-number">2.3.2</span> 범주형 변수 요약</h3>
 <p>범주형 변수는 고유값의 개수, 최빈값, 빈도 등으로 요약할 수 있다.</p>
 <p><strong>예제: 범주형 변수 기술 통계량</strong></p>
-<div id="c49f4b7f" class="cell" data-execution_count="5">
+<div id="c963d6f3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주형 컬럼의 기술 통계량</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df.describe(include<span class="op">=</span><span class="st">"object"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -756,7 +756,7 @@ memory usage: 18.9 KB</code></pre>
 <h2 data-number="2.4" class="anchored" data-anchor-id="결측치-탐색"><span class="header-section-number">2.4</span> 결측치 탐색</h2>
 <p>결측치는 데이터 분석 결과를 왜곡할 수 있으므로 반드시 확인하고 적절히 처리해야 한다. 결측치의 개수와 비율을 파악하여 처리 전략을 수립할 수 있다.</p>
 <p><strong>예제: 컬럼별 결측치 개수 확인</strong></p>
-<div id="760c0f34" class="cell" data-execution_count="6">
+<div id="6e110d4f" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 컬럼의 결측치 개수</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -771,7 +771,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p><strong>예제: 컬럼별 결측치 비율 확인</strong></p>
-<div id="58277516" class="cell" data-execution_count="7">
+<div id="328666a9" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 컬럼의 결측치 비율 (%)</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>(df.isna().mean() <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -794,7 +794,7 @@ dtype: float64</code></pre>
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="종species-분포"><span class="header-section-number">2.5.1</span> 종(species) 분포</h3>
 <p>펭귄 종별 개체 수를 확인하여 데이터의 균형 상태를 파악한다.</p>
 <p><strong>예제: 종별 빈도 확인</strong></p>
-<div id="a5141e66" class="cell" data-execution_count="8">
+<div id="4d7da68d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종(species)별 개체 수</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -806,7 +806,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p><strong>예제: 종별 분포 시각화</strong></p>
-<div id="0e9e3b2b" class="cell" data-execution_count="9">
+<div id="14eb56fe" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 분포 막대 그래프</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"species"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Penguin Species"</span>)</span>
@@ -826,7 +826,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="2.5.2" class="anchored" data-anchor-id="성별sex-분포"><span class="header-section-number">2.5.2</span> 성별(sex) 분포</h3>
 <p>성별 분포를 확인하여 데이터 수집 과정에서 성별 편향이 있는지 파악한다.</p>
 <p><strong>예제: 성별 분포 시각화</strong></p>
-<div id="fc77b859" class="cell" data-execution_count="10">
+<div id="a46e8303" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 성별 분포 막대 그래프</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"sex"</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Penguin Sex"</span>)</span>
@@ -850,7 +850,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="히스토그램"><span class="header-section-number">2.6.1</span> 히스토그램</h3>
 <p>히스토그램은 수치형 변수의 분포를 구간별 빈도로 나타낸 그래프이다. 데이터가 정규분포를 따르는지, 왜곡되어 있는지 등을 확인할 수 있다.</p>
 <p><strong>예제: 전체 수치형 변수 히스토그램</strong></p>
-<div id="2e271a9a" class="cell" data-execution_count="11">
+<div id="b8a7434f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 수치형 변수의 히스토그램</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df.hist(bins<span class="op">=</span><span class="dv">20</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
@@ -869,7 +869,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="박스플롯-이상치-탐색"><span class="header-section-number">2.6.2</span> 박스플롯 (이상치 탐색)</h3>
 <p>박스플롯은 사분위수를 기반으로 데이터의 분포와 이상치를 시각화하는 도구이다. 박스 밖의 점들은 이상치 후보로 간주할 수 있다.</p>
 <p><strong>예제: 종별 체중 분포 및 이상치 확인</strong></p>
-<div id="0c2ab83d" class="cell" data-execution_count="12">
+<div id="030e4286" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 체중 분포 박스플롯</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"body_mass_g"</span>)</span>
@@ -925,7 +925,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="2.7.1" class="anchored" data-anchor-id="두-수치형-변수-관계"><span class="header-section-number">2.7.1</span> 두 수치형 변수 관계</h3>
 <p>산점도는 두 수치형 변수 간의 관계를 점으로 표현한 그래프이다. 범주형 변수로 색상을 구분하면 그룹별 패턴을 동시에 확인할 수 있다.</p>
 <p><strong>예제: 부리 길이와 깊이의 관계</strong></p>
-<div id="a0764af9" class="cell" data-execution_count="13">
+<div id="7ad388d3" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부리 길이와 깊이의 산점도 (종별 구분)</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df,</span>
@@ -951,7 +951,7 @@ Name: count, dtype: int64</code></pre>
 <h3 data-number="2.7.2" class="anchored" data-anchor-id="페어플롯"><span class="header-section-number">2.7.2</span> 페어플롯</h3>
 <p>페어플롯은 모든 수치형 변수 쌍에 대한 산점도를 행렬 형태로 배치한 그래프이다. 대각선에는 각 변수의 히스토그램이나 커널 밀도 추정(KDE) 그래프가 표시된다.</p>
 <p><strong>예제: 전체 변수 간 관계 확인</strong></p>
-<div id="cc089483" class="cell" data-execution_count="14">
+<div id="0aca325f" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 수치형 변수 쌍의 관계 시각화</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    df,</span>
@@ -981,7 +981,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="2.8" class="anchored" data-anchor-id="그룹별-통계-확인"><span class="header-section-number">2.8</span> 그룹별 통계 확인</h2>
 <p>그룹별 통계량을 비교하면 범주형 변수가 수치형 변수에 미치는 영향을 정량적으로 파악할 수 있다.</p>
 <p><strong>예제: 종별 평균 통계</strong></p>
-<div id="0034c152" class="cell" data-execution_count="15">
+<div id="8f5992b2" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 부리 길이와 체중의 평균</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"species"</span>)[[<span class="st">"bill_length_mm"</span>, <span class="st">"body_mass_g"</span>]].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -1025,7 +1025,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 <p>추가적으로 표준편차, 중앙값 등 다양한 통계량을 함께 확인할 수 있다.</p>
 <p><strong>예제: 종별 다양한 통계량</strong></p>
-<div id="a0a7c284" class="cell" data-execution_count="16">
+<div id="c74bbe32" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 다양한 통계량 확인</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"species"</span>)[[<span class="st">"bill_length_mm"</span>, <span class="st">"body_mass_g"</span>]].agg([<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"median"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="16">

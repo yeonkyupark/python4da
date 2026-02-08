@@ -436,7 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>“모델 성능의 상당 부분은 알고리즘이 아니라 피처에서 결정된다.”</p>
 </blockquote>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="cd2f3add" class="cell" data-execution_count="1">
+<div id="40b68681" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -514,7 +514,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="10.2.1" class="anchored" data-anchor-id="비율ratio-피처"><span class="header-section-number">10.2.1</span> 비율(Ratio) 피처</h3>
 <p>두 변수의 비율은 각 변수의 절대값보다 더 의미 있는 정보를 담을 수 있다. 특히 크기가 다른 개체를 비교할 때 유용하다.</p>
 <p><strong>예제: 부리 비율 피처 생성</strong></p>
-<div id="c4126468" class="cell" data-execution_count="2">
+<div id="77204df9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 부리 길이 대 깊이 비율</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_ratio"</span>] <span class="op">=</span> df[<span class="st">"bill_length_mm"</span>] <span class="op">/</span> df[<span class="st">"bill_depth_mm"</span>]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -551,7 +551,7 @@ Name: bill_ratio, dtype: float64</code></pre>
 <li>효율성이나 밀도를 나타낼 때 (예: 연비, 인구밀도)</li>
 </ul>
 <p><strong>추가 예시</strong></p>
-<div id="e4196084" class="cell" data-execution_count="3">
+<div id="a0b03fef" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 대 날개 길이 비율 (체중 효율성)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_flipper_ratio"</span>] <span class="op">=</span> df[<span class="st">"body_mass_g"</span>] <span class="op">/</span> df[<span class="st">"flipper_length_mm"</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -577,7 +577,7 @@ Name: bill_ratio, dtype: float64</code></pre>
 <h3 data-number="10.2.2" class="anchored" data-anchor-id="조합-피처-곱셈-덧셈"><span class="header-section-number">10.2.2</span> 조합 피처 (곱셈, 덧셈)</h3>
 <p>여러 변수를 곱하거나 더하면 변수 간 상호작용이나 전체 크기를 나타낼 수 있다.</p>
 <p><strong>예제: 상호작용 피처 생성</strong></p>
-<div id="8d2ded9e" class="cell" data-execution_count="4">
+<div id="4c8f36e4" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중과 날개 길이의 상호작용 (전체적인 신체 크기)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_flipper_interaction"</span>] <span class="op">=</span> df[<span class="st">"body_mass_g"</span>] <span class="op">*</span> df[<span class="st">"flipper_length_mm"</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -640,7 +640,7 @@ Name: body_flipper_interaction, dtype: float64</code></pre>
 </tbody>
 </table>
 <p><strong>추가 예시</strong></p>
-<div id="250a3994" class="cell" data-execution_count="5">
+<div id="c07b2502" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 전체 부리 크기 (길이 + 깊이)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_total_size"</span>] <span class="op">=</span> df[<span class="st">"bill_length_mm"</span>] <span class="op">+</span> df[<span class="st">"bill_depth_mm"</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -665,7 +665,7 @@ Name: body_flipper_interaction, dtype: float64</code></pre>
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="다항식-피처"><span class="header-section-number">10.2.3</span> 다항식 피처</h3>
 <p>변수의 제곱이나 고차항은 비선형 관계를 선형 모델에서 포착할 수 있게 한다.</p>
 <p><strong>예제: 제곱 피처 생성</strong></p>
-<div id="f4a3b2a4" class="cell" data-execution_count="6">
+<div id="9a1b9ec8" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중의 제곱 (비선형 관계 표현)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_squared"</span>] <span class="op">=</span> df[<span class="st">"body_mass_g"</span>] <span class="op">**</span> <span class="dv">2</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -693,7 +693,7 @@ Name: body_flipper_interaction, dtype: float64</code></pre>
 <h3 data-number="10.3.1" class="anchored" data-anchor-id="로그-변환-피처"><span class="header-section-number">10.3.1</span> 로그 변환 피처</h3>
 <p>로그 변환은 왜곡된 분포를 정규화하고 큰 값의 영향을 줄인다.</p>
 <p><strong>예제: 로그 변환 피처</strong></p>
-<div id="72ddb12f" class="cell" data-execution_count="7">
+<div id="fff37a02" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중의 로그 변환</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"log_body_mass"</span>] <span class="op">=</span> np.log(df[<span class="st">"body_mass_g"</span>])</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -746,7 +746,7 @@ Name: log_body_mass, dtype: float64</code></pre>
 <h3 data-number="10.3.2" class="anchored" data-anchor-id="표준화정규화-피처"><span class="header-section-number">10.3.2</span> 표준화/정규화 피처</h3>
 <p>변수를 일정 범위로 변환하여 스케일을 통일한다.</p>
 <p><strong>예제: 표준화 피처 생성</strong></p>
-<div id="22330783" class="cell" data-execution_count="8">
+<div id="49c5e23d" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 주요 수치형 변수들을 표준화</span></span>
@@ -780,7 +780,7 @@ Name: log_body_mass, dtype: float64</code></pre>
 <h2 data-number="10.4" class="anchored" data-anchor-id="구간-기반-피처-binning"><span class="header-section-number">10.4</span> 구간 기반 피처 (Binning)</h2>
 <p>연속형 변수를 구간으로 나누어 범주화하면 비선형 관계를 포착하고 해석력을 높일 수 있다.</p>
 <p><strong>예제: 체중 구간 피처</strong></p>
-<div id="cb4b50a1" class="cell" data-execution_count="9">
+<div id="1f49cf97" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중을 3개 구간으로 분류</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_group"</span>] <span class="op">=</span> pd.cut(</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
@@ -818,7 +818,7 @@ Name: flipper_length_mm, dtype: float64</code></pre>
 <li>이상치의 영향 완화</li>
 </ul>
 <p><strong>추가 예시: 등빈도 구간화</strong></p>
-<div id="c907e3d3" class="cell" data-execution_count="10">
+<div id="12d3fa92" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 사분위수 기준 구간화</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_quantile"</span>] <span class="op">=</span> pd.qcut(</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"body_mass_g"</span>],</span>
@@ -845,7 +845,7 @@ Name: count, dtype: int64</code></pre>
 <section id="그룹-평균-대비-차이" class="level3" data-number="10.5.1">
 <h3 data-number="10.5.1" class="anchored" data-anchor-id="그룹-평균-대비-차이"><span class="header-section-number">10.5.1</span> 그룹 평균 대비 차이</h3>
 <p><strong>예제: 종별 평균 대비 편차</strong></p>
-<div id="38820a57" class="cell" data-execution_count="11">
+<div id="7fb390f4" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 평균 체중 계산</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>species_mean <span class="op">=</span> df.groupby(<span class="st">"species"</span>)[<span class="st">"body_mass_g"</span>].transform(<span class="st">"mean"</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -890,7 +890,7 @@ Gentoo    -42.436975  407.563025  1207.563025  </code></pre>
 <section id="그룹별-다양한-통계량" class="level3" data-number="10.5.2">
 <h3 data-number="10.5.2" class="anchored" data-anchor-id="그룹별-다양한-통계량"><span class="header-section-number">10.5.2</span> 그룹별 다양한 통계량</h3>
 <p><strong>예제: 종별 순위와 백분위수</strong></p>
-<div id="17fa066f" class="cell" data-execution_count="12">
+<div id="7c7fed6e" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종 내 체중 순위</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"body_mass_rank_species"</span>] <span class="op">=</span> df.groupby(<span class="st">"species"</span>)[<span class="st">"body_mass_g"</span>].rank(ascending<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -957,7 +957,7 @@ Gentoo    -42.436975  407.563025  1207.563025  </code></pre>
 <h2 data-number="10.6" class="anchored" data-anchor-id="통계-요약-피처"><span class="header-section-number">10.6</span> 통계 요약 피처</h2>
 <p>여러 변수의 통계량을 계산하여 개체의 전반적인 특성을 요약한다.</p>
 <p><strong>예제: 행 단위 통계 피처</strong></p>
-<div id="53057a4e" class="cell" data-execution_count="13">
+<div id="51becf6a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 주요 수치형 변수 선택</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1003,7 +1003,7 @@ max    1646.350000  3103.740721  6284.800000</code></pre>
 <h2 data-number="10.7" class="anchored" data-anchor-id="범주형-조합-피처"><span class="header-section-number">10.7</span> 범주형 조합 피처</h2>
 <p>여러 범주형 변수를 결합하여 세분화된 그룹을 만든다.</p>
 <p><strong>예제: 종과 성별 조합</strong></p>
-<div id="131785e4" class="cell" data-execution_count="14">
+<div id="623d060d" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종과 성별을 결합한 새로운 범주</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species_sex"</span>] <span class="op">=</span> df[<span class="st">"species"</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> df[<span class="st">"sex"</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1043,7 +1043,7 @@ Name: body_mass_g, dtype: float64</code></pre>
 <li>One-Hot Encoding 시 컬럼 수 급증 주의</li>
 </ul>
 <p><strong>추가 예시: 삼원 조합</strong></p>
-<div id="5fbf9da2" class="cell" data-execution_count="15">
+<div id="c04342e1" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종, 성별, 체중 구간의 삼원 조합</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"species_sex_mass"</span>] <span class="op">=</span> (</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"species"</span>].astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> </span>
@@ -1075,7 +1075,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="10.8" class="anchored" data-anchor-id="시간-및-순서형-데이터-피처"><span class="header-section-number">10.8</span> 시간 및 순서형 데이터 피처</h2>
 <p>시계열 데이터나 순서가 있는 데이터에서는 추가적인 피처 생성 기법을 사용한다.</p>
 <p><strong>시간 데이터 피처 예시</strong></p>
-<div id="52362d44" class="cell" data-execution_count="16">
+<div id="38771a92" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예시: 날짜 데이터가 있다고 가정</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df["date"] = pd.to_datetime(df["date"])</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
@@ -1138,7 +1138,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="10.9" class="anchored" data-anchor-id="피처-선택과의-연결"><span class="header-section-number">10.9</span> 피처 선택과의 연결</h2>
 <p>모든 피처를 사용하는 것이 정답은 아니다. 중복되거나 불필요한 피처는 모델 성능을 저하시킬 수 있다.</p>
 <p><strong>예제: 상관관계 분석</strong></p>
-<div id="bb4ecccd" class="cell" data-execution_count="17">
+<div id="e08eaf74" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1172,7 +1172,7 @@ Name: count, dtype: int64</code></pre>
 <li>피처 중요도: 트리 모델의 <code>feature_importances_</code> 활용</li>
 </ul>
 <p><strong>예제: 중요도 기반 선택</strong></p>
-<div id="4e422806" class="cell" data-execution_count="18">
+<div id="0cc59116" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 간단한 모델로 피처 중요도 확인</span></span>
@@ -1256,7 +1256,7 @@ Name: count, dtype: int64</code></pre>
 </tbody>
 </table>
 <p><strong>모델별 예시</strong></p>
-<div id="68482d50" class="cell" data-execution_count="19">
+<div id="2d3c0c94" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 선형 모델용: 상호작용 피처</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
