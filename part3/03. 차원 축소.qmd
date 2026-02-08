@@ -1,174 +1,523 @@
 # 차원 축소
 
-## 차원 축소 
+차원 축소(Dimensionality Reduction)는 여러 개의 입력 변수(차원)를 더 적은 수의 변수로 변환하는 과정이다. 원본 특성을 그대로 사용하지 않고 새로운 특성(축)을 만들어 데이터를 표현하는 방법으로, 특성 추출(Feature Extraction)을 포함하는 개념이다. 차원 축소는 고차원 데이터의 시각화, 학습 속도 향상, 일반화 성능 개선에 핵심적인 역할을 한다. 이 장에서는 PCA, t-SNE, UMAP 등 주요 차원 축소 기법의 원리와 실무 활용법을 학습한다.
 
-### 차원 축소란
+**예제: 데이터 로드**
 
-**차원 축소**(Dimensionality Reduction)란 여러 개의 입력 변수(차원)를 **더 적은 수의 변수로 변환**하는 과정이다. 원본 특성을 그대로 쓰지 않고
-* **새로운 특성(축)**을 만들어 데이터를 표현하는 방법이다. 참고로 **특성 추출(feature extraction)**을 포함하는 개념이다.
-
-### 차원 축소가 필요한 이유
-
-* 고차원 데이터의 시각화 어려움
-* 차원의 저주(curse of dimensionality)
-* 모델 학습 시간 증가
-* 잡음(noise) 포함 가능성 증가
-
-#### 기대 효과
-
-* 데이터 구조 단순화
-* 학습 속도 향상
-* 일반화 성능 개선
-* 시각화 가능 (2D, 3D)
-
-### 특성 선택 vs 특성 추출
-
-* **특성 선택**
-
-  * 기존 변수 중 일부 선택
-  * 변수 의미 유지
-* **특성 추출**
-
-  * 기존 변수를 조합하여 새로운 변수 생성
-  * 변수 의미는 직관적으로 해석하기 어려움
-
-**차원 축소 = 특성 추출의 대표적인 방법**
-
-## 선형 차원 축소
-
-### PCA 
-PCA(Principal Component Analysis)는 대표적인 선형 차원 축소 방법이다. 
-
-#### 기본 개념
-
-* 데이터의 **분산을 가장 잘 설명하는 방향**을 찾음
-* 기존 변수의 **선형 결합**으로 새로운 축 생성
-* 새 축을 **주성분(Principal Component)**이라 부름
-
-### PCA의 직관적 이해
-
-* 데이터가 가장 길게 퍼져 있는 방향이 1번 주성분
-* 그 다음으로 퍼진 방향이 2번 주성분
-* 서로 직교(독립)
-
-### PCA의 특징
-
-* 선형 변환
-* 변수 간 상관관계 제거
-* 스케일에 민감 → 표준화 필요
-
-### PCA 주요 용어
-
-* **설명 분산 비율 (explained variance ratio)**
-
-  * 각 주성분이 설명하는 정보량 비율
-* 누적 설명 분산을 기준으로 차원 수 결정
-
-### PCA 예제
-
-```python
-from sklearn.decomposition import PCA
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
+# 데이터 로드
+df = sns.load_dataset("penguins").dropna()
+X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y = df["species"]
+
+print("데이터 크기:", X.shape)
+print("원본 차원:", X.shape[1])
+```
+
+## 차원 축소의 개념과 필요성
+
+차원 축소는 고차원 데이터를 저차원으로 변환하여 데이터를 효율적으로 표현하고 분석한다.
+
+**차원 축소가 필요한 이유**
+
+| 문제 | 설명 | 차원 축소로 해결 |
+|------|------|----------------|
+| 차원의 저주 | 변수가 많아질수록 필요한 샘플 수 기하급수적 증가 | 핵심 변수만 유지 |
+| 시각화 어려움 | 3차원 이상은 직접 시각화 불가 | 2D/3D로 변환 |
+| 학습 시간 증가 | 변수가 많을수록 계산량 증가 | 연산량 감소 |
+| 다중공선성 | 상관성 높은 변수들이 모델 불안정화 | 독립적인 축 생성 |
+| 노이즈 | 불필요한 변수가 노이즈 포함 | 주요 신호만 추출 |
+| 메모리 사용 | 고차원 데이터는 저장 공간 많이 차지 | 데이터 압축 |
+
+**차원 축소의 기대 효과**
+
+| 효과 | 설명 |
+|------|------|
+| 데이터 구조 단순화 | 복잡한 데이터를 간결하게 표현 |
+| 학습 속도 향상 | 변수 수 감소로 연산량 감소 |
+| 일반화 성능 개선 | 과적합 위험 감소 |
+| 시각화 가능 | 2D/3D로 변환하여 패턴 파악 |
+| 저장 공간 절약 | 데이터 압축 효과 |
+
+### 특성 선택 vs 차원 축소 (특성 추출)
+
+**특성 선택 vs 차원 축소 비교**
+
+| 구분 | 특성 선택 (Feature Selection) | 차원 축소 (Feature Extraction) |
+|------|------------------------------|------------------------------|
+| 정의 | 기존 변수 중 일부를 선택 | 기존 변수를 변환하여 새로운 변수 생성 |
+| 원본 변수 | 그대로 유지 | 변환/조합 |
+| 변수 의미 | 유지됨 | 해석 어려워짐 |
+| 정보 손실 | 선택 안 된 변수의 정보 손실 | 압축 과정에서 일부 손실 |
+| 예시 | 상관계수로 3개 변수 선택 | PCA로 2개 주성분 생성 |
+| 해석력 | 높음 | 낮음 |
+| 적용 | 도메인 지식 중요 | 데이터 구조 의존 |
+
+**예제: 특성 선택 vs 차원 축소**
+
+```{python}
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.decomposition import PCA
+
+# 데이터 표준화
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
+# 특성 선택: 원본 변수 중 2개 선택
+selector = SelectKBest(score_func=f_classif, k=2)
+X_selected = selector.fit_transform(X, y)
+selected_features = X.columns[selector.get_support()]
+
+print("=== 특성 선택 ===")
+print(f"선택된 변수: {selected_features.tolist()}")
+print(f"변수 의미: 원본 그대로 유지")
+
+# 차원 축소: 새로운 2개 주성분 생성
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 
-pca.explained_variance_ratio_
+print("\n=== 차원 축소 (PCA) ===")
+print(f"생성된 변수: PC1, PC2")
+print(f"변수 의미: 원본 변수들의 선형 조합")
+print(f"설명 분산: {pca.explained_variance_ratio_}")
+```
+
+## 선형 차원 축소: PCA
+
+PCA(Principal Component Analysis, 주성분 분석)는 가장 널리 사용되는 선형 차원 축소 방법이다.
+
+**PCA의 핵심 아이디어**
+
+- 데이터의 **분산을 가장 잘 설명하는 방향**을 찾음
+- 기존 변수의 **선형 결합**으로 새로운 축 생성
+- 새로운 축을 **주성분(Principal Component)**이라 부름
+- 각 주성분은 서로 **직교(독립)**
+
+**PCA의 작동 원리**
+
+1. 데이터 표준화 (평균 0, 분산 1)
+2. 공분산 행렬 계산
+3. 고유값과 고유벡터 계산
+4. 고유값이 큰 순서로 주성분 선택
+5. 원본 데이터를 새로운 주성분 공간으로 투영
+
+**PCA의 특징**
+
+| 특징 | 설명 |
+|------|------|
+| 선형 변환 | 원본 변수의 선형 조합 |
+| 분산 최대화 | 데이터가 가장 퍼진 방향 찾기 |
+| 직교성 | 주성분들은 서로 독립 |
+| 스케일 민감 | 표준화 필수 |
+| 비지도 학습 | 타겟 정보 사용 안 함 |
+| 해석 가능 | 각 주성분의 기여도 확인 가능 |
+
+### PCA 실습
+
+**예제: PCA 적용**
+
+```{python}
+from sklearn.decomposition import PCA
+
+# 데이터 표준화
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# PCA 적용 (2차원으로 축소)
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+
+print("=== PCA 결과 ===")
+print(f"원본 차원: {X.shape[1]}")
+print(f"축소 차원: {X_pca.shape[1]}")
+print(f"\n각 주성분의 설명 분산 비율:")
+for i, var in enumerate(pca.explained_variance_ratio_, 1):
+    print(f"  PC{i}: {var:.4f} ({var*100:.2f}%)")
+print(f"\n누적 설명 분산: {pca.explained_variance_ratio_.sum():.4f} ({pca.explained_variance_ratio_.sum()*100:.2f}%)")
+```
+
+**예제: 주성분 구성 확인**
+
+```{python}
+# 각 주성분을 구성하는 원본 변수의 기여도
+components_df = pd.DataFrame(
+    pca.components_,
+    columns=X.columns,
+    index=[f'PC{i+1}' for i in range(pca.n_components_)]
+)
+
+print("\n=== 주성분 구성 (변수별 기여도) ===")
+print(components_df.round(3))
+
+# 시각화
+plt.figure(figsize=(10, 5))
+sns.heatmap(components_df, annot=True, cmap='coolwarm', center=0, 
+            cbar_kws={'label': 'Contribution'})
+plt.title("PCA Component Loadings")
+plt.tight_layout()
+plt.show()
+```
+
+**예제: 설명 분산 시각화**
+
+```{python}
+# 모든 주성분의 설명 분산
+pca_full = PCA()
+pca_full.fit(X_scaled)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 개별 설명 분산
+axes[0].bar(range(1, len(pca_full.explained_variance_ratio_)+1), 
+            pca_full.explained_variance_ratio_)
+axes[0].set_xlabel('Principal Component')
+axes[0].set_ylabel('Explained Variance Ratio')
+axes[0].set_title('Variance Explained by Each Component')
+axes[0].set_xticks(range(1, len(pca_full.explained_variance_ratio_)+1))
+
+# 누적 설명 분산
+cumsum = np.cumsum(pca_full.explained_variance_ratio_)
+axes[1].plot(range(1, len(cumsum)+1), cumsum, 'o-', linewidth=2)
+axes[1].axhline(y=0.95, color='r', linestyle='--', label='95% threshold')
+axes[1].set_xlabel('Number of Components')
+axes[1].set_ylabel('Cumulative Explained Variance')
+axes[1].set_title('Cumulative Variance Explained')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+axes[1].set_xticks(range(1, len(cumsum)+1))
+
+plt.tight_layout()
+plt.show()
+
+print(f"\n95% 분산 설명에 필요한 주성분 수: {np.argmax(cumsum >= 0.95) + 1}")
+```
+
+**예제: PCA 시각화**
+
+```{python}
+# 2D 시각화
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y.astype('category').cat.codes, 
+                     cmap='viridis', alpha=0.6, edgecolors='k')
+plt.xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
+plt.ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+plt.title('PCA: 2D Projection')
+plt.colorbar(scatter, label='Species')
+plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+### PCA 적정 차원 수 선택
+
+**차원 수 선택 기준**
+
+| 방법 | 설명 | 기준 |
+|------|------|------|
+| 누적 설명 분산 | 전체 분산의 일정 비율 유지 | 일반적으로 85~95% |
+| Elbow Method | 설명 분산 증가율이 급감하는 지점 | 그래프에서 꺾이는 점 |
+| Kaiser Rule | 고유값 > 1인 주성분 선택 | 표준화 데이터 기준 |
+| 도메인 지식 | 해석 가능한 차원 수 | 실무 목적에 맞게 |
+
+**예제: 적정 차원 수 자동 선택**
+
+```{python}
+# 95% 분산 설명하는 차원 수 자동 선택
+pca_auto = PCA(n_components=0.95)
+X_pca_auto = pca_auto.fit_transform(X_scaled)
+
+print(f"=== 자동 차원 선택 (95% 분산) ===")
+print(f"선택된 주성분 수: {pca_auto.n_components_}")
+print(f"실제 설명 분산: {pca_auto.explained_variance_ratio_.sum():.4f}")
 ```
 
 ## 비선형 차원 축소
 
-선형 변환으로는 **복잡한 데이터 구조**를 표현하기 어려운 경우 사용한다
+선형 변환으로는 복잡한 데이터 구조를 표현하기 어려운 경우 비선형 차원 축소를 사용한다.
 
-* 데이터의 **국소 구조(local structure)** 보존
-* 주로 시각화 목적
+**선형 vs 비선형 차원 축소**
 
-### t-SNE 
-대표적인 비선형 차원 축소 방법이 t-SNE(t-Distributed Stochastic Neighbor Embedding)이다.
+| 구분 | 선형 (PCA) | 비선형 (t-SNE, UMAP) |
+|------|-----------|---------------------|
+| 가정 | 데이터가 선형 부분공간에 존재 | 데이터가 비선형 다양체에 존재 |
+| 변환 | 선형 조합 | 비선형 변환 |
+| 전역 구조 | 잘 보존 | 보존 정도 다름 |
+| 국소 구조 | 보존 못할 수 있음 | 잘 보존 |
+| 주 용도 | 전처리, 압축 | 시각화 |
+| 역변환 | 가능 | 불가능 |
 
-#### 개념
+### t-SNE
 
-* 데이터 간 **이웃 관계**를 확률적으로 모델링
-* 가까운 데이터는 가깝게, 먼 데이터는 멀게 배치
+t-SNE(t-Distributed Stochastic Neighbor Embedding)는 데이터 간 이웃 관계를 확률적으로 모델링하는 비선형 차원 축소 방법이다.
 
-#### 특징
+**t-SNE의 특징**
 
-* 비선형
-* 시각화(2D, 3D)에 특화
-* 계산 비용 큼
-* 결과가 매번 달라질 수 있음
+| 특징 | 설명 |
+|------|------|
+| 비선형 | 복잡한 구조 표현 가능 |
+| 국소 구조 보존 | 가까운 점들을 가깝게 유지 |
+| 시각화 특화 | 주로 2D/3D 시각화 목적 |
+| 계산 비용 높음 | 대용량 데이터에 느림 |
+| 비결정적 | 초기화에 따라 결과 다름 |
+| 역변환 불가 | 모델 입력용 부적합 |
 
-### t-SNE 예제
+**t-SNE 하이퍼파라미터**
 
-```python
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| n_components | 출력 차원 | 2 또는 3 |
+| perplexity | 이웃 수 (5~50) | 30 (기본값) |
+| learning_rate | 학습률 | 200 (기본값) |
+| n_iter | 최적화 반복 횟수 | 1000+ |
+| random_state | 재현성 | 고정값 |
+
+**예제: t-SNE 적용**
+
+```{python}
 from sklearn.manifold import TSNE
 
-tsne = TSNE(n_components=2, random_state=42)
+# t-SNE 적용
+tsne = TSNE(n_components=2, random_state=42, perplexity=30)
 X_tsne = tsne.fit_transform(X_scaled)
+
+print("=== t-SNE 결과 ===")
+print(f"원본 차원: {X.shape[1]}")
+print(f"축소 차원: {X_tsne.shape[1]}")
+
+# 시각화
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y.astype('category').cat.codes,
+                     cmap='viridis', alpha=0.6, edgecolors='k')
+plt.xlabel('t-SNE Component 1')
+plt.ylabel('t-SNE Component 2')
+plt.title('t-SNE: 2D Projection')
+plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
 ```
 
-### UMAP 
-또다른 비선형 차원 축소방법으로 UMAP(Uniform Manifold Approximation and Projection)이 있다.
+**예제: Perplexity 영향 확인**
 
-#### 개념
+```{python}
+# 다양한 perplexity 값으로 실험
+perplexities = [5, 30, 50]
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-* 데이터가 저차원 다양체(manifold)에 놓여 있다고 가정
-* 전역 구조와 국소 구조를 동시에 보존하려는 접근
+for idx, perp in enumerate(perplexities):
+    tsne_temp = TSNE(n_components=2, random_state=42, perplexity=perp)
+    X_tsne_temp = tsne_temp.fit_transform(X_scaled)
+    
+    scatter = axes[idx].scatter(X_tsne_temp[:, 0], X_tsne_temp[:, 1], 
+                               c=y.astype('category').cat.codes,
+                               cmap='viridis', alpha=0.6, edgecolors='k')
+    axes[idx].set_title(f't-SNE (perplexity={perp})')
+    axes[idx].set_xlabel('Component 1')
+    axes[idx].set_ylabel('Component 2')
+    axes[idx].grid(True, alpha=0.3)
 
-### UMAP의 특징
-
-* t-SNE보다 빠름
-* 대규모 데이터에 적합
-* 결과 재현성 비교적 좋음
-* 시각화 + 전처리 용도로 활용 가능
-
-### UMAP 예제
-
-```python
-import umap
-
-umap_model = umap.UMAP(n_components=2, random_state=42)
-X_umap = umap_model.fit_transform(X_scaled)
+plt.tight_layout()
+plt.show()
 ```
 
-## PCA vs t-SNE vs UMAP 비교
+### UMAP
 
-* **PCA**
+UMAP(Uniform Manifold Approximation and Projection)은 데이터가 저차원 다양체에 놓여 있다고 가정하고, 전역 구조와 국소 구조를 동시에 보존하려는 비선형 차원 축소 방법이다.
 
-  * 선형
-  * 빠름
-  * 해석 가능
-  * 전처리 및 모델 입력으로 사용 가능
+**UMAP의 특징**
 
-* **t-SNE**
+| 특징 | 설명 |
+|------|------|
+| t-SNE보다 빠름 | 대규모 데이터 처리 가능 |
+| 전역+국소 구조 보존 | 균형 잡힌 표현 |
+| 재현성 좋음 | 같은 설정에서 일관된 결과 |
+| 다목적 | 시각화 + 전처리 모두 가능 |
+| 하이퍼파라미터 민감 | 튜닝 필요 |
 
-  * 비선형
-  * 시각화 특화
-  * 모델 입력용으로는 부적합
+**UMAP 하이퍼파라미터**
 
-* **UMAP**
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| n_components | 출력 차원 | 2 또는 3 |
+| n_neighbors | 이웃 수 | 15 (기본값) |
+| min_dist | 점 간 최소 거리 | 0.1 (기본값) |
+| metric | 거리 측정 방법 | 'euclidean' |
+| random_state | 재현성 | 고정값 |
 
-  * 비선형
-  * 빠름
-  * 시각화 + 전처리 가능
+**예제: UMAP 적용**
 
-## 3.3.7 실무 활용 가이드
+```{python}
+# UMAP 설치 필요: pip install umap-learn
+try:
+    import umap
+    
+    # UMAP 적용
+    umap_model = umap.UMAP(n_components=2, random_state=42)
+    X_umap = umap_model.fit_transform(X_scaled)
+    
+    print("=== UMAP 결과 ===")
+    print(f"원본 차원: {X.shape[1]}")
+    print(f"축소 차원: {X_umap.shape[1]}")
+    
+    # 시각화
+    plt.figure(figsize=(10, 6))
+    scatter = plt.scatter(X_umap[:, 0], X_umap[:, 1], c=y.astype('category').cat.codes,
+                         cmap='viridis', alpha=0.6, edgecolors='k')
+    plt.xlabel('UMAP Component 1')
+    plt.ylabel('UMAP Component 2')
+    plt.title('UMAP: 2D Projection')
+    plt.legend(handles=scatter.legend_elements()[0], labels=y.unique())
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+    
+except ImportError:
+    print("UMAP이 설치되지 않았습니다. 설치하려면: pip install umap-learn")
+```
 
-* 모델 학습 전 차원 축소
+## 방법 간 종합 비교
 
-  * PCA
-* 데이터 탐색 및 시각화
+**PCA vs t-SNE vs UMAP 비교**
 
-  * t-SNE, UMAP
-* 대용량 데이터 시각화
+| 구분 | PCA | t-SNE | UMAP |
+|------|-----|-------|------|
+| 유형 | 선형 | 비선형 | 비선형 |
+| 속도 | 매우 빠름 | 느림 | 빠름 |
+| 전역 구조 보존 | 우수 | 보통 | 우수 |
+| 국소 구조 보존 | 보통 | 우수 | 우수 |
+| 해석 가능성 | 높음 | 낮음 | 낮음 |
+| 역변환 | 가능 | 불가능 | 불가능 |
+| 재현성 | 완벽 | 낮음 | 높음 |
+| 대용량 데이터 | 적합 | 부적합 | 적합 |
+| 주 용도 | 전처리, 압축, 시각화 | 시각화 | 시각화, 전처리 |
+| 모델 입력 | 가능 | 불가능 | 가능 |
 
-  * UMAP 우선 고려
+**예제: 세 방법 비교 시각화**
 
-## 주의 사항
+```{python}
+# 세 가지 방법 비교
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-* 차원 축소 후 변수 해석이 어려워질 수 있음
-* 지도 학습에서는 타깃 정보가 반영되지 않음
-* 과도한 차원 축소는 정보 손실 초래
+# PCA
+scatter1 = axes[0].scatter(X_pca[:, 0], X_pca[:, 1], c=y.astype('category').cat.codes,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[0].set_title('PCA (Linear)')
+axes[0].set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
+axes[0].set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+axes[0].grid(True, alpha=0.3)
+
+# t-SNE
+scatter2 = axes[1].scatter(X_tsne[:, 0], X_tsne[:, 1], c=y.astype('category').cat.codes,
+                           cmap='viridis', alpha=0.6, edgecolors='k')
+axes[1].set_title('t-SNE (Non-linear)')
+axes[1].set_xlabel('Component 1')
+axes[1].set_ylabel('Component 2')
+axes[1].grid(True, alpha=0.3)
+
+# UMAP (설치된 경우)
+try:
+    scatter3 = axes[2].scatter(X_umap[:, 0], X_umap[:, 1], c=y.astype('category').cat.codes,
+                               cmap='viridis', alpha=0.6, edgecolors='k')
+    axes[2].set_title('UMAP (Non-linear)')
+    axes[2].set_xlabel('Component 1')
+    axes[2].set_ylabel('Component 2')
+    axes[2].grid(True, alpha=0.3)
+except:
+    axes[2].text(0.5, 0.5, 'UMAP not installed', 
+                ha='center', va='center', fontsize=14)
+    axes[2].set_title('UMAP (Not Available)')
+
+plt.tight_layout()
+plt.show()
+```
+
+## 실무 활용 가이드
+
+**사용 목적별 방법 선택**
+
+| 목적 | 권장 방법 | 이유 |
+|------|----------|------|
+| 모델 학습 전 전처리 | PCA | 빠르고 안정적, 역변환 가능 |
+| 데이터 탐색 및 시각화 | t-SNE 또는 UMAP | 비선형 구조 잘 표현 |
+| 대용량 데이터 시각화 | UMAP | 속도와 품질의 균형 |
+| 노이즈 제거 | PCA | 주요 신호만 추출 |
+| 다중공선성 제거 | PCA | 독립적인 축 생성 |
+| 클러스터링 전처리 | PCA 또는 UMAP | 차원 줄여 효율성 향상 |
+
+**데이터 크기별 권장**
+
+| 샘플 수 | 변수 수 | 권장 방법 |
+|---------|---------|----------|
+| < 1,000 | < 50 | PCA, t-SNE, UMAP 모두 가능 |
+| < 10,000 | 50~100 | PCA, UMAP (t-SNE 주의) |
+| > 10,000 | > 100 | PCA, UMAP (t-SNE 피함) |
+
+**파이프라인 예제**
+
+```{python}
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+
+# PCA + 분류 모델 파이프라인
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('pca', PCA(n_components=0.95)),
+    ('classifier', RandomForestClassifier(random_state=42))
+])
+
+# 교차 검증
+scores = cross_val_score(pipeline, X, y, cv=5)
+
+print("=== PCA + RandomForest 파이프라인 ===")
+print(f"교차 검증 정확도: {scores.mean():.4f} ± {scores.std():.4f}")
+```
+
+## 주의사항
+
+**차원 축소 사용 시 주의점**
+
+| 주의사항 | 설명 | 대응 방법 |
+|---------|------|----------|
+| 정보 손실 | 차원 축소 시 일부 정보 손실 불가피 | 설명 분산 비율 확인 |
+| 해석 어려움 | 새로운 변수의 의미 파악 곤란 | PCA 로딩 분석 |
+| 타겟 미반영 | 비지도 학습이라 타겟 고려 안 함 | LDA 등 지도 학습 차원 축소 고려 |
+| 스케일 민감 | 변수 스케일에 따라 결과 달라짐 | 반드시 표준화 |
+| 과적합 위험 | t-SNE 등은 학습 데이터에만 적용 | 테스트셋 변환 시 주의 |
+| 하이퍼파라미터 | 설정에 따라 결과 크게 달라짐 | 여러 값 실험 |
+
+**체크리스트**
+
+- [ ] 데이터 표준화 수행
+- [ ] 적절한 방법 선택 (목적에 맞게)
+- [ ] 설명 분산 또는 재구성 오차 확인
+- [ ] 시각화로 결과 검증
+- [ ] 원본 데이터와 비교
+- [ ] 파이프라인에 통합
+
+## 요약
+
+이 장에서는 고차원 데이터를 저차원으로 변환하는 차원 축소 기법을 학습했다. 주요 내용은 다음과 같다.
+
+**핵심 요약**
+
+- **목적**: 차원의 저주 해결, 시각화, 학습 효율화
+- **PCA**: 선형, 빠름, 해석 가능, 전처리 및 시각화
+- **t-SNE**: 비선형, 시각화 특화, 국소 구조 보존
+- **UMAP**: 비선형, 빠름, 전역+국소 보존, 다목적
+
+**선택 가이드**
+
+- 전처리 목적 → PCA
+- 시각화 목적 (소규모) → t-SNE
+- 시각화 목적 (대규모) → UMAP
+- 균형 잡힌 접근 → PCA로 시작, 필요시 UMAP
+
+차원 축소는 데이터의 본질적인 구조를 파악하고 효율적으로 분석하는 강력한 도구이다. 데이터 특성과 분석 목적에 맞는 방법을 선택하고, 결과를 시각화하여 검증하는 것이 중요하다.
