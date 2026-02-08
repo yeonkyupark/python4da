@@ -1,202 +1,471 @@
-# 데이터 분할 및 검정
+# 데이터 분할 및 검증
 
-## 데이터 분할 및 검증
+데이터 분할(Data Splitting)과 검증(Validation)은 머신러닝 모델의 일반화 성능을 평가하는 핵심 과정이다. 모델의 성능은 알고리즘 자체보다 데이터를 어떻게 나누고 검증했는지에 더 크게 좌우된다. 잘못된 데이터 분할은 과적합을 발견하지 못하고 모델 성능을 과대평가하게 만든다. 이 장에서는 올바른 데이터 분할 방법과 교차 검증 기법을 학습한다.
 
-머신러닝 모델의 성능은 모델 자체보다 **데이터를 어떻게 나누고 검증했는지**에 더 크게 좌우된다.
-
-## 왜 데이터 분할이 필요한가?
-
-모델은 학습 데이터에 최적화된다. 따라서 동일 데이터를 평가에 사용하면
-
-* 성능이 과대평가(overfitting)
-* 보지 않은 데이터에서의 성능을 추정해야 한다
-
-즉, **일반화 성능(generalization performance)** 평가가 목적이다.
-
-## 학습 · 검증 · 테스트 분할
-
-### 기본 개념
-
-| 구분             | 역할         |
-| -------------- | ---------- |
-| 학습(train)      | 모델 학습      |
-| 검증(validation) | 하이퍼파라미터 튜닝 |
-| 테스트(test)      | 최종 성능 평가   |
-
-### 일반적인 분할 비율
-
-* 60 / 20 / 20
-* 70 / 15 / 15
-* 80 / 20 (검증을 교차 검증으로 대체하는 경우)
-
-### 예제
-
-#### 분석 목표
-
-* species 분류
-* 수치형 변수를 사용한 기본 모델링
+**예제: 데이터 로드**
 
 ```{python}
 import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
+# 데이터 로드
 df = sns.load_dataset("penguins")
 df_ml = df.dropna()
 
-X = df_ml[
-    ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
-]
-y = df_ml["species"]
+print("데이터 크기:", df_ml.shape)
+print("\n타겟 변수 분포:")
+print(df_ml["species"].value_counts())
 ```
 
-### 학습 / 테스트 분할
+## 데이터 분할의 필요성
+
+머신러닝 모델은 학습 데이터에 최적화되므로, 동일한 데이터로 평가하면 성능이 과대평가된다.
+
+**과적합과 일반화**
+
+| 개념 | 설명 | 문제점 |
+|------|------|--------|
+| 과적합 (Overfitting) | 학습 데이터에 지나치게 최적화 | 새로운 데이터에서 성능 저하 |
+| 과소적합 (Underfitting) | 학습 데이터조차 제대로 학습 못함 | 전반적으로 낮은 성능 |
+| 일반화 (Generalization) | 보지 못한 데이터에도 잘 작동 | 목표 |
+
+**데이터 분할의 목적**
+
+1. **일반화 성능 평가**: 모델이 새로운 데이터에서 얼마나 잘 작동하는가?
+2. **과적합 탐지**: 학습 성능과 검증 성능의 차이 확인
+3. **모델 선택**: 여러 모델 중 가장 좋은 모델 선택
+4. **하이퍼파라미터 튜닝**: 최적의 설정값 찾기
+5. **공정한 비교**: 동일한 기준으로 모델 성능 비교
+
+**잘못된 평가의 예**
+
+```python
+# ❌ 잘못된 예: 학습 데이터로 평가
+model.fit(X, y)
+score = model.score(X, y)  # 과대평가!
+
+# ✓ 올바른 예: 별도의 테스트 데이터로 평가
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model.fit(X_train, y_train)
+score = model.score(X_test, y_test)  # 올바른 평가
+```
+
+## 데이터 분할의 종류
+
+**데이터셋의 역할**
+
+| 데이터셋 | 영어 | 역할 | 사용 시점 |
+|---------|------|------|----------|
+| 학습 | Train | 모델 파라미터 학습 | 매 에포크/반복 |
+| 검증 | Validation | 하이퍼파라미터 튜닝, 조기 종료 | 학습 중 |
+| 테스트 | Test | 최종 성능 평가 | 단 한 번 (마지막) |
+
+**일반적인 분할 비율**
+
+| 전체 데이터 크기 | 분할 비율 (Train/Val/Test) | 설명 |
+|-----------------|-------------------------|------|
+| 매우 큼 (100만+) | 98/1/1 | 충분한 데이터, 작은 비율도 충분 |
+| 큼 (10만+) | 90/5/5 또는 80/10/10 | 일반적 상황 |
+| 중간 (1만+) | 70/15/15 또는 60/20/20 | 표준 비율 |
+| 작음 (1천+) | 교차 검증 + 80/20 | 검증셋 없이 CV 사용 |
+| 매우 작음 (100+) | Leave-One-Out CV | 모든 데이터 활용 |
+
+## 기본 데이터 분할
+
+### 학습/테스트 분할
+
+**예제: 데이터 준비**
 
 ```{python}
+# 특성과 타겟 분리
+X = df_ml[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y = df_ml["species"]
+
+print("특성 행렬(X) 크기:", X.shape)
+print("타겟 벡터(y) 크기:", y.shape)
+print("\n타겟 클래스 분포:")
+print(y.value_counts())
+print(f"\n클래스 비율:")
+print((y.value_counts() / len(y)).round(3))
+```
+
+**예제: 학습/테스트 분할**
+
+```{python}
+# 학습/테스트 분할 (80/20)
 X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,        # 테스트 20%
+    random_state=42,       # 재현성
+    stratify=y            # 클래스 비율 유지
+)
+
+print("=== 데이터 분할 결과 ===")
+print(f"전체 데이터: {len(X)}")
+print(f"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
+print(f"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
+
+# 클래스 비율 확인
+print("\n=== 클래스 비율 비교 ===")
+print("전체 데이터:")
+print((y.value_counts() / len(y)).round(3))
+print("\n학습 데이터:")
+print((y_train.value_counts() / len(y_train)).round(3))
+print("\n테스트 데이터:")
+print((y_test.value_counts() / len(y_test)).round(3))
+```
+
+**train_test_split 주요 파라미터**
+
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| test_size | 테스트셋 비율 | 0.2 ~ 0.3 |
+| random_state | 난수 시드 (재현성) | 고정값 (예: 42) |
+| stratify | 클래스 비율 유지 | 분류 문제에서 y |
+| shuffle | 섞기 여부 | True (기본값) |
+
+### 학습/검증/테스트 분할
+
+하이퍼파라미터 튜닝이 필요한 경우 3-way 분할을 수행한다.
+
+**예제: 3-way 분할**
+
+```{python}
+# 1단계: 학습+검증 vs 테스트 (80/20)
+X_temp, X_test, y_temp, y_test = train_test_split(
     X, y,
     test_size=0.2,
     random_state=42,
     stratify=y
 )
+
+# 2단계: 학습 vs 검증 (60/20)
+# temp의 25%는 전체의 20% (0.8 * 0.25 = 0.2)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_temp, y_temp,
+    test_size=0.25,  # temp의 25% = 전체의 20%
+    random_state=42,
+    stratify=y_temp
+)
+
+print("=== 3-way 데이터 분할 결과 ===")
+print(f"전체 데이터: {len(X)}")
+print(f"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
+print(f"검증 데이터: {len(X_val)} ({len(X_val)/len(X)*100:.1f}%)")
+print(f"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
+
+# 시각화
+sizes = [len(X_train), len(X_val), len(X_test)]
+labels = ['Train (60%)', 'Validation (20%)', 'Test (20%)']
+colors = ['#3498db', '#2ecc71', '#e74c3c']
+
+plt.figure(figsize=(10, 6))
+plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+plt.title("Data Split: Train/Validation/Test")
+plt.axis('equal')
+plt.show()
 ```
 
-* stratify
+**3-way 분할 사용 흐름**
 
-  * 클래스 비율 유지
-  * 분류 문제에서 매우 중요
-
-### 학습 / 검증 분할
-
-```{python}
-X_train, X_val, y_train, y_val = train_test_split(
-    X_train, y_train,
-    test_size=0.25,  # 전체 기준 0.2
-    random_state=42,
-    stratify=y_train
-)
+```
+학습 데이터 (Train)
+  ↓
+모델 학습 (fit)
+  ↓
+검증 데이터 (Validation)
+  ↓
+하이퍼파라미터 튜닝
+  ↓
+최종 모델 선택
+  ↓
+테스트 데이터 (Test)
+  ↓
+최종 성능 평가 (단 한 번!)
 ```
 
 ## 교차 검증 (Cross-Validation)
 
-### 개념
+교차 검증은 데이터를 여러 번 나누어 학습과 검증을 반복함으로써 더 안정적이고 신뢰할 수 있는 성능 추정을 제공한다.
 
-* 데이터를 여러 번 나누어
-* 학습과 검증을 반복
-* 성능의 평균과 분산을 함께 평가
+**교차 검증의 장점**
 
-**단일 분할의 운(luck)에 의존하지 않음**
+| 장점 | 설명 |
+|------|------|
+| 안정적 평가 | 단일 분할의 운(luck)에 의존하지 않음 |
+| 데이터 효율성 | 모든 데이터를 학습과 검증에 사용 |
+| 분산 추정 | 성능의 평균과 표준편차 확인 가능 |
+| 과적합 탐지 | 폴드 간 성능 차이로 과적합 감지 |
+
+**교차 검증 vs 홀드아웃**
+
+| 항목 | 홀드아웃 (단일 분할) | 교차 검증 |
+|------|-------------------|----------|
+| 계산 비용 | 낮음 | 높음 (k배) |
+| 안정성 | 낮음 (운에 좌우) | 높음 |
+| 데이터 효율 | 낮음 | 높음 (모든 데이터 활용) |
+| 성능 분산 | 알 수 없음 | 측정 가능 |
+| 소표본 적합성 | 부적합 | 적합 |
+| 사용 시점 | 빠른 실험 | 최종 평가 |
 
 ## K-Fold 교차 검증
 
-### 원리
+K-Fold는 데이터를 K개의 폴드로 나누어 각 폴드를 한 번씩 검증셋으로 사용하는 방법이다.
 
-* 데이터를 K개 폴드로 분할
-* K-1개로 학습, 1개로 검증
-* K번 반복
-
-### 시각적 개념
+**K-Fold 원리**
 
 ```
-Fold 1 | V T T ... T T
-Fold 2 | T V T ... T T
-Fold 3 | T T V ... T T
-...
-Fold K | T T T ... T V
+전체 데이터를 K개로 분할
+
+Fold 1: [Validation] [Train] [Train] [Train] [Train]
+Fold 2: [Train] [Validation] [Train] [Train] [Train]
+Fold 3: [Train] [Train] [Validation] [Train] [Train]
+Fold 4: [Train] [Train] [Train] [Validation] [Train]
+Fold 5: [Train] [Train] [Train] [Train] [Validation]
+
+→ K번 학습 후 평균 성능 계산
 ```
 
-### 기본 K-Fold 예제
+**예제: K-Fold 교차 검증**
 
 ```{python}
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.linear_model import LogisticRegression
 
-model = LogisticRegression(max_iter=1000)
+# 모델 정의
+model = LogisticRegression(max_iter=1000, random_state=42)
 
+# K-Fold 설정
 kf = KFold(
-    n_splits=5,
-    shuffle=True,
-    random_state=42
+    n_splits=5,         # 5개 폴드
+    shuffle=True,        # 섞기
+    random_state=42      # 재현성
 )
 
+# 교차 검증 수행
 scores = cross_val_score(
     model, X, y,
     cv=kf,
-    scoring="accuracy"
+    scoring='accuracy'
 )
 
-scores, scores.mean()
+print("=== K-Fold 교차 검증 결과 ===")
+print(f"각 폴드 정확도: {scores}")
+print(f"평균 정확도: {scores.mean():.4f}")
+print(f"표준편차: {scores.std():.4f}")
+print(f"95% 신뢰구간: {scores.mean():.4f} ± {1.96 * scores.std():.4f}")
+```
+
+**예제: 폴드별 성능 시각화**
+
+```{python}
+# 폴드별 성능 시각화
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, len(scores)+1), scores, 'o-', linewidth=2, markersize=8)
+plt.axhline(scores.mean(), color='r', linestyle='--', linewidth=2, 
+            label=f'Mean = {scores.mean():.4f}')
+plt.fill_between(range(1, len(scores)+1), 
+                 scores.mean() - scores.std(), 
+                 scores.mean() + scores.std(), 
+                 alpha=0.2, color='r', label=f'Std = {scores.std():.4f}')
+plt.xlabel('Fold')
+plt.ylabel('Accuracy')
+plt.title('K-Fold Cross-Validation Results')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.xticks(range(1, len(scores)+1))
+plt.show()
 ```
 
 ## Stratified K-Fold
 
-### 왜 필요한가?
+Stratified K-Fold는 각 폴드에서 클래스 비율을 유지하는 K-Fold의 변형으로, 불균형 데이터에서 필수적이다.
 
-* 분류 문제에서 클래스 불균형이 있으면
+**왜 필요한가?**
 
-  * 폴드마다 클래스 비율이 달라질 수 있음
+일반 K-Fold는 클래스를 고려하지 않으므로:
+- 한 폴드에 특정 클래스가 몰릴 수 있음
+- 폴드 간 성능 차이가 클래스 불균형 때문일 수 있음
+- 소수 클래스가 일부 폴드에 없을 수 있음
 
-각 폴드에 **클래스 비율을 유지**
-
-### 예제
+**예제: Stratified K-Fold**
 
 ```{python}
 from sklearn.model_selection import StratifiedKFold
 
+# Stratified K-Fold 설정
 skf = StratifiedKFold(
     n_splits=5,
     shuffle=True,
     random_state=42
 )
 
-scores = cross_val_score(
+# 교차 검증 수행
+scores_stratified = cross_val_score(
     model, X, y,
     cv=skf,
-    scoring="accuracy"
+    scoring='accuracy'
 )
 
-scores, scores.mean()
+print("=== Stratified K-Fold 교차 검증 결과 ===")
+print(f"각 폴드 정확도: {scores_stratified}")
+print(f"평균 정확도: {scores_stratified.mean():.4f}")
+print(f"표준편차: {scores_stratified.std():.4f}")
+
+# K-Fold vs Stratified K-Fold 비교
+print("\n=== K-Fold vs Stratified K-Fold 비교 ===")
+print(f"K-Fold:           평균 = {scores.mean():.4f}, 표준편차 = {scores.std():.4f}")
+print(f"Stratified K-Fold: 평균 = {scores_stratified.mean():.4f}, 표준편차 = {scores_stratified.std():.4f}")
 ```
 
-## 교차 검증 vs 홀드아웃 검증
+**예제: 폴드별 클래스 분포 확인**
 
-| 항목     | 홀드아웃  | 교차 검증 |
-| ------ | ----- | ----- |
-| 계산 비용  | 낮음    | 높음    |
-| 안정성    | 낮음    | 높음    |
-| 데이터 소량 | 부적합   | 적합    |
-| 실무 사용  | 빠른 실험 | 최종 평가 |
+```{python}
+# 폴드별 클래스 분포 확인
+print("\n=== 각 폴드의 클래스 분포 ===")
+for fold_idx, (train_idx, val_idx) in enumerate(skf.split(X, y), 1):
+    y_fold = y.iloc[val_idx]
+    print(f"\nFold {fold_idx}:")
+    print(f"  크기: {len(y_fold)}")
+    print(f"  클래스 비율:")
+    print((y_fold.value_counts() / len(y_fold)).round(3).to_dict())
+```
 
-## 시계열 데이터의 주의점
+## 기타 교차 검증 방법
 
-* 미래 데이터를 학습에 사용하면 안 됨
-* 반드시 시간 순서 유지
+**교차 검증 방법 비교**
+
+| 방법 | 설명 | 사용 상황 |
+|------|------|----------|
+| K-Fold | 데이터를 K개로 분할 | 회귀, 균형 분류 |
+| Stratified K-Fold | 클래스 비율 유지 | 불균형 분류 (권장) |
+| Leave-One-Out (LOO) | K = n (각 샘플을 검증셋으로) | 매우 소량 데이터 |
+| Leave-P-Out (LPO) | P개씩 조합 | 극소량 데이터 |
+| Shuffle Split | 무작위 분할 반복 | 빠른 근사 평가 |
+| Group K-Fold | 그룹 단위 분할 | 그룹 종속 데이터 |
+| Time Series Split | 시간 순서 유지 | 시계열 데이터 |
+
+### Time Series Split (시계열 교차 검증)
+
+시계열 데이터는 미래를 예측하므로, 학습 데이터가 검증 데이터보다 과거여야 한다.
+
+**예제: Time Series Split**
 
 ```{python}
 from sklearn.model_selection import TimeSeriesSplit
 
+# Time Series Split 설정
 tscv = TimeSeriesSplit(n_splits=5)
+
+# 분할 시각화
+print("=== Time Series Split 구조 ===")
+for fold_idx, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
+    print(f"Fold {fold_idx}:")
+    print(f"  Train: {min(train_idx):3d} ~ {max(train_idx):3d} (n={len(train_idx)})")
+    print(f"  Val:   {min(val_idx):3d} ~ {max(val_idx):3d} (n={len(val_idx)})")
 ```
 
-**일반 K-Fold 사용 금지**
+**시계열 데이터 주의사항**
 
-## Nested Cross-Validation
+- ❌ 일반 K-Fold 사용 금지 (미래 데이터로 학습)
+- ✓ TimeSeriesSplit 사용
+- ✓ 학습 데이터 < 검증 데이터 (시간 순서)
+- ✓ 데이터 섞기(shuffle) 금지
 
-### 개념
+## 교차 검증 실무 가이드
 
-* 하이퍼파라미터 튜닝과 모델 평가를 분리 및 성능 과대평가 방지
+**교차 검증 선택 가이드**
 
-## 체크리스트
+```
+분류 문제?
+├─ Yes → 클래스 불균형?
+│         ├─ Yes → Stratified K-Fold (필수)
+│         └─ No → K-Fold 또는 Stratified K-Fold
+└─ No (회귀) → 시계열?
+                ├─ Yes → TimeSeriesSplit
+                └─ No → K-Fold
+```
 
-* 분류 문제인가?
+**K 값 선택**
 
-  * stratify 사용
-* 데이터가 적은가?
+| 데이터 크기 | 권장 K | 이유 |
+|-----------|-------|------|
+| n < 100 | k = n (LOO) | 데이터 최대 활용 |
+| 100 ≤ n < 1000 | k = 10 | 표준, 계산 가능 |
+| n ≥ 1000 | k = 5 | 계산 효율성 |
+| n ≥ 10000 | k = 3 또는 홀드아웃 | 빠른 평가 |
 
-  * 교차 검증
-* 하이퍼파라미터 튜닝 중인가?
+## 데이터 누수 (Data Leakage) 방지
 
-  * 검증 데이터 분리
-* 최종 성능 보고인가?
+데이터 누수는 학습 과정에서 테스트 정보가 유입되어 성능이 과대평가되는 현상이다.
 
-  * 테스트 데이터는 마지막까지 보존
+**데이터 누수의 원인**
 
+| 원인 | 예시 | 올바른 방법 |
+|------|------|-----------|
+| 전처리 순서 오류 | 전체 데이터 스케일링 후 분할 | 분할 후 학습 데이터로만 스케일링 |
+| 피처 선택 오류 | 전체 데이터로 피처 선택 | 분할 후 학습 데이터로만 선택 |
+| 타겟 인코딩 오류 | 전체 데이터로 타겟 인코딩 | 분할 후 학습 데이터로만 인코딩 |
+| 검증셋 재사용 | 검증셋으로 여러 번 튜닝 | 최종은 테스트셋으로 단 한 번 |
+
+**올바른 파이프라인**
+
+```python
+# ✓ 올바른 예: 분할 후 전처리
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+# 1. 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# 2. 파이프라인 (분할 후 전처리)
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),  # 학습 데이터로만 fit
+    ('model', LogisticRegression())
+])
+
+# 3. 학습 (scaler는 X_train으로만 fit됨)
+pipeline.fit(X_train, y_train)
+
+# 4. 평가 (scaler 파라미터는 학습 때 학습됨)
+score = pipeline.score(X_test, y_test)
+```
+
+## 요약
+
+이 장에서는 데이터 분할과 교차 검증을 학습했다. 주요 내용은 다음과 같다.
+
+**데이터 분할 핵심**
+
+- **목적**: 일반화 성능 평가, 과적합 탐지
+- **기본 분할**: Train/Validation/Test (60/20/20)
+- **Stratify**: 분류 문제에서 클래스 비율 유지 필수
+- **테스트셋**: 단 한 번만 사용 (최종 평가)
+
+**교차 검증 핵심**
+
+- **K-Fold**: 데이터를 K개로 나누어 반복 평가
+- **Stratified K-Fold**: 분류 문제에서 권장 (클래스 비율 유지)
+- **Time Series Split**: 시계열 데이터 전용
+- **장점**: 안정적 평가, 모든 데이터 활용
+
+**실무 체크리스트**
+
+- [ ] 분류 문제인가? → Stratify 사용
+- [ ] 데이터가 적은가? → 교차 검증 사용
+- [ ] 하이퍼파라미터 튜닝? → 검증셋 분리
+- [ ] 시계열 데이터? → TimeSeriesSplit 사용
+- [ ] 데이터 누수 방지? → 분할 후 전처리
+- [ ] 최종 평가? → 테스트셋은 마지막에 단 한 번
+
+**주의사항**
+
+- 테스트셋은 절대 학습에 사용하지 않음
+- 전처리(스케일링 등)는 분할 후 수행
+- 검증셋을 여러 번 보면 간접적인 과적합
+- 시계열은 반드시 TimeSeriesSplit 사용
+
+올바른 데이터 분할과 검증은 신뢰할 수 있는 모델 평가의 기초이다. 다음 장에서는 모델 성능을 측정하는 다양한 평가 지표를 학습할 것이다.

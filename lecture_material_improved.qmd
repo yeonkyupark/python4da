@@ -1,8 +1,6 @@
-# 상관 분석
+# 데이터 분할 및 검증
 
-상관 분석(Correlation Analysis)은 두 연속형 변수 간의 관계 방향과 강도를 수치로 표현하는 통계적 방법이다. 상관계수는 두 변수가 함께 변하는 패턴을 -1에서 +1 사이의 값으로 나타내며, 변수 간 관계를 탐색하고 이해하는 데 필수적인 도구이다. 이 장에서는 Pearson, Spearman, Kendall 상관계수의 개념과 차이, 그리고 실무 적용 방법을 학습한다.
-
-**중요**: 상관관계는 두 변수 간 연관성만을 나타내며, 인과관계를 의미하지 않는다.
+데이터 분할(Data Splitting)과 검증(Validation)은 머신러닝 모델의 일반화 성능을 평가하는 핵심 과정이다. 모델의 성능은 알고리즘 자체보다 데이터를 어떻게 나누고 검증했는지에 더 크게 좌우된다. 잘못된 데이터 분할은 과적합을 발견하지 못하고 모델 성능을 과대평가하게 만든다. 이 장에서는 올바른 데이터 분할 방법과 교차 검증 기법을 학습한다.
 
 **예제: 데이터 로드**
 
@@ -11,447 +9,463 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import stats
+from sklearn.model_selection import train_test_split
 
 # 데이터 로드
 df = sns.load_dataset("penguins")
+df_ml = df.dropna()
 
-print("데이터 크기:", df.shape)
-print("\n연속형 변수:")
-print(df.select_dtypes(include=[np.number]).columns.tolist())
+print("데이터 크기:", df_ml.shape)
+print("\n타겟 변수 분포:")
+print(df_ml["species"].value_counts())
 ```
 
-## 상관계수의 기본 개념
+## 데이터 분할의 필요성
 
-상관계수는 두 변수 간 선형 또는 단조 관계의 방향과 강도를 나타낸다.
+머신러닝 모델은 학습 데이터에 최적화되므로, 동일한 데이터로 평가하면 성능이 과대평가된다.
 
-**상관계수의 특성**
+**과적합과 일반화**
 
-| 항목 | 설명 |
-|------|------|
-| 범위 | -1 ≤ r ≤ +1 |
-| +1 | 완벽한 양의 상관 (한 변수 증가 시 다른 변수도 완벽히 증가) |
-| 0 | 선형 관계 없음 (독립적이거나 비선형 관계) |
-| -1 | 완벽한 음의 상관 (한 변수 증가 시 다른 변수는 완벽히 감소) |
-| \|r\| | 절댓값이 클수록 관계가 강함 |
+| 개념 | 설명 | 문제점 |
+|------|------|--------|
+| 과적합 (Overfitting) | 학습 데이터에 지나치게 최적화 | 새로운 데이터에서 성능 저하 |
+| 과소적합 (Underfitting) | 학습 데이터조차 제대로 학습 못함 | 전반적으로 낮은 성능 |
+| 일반화 (Generalization) | 보지 못한 데이터에도 잘 작동 | 목표 |
 
-**상관계수 강도 해석 (경험적 기준)**
+**데이터 분할의 목적**
 
-| \|r\| 값 | 관계 강도 | 해석 |
-|---------|----------|------|
-| 0.0 ~ 0.1 | 매우 약함 | 거의 관계 없음 |
-| 0.1 ~ 0.3 | 약함 | 약한 관계 |
-| 0.3 ~ 0.5 | 중간 | 중간 정도 관계 |
-| 0.5 ~ 0.7 | 강함 | 강한 관계 |
-| 0.7 ~ 1.0 | 매우 강함 | 매우 강한 관계 |
+1. **일반화 성능 평가**: 모델이 새로운 데이터에서 얼마나 잘 작동하는가?
+2. **과적합 탐지**: 학습 성능과 검증 성능의 차이 확인
+3. **모델 선택**: 여러 모델 중 가장 좋은 모델 선택
+4. **하이퍼파라미터 튜닝**: 최적의 설정값 찾기
+5. **공정한 비교**: 동일한 기준으로 모델 성능 비교
 
-**주의사항**
+**잘못된 평가의 예**
 
-| 주의점 | 설명 |
-|--------|------|
-| 인과관계 아님 | "A와 B가 상관있다" ≠ "A가 B를 야기한다" |
-| 이상치 민감 | 극단값이 상관계수를 크게 왜곡할 수 있음 |
-| 비선형 관계 | 비선형 관계는 상관계수가 낮게 나올 수 있음 |
-| 제3의 변수 | 두 변수의 상관이 다른 변수 때문일 수 있음 |
-| Simpson's Paradox | 전체 데이터와 그룹별 데이터의 상관이 반대일 수 있음 |
+```python
+# ❌ 잘못된 예: 학습 데이터로 평가
+model.fit(X, y)
+score = model.score(X, y)  # 과대평가!
 
-## Pearson 상관계수
+# ✓ 올바른 예: 별도의 테스트 데이터로 평가
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model.fit(X_train, y_train)
+score = model.score(X_test, y_test)  # 올바른 평가
+```
 
-Pearson 상관계수는 두 변수 간 선형 관계의 강도와 방향을 측정하는 가장 널리 사용되는 방법이다.
+## 데이터 분할의 종류
 
-**개념**
+**데이터셋의 역할**
 
-- **측정 대상**: 선형 관계
-- **계산 기반**: 공분산을 표준편차로 나눈 값
-- **가정**: 두 변수 모두 연속형, 선형 관계, 정규분포 (근사적)
+| 데이터셋 | 영어 | 역할 | 사용 시점 |
+|---------|------|------|----------|
+| 학습 | Train | 모델 파라미터 학습 | 매 에포크/반복 |
+| 검증 | Validation | 하이퍼파라미터 튜닝, 조기 종료 | 학습 중 |
+| 테스트 | Test | 최종 성능 평가 | 단 한 번 (마지막) |
 
-**Pearson 상관계수 공식**
+**일반적인 분할 비율**
 
-$$
-r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
-$$
+| 전체 데이터 크기 | 분할 비율 (Train/Val/Test) | 설명 |
+|-----------------|-------------------------|------|
+| 매우 큼 (100만+) | 98/1/1 | 충분한 데이터, 작은 비율도 충분 |
+| 큼 (10만+) | 90/5/5 또는 80/10/10 | 일반적 상황 |
+| 중간 (1만+) | 70/15/15 또는 60/20/20 | 표준 비율 |
+| 작음 (1천+) | 교차 검증 + 80/20 | 검증셋 없이 CV 사용 |
+| 매우 작음 (100+) | Leave-One-Out CV | 모든 데이터 활용 |
 
-**가설 설정**
+## 기본 데이터 분할
 
-- H₀ (귀무가설): ρ = 0 (두 변수 간 선형 상관이 없다)
-- H₁ (대립가설): ρ ≠ 0 (두 변수 간 선형 상관이 있다)
-
-### 예제: 부리 길이와 깊이의 상관관계
+### 학습/테스트 분할
 
 **예제: 데이터 준비**
 
 ```{python}
-from scipy.stats import pearsonr
+# 특성과 타겟 분리
+X = df_ml[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y = df_ml["species"]
 
-# 결측치 제거
-df_corr = df[["bill_length_mm", "bill_depth_mm"]].dropna()
-
-print("=== 데이터 정보 ===")
-print(f"샘플 수: {len(df_corr)}")
-print("\n기술 통계량:")
-print(df_corr.describe())
+print("특성 행렬(X) 크기:", X.shape)
+print("타겟 벡터(y) 크기:", y.shape)
+print("\n타겟 클래스 분포:")
+print(y.value_counts())
+print(f"\n클래스 비율:")
+print((y.value_counts() / len(y)).round(3))
 ```
 
-**예제: Pearson 상관계수 계산**
+**예제: 학습/테스트 분할**
 
 ```{python}
-# Pearson 상관계수
-r, p_value = pearsonr(
-    df_corr["bill_length_mm"],
-    df_corr["bill_depth_mm"]
+# 학습/테스트 분할 (80/20)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,        # 테스트 20%
+    random_state=42,       # 재현성
+    stratify=y            # 클래스 비율 유지
 )
 
-print("=== Pearson 상관 분석 ===")
-print(f"상관계수 (r): {r:.4f}")
-print(f"p-value: {p_value:.4f}")
+print("=== 데이터 분할 결과 ===")
+print(f"전체 데이터: {len(X)}")
+print(f"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
+print(f"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
 
-# 해석
-alpha = 0.05
-print(f"\n유의수준 {alpha} 기준:")
-if p_value < alpha:
-    print(f"✓ 상관관계가 통계적으로 유의함")
-    
-    if r > 0:
-        direction = "양의"
-    else:
-        direction = "음의"
-    
-    if abs(r) < 0.3:
-        strength = "약한"
-    elif abs(r) < 0.5:
-        strength = "중간"
-    else:
-        strength = "강한"
-    
-    print(f"  → {direction} {strength} 선형 관계")
-else:
-    print(f"✗ 상관관계가 통계적으로 유의하지 않음")
+# 클래스 비율 확인
+print("\n=== 클래스 비율 비교 ===")
+print("전체 데이터:")
+print((y.value_counts() / len(y)).round(3))
+print("\n학습 데이터:")
+print((y_train.value_counts() / len(y_train)).round(3))
+print("\n테스트 데이터:")
+print((y_test.value_counts() / len(y_test)).round(3))
 ```
 
-**예제: 산점도 시각화**
+**train_test_split 주요 파라미터**
+
+| 파라미터 | 설명 | 권장값 |
+|---------|------|--------|
+| test_size | 테스트셋 비율 | 0.2 ~ 0.3 |
+| random_state | 난수 시드 (재현성) | 고정값 (예: 42) |
+| stratify | 클래스 비율 유지 | 분류 문제에서 y |
+| shuffle | 섞기 여부 | True (기본값) |
+
+### 학습/검증/테스트 분할
+
+하이퍼파라미터 튜닝이 필요한 경우 3-way 분할을 수행한다.
+
+**예제: 3-way 분할**
 
 ```{python}
-# 산점도와 회귀선
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+# 1단계: 학습+검증 vs 테스트 (80/20)
+X_temp, X_test, y_temp, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
 
-# 전체 데이터 산점도
-axes[0].scatter(df_corr["bill_length_mm"], df_corr["bill_depth_mm"], alpha=0.5)
-axes[0].set_title(f"Bill Length vs Depth\n(Pearson r = {r:.3f})")
-axes[0].set_xlabel("Bill Length (mm)")
-axes[0].set_ylabel("Bill Depth (mm)")
-axes[0].grid(True, alpha=0.3)
+# 2단계: 학습 vs 검증 (60/20)
+# temp의 25%는 전체의 20% (0.8 * 0.25 = 0.2)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_temp, y_temp,
+    test_size=0.25,  # temp의 25% = 전체의 20%
+    random_state=42,
+    stratify=y_temp
+)
 
-# 회귀선 추가
-z = np.polyfit(df_corr["bill_length_mm"], df_corr["bill_depth_mm"], 1)
-p = np.poly1d(z)
-axes[0].plot(df_corr["bill_length_mm"].sort_values(), 
-             p(df_corr["bill_length_mm"].sort_values()), 
-             "r--", linewidth=2, label='Linear fit')
-axes[0].legend()
+print("=== 3-way 데이터 분할 결과 ===")
+print(f"전체 데이터: {len(X)}")
+print(f"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
+print(f"검증 데이터: {len(X_val)} ({len(X_val)/len(X)*100:.1f}%)")
+print(f"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
 
-# 종별 산점도 (Simpson's Paradox 확인)
-for species in df["species"].unique():
-    species_data = df[df["species"] == species][["bill_length_mm", "bill_depth_mm"]].dropna()
-    axes[1].scatter(species_data["bill_length_mm"], 
-                   species_data["bill_depth_mm"], 
-                   alpha=0.6, label=species)
+# 시각화
+sizes = [len(X_train), len(X_val), len(X_test)]
+labels = ['Train (60%)', 'Validation (20%)', 'Test (20%)']
+colors = ['#3498db', '#2ecc71', '#e74c3c']
 
-axes[1].set_title("Bill Length vs Depth by Species")
-axes[1].set_xlabel("Bill Length (mm)")
-axes[1].set_ylabel("Bill Depth (mm)")
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
+plt.figure(figsize=(10, 6))
+plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+plt.title("Data Split: Train/Validation/Test")
+plt.axis('equal')
 plt.show()
 ```
 
-**Simpson's Paradox 확인**
+**3-way 분할 사용 흐름**
 
-```{python}
-# 종별 상관계수
-print("\n=== 종별 Pearson 상관계수 ===")
-for species in df["species"].unique():
-    species_data = df[df["species"] == species][["bill_length_mm", "bill_depth_mm"]].dropna()
-    r_species, p_species = pearsonr(species_data["bill_length_mm"], species_data["bill_depth_mm"])
-    print(f"{species:12s}: r = {r_species:6.3f}, p = {p_species:.4f}")
-
-print(f"\n전체 데이터:  r = {r:6.3f}, p = {p_value:.4f}")
-print("\n⚠️ 전체 데이터와 그룹별 상관의 방향이 다를 수 있음 (Simpson's Paradox)")
+```
+학습 데이터 (Train)
+  ↓
+모델 학습 (fit)
+  ↓
+검증 데이터 (Validation)
+  ↓
+하이퍼파라미터 튜닝
+  ↓
+최종 모델 선택
+  ↓
+테스트 데이터 (Test)
+  ↓
+최종 성능 평가 (단 한 번!)
 ```
 
-## Spearman 순위 상관계수
+## 교차 검증 (Cross-Validation)
 
-Spearman 상관계수는 데이터의 순위를 사용하여 단조 관계를 측정하는 비모수적 방법이다.
+교차 검증은 데이터를 여러 번 나누어 학습과 검증을 반복함으로써 더 안정적이고 신뢰할 수 있는 성능 추정을 제공한다.
 
-**개념**
+**교차 검증의 장점**
 
-- **측정 대상**: 단조 관계 (monotonic relationship)
-- **계산 기반**: 순위 간 Pearson 상관계수
-- **가정**: 순서형 이상의 데이터, 정규성 불필요
-
-**언제 사용하는가?**
-
-| 상황 | 설명 |
+| 장점 | 설명 |
 |------|------|
-| 정규성 위배 | 데이터가 정규분포를 따르지 않음 |
-| 이상치 많음 | 극단값이 결과를 왜곡할 수 있음 |
-| 비선형 단조 관계 | 직선은 아니지만 한 방향으로 증가/감소 |
-| 순서형 데이터 | 순위나 등급 데이터 |
+| 안정적 평가 | 단일 분할의 운(luck)에 의존하지 않음 |
+| 데이터 효율성 | 모든 데이터를 학습과 검증에 사용 |
+| 분산 추정 | 성능의 평균과 표준편차 확인 가능 |
+| 과적합 탐지 | 폴드 간 성능 차이로 과적합 감지 |
 
-**가설 설정**
+**교차 검증 vs 홀드아웃**
 
-- H₀ (귀무가설): ρₛ = 0 (두 변수 간 순위 상관이 없다)
-- H₁ (대립가설): ρₛ ≠ 0 (두 변수 간 순위 상관이 있다)
+| 항목 | 홀드아웃 (단일 분할) | 교차 검증 |
+|------|-------------------|----------|
+| 계산 비용 | 낮음 | 높음 (k배) |
+| 안정성 | 낮음 (운에 좌우) | 높음 |
+| 데이터 효율 | 낮음 | 높음 (모든 데이터 활용) |
+| 성능 분산 | 알 수 없음 | 측정 가능 |
+| 소표본 적합성 | 부적합 | 적합 |
+| 사용 시점 | 빠른 실험 | 최종 평가 |
 
-### 예제: Spearman 상관계수
+## K-Fold 교차 검증
 
-**예제: Spearman 상관 분석**
+K-Fold는 데이터를 K개의 폴드로 나누어 각 폴드를 한 번씩 검증셋으로 사용하는 방법이다.
+
+**K-Fold 원리**
+
+```
+전체 데이터를 K개로 분할
+
+Fold 1: [Validation] [Train] [Train] [Train] [Train]
+Fold 2: [Train] [Validation] [Train] [Train] [Train]
+Fold 3: [Train] [Train] [Validation] [Train] [Train]
+Fold 4: [Train] [Train] [Train] [Validation] [Train]
+Fold 5: [Train] [Train] [Train] [Train] [Validation]
+
+→ K번 학습 후 평균 성능 계산
+```
+
+**예제: K-Fold 교차 검증**
 
 ```{python}
-from scipy.stats import spearmanr
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.linear_model import LogisticRegression
 
-# Spearman 순위 상관계수
-rho, p_value_spear = spearmanr(
-    df_corr["bill_length_mm"],
-    df_corr["bill_depth_mm"]
+# 모델 정의
+model = LogisticRegression(max_iter=1000, random_state=42)
+
+# K-Fold 설정
+kf = KFold(
+    n_splits=5,         # 5개 폴드
+    shuffle=True,        # 섞기
+    random_state=42      # 재현성
 )
 
-print("=== Spearman 순위 상관 분석 ===")
-print(f"순위 상관계수 (ρ): {rho:.4f}")
-print(f"p-value: {p_value_spear:.4f}")
-
-# Pearson과 비교
-print("\n=== Pearson vs Spearman 비교 ===")
-print(f"Pearson r:  {r:.4f} (p = {p_value:.4f})")
-print(f"Spearman ρ: {rho:.4f} (p = {p_value_spear:.4f})")
-print(f"차이: {abs(r - rho):.4f}")
-
-if abs(r - rho) > 0.1:
-    print("\n⚠️ Pearson과 Spearman 차이가 큼 → 비선형 관계 또는 이상치 의심")
-```
-
-**Pearson vs Spearman 비교**
-
-| 항목 | Pearson | Spearman |
-|------|---------|----------|
-| 기반 | 실제 값 | 순위 |
-| 측정 관계 | 선형 | 단조 |
-| 이상치 영향 | 크다 | 작다 |
-| 정규성 가정 | 중요 | 불필요 |
-| 계산 복잡도 | 낮음 | 중간 |
-| 적용 범위 | 선형 관계 | 단조 관계 |
-
-## Kendall 순위 상관계수
-
-Kendall τ는 순위 쌍의 일치도를 측정하는 또 다른 비모수적 상관계수이다.
-
-**개념**
-
-- **측정 대상**: 순위 쌍의 일치 정도
-- **계산 기반**: concordant pairs vs discordant pairs
-- **가정**: 순서형 이상의 데이터
-
-**직관적 설명**
-
-두 관측치 쌍 (xᵢ, yᵢ)와 (xⱼ, yⱼ)에 대해:
-- **Concordant**: x와 y가 같은 방향으로 증가/감소
-- **Discordant**: x와 y가 반대 방향
-
-$$
-\tau = \frac{\text{(일치 쌍 수)} - \text{(불일치 쌍 수)}}{\text{전체 쌍 수}}
-$$
-
-**언제 사용하는가?**
-
-| 상황 | 이유 |
-|------|------|
-| 소표본 | Spearman보다 안정적 |
-| 동순위 많음 | Ties 처리가 우수 |
-| 순서 중시 | 순위 정보가 핵심 |
-| 보수적 추정 | 절댓값이 작아 신중한 해석 |
-
-### 예제: Kendall 상관계수
-
-**예제: Kendall τ 계산**
-
-```{python}
-from scipy.stats import kendalltau
-
-# Kendall τ 계산
-tau, p_value_kendall = kendalltau(
-    df_corr["bill_length_mm"],
-    df_corr["bill_depth_mm"]
+# 교차 검증 수행
+scores = cross_val_score(
+    model, X, y,
+    cv=kf,
+    scoring='accuracy'
 )
 
-print("=== Kendall τ 순위 상관 분석 ===")
-print(f"Kendall τ: {tau:.4f}")
-print(f"p-value: {p_value_kendall:.4f}")
-
-# 세 가지 상관계수 비교
-print("\n=== 세 가지 상관계수 비교 ===")
-print(f"Pearson r:  {r:.4f} (p = {p_value:.4f})")
-print(f"Spearman ρ: {rho:.4f} (p = {p_value_spear:.4f})")
-print(f"Kendall τ:  {tau:.4f} (p = {p_value_kendall:.4f})")
-
-print("\n특징:")
-print("- Kendall τ가 가장 보수적 (절댓값 작음)")
-print("- 세 계수 모두 같은 방향 (부호 일치)")
+print("=== K-Fold 교차 검증 결과 ===")
+print(f"각 폴드 정확도: {scores}")
+print(f"평균 정확도: {scores.mean():.4f}")
+print(f"표준편차: {scores.std():.4f}")
+print(f"95% 신뢰구간: {scores.mean():.4f} ± {1.96 * scores.std():.4f}")
 ```
 
-**세 가지 상관계수 종합 비교**
-
-| 구분 | Pearson | Spearman | Kendall |
-|------|---------|----------|---------|
-| 기반 | 실제 값 | 순위 | 순위 쌍 |
-| 측정 관계 | 선형 | 단조 | 단조 |
-| 이상치 영향 | 큰 | 중간 | 작음 |
-| 정규성 필요 | 높음 | 낮음 | 낮음 |
-| 값 크기 경향 | 가장 큼 | 중간 | 가장 작음 |
-| 해석 안정성 | 낮음 | 중간 | 높음 |
-| 계산 속도 | 빠름 | 중간 | 느림 |
-| 동순위 처리 | 보통 | 보통 | 우수 |
-
-## 상관 행렬 (Correlation Matrix)
-
-여러 변수 간의 상관관계를 한눈에 파악할 수 있는 행렬이다.
-
-**예제: 상관 행렬 계산**
+**예제: 폴드별 성능 시각화**
 
 ```{python}
-# 수치형 변수 선택
-num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
-
-# Pearson 상관 행렬
-corr_matrix = df[num_cols].corr(method="pearson")
-
-print("=== Pearson 상관 행렬 ===")
-print(corr_matrix.round(3))
-```
-
-**예제: 상관 행렬 히트맵**
-
-```{python}
-# 히트맵 시각화
-fig, axes = plt.subplots(1, 2, figsize=(16, 6))
-
-# Pearson 상관 행렬
-sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", 
-            center=0, vmin=-1, vmax=1, ax=axes[0],
-            cbar_kws={'label': 'Correlation'})
-axes[0].set_title("Pearson Correlation Matrix")
-
-# Spearman 상관 행렬
-corr_matrix_spear = df[num_cols].corr(method="spearman")
-sns.heatmap(corr_matrix_spear, annot=True, cmap="coolwarm", fmt=".2f",
-            center=0, vmin=-1, vmax=1, ax=axes[1],
-            cbar_kws={'label': 'Correlation'})
-axes[1].set_title("Spearman Correlation Matrix")
-
-plt.tight_layout()
+# 폴드별 성능 시각화
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, len(scores)+1), scores, 'o-', linewidth=2, markersize=8)
+plt.axhline(scores.mean(), color='r', linestyle='--', linewidth=2, 
+            label=f'Mean = {scores.mean():.4f}')
+plt.fill_between(range(1, len(scores)+1), 
+                 scores.mean() - scores.std(), 
+                 scores.mean() + scores.std(), 
+                 alpha=0.2, color='r', label=f'Std = {scores.std():.4f}')
+plt.xlabel('Fold')
+plt.ylabel('Accuracy')
+plt.title('K-Fold Cross-Validation Results')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.xticks(range(1, len(scores)+1))
 plt.show()
 ```
 
-**예제: 상관계수 p-value 확인**
+## Stratified K-Fold
+
+Stratified K-Fold는 각 폴드에서 클래스 비율을 유지하는 K-Fold의 변형으로, 불균형 데이터에서 필수적이다.
+
+**왜 필요한가?**
+
+일반 K-Fold는 클래스를 고려하지 않으므로:
+- 한 폴드에 특정 클래스가 몰릴 수 있음
+- 폴드 간 성능 차이가 클래스 불균형 때문일 수 있음
+- 소수 클래스가 일부 폴드에 없을 수 있음
+
+**예제: Stratified K-Fold**
 
 ```{python}
-# 상관계수와 p-value를 함께 표시
-def correlation_with_pvalue(df, method='pearson'):
-    """상관계수와 p-value를 함께 계산"""
-    corr_matrix = df.corr(method=method)
-    n = len(df)
-    
-    # p-value 행렬 생성
-    p_matrix = pd.DataFrame(np.zeros_like(corr_matrix), 
-                            columns=corr_matrix.columns, 
-                            index=corr_matrix.index)
-    
-    for i, col1 in enumerate(corr_matrix.columns):
-        for j, col2 in enumerate(corr_matrix.columns):
-            if i != j:
-                if method == 'pearson':
-                    _, p = pearsonr(df[col1].dropna(), df[col2].dropna())
-                elif method == 'spearman':
-                    _, p = spearmanr(df[col1].dropna(), df[col2].dropna())
-                p_matrix.iloc[i, j] = p
-    
-    return corr_matrix, p_matrix
+from sklearn.model_selection import StratifiedKFold
 
-corr, pval = correlation_with_pvalue(df[num_cols], method='pearson')
+# Stratified K-Fold 설정
+skf = StratifiedKFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
 
-print("=== 상관계수 (위) 및 p-value (아래) ===")
-for i, col1 in enumerate(num_cols):
-    for j, col2 in enumerate(num_cols):
-        if i < j:
-            print(f"{col1:20s} vs {col2:20s}: r = {corr.iloc[i,j]:6.3f}, p = {pval.iloc[i,j]:.4f}")
+# 교차 검증 수행
+scores_stratified = cross_val_score(
+    model, X, y,
+    cv=skf,
+    scoring='accuracy'
+)
+
+print("=== Stratified K-Fold 교차 검증 결과 ===")
+print(f"각 폴드 정확도: {scores_stratified}")
+print(f"평균 정확도: {scores_stratified.mean():.4f}")
+print(f"표준편차: {scores_stratified.std():.4f}")
+
+# K-Fold vs Stratified K-Fold 비교
+print("\n=== K-Fold vs Stratified K-Fold 비교 ===")
+print(f"K-Fold:           평균 = {scores.mean():.4f}, 표준편차 = {scores.std():.4f}")
+print(f"Stratified K-Fold: 평균 = {scores_stratified.mean():.4f}, 표준편차 = {scores_stratified.std():.4f}")
 ```
 
-## 상관 분석 실무 가이드
+**예제: 폴드별 클래스 분포 확인**
 
-**상관 분석 활용 분야**
+```{python}
+# 폴드별 클래스 분포 확인
+print("\n=== 각 폴드의 클래스 분포 ===")
+for fold_idx, (train_idx, val_idx) in enumerate(skf.split(X, y), 1):
+    y_fold = y.iloc[val_idx]
+    print(f"\nFold {fold_idx}:")
+    print(f"  크기: {len(y_fold)}")
+    print(f"  클래스 비율:")
+    print((y_fold.value_counts() / len(y_fold)).round(3).to_dict())
+```
 
-| 분야 | 활용 |
-|------|------|
-| 탐색적 데이터 분석 (EDA) | 변수 간 관계 파악 |
-| 피처 선택 | 다중공선성 확인, 중복 변수 제거 |
-| 회귀 모델링 | 독립변수 선택, 다중공선성 진단 |
-| 이상치 탐지 | 예상 밖의 낮은/높은 상관 확인 |
-| 가설 생성 | 추가 연구 방향 설정 |
+## 기타 교차 검증 방법
 
-**상관 분석 체크리스트**
+**교차 검증 방법 비교**
 
-- [ ] 산점도로 관계 형태 확인 (선형/비선형)
-- [ ] 이상치 확인 및 처리
-- [ ] 적절한 상관계수 선택 (Pearson/Spearman/Kendall)
-- [ ] p-value 확인 (통계적 유의성)
-- [ ] 효과 크기 고려 (상관계수 절댓값)
-- [ ] 제3의 변수 가능성 검토
-- [ ] 인과관계로 오해하지 않기
+| 방법 | 설명 | 사용 상황 |
+|------|------|----------|
+| K-Fold | 데이터를 K개로 분할 | 회귀, 균형 분류 |
+| Stratified K-Fold | 클래스 비율 유지 | 불균형 분류 (권장) |
+| Leave-One-Out (LOO) | K = n (각 샘플을 검증셋으로) | 매우 소량 데이터 |
+| Leave-P-Out (LPO) | P개씩 조합 | 극소량 데이터 |
+| Shuffle Split | 무작위 분할 반복 | 빠른 근사 평가 |
+| Group K-Fold | 그룹 단위 분할 | 그룹 종속 데이터 |
+| Time Series Split | 시간 순서 유지 | 시계열 데이터 |
 
-**주의사항**
+### Time Series Split (시계열 교차 검증)
 
-- **상관 ≠ 인과**: "A와 B가 상관있다"는 "A가 B를 야기한다"를 의미하지 않음
-- **비선형 관계**: 상관계수가 낮아도 강한 비선형 관계 가능
-- **제3의 변수**: 두 변수의 상관이 다른 변수 때문일 수 있음 (교란변수)
-- **Simpson's Paradox**: 전체와 부분에서 상관의 방향이 반대일 수 있음
-- **표본 크기**: n이 작으면 우연한 상관이 유의하게 나올 수 있음
+시계열 데이터는 미래를 예측하므로, 학습 데이터가 검증 데이터보다 과거여야 한다.
+
+**예제: Time Series Split**
+
+```{python}
+from sklearn.model_selection import TimeSeriesSplit
+
+# Time Series Split 설정
+tscv = TimeSeriesSplit(n_splits=5)
+
+# 분할 시각화
+print("=== Time Series Split 구조 ===")
+for fold_idx, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
+    print(f"Fold {fold_idx}:")
+    print(f"  Train: {min(train_idx):3d} ~ {max(train_idx):3d} (n={len(train_idx)})")
+    print(f"  Val:   {min(val_idx):3d} ~ {max(val_idx):3d} (n={len(val_idx)})")
+```
+
+**시계열 데이터 주의사항**
+
+- ❌ 일반 K-Fold 사용 금지 (미래 데이터로 학습)
+- ✓ TimeSeriesSplit 사용
+- ✓ 학습 데이터 < 검증 데이터 (시간 순서)
+- ✓ 데이터 섞기(shuffle) 금지
+
+## 교차 검증 실무 가이드
+
+**교차 검증 선택 가이드**
+
+```
+분류 문제?
+├─ Yes → 클래스 불균형?
+│         ├─ Yes → Stratified K-Fold (필수)
+│         └─ No → K-Fold 또는 Stratified K-Fold
+└─ No (회귀) → 시계열?
+                ├─ Yes → TimeSeriesSplit
+                └─ No → K-Fold
+```
+
+**K 값 선택**
+
+| 데이터 크기 | 권장 K | 이유 |
+|-----------|-------|------|
+| n < 100 | k = n (LOO) | 데이터 최대 활용 |
+| 100 ≤ n < 1000 | k = 10 | 표준, 계산 가능 |
+| n ≥ 1000 | k = 5 | 계산 효율성 |
+| n ≥ 10000 | k = 3 또는 홀드아웃 | 빠른 평가 |
+
+## 데이터 누수 (Data Leakage) 방지
+
+데이터 누수는 학습 과정에서 테스트 정보가 유입되어 성능이 과대평가되는 현상이다.
+
+**데이터 누수의 원인**
+
+| 원인 | 예시 | 올바른 방법 |
+|------|------|-----------|
+| 전처리 순서 오류 | 전체 데이터 스케일링 후 분할 | 분할 후 학습 데이터로만 스케일링 |
+| 피처 선택 오류 | 전체 데이터로 피처 선택 | 분할 후 학습 데이터로만 선택 |
+| 타겟 인코딩 오류 | 전체 데이터로 타겟 인코딩 | 분할 후 학습 데이터로만 인코딩 |
+| 검증셋 재사용 | 검증셋으로 여러 번 튜닝 | 최종은 테스트셋으로 단 한 번 |
+
+**올바른 파이프라인**
+
+```python
+# ✓ 올바른 예: 분할 후 전처리
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+# 1. 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# 2. 파이프라인 (분할 후 전처리)
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),  # 학습 데이터로만 fit
+    ('model', LogisticRegression())
+])
+
+# 3. 학습 (scaler는 X_train으로만 fit됨)
+pipeline.fit(X_train, y_train)
+
+# 4. 평가 (scaler 파라미터는 학습 때 학습됨)
+score = pipeline.score(X_test, y_test)
+```
 
 ## 요약
 
-이 장에서는 두 변수 간 관계를 측정하는 상관 분석을 학습했다. 주요 내용은 다음과 같다.
+이 장에서는 데이터 분할과 교차 검증을 학습했다. 주요 내용은 다음과 같다.
 
-**상관계수 종합 정리**
+**데이터 분할 핵심**
 
-| 상황 | 권장 방법 | 이유 |
-|------|----------|------|
-| 선형 관계 + 정규성 | Pearson | 검정력 높음, 해석 명확 |
-| 단조 관계 + 비정규 | Spearman | 정규성 불필요, 이상치 강건 |
-| 소표본 + 동순위 많음 | Kendall | 안정적, 동순위 처리 우수 |
-| 이상치 많음 | Spearman 또는 Kendall | Pearson보다 강건 |
-| 순서형 데이터 | Spearman 또는 Kendall | 순위 기반 |
+- **목적**: 일반화 성능 평가, 과적합 탐지
+- **기본 분할**: Train/Validation/Test (60/20/20)
+- **Stratify**: 분류 문제에서 클래스 비율 유지 필수
+- **테스트셋**: 단 한 번만 사용 (최종 평가)
 
-**상관 분석 의사결정 흐름**
+**교차 검증 핵심**
 
-```
-데이터 확인
-  ↓
-산점도 작성
-  ├─ 선형 관계?
-  │    ├─ Yes → 정규성 확인
-  │    │         ├─ Yes → Pearson
-  │    │         └─ No → Spearman
-  │    └─ No → 단조 관계?
-  │              ├─ Yes → Spearman 또는 Kendall
-  │              └─ No → 비선형 모델 고려
-  └─ 이상치 많음? → Spearman 또는 Kendall
-```
+- **K-Fold**: 데이터를 K개로 나누어 반복 평가
+- **Stratified K-Fold**: 분류 문제에서 권장 (클래스 비율 유지)
+- **Time Series Split**: 시계열 데이터 전용
+- **장점**: 안정적 평가, 모든 데이터 활용
 
-**핵심 포인트**
+**실무 체크리스트**
 
-- **Pearson**: 선형 관계의 표준, 가장 널리 사용
-- **Spearman**: 단조 관계, 이상치에 강건
-- **Kendall**: 보수적, 소표본과 동순위에 강함
-- **상관 ≠ 인과**: 항상 주의
-- **시각화 필수**: 산점도로 관계 형태 확인
+- [ ] 분류 문제인가? → Stratify 사용
+- [ ] 데이터가 적은가? → 교차 검증 사용
+- [ ] 하이퍼파라미터 튜닝? → 검증셋 분리
+- [ ] 시계열 데이터? → TimeSeriesSplit 사용
+- [ ] 데이터 누수 방지? → 분할 후 전처리
+- [ ] 최종 평가? → 테스트셋은 마지막에 단 한 번
 
-상관 분석은 변수 간 관계를 탐색하고 이해하는 기본 도구이다. 적절한 상관계수를 선택하고, 결과를 올바르게 해석하며, 인과관계로 오해하지 않는 것이 중요하다. 다음으로는 상관 분석을 확장한 회귀 분석을 학습할 수 있다.
+**주의사항**
+
+- 테스트셋은 절대 학습에 사용하지 않음
+- 전처리(스케일링 등)는 분할 후 수행
+- 검증셋을 여러 번 보면 간접적인 과적합
+- 시계열은 반드시 TimeSeriesSplit 사용
+
+올바른 데이터 분할과 검증은 신뢰할 수 있는 모델 평가의 기초이다. 다음 장에서는 모델 성능을 측정하는 다양한 평가 지표를 학습할 것이다.
