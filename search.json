@@ -1034,7 +1034,7 @@
     "href": "part2/01. 확률분포와 표본.html#이산형-확률분포-discrete-distributions",
     "title": "11  확률분포와 표본",
     "section": "11.3 이산형 확률분포 (Discrete Distributions)",
-    "text": "11.3 이산형 확률분포 (Discrete Distributions)\n이산형 확률분포는 셀 수 있는 값들만 가질 수 있는 변수의 분포이다. 각 값에 대한 확률을 확률질량함수(PMF)로 표현한다.\n\n11.3.1 대표적인 이산형 분포\n이산형 분포 비교\n\n\n\n\n\n\n\n\n\n\n분포\n특징\n파라미터\n확률질량함수\n사용 예시\n\n\n\n\n베르누이 (Bernoulli)\n성공/실패 1회 시행\np (성공 확률)\nP(X=1)=p, P(X=0)=1-p\n동전 던지기, 합격 여부\n\n\n이항분포 (Binomial)\nn번 독립 시행 성공 횟수\nn (시행 횟수), p (성공 확률)\n\\(\\binom{n}{k}p^k(1-p)^{n-k}\\)\n불량품 개수, 설문 응답\n\n\n포아송분포 (Poisson)\n단위 시간/공간 발생 횟수\nλ (평균 발생률)\n\\(\\frac{\\lambda^k e^{-\\lambda}}{k!}\\)\n고객 방문 수, 교통사고 건수\n\n\n기하분포 (Geometric)\n첫 성공까지 시행 횟수\np (성공 확률)\n\\((1-p)^{k-1}p\\)\n제품 판매까지 시도 횟수\n\n\n\n\n\n11.3.2 베르누이 분포와 이항분포\n베르누이 분포는 성공(1) 또는 실패(0)의 이진 결과를 가지며, 이항분포는 n번의 독립적인 베르누이 시행에서 성공 횟수의 분포이다.\n이항분포 확률질량함수\n\\[\nP(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}\n\\]\n여기서 n은 시행 횟수, k는 성공 횟수, p는 각 시행의 성공 확률이다.\n예제: 이산형 변수의 분포\n\n# 종별 개체 수 확인\nspecies_counts = df[\"species\"].value_counts()\n\nprint(\"종별 개체 수:\")\nprint(species_counts)\nprint(f\"\\n총 개체 수: {len(df)}\")\n\n# 시각화\nplt.figure(figsize=(8, 5))\nsns.countplot(x=\"species\", data=df, order=species_counts.index)\nplt.title(\"Species Distribution\")\nplt.xlabel(\"Species\")\nplt.ylabel(\"Count\")\nplt.show()\n\n# 비율 계산\nspecies_prob = species_counts / len(df)\nprint(\"\\n종별 확률 (비율):\")\nprint(species_prob.round(3))\n\n종별 개체 수:\nspecies\nAdelie       146\nGentoo       119\nChinstrap     68\nName: count, dtype: int64\n\n총 개체 수: 333\n\n\n\n\n\n\n\n\n\n\n종별 확률 (비율):\nspecies\nAdelie       0.438\nGentoo       0.357\nChinstrap    0.204\nName: count, dtype: float64\n\n\n예제: 이항분포 시뮬레이션\n\n# 동전 던지기 100번을 1000회 반복\nn_trials = 100  # 각 실험에서 동전을 던지는 횟수\np_success = 0.5  # 앞면이 나올 확률\nn_experiments = 1000  # 실험 반복 횟수\n\n# 시뮬레이션\nresults = np.random.binomial(n_trials, p_success, n_experiments)\n\n# 시각화\nplt.figure(figsize=(10, 5))\nplt.hist(results, bins=30, density=True, alpha=0.7, edgecolor='black')\nplt.axvline(n_trials * p_success, color='red', linestyle='--', \n            label=f'Expected (np={n_trials * p_success})')\nplt.title(f\"Binomial Distribution: n={n_trials}, p={p_success}\")\nplt.xlabel(\"Number of Successes\")\nplt.ylabel(\"Probability Density\")\nplt.legend()\nplt.show()\n\nprint(f\"이론적 평균: {n_trials * p_success}\")\nprint(f\"시뮬레이션 평균: {results.mean():.2f}\")\nprint(f\"이론적 표준편차: {np.sqrt(n_trials * p_success * (1 - p_success)):.2f}\")\nprint(f\"시뮬레이션 표준편차: {results.std():.2f}\")\n\n\n\n\n\n\n\n\n이론적 평균: 50.0\n시뮬레이션 평균: 50.12\n이론적 표준편차: 5.00\n시뮬레이션 표준편차: 5.30",
+    "text": "11.3 이산형 확률분포 (Discrete Distributions)\n이산형 확률분포는 셀 수 있는 값들만 가질 수 있는 변수의 분포이다. 각 값에 대한 확률을 확률질량함수(PMF)로 표현한다.\n\n11.3.1 대표적인 이산형 분포\n이산형 분포 비교\n\n\n\n\n\n\n\n\n\n\n분포\n특징\n파라미터\n확률질량함수\n사용 예시\n\n\n\n\n베르누이 (Bernoulli)\n성공/실패 1회 시행\np (성공 확률)\nP(X=1)=p, P(X=0)=1-p\n동전 던지기, 합격 여부\n\n\n이항분포 (Binomial)\nn번 독립 시행 성공 횟수\nn (시행 횟수), p (성공 확률)\n\\(\\binom{n}{k}p^k(1-p)^{n-k}\\)\n불량품 개수, 설문 응답\n\n\n포아송분포 (Poisson)\n단위 시간/공간 발생 횟수\nλ (평균 발생률)\n\\(\\frac{\\lambda^k e^{-\\lambda}}{k!}\\)\n고객 방문 수, 교통사고 건수\n\n\n기하분포 (Geometric)\n첫 성공까지 시행 횟수\np (성공 확률)\n\\((1-p)^{k-1}p\\)\n제품 판매까지 시도 횟수\n\n\n\n\n\n11.3.2 베르누이 분포와 이항분포\n베르누이 분포는 성공(1) 또는 실패(0)의 이진 결과를 가지며, 이항분포는 n번의 독립적인 베르누이 시행에서 성공 횟수의 분포이다.\n이항분포 확률질량함수\n\\[\nP(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}\n\\]\n여기서 n은 시행 횟수, k는 성공 횟수, p는 각 시행의 성공 확률이다.\n예제: 이산형 변수의 분포\n\n# 종별 개체 수 확인\nspecies_counts = df[\"species\"].value_counts()\n\nprint(\"종별 개체 수:\")\nprint(species_counts)\nprint(f\"\\n총 개체 수: {len(df)}\")\n\n# 시각화\nplt.figure(figsize=(8, 5))\nsns.countplot(x=\"species\", data=df, order=species_counts.index)\nplt.title(\"Species Distribution\")\nplt.xlabel(\"Species\")\nplt.ylabel(\"Count\")\nplt.show()\n\n# 비율 계산\nspecies_prob = species_counts / len(df)\nprint(\"\\n종별 확률 (비율):\")\nprint(species_prob.round(3))\n\n종별 개체 수:\nspecies\nAdelie       146\nGentoo       119\nChinstrap     68\nName: count, dtype: int64\n\n총 개체 수: 333\n\n\n\n\n\n\n\n\n\n\n종별 확률 (비율):\nspecies\nAdelie       0.438\nGentoo       0.357\nChinstrap    0.204\nName: count, dtype: float64\n\n\n예제: 이항분포 시뮬레이션\n\n# 동전 던지기 100번을 1000회 반복\nn_trials = 100  # 각 실험에서 동전을 던지는 횟수\np_success = 0.5  # 앞면이 나올 확률\nn_experiments = 1000  # 실험 반복 횟수\n\n# 시뮬레이션\nresults = np.random.binomial(n_trials, p_success, n_experiments)\n\n# 시각화\nplt.figure(figsize=(10, 5))\nplt.hist(results, bins=30, density=True, alpha=0.7, edgecolor='black')\nplt.axvline(n_trials * p_success, color='red', linestyle='--', \n            label=f'Expected (np={n_trials * p_success})')\nplt.title(f\"Binomial Distribution: n={n_trials}, p={p_success}\")\nplt.xlabel(\"Number of Successes\")\nplt.ylabel(\"Probability Density\")\nplt.legend()\nplt.show()\n\nprint(f\"이론적 평균: {n_trials * p_success}\")\nprint(f\"시뮬레이션 평균: {results.mean():.2f}\")\nprint(f\"이론적 표준편차: {np.sqrt(n_trials * p_success * (1 - p_success)):.2f}\")\nprint(f\"시뮬레이션 표준편차: {results.std():.2f}\")\n\n\n\n\n\n\n\n\n이론적 평균: 50.0\n시뮬레이션 평균: 50.12\n이론적 표준편차: 5.00\n시뮬레이션 표준편차: 5.09",
     "crumbs": [
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
@@ -1056,7 +1056,7 @@
     "href": "part2/01. 확률분포와 표본.html#표본-분포-sampling-distribution",
     "title": "11  확률분포와 표본",
     "section": "11.5 표본 분포 (Sampling Distribution)",
-    "text": "11.5 표본 분포 (Sampling Distribution)\n표본 분포는 표본 통계량(평균, 분산, 비율 등)의 확률분포를 의미한다. 이는 데이터 자체의 분포와는 다른 개념이다.\n중요한 구분\n\n데이터의 분포: 개별 관측값의 분포 (예: 펭귄 체중 분포)\n표본 평균의 분포: 여러 표본에서 계산한 평균들의 분포\n\n예제: 표본 평균 분포 시뮬레이션\n\n# 원본 데이터 (모집단으로 가정)\nbody_mass = df[\"body_mass_g\"].values\n\nprint(f\"모집단 크기: {len(body_mass)}\")\nprint(f\"모집단 평균: {body_mass.mean():.2f}\")\nprint(f\"모집단 표준편차: {body_mass.std():.2f}\")\n\n# 표본 크기와 반복 횟수 설정\nsample_size = 30\nn_samples = 1000\n\n# 표본 평균 수집\nsample_means = []\nfor _ in range(n_samples):\n    sample = np.random.choice(body_mass, size=sample_size, replace=True)\n    sample_means.append(sample.mean())\n\nsample_means = np.array(sample_means)\n\nprint(f\"\\n표본 평균의 평균: {sample_means.mean():.2f}\")\nprint(f\"표본 평균의 표준편차(표준오차): {sample_means.std():.2f}\")\nprint(f\"이론적 표준오차: {body_mass.std() / np.sqrt(sample_size):.2f}\")\n\n모집단 크기: 333\n모집단 평균: 4207.06\n모집단 표준편차: 804.01\n\n표본 평균의 평균: 4204.68\n표본 평균의 표준편차(표준오차): 147.95\n이론적 표준오차: 146.79\n\n\n예제: 원본 데이터 vs 표본 평균 분포\n\n# 시각화\nfig, axes = plt.subplots(1, 2, figsize=(14, 5))\n\n# 원본 데이터 분포\naxes[0].hist(body_mass, bins=30, density=True, alpha=0.7, edgecolor='black')\naxes[0].axvline(body_mass.mean(), color='red', linestyle='--', \n                label=f'Mean = {body_mass.mean():.2f}')\naxes[0].set_title(\"Original Data Distribution\")\naxes[0].set_xlabel(\"Body Mass (g)\")\naxes[0].set_ylabel(\"Density\")\naxes[0].legend()\n\n# 표본 평균 분포\naxes[1].hist(sample_means, bins=30, density=True, alpha=0.7, edgecolor='black')\naxes[1].axvline(sample_means.mean(), color='red', linestyle='--', \n                label=f'Mean = {sample_means.mean():.2f}')\n\n# 정규분포 곡선 추가\nx = np.linspace(sample_means.min(), sample_means.max(), 100)\naxes[1].plot(x, stats.norm.pdf(x, sample_means.mean(), sample_means.std()), \n             'g-', linewidth=2, label='Normal fit')\naxes[1].set_title(\"Sampling Distribution of the Mean\")\naxes[1].set_xlabel(\"Sample Mean\")\naxes[1].set_ylabel(\"Density\")\naxes[1].legend()\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n위 그래프에서 확인할 수 있듯이, 원본 데이터는 다소 비대칭적이지만 표본 평균의 분포는 정규분포에 가깝다.",
+    "text": "11.5 표본 분포 (Sampling Distribution)\n표본 분포는 표본 통계량(평균, 분산, 비율 등)의 확률분포를 의미한다. 이는 데이터 자체의 분포와는 다른 개념이다.\n중요한 구분\n\n데이터의 분포: 개별 관측값의 분포 (예: 펭귄 체중 분포)\n표본 평균의 분포: 여러 표본에서 계산한 평균들의 분포\n\n예제: 표본 평균 분포 시뮬레이션\n\n# 원본 데이터 (모집단으로 가정)\nbody_mass = df[\"body_mass_g\"].values\n\nprint(f\"모집단 크기: {len(body_mass)}\")\nprint(f\"모집단 평균: {body_mass.mean():.2f}\")\nprint(f\"모집단 표준편차: {body_mass.std():.2f}\")\n\n# 표본 크기와 반복 횟수 설정\nsample_size = 30\nn_samples = 1000\n\n# 표본 평균 수집\nsample_means = []\nfor _ in range(n_samples):\n    sample = np.random.choice(body_mass, size=sample_size, replace=True)\n    sample_means.append(sample.mean())\n\nsample_means = np.array(sample_means)\n\nprint(f\"\\n표본 평균의 평균: {sample_means.mean():.2f}\")\nprint(f\"표본 평균의 표준편차(표준오차): {sample_means.std():.2f}\")\nprint(f\"이론적 표준오차: {body_mass.std() / np.sqrt(sample_size):.2f}\")\n\n모집단 크기: 333\n모집단 평균: 4207.06\n모집단 표준편차: 804.01\n\n표본 평균의 평균: 4219.70\n표본 평균의 표준편차(표준오차): 144.33\n이론적 표준오차: 146.79\n\n\n예제: 원본 데이터 vs 표본 평균 분포\n\n# 시각화\nfig, axes = plt.subplots(1, 2, figsize=(14, 5))\n\n# 원본 데이터 분포\naxes[0].hist(body_mass, bins=30, density=True, alpha=0.7, edgecolor='black')\naxes[0].axvline(body_mass.mean(), color='red', linestyle='--', \n                label=f'Mean = {body_mass.mean():.2f}')\naxes[0].set_title(\"Original Data Distribution\")\naxes[0].set_xlabel(\"Body Mass (g)\")\naxes[0].set_ylabel(\"Density\")\naxes[0].legend()\n\n# 표본 평균 분포\naxes[1].hist(sample_means, bins=30, density=True, alpha=0.7, edgecolor='black')\naxes[1].axvline(sample_means.mean(), color='red', linestyle='--', \n                label=f'Mean = {sample_means.mean():.2f}')\n\n# 정규분포 곡선 추가\nx = np.linspace(sample_means.min(), sample_means.max(), 100)\naxes[1].plot(x, stats.norm.pdf(x, sample_means.mean(), sample_means.std()), \n             'g-', linewidth=2, label='Normal fit')\naxes[1].set_title(\"Sampling Distribution of the Mean\")\naxes[1].set_xlabel(\"Sample Mean\")\naxes[1].set_ylabel(\"Density\")\naxes[1].legend()\n\nplt.tight_layout()\nplt.show()\n\n\n\n\n\n\n\n\n위 그래프에서 확인할 수 있듯이, 원본 데이터는 다소 비대칭적이지만 표본 평균의 분포는 정규분포에 가깝다.",
     "crumbs": [
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
@@ -1078,7 +1078,7 @@
     "href": "part2/01. 확률분포와 표본.html#중심극한정리의-중요성",
     "title": "11  확률분포와 표본",
     "section": "11.7 중심극한정리의 중요성",
-    "text": "11.7 중심극한정리의 중요성\n중심극한정리는 대부분의 통계적 추론 방법의 이론적 기반이다.\n중심극한정리가 적용되는 통계 기법\n\n\n\n기법\n설명\n중심극한정리의 역할\n\n\n\n\nt-검정\n두 그룹 평균 비교\n표본 평균이 정규분포를 따름\n\n\nANOVA\n여러 그룹 평균 비교\n그룹별 평균이 정규분포를 따름\n\n\n신뢰구간\n모수 추정 범위\n표본 평균의 분포가 정규분포\n\n\n선형 회귀\n변수 간 관계 모델링\n잔차의 정규성 가정\n\n\n가설검정\n통계적 의사결정\n검정 통계량의 분포\n\n\n\n실무적 의미\n\n모집단 분포 불필요: 모집단이 정규분포가 아니어도 분석 가능\n신뢰구간 구성: 표본으로부터 모수의 범위 추정\n가설검정: p-value 계산의 이론적 근거\n예측 구간: 미래 값의 불확실성 정량화\n\n예제: 비정규 분포에서의 중심극한정리\n\n# 극단적으로 왜곡된 분포 (지수분포) 생성\nexponential_data = np.random.exponential(scale=2, size=10000)\n\n# 원본 데이터 분포\nfig, axes = plt.subplots(1, 2, figsize=(14, 5))\n\naxes[0].hist(exponential_data, bins=50, density=True, alpha=0.7, edgecolor='black')\naxes[0].set_title(\"Original Exponential Distribution\")\naxes[0].set_xlabel(\"Value\")\naxes[0].set_ylabel(\"Density\")\n\n# 표본 평균 분포 (n=30)\nsample_means_exp = []\nfor _ in range(1000):\n    sample = np.random.choice(exponential_data, size=30, replace=True)\n    sample_means_exp.append(sample.mean())\n\naxes[1].hist(sample_means_exp, bins=30, density=True, alpha=0.7, edgecolor='black')\nx = np.linspace(min(sample_means_exp), max(sample_means_exp), 100)\naxes[1].plot(x, stats.norm.pdf(x, np.mean(sample_means_exp), np.std(sample_means_exp)), \n             'r-', linewidth=2, label='Normal fit')\naxes[1].set_title(\"Sampling Distribution (n=30)\")\naxes[1].set_xlabel(\"Sample Mean\")\naxes[1].set_ylabel(\"Density\")\naxes[1].legend()\n\nplt.tight_layout()\nplt.show()\n\nprint(f\"원본 데이터 왜도: {stats.skew(exponential_data):.3f}\")\nprint(f\"표본 평균 왜도: {stats.skew(sample_means_exp):.3f}\")\n\n\n\n\n\n\n\n\n원본 데이터 왜도: 1.996\n표본 평균 왜도: 0.312\n\n\n원본 데이터는 극도로 왜곡되어 있지만, 표본 평균의 분포는 정규분포에 매우 가깝다는 것을 확인할 수 있다.",
+    "text": "11.7 중심극한정리의 중요성\n중심극한정리는 대부분의 통계적 추론 방법의 이론적 기반이다.\n중심극한정리가 적용되는 통계 기법\n\n\n\n기법\n설명\n중심극한정리의 역할\n\n\n\n\nt-검정\n두 그룹 평균 비교\n표본 평균이 정규분포를 따름\n\n\nANOVA\n여러 그룹 평균 비교\n그룹별 평균이 정규분포를 따름\n\n\n신뢰구간\n모수 추정 범위\n표본 평균의 분포가 정규분포\n\n\n선형 회귀\n변수 간 관계 모델링\n잔차의 정규성 가정\n\n\n가설검정\n통계적 의사결정\n검정 통계량의 분포\n\n\n\n실무적 의미\n\n모집단 분포 불필요: 모집단이 정규분포가 아니어도 분석 가능\n신뢰구간 구성: 표본으로부터 모수의 범위 추정\n가설검정: p-value 계산의 이론적 근거\n예측 구간: 미래 값의 불확실성 정량화\n\n예제: 비정규 분포에서의 중심극한정리\n\n# 극단적으로 왜곡된 분포 (지수분포) 생성\nexponential_data = np.random.exponential(scale=2, size=10000)\n\n# 원본 데이터 분포\nfig, axes = plt.subplots(1, 2, figsize=(14, 5))\n\naxes[0].hist(exponential_data, bins=50, density=True, alpha=0.7, edgecolor='black')\naxes[0].set_title(\"Original Exponential Distribution\")\naxes[0].set_xlabel(\"Value\")\naxes[0].set_ylabel(\"Density\")\n\n# 표본 평균 분포 (n=30)\nsample_means_exp = []\nfor _ in range(1000):\n    sample = np.random.choice(exponential_data, size=30, replace=True)\n    sample_means_exp.append(sample.mean())\n\naxes[1].hist(sample_means_exp, bins=30, density=True, alpha=0.7, edgecolor='black')\nx = np.linspace(min(sample_means_exp), max(sample_means_exp), 100)\naxes[1].plot(x, stats.norm.pdf(x, np.mean(sample_means_exp), np.std(sample_means_exp)), \n             'r-', linewidth=2, label='Normal fit')\naxes[1].set_title(\"Sampling Distribution (n=30)\")\naxes[1].set_xlabel(\"Sample Mean\")\naxes[1].set_ylabel(\"Density\")\naxes[1].legend()\n\nplt.tight_layout()\nplt.show()\n\nprint(f\"원본 데이터 왜도: {stats.skew(exponential_data):.3f}\")\nprint(f\"표본 평균 왜도: {stats.skew(sample_means_exp):.3f}\")\n\n\n\n\n\n\n\n\n원본 데이터 왜도: 1.948\n표본 평균 왜도: 0.527\n\n\n원본 데이터는 극도로 왜곡되어 있지만, 표본 평균의 분포는 정규분포에 매우 가깝다는 것을 확인할 수 있다.",
     "crumbs": [
       "Ⅱ. 통계분석 및 가설검정",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>확률분포와 표본</span>"
@@ -1703,111 +1703,122 @@
   {
     "objectID": "part3/01. 데이터 분할 및 검정.html",
     "href": "part3/01. 데이터 분할 및 검정.html",
-    "title": "19  데이터 분할 및 검정",
+    "title": "19  데이터 분할 및 검증",
     "section": "",
-    "text": "19.1 데이터 분할 및 검증\n머신러닝 모델의 성능은 모델 자체보다 데이터를 어떻게 나누고 검증했는지에 더 크게 좌우된다.",
+    "text": "19.1 데이터 분할의 필요성\n데이터 분할(Data Splitting)과 검증(Validation)은 머신러닝 모델의 일반화 성능을 평가하는 핵심 과정이다. 모델의 성능은 알고리즘 자체보다 데이터를 어떻게 나누고 검증했는지에 더 크게 좌우된다. 잘못된 데이터 분할은 과적합을 발견하지 못하고 모델 성능을 과대평가하게 만든다. 이 장에서는 올바른 데이터 분할 방법과 교차 검증 기법을 학습한다.\n예제: 데이터 로드\n머신러닝 모델은 학습 데이터에 최적화되므로, 동일한 데이터로 평가하면 성능이 과대평가된다.\n과적합과 일반화\n데이터 분할의 목적\n잘못된 평가의 예",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#왜-데이터-분할이-필요한가",
-    "href": "part3/01. 데이터 분할 및 검정.html#왜-데이터-분할이-필요한가",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.2 왜 데이터 분할이 필요한가?",
-    "text": "19.2 왜 데이터 분할이 필요한가?\n모델은 학습 데이터에 최적화된다. 따라서 동일 데이터를 평가에 사용하면\n\n성능이 과대평가(overfitting)\n보지 않은 데이터에서의 성능을 추정해야 한다\n\n즉, 일반화 성능(generalization performance) 평가가 목적이다.",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#데이터-분할의-필요성",
+    "href": "part3/01. 데이터 분할 및 검정.html#데이터-분할의-필요성",
+    "title": "19  데이터 분할 및 검증",
+    "section": "",
+    "text": "개념\n설명\n문제점\n\n\n\n\n과적합 (Overfitting)\n학습 데이터에 지나치게 최적화\n새로운 데이터에서 성능 저하\n\n\n과소적합 (Underfitting)\n학습 데이터조차 제대로 학습 못함\n전반적으로 낮은 성능\n\n\n일반화 (Generalization)\n보지 못한 데이터에도 잘 작동\n목표\n\n\n\n\n\n일반화 성능 평가: 모델이 새로운 데이터에서 얼마나 잘 작동하는가?\n과적합 탐지: 학습 성능과 검증 성능의 차이 확인\n모델 선택: 여러 모델 중 가장 좋은 모델 선택\n하이퍼파라미터 튜닝: 최적의 설정값 찾기\n공정한 비교: 동일한 기준으로 모델 성능 비교\n\n\n# ❌ 잘못된 예: 학습 데이터로 평가\nmodel.fit(X, y)\nscore = model.score(X, y)  # 과대평가!\n\n# ✓ 올바른 예: 별도의 테스트 데이터로 평가\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\nmodel.fit(X_train, y_train)\nscore = model.score(X_test, y_test)  # 올바른 평가",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#학습-검증-테스트-분할",
-    "href": "part3/01. 데이터 분할 및 검정.html#학습-검증-테스트-분할",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.3 학습 · 검증 · 테스트 분할",
-    "text": "19.3 학습 · 검증 · 테스트 분할\n\n19.3.1 기본 개념\n\n\n\n구분\n역할\n\n\n\n\n학습(train)\n모델 학습\n\n\n검증(validation)\n하이퍼파라미터 튜닝\n\n\n테스트(test)\n최종 성능 평가\n\n\n\n\n\n19.3.2 일반적인 분할 비율\n\n60 / 20 / 20\n70 / 15 / 15\n80 / 20 (검증을 교차 검증으로 대체하는 경우)\n\n\n\n19.3.3 예제\n\n19.3.3.1 분석 목표\n\nspecies 분류\n수치형 변수를 사용한 기본 모델링\n\n\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\n\ndf = sns.load_dataset(\"penguins\")\ndf_ml = df.dropna()\n\nX = df_ml[\n    [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\"]\n]\ny = df_ml[\"species\"]\n\n\n\n\n19.3.4 학습 / 테스트 분할\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y,\n    test_size=0.2,\n    random_state=42,\n    stratify=y\n)\n\n\nstratify\n\n클래스 비율 유지\n분류 문제에서 매우 중요\n\n\n\n\n19.3.5 학습 / 검증 분할\n\nX_train, X_val, y_train, y_val = train_test_split(\n    X_train, y_train,\n    test_size=0.25,  # 전체 기준 0.2\n    random_state=42,\n    stratify=y_train\n)",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#데이터-분할의-종류",
+    "href": "part3/01. 데이터 분할 및 검정.html#데이터-분할의-종류",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.2 데이터 분할의 종류",
+    "text": "19.2 데이터 분할의 종류\n데이터셋의 역할\n\n\n\n데이터셋\n영어\n역할\n사용 시점\n\n\n\n\n학습\nTrain\n모델 파라미터 학습\n매 에포크/반복\n\n\n검증\nValidation\n하이퍼파라미터 튜닝, 조기 종료\n학습 중\n\n\n테스트\nTest\n최종 성능 평가\n단 한 번 (마지막)\n\n\n\n일반적인 분할 비율\n\n\n\n전체 데이터 크기\n분할 비율 (Train/Val/Test)\n설명\n\n\n\n\n매우 큼 (100만+)\n98/1/1\n충분한 데이터, 작은 비율도 충분\n\n\n큼 (10만+)\n90/5/5 또는 80/10/10\n일반적 상황\n\n\n중간 (1만+)\n70/15/15 또는 60/20/20\n표준 비율\n\n\n작음 (1천+)\n교차 검증 + 80/20\n검증셋 없이 CV 사용\n\n\n매우 작음 (100+)\nLeave-One-Out CV\n모든 데이터 활용",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
+    ]
+  },
+  {
+    "objectID": "part3/01. 데이터 분할 및 검정.html#기본-데이터-분할",
+    "href": "part3/01. 데이터 분할 및 검정.html#기본-데이터-분할",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.3 기본 데이터 분할",
+    "text": "19.3 기본 데이터 분할\n\n19.3.1 학습/테스트 분할\n예제: 데이터 준비\n\n# 특성과 타겟 분리\nX = df_ml[[\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\"]]\ny = df_ml[\"species\"]\n\nprint(\"특성 행렬(X) 크기:\", X.shape)\nprint(\"타겟 벡터(y) 크기:\", y.shape)\nprint(\"\\n타겟 클래스 분포:\")\nprint(y.value_counts())\nprint(f\"\\n클래스 비율:\")\nprint((y.value_counts() / len(y)).round(3))\n\n특성 행렬(X) 크기: (333, 4)\n타겟 벡터(y) 크기: (333,)\n\n타겟 클래스 분포:\nspecies\nAdelie       146\nGentoo       119\nChinstrap     68\nName: count, dtype: int64\n\n클래스 비율:\nspecies\nAdelie       0.438\nGentoo       0.357\nChinstrap    0.204\nName: count, dtype: float64\n\n\n예제: 학습/테스트 분할\n\n# 학습/테스트 분할 (80/20)\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y,\n    test_size=0.2,        # 테스트 20%\n    random_state=42,       # 재현성\n    stratify=y            # 클래스 비율 유지\n)\n\nprint(\"=== 데이터 분할 결과 ===\")\nprint(f\"전체 데이터: {len(X)}\")\nprint(f\"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)\")\nprint(f\"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)\")\n\n# 클래스 비율 확인\nprint(\"\\n=== 클래스 비율 비교 ===\")\nprint(\"전체 데이터:\")\nprint((y.value_counts() / len(y)).round(3))\nprint(\"\\n학습 데이터:\")\nprint((y_train.value_counts() / len(y_train)).round(3))\nprint(\"\\n테스트 데이터:\")\nprint((y_test.value_counts() / len(y_test)).round(3))\n\n=== 데이터 분할 결과 ===\n전체 데이터: 333\n학습 데이터: 266 (79.9%)\n테스트 데이터: 67 (20.1%)\n\n=== 클래스 비율 비교 ===\n전체 데이터:\nspecies\nAdelie       0.438\nGentoo       0.357\nChinstrap    0.204\nName: count, dtype: float64\n\n학습 데이터:\nspecies\nAdelie       0.440\nGentoo       0.357\nChinstrap    0.203\nName: count, dtype: float64\n\n테스트 데이터:\nspecies\nAdelie       0.433\nGentoo       0.358\nChinstrap    0.209\nName: count, dtype: float64\n\n\ntrain_test_split 주요 파라미터\n\n\n\n파라미터\n설명\n권장값\n\n\n\n\ntest_size\n테스트셋 비율\n0.2 ~ 0.3\n\n\nrandom_state\n난수 시드 (재현성)\n고정값 (예: 42)\n\n\nstratify\n클래스 비율 유지\n분류 문제에서 y\n\n\nshuffle\n섞기 여부\nTrue (기본값)\n\n\n\n\n\n19.3.2 학습/검증/테스트 분할\n하이퍼파라미터 튜닝이 필요한 경우 3-way 분할을 수행한다.\n예제: 3-way 분할\n\n# 1단계: 학습+검증 vs 테스트 (80/20)\nX_temp, X_test, y_temp, y_test = train_test_split(\n    X, y,\n    test_size=0.2,\n    random_state=42,\n    stratify=y\n)\n\n# 2단계: 학습 vs 검증 (60/20)\n# temp의 25%는 전체의 20% (0.8 * 0.25 = 0.2)\nX_train, X_val, y_train, y_val = train_test_split(\n    X_temp, y_temp,\n    test_size=0.25,  # temp의 25% = 전체의 20%\n    random_state=42,\n    stratify=y_temp\n)\n\nprint(\"=== 3-way 데이터 분할 결과 ===\")\nprint(f\"전체 데이터: {len(X)}\")\nprint(f\"학습 데이터: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)\")\nprint(f\"검증 데이터: {len(X_val)} ({len(X_val)/len(X)*100:.1f}%)\")\nprint(f\"테스트 데이터: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)\")\n\n# 시각화\nsizes = [len(X_train), len(X_val), len(X_test)]\nlabels = ['Train (60%)', 'Validation (20%)', 'Test (20%)']\ncolors = ['#3498db', '#2ecc71', '#e74c3c']\n\nplt.figure(figsize=(10, 6))\nplt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)\nplt.title(\"Data Split: Train/Validation/Test\")\nplt.axis('equal')\nplt.show()\n\n=== 3-way 데이터 분할 결과 ===\n전체 데이터: 333\n학습 데이터: 199 (59.8%)\n검증 데이터: 67 (20.1%)\n테스트 데이터: 67 (20.1%)\n\n\n\n\n\n\n\n\n\n3-way 분할 사용 흐름\n학습 데이터 (Train)\n  ↓\n모델 학습 (fit)\n  ↓\n검증 데이터 (Validation)\n  ↓\n하이퍼파라미터 튜닝\n  ↓\n최종 모델 선택\n  ↓\n테스트 데이터 (Test)\n  ↓\n최종 성능 평가 (단 한 번!)",
+    "crumbs": [
+      "Ⅲ. 머신러닝 모델링 및 평가",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
     "objectID": "part3/01. 데이터 분할 및 검정.html#교차-검증-cross-validation",
     "href": "part3/01. 데이터 분할 및 검정.html#교차-검증-cross-validation",
-    "title": "19  데이터 분할 및 검정",
+    "title": "19  데이터 분할 및 검증",
     "section": "19.4 교차 검증 (Cross-Validation)",
-    "text": "19.4 교차 검증 (Cross-Validation)\n\n19.4.1 개념\n\n데이터를 여러 번 나누어\n학습과 검증을 반복\n성능의 평균과 분산을 함께 평가\n\n단일 분할의 운(luck)에 의존하지 않음",
+    "text": "19.4 교차 검증 (Cross-Validation)\n교차 검증은 데이터를 여러 번 나누어 학습과 검증을 반복함으로써 더 안정적이고 신뢰할 수 있는 성능 추정을 제공한다.\n교차 검증의 장점\n\n\n\n장점\n설명\n\n\n\n\n안정적 평가\n단일 분할의 운(luck)에 의존하지 않음\n\n\n데이터 효율성\n모든 데이터를 학습과 검증에 사용\n\n\n분산 추정\n성능의 평균과 표준편차 확인 가능\n\n\n과적합 탐지\n폴드 간 성능 차이로 과적합 감지\n\n\n\n교차 검증 vs 홀드아웃\n\n\n\n항목\n홀드아웃 (단일 분할)\n교차 검증\n\n\n\n\n계산 비용\n낮음\n높음 (k배)\n\n\n안정성\n낮음 (운에 좌우)\n높음\n\n\n데이터 효율\n낮음\n높음 (모든 데이터 활용)\n\n\n성능 분산\n알 수 없음\n측정 가능\n\n\n소표본 적합성\n부적합\n적합\n\n\n사용 시점\n빠른 실험\n최종 평가",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
     "objectID": "part3/01. 데이터 분할 및 검정.html#k-fold-교차-검증",
     "href": "part3/01. 데이터 분할 및 검정.html#k-fold-교차-검증",
-    "title": "19  데이터 분할 및 검정",
+    "title": "19  데이터 분할 및 검증",
     "section": "19.5 K-Fold 교차 검증",
-    "text": "19.5 K-Fold 교차 검증\n\n19.5.1 원리\n\n데이터를 K개 폴드로 분할\nK-1개로 학습, 1개로 검증\nK번 반복\n\n\n\n19.5.2 시각적 개념\nFold 1 | V T T ... T T\nFold 2 | T V T ... T T\nFold 3 | T T V ... T T\n...\nFold K | T T T ... T V\n\n\n19.5.3 기본 K-Fold 예제\n\nfrom sklearn.model_selection import KFold, cross_val_score\nfrom sklearn.linear_model import LogisticRegression\n\nmodel = LogisticRegression(max_iter=1000)\n\nkf = KFold(\n    n_splits=5,\n    shuffle=True,\n    random_state=42\n)\n\nscores = cross_val_score(\n    model, X, y,\n    cv=kf,\n    scoring=\"accuracy\"\n)\n\nscores, scores.mean()\n\n(array([0.98507463, 0.97014925, 0.98507463, 1.        , 0.98484848]),\n np.float64(0.9850293984622344))",
+    "text": "19.5 K-Fold 교차 검증\nK-Fold는 데이터를 K개의 폴드로 나누어 각 폴드를 한 번씩 검증셋으로 사용하는 방법이다.\nK-Fold 원리\n전체 데이터를 K개로 분할\n\nFold 1: [Validation] [Train] [Train] [Train] [Train]\nFold 2: [Train] [Validation] [Train] [Train] [Train]\nFold 3: [Train] [Train] [Validation] [Train] [Train]\nFold 4: [Train] [Train] [Train] [Validation] [Train]\nFold 5: [Train] [Train] [Train] [Train] [Validation]\n\n→ K번 학습 후 평균 성능 계산\n예제: K-Fold 교차 검증\n\nfrom sklearn.model_selection import KFold, cross_val_score\nfrom sklearn.linear_model import LogisticRegression\n\n# 모델 정의\nmodel = LogisticRegression(max_iter=1000, random_state=42)\n\n# K-Fold 설정\nkf = KFold(\n    n_splits=5,         # 5개 폴드\n    shuffle=True,        # 섞기\n    random_state=42      # 재현성\n)\n\n# 교차 검증 수행\nscores = cross_val_score(\n    model, X, y,\n    cv=kf,\n    scoring='accuracy'\n)\n\nprint(\"=== K-Fold 교차 검증 결과 ===\")\nprint(f\"각 폴드 정확도: {scores}\")\nprint(f\"평균 정확도: {scores.mean():.4f}\")\nprint(f\"표준편차: {scores.std():.4f}\")\nprint(f\"95% 신뢰구간: {scores.mean():.4f} ± {1.96 * scores.std():.4f}\")\n\n=== K-Fold 교차 검증 결과 ===\n각 폴드 정확도: [0.98507463 0.97014925 0.98507463 1.         0.98484848]\n평균 정확도: 0.9850\n표준편차: 0.0094\n95% 신뢰구간: 0.9850 ± 0.0185\n\n\n예제: 폴드별 성능 시각화\n\n# 폴드별 성능 시각화\nplt.figure(figsize=(10, 6))\nplt.plot(range(1, len(scores)+1), scores, 'o-', linewidth=2, markersize=8)\nplt.axhline(scores.mean(), color='r', linestyle='--', linewidth=2, \n            label=f'Mean = {scores.mean():.4f}')\nplt.fill_between(range(1, len(scores)+1), \n                 scores.mean() - scores.std(), \n                 scores.mean() + scores.std(), \n                 alpha=0.2, color='r', label=f'Std = {scores.std():.4f}')\nplt.xlabel('Fold')\nplt.ylabel('Accuracy')\nplt.title('K-Fold Cross-Validation Results')\nplt.legend()\nplt.grid(True, alpha=0.3)\nplt.xticks(range(1, len(scores)+1))\nplt.show()",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
     "objectID": "part3/01. 데이터 분할 및 검정.html#stratified-k-fold",
     "href": "part3/01. 데이터 분할 및 검정.html#stratified-k-fold",
-    "title": "19  데이터 분할 및 검정",
+    "title": "19  데이터 분할 및 검증",
     "section": "19.6 Stratified K-Fold",
-    "text": "19.6 Stratified K-Fold\n\n19.6.1 왜 필요한가?\n\n분류 문제에서 클래스 불균형이 있으면\n\n폴드마다 클래스 비율이 달라질 수 있음\n\n\n각 폴드에 클래스 비율을 유지\n\n\n19.6.2 예제\n\nfrom sklearn.model_selection import StratifiedKFold\n\nskf = StratifiedKFold(\n    n_splits=5,\n    shuffle=True,\n    random_state=42\n)\n\nscores = cross_val_score(\n    model, X, y,\n    cv=skf,\n    scoring=\"accuracy\"\n)\n\nscores, scores.mean()\n\n(array([0.97014925, 0.98507463, 0.98507463, 1.        , 0.98484848]),\n np.float64(0.9850293984622344))",
+    "text": "19.6 Stratified K-Fold\nStratified K-Fold는 각 폴드에서 클래스 비율을 유지하는 K-Fold의 변형으로, 불균형 데이터에서 필수적이다.\n왜 필요한가?\n일반 K-Fold는 클래스를 고려하지 않으므로: - 한 폴드에 특정 클래스가 몰릴 수 있음 - 폴드 간 성능 차이가 클래스 불균형 때문일 수 있음 - 소수 클래스가 일부 폴드에 없을 수 있음\n예제: Stratified K-Fold\n\nfrom sklearn.model_selection import StratifiedKFold\n\n# Stratified K-Fold 설정\nskf = StratifiedKFold(\n    n_splits=5,\n    shuffle=True,\n    random_state=42\n)\n\n# 교차 검증 수행\nscores_stratified = cross_val_score(\n    model, X, y,\n    cv=skf,\n    scoring='accuracy'\n)\n\nprint(\"=== Stratified K-Fold 교차 검증 결과 ===\")\nprint(f\"각 폴드 정확도: {scores_stratified}\")\nprint(f\"평균 정확도: {scores_stratified.mean():.4f}\")\nprint(f\"표준편차: {scores_stratified.std():.4f}\")\n\n# K-Fold vs Stratified K-Fold 비교\nprint(\"\\n=== K-Fold vs Stratified K-Fold 비교 ===\")\nprint(f\"K-Fold:           평균 = {scores.mean():.4f}, 표준편차 = {scores.std():.4f}\")\nprint(f\"Stratified K-Fold: 평균 = {scores_stratified.mean():.4f}, 표준편차 = {scores_stratified.std():.4f}\")\n\n=== Stratified K-Fold 교차 검증 결과 ===\n각 폴드 정확도: [0.97014925 0.98507463 0.98507463 1.         0.98484848]\n평균 정확도: 0.9850\n표준편차: 0.0094\n\n=== K-Fold vs Stratified K-Fold 비교 ===\nK-Fold:           평균 = 0.9850, 표준편차 = 0.0094\nStratified K-Fold: 평균 = 0.9850, 표준편차 = 0.0094\n\n\n예제: 폴드별 클래스 분포 확인\n\n# 폴드별 클래스 분포 확인\nprint(\"\\n=== 각 폴드의 클래스 분포 ===\")\nfor fold_idx, (train_idx, val_idx) in enumerate(skf.split(X, y), 1):\n    y_fold = y.iloc[val_idx]\n    print(f\"\\nFold {fold_idx}:\")\n    print(f\"  크기: {len(y_fold)}\")\n    print(f\"  클래스 비율:\")\n    print((y_fold.value_counts() / len(y_fold)).round(3).to_dict())\n\n\n=== 각 폴드의 클래스 분포 ===\n\nFold 1:\n  크기: 67\n  클래스 비율:\n{'Adelie': 0.448, 'Gentoo': 0.358, 'Chinstrap': 0.194}\n\nFold 2:\n  크기: 67\n  클래스 비율:\n{'Adelie': 0.433, 'Gentoo': 0.358, 'Chinstrap': 0.209}\n\nFold 3:\n  크기: 67\n  클래스 비율:\n{'Adelie': 0.433, 'Gentoo': 0.358, 'Chinstrap': 0.209}\n\nFold 4:\n  크기: 66\n  클래스 비율:\n{'Adelie': 0.439, 'Gentoo': 0.348, 'Chinstrap': 0.212}\n\nFold 5:\n  크기: 66\n  클래스 비율:\n{'Adelie': 0.439, 'Gentoo': 0.364, 'Chinstrap': 0.197}",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#교차-검증-vs-홀드아웃-검증",
-    "href": "part3/01. 데이터 분할 및 검정.html#교차-검증-vs-홀드아웃-검증",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.7 교차 검증 vs 홀드아웃 검증",
-    "text": "19.7 교차 검증 vs 홀드아웃 검증\n\n\n\n항목\n홀드아웃\n교차 검증\n\n\n\n\n계산 비용\n낮음\n높음\n\n\n안정성\n낮음\n높음\n\n\n데이터 소량\n부적합\n적합\n\n\n실무 사용\n빠른 실험\n최종 평가",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#기타-교차-검증-방법",
+    "href": "part3/01. 데이터 분할 및 검정.html#기타-교차-검증-방법",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.7 기타 교차 검증 방법",
+    "text": "19.7 기타 교차 검증 방법\n교차 검증 방법 비교\n\n\n\n\n\n\n\n\n방법\n설명\n사용 상황\n\n\n\n\nK-Fold\n데이터를 K개로 분할\n회귀, 균형 분류\n\n\nStratified K-Fold\n클래스 비율 유지\n불균형 분류 (권장)\n\n\nLeave-One-Out (LOO)\nK = n (각 샘플을 검증셋으로)\n매우 소량 데이터\n\n\nLeave-P-Out (LPO)\nP개씩 조합\n극소량 데이터\n\n\nShuffle Split\n무작위 분할 반복\n빠른 근사 평가\n\n\nGroup K-Fold\n그룹 단위 분할\n그룹 종속 데이터\n\n\nTime Series Split\n시간 순서 유지\n시계열 데이터\n\n\n\n\n19.7.1 Time Series Split (시계열 교차 검증)\n시계열 데이터는 미래를 예측하므로, 학습 데이터가 검증 데이터보다 과거여야 한다.\n예제: Time Series Split\n\nfrom sklearn.model_selection import TimeSeriesSplit\n\n# Time Series Split 설정\ntscv = TimeSeriesSplit(n_splits=5)\n\n# 분할 시각화\nprint(\"=== Time Series Split 구조 ===\")\nfor fold_idx, (train_idx, val_idx) in enumerate(tscv.split(X), 1):\n    print(f\"Fold {fold_idx}:\")\n    print(f\"  Train: {min(train_idx):3d} ~ {max(train_idx):3d} (n={len(train_idx)})\")\n    print(f\"  Val:   {min(val_idx):3d} ~ {max(val_idx):3d} (n={len(val_idx)})\")\n\n=== Time Series Split 구조 ===\nFold 1:\n  Train:   0 ~  57 (n=58)\n  Val:    58 ~ 112 (n=55)\nFold 2:\n  Train:   0 ~ 112 (n=113)\n  Val:   113 ~ 167 (n=55)\nFold 3:\n  Train:   0 ~ 167 (n=168)\n  Val:   168 ~ 222 (n=55)\nFold 4:\n  Train:   0 ~ 222 (n=223)\n  Val:   223 ~ 277 (n=55)\nFold 5:\n  Train:   0 ~ 277 (n=278)\n  Val:   278 ~ 332 (n=55)\n\n\n시계열 데이터 주의사항\n\n❌ 일반 K-Fold 사용 금지 (미래 데이터로 학습)\n✓ TimeSeriesSplit 사용\n✓ 학습 데이터 &lt; 검증 데이터 (시간 순서)\n✓ 데이터 섞기(shuffle) 금지",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#시계열-데이터의-주의점",
-    "href": "part3/01. 데이터 분할 및 검정.html#시계열-데이터의-주의점",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.8 시계열 데이터의 주의점",
-    "text": "19.8 시계열 데이터의 주의점\n\n미래 데이터를 학습에 사용하면 안 됨\n반드시 시간 순서 유지\n\n\nfrom sklearn.model_selection import TimeSeriesSplit\n\ntscv = TimeSeriesSplit(n_splits=5)\n\n일반 K-Fold 사용 금지",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#교차-검증-실무-가이드",
+    "href": "part3/01. 데이터 분할 및 검정.html#교차-검증-실무-가이드",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.8 교차 검증 실무 가이드",
+    "text": "19.8 교차 검증 실무 가이드\n교차 검증 선택 가이드\n분류 문제?\n├─ Yes → 클래스 불균형?\n│         ├─ Yes → Stratified K-Fold (필수)\n│         └─ No → K-Fold 또는 Stratified K-Fold\n└─ No (회귀) → 시계열?\n                ├─ Yes → TimeSeriesSplit\n                └─ No → K-Fold\nK 값 선택\n\n\n\n데이터 크기\n권장 K\n이유\n\n\n\n\nn &lt; 100\nk = n (LOO)\n데이터 최대 활용\n\n\n100 ≤ n &lt; 1000\nk = 10\n표준, 계산 가능\n\n\nn ≥ 1000\nk = 5\n계산 효율성\n\n\nn ≥ 10000\nk = 3 또는 홀드아웃\n빠른 평가",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#nested-cross-validation",
-    "href": "part3/01. 데이터 분할 및 검정.html#nested-cross-validation",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.9 Nested Cross-Validation",
-    "text": "19.9 Nested Cross-Validation\n\n19.9.1 개념\n\n하이퍼파라미터 튜닝과 모델 평가를 분리 및 성능 과대평가 방지",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#데이터-누수-data-leakage-방지",
+    "href": "part3/01. 데이터 분할 및 검정.html#데이터-누수-data-leakage-방지",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.9 데이터 누수 (Data Leakage) 방지",
+    "text": "19.9 데이터 누수 (Data Leakage) 방지\n데이터 누수는 학습 과정에서 테스트 정보가 유입되어 성능이 과대평가되는 현상이다.\n데이터 누수의 원인\n\n\n\n\n\n\n\n\n원인\n예시\n올바른 방법\n\n\n\n\n전처리 순서 오류\n전체 데이터 스케일링 후 분할\n분할 후 학습 데이터로만 스케일링\n\n\n피처 선택 오류\n전체 데이터로 피처 선택\n분할 후 학습 데이터로만 선택\n\n\n타겟 인코딩 오류\n전체 데이터로 타겟 인코딩\n분할 후 학습 데이터로만 인코딩\n\n\n검증셋 재사용\n검증셋으로 여러 번 튜닝\n최종은 테스트셋으로 단 한 번\n\n\n\n올바른 파이프라인\n# ✓ 올바른 예: 분할 후 전처리\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\n\n# 1. 데이터 분할\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\n# 2. 파이프라인 (분할 후 전처리)\npipeline = Pipeline([\n    ('scaler', StandardScaler()),  # 학습 데이터로만 fit\n    ('model', LogisticRegression())\n])\n\n# 3. 학습 (scaler는 X_train으로만 fit됨)\npipeline.fit(X_train, y_train)\n\n# 4. 평가 (scaler 파라미터는 학습 때 학습됨)\nscore = pipeline.score(X_test, y_test)",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {
-    "objectID": "part3/01. 데이터 분할 및 검정.html#체크리스트",
-    "href": "part3/01. 데이터 분할 및 검정.html#체크리스트",
-    "title": "19  데이터 분할 및 검정",
-    "section": "19.10 체크리스트",
-    "text": "19.10 체크리스트\n\n분류 문제인가?\n\nstratify 사용\n\n데이터가 적은가?\n\n교차 검증\n\n하이퍼파라미터 튜닝 중인가?\n\n검증 데이터 분리\n\n최종 성능 보고인가?\n\n테스트 데이터는 마지막까지 보존",
+    "objectID": "part3/01. 데이터 분할 및 검정.html#요약",
+    "href": "part3/01. 데이터 분할 및 검정.html#요약",
+    "title": "19  데이터 분할 및 검증",
+    "section": "19.10 요약",
+    "text": "19.10 요약\n이 장에서는 데이터 분할과 교차 검증을 학습했다. 주요 내용은 다음과 같다.\n데이터 분할 핵심\n\n목적: 일반화 성능 평가, 과적합 탐지\n기본 분할: Train/Validation/Test (60/20/20)\nStratify: 분류 문제에서 클래스 비율 유지 필수\n테스트셋: 단 한 번만 사용 (최종 평가)\n\n교차 검증 핵심\n\nK-Fold: 데이터를 K개로 나누어 반복 평가\nStratified K-Fold: 분류 문제에서 권장 (클래스 비율 유지)\nTime Series Split: 시계열 데이터 전용\n장점: 안정적 평가, 모든 데이터 활용\n\n실무 체크리스트\n\n분류 문제인가? → Stratify 사용\n데이터가 적은가? → 교차 검증 사용\n하이퍼파라미터 튜닝? → 검증셋 분리\n시계열 데이터? → TimeSeriesSplit 사용\n데이터 누수 방지? → 분할 후 전처리\n최종 평가? → 테스트셋은 마지막에 단 한 번\n\n주의사항\n\n테스트셋은 절대 학습에 사용하지 않음\n전처리(스케일링 등)는 분할 후 수행\n검증셋을 여러 번 보면 간접적인 과적합\n시계열은 반드시 TimeSeriesSplit 사용\n\n올바른 데이터 분할과 검증은 신뢰할 수 있는 모델 평가의 기초이다. 다음 장에서는 모델 성능을 측정하는 다양한 평가 지표를 학습할 것이다.",
     "crumbs": [
       "Ⅲ. 머신러닝 모델링 및 평가",
-      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검정</span>"
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>데이터 분할 및 검증</span>"
     ]
   },
   {

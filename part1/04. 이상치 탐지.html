@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../part3/01. 데이터 분할 및 검정.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">데이터 분할 및 검정</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">데이터 분할 및 검증</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>이상치(Outlier)는 다른 관측값들과 현저히 다른 값을 의미한다. 이상치는 측정 오류, 입력 오류, 또는 실제로 극단적인 사건에 의해 발생할 수 있다. 이상치가 존재하면 통계 분석 결과가 왜곡되고 머신러닝 모델의 성능이 저하될 수 있으므로, 적절한 탐지와 처리가 필요하다. 이 장에서는 통계적 방법과 머신러닝 기법을 활용한 다양한 이상치 탐지 방법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="fc2a4503" class="cell" data-execution_count="1">
+<div id="ddcf99c3" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -443,7 +443,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="4.1" class="anchored" data-anchor-id="분석-대상-변수-선택"><span class="header-section-number">4.1</span> 분석 대상 변수 선택</h2>
 <p>이상치 탐지는 주로 수치형 변수를 대상으로 수행한다. 범주형 변수는 이상치 개념이 명확하지 않기 때문에 일반적으로 제외한다.</p>
 <p><strong>예제: 수치형 변수 추출</strong></p>
-<div id="fdce69b5" class="cell" data-execution_count="2">
+<div id="5ca5b002" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 분석 대상 수치형 컬럼</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"bill_length_mm"</span>,</span>
@@ -477,7 +477,7 @@ max         59.600000      21.500000         231.000000  6300.000000</code></pre
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="박스플롯으로-이상치-확인"><span class="header-section-number">4.2.1</span> 박스플롯으로 이상치 확인</h3>
 <p>박스플롯은 각 변수의 중앙값, 사분위수, 이상치를 한눈에 보여준다. 다만, 변수마다 척도가 다르면 비교가 어려우므로 표준화를 적용하는 것이 좋다.</p>
 <p><strong>예제: 표준화 후 박스플롯</strong></p>
-<div id="ee55a44d" class="cell" data-execution_count="3">
+<div id="0216060e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -511,7 +511,7 @@ max         59.600000      21.500000         231.000000  6300.000000</code></pre
 <section id="iqr-계산" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="iqr-계산"><span class="header-section-number">4.3.1</span> IQR 계산</h3>
 <p><strong>예제: 사분위수 및 IQR 계산</strong></p>
-<div id="e913e557" class="cell" data-execution_count="4">
+<div id="49060db1" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 제1사분위수 (Q1, 25%)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> df_num.quantile(<span class="fl">0.25</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -560,7 +560,7 @@ dtype: float64</code></pre>
 </ul>
 <p>이 범위를 벗어나는 값을 이상치로 판단한다.</p>
 <p><strong>예제: 이상치 조건 정의</strong></p>
-<div id="52ca50de" class="cell" data-execution_count="5">
+<div id="37be051a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이상치 조건: 하한 미만 또는 상한 초과</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>outlier_condition <span class="op">=</span> (df_num <span class="op">&lt;</span> (Q1 <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> IQR)) <span class="op">|</span> (df_num <span class="op">&gt;</span> (Q3 <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> IQR))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -581,7 +581,7 @@ dtype: int64</code></pre>
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="이상치가-있는-행-확인"><span class="header-section-number">4.3.3</span> 이상치가 있는 행 확인</h3>
 <p>하나의 컬럼이라도 이상치가 있으면 해당 행 전체를 이상치로 판단하는 방법이다.</p>
 <p><strong>예제: 이상치 행 추출</strong></p>
-<div id="373ef9e3" class="cell" data-execution_count="6">
+<div id="c754721b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 하나라도 이상치가 있는 행</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>outlier_rows <span class="op">=</span> outlier_condition.<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -603,7 +603,7 @@ Index: []</code></pre>
 <h3 data-number="4.3.4" class="anchored" data-anchor-id="이상치-제거"><span class="header-section-number">4.3.4</span> 이상치 제거</h3>
 <p>이상치를 제거하여 정제된 데이터셋을 생성한다.</p>
 <p><strong>예제: IQR 기반 이상치 제거</strong></p>
-<div id="cd1b2d0d" class="cell" data-execution_count="7">
+<div id="78160e36" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이상치가 없는 행만 유지</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_iqr_clean <span class="op">=</span> df[<span class="op">~</span>outlier_rows]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -623,7 +623,7 @@ Index: []</code></pre>
 <h2 data-number="4.4" class="anchored" data-anchor-id="z-score-기반-이상치-탐지"><span class="header-section-number">4.4</span> Z-score 기반 이상치 탐지</h2>
 <p>Z-score는 각 값이 평균으로부터 표준편차의 몇 배만큼 떨어져 있는지를 나타내는 지표이다. 일반적으로 |Z| &gt; 3인 경우를 이상치로 판단한다. 이 방법은 계산이 간단하지만 데이터가 정규분포를 따른다고 가정하므로, 분포가 왜곡된 경우 적절하지 않을 수 있다.</p>
 <p><strong>예제: Z-score 계산 및 이상치 탐지</strong></p>
-<div id="43be0bb4" class="cell" data-execution_count="8">
+<div id="ff364ffd" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> zscore</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Z-score 계산</span></span>
@@ -645,7 +645,7 @@ Index: []</code></pre>
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="임계값-기준-이상치-탐지"><span class="header-section-number">4.4.1</span> 임계값 기준 이상치 탐지</h3>
 <p>절댓값이 3을 초과하는 Z-score를 가진 값을 이상치로 판단한다.</p>
 <p><strong>예제: Z-score 기반 이상치 제거</strong></p>
-<div id="d17c8103" class="cell" data-execution_count="9">
+<div id="17a93dca" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># abs(Z-score) &gt; 3 인 경우 이상치로 판단</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>outlier_z <span class="op">=</span> (np.<span class="bu">abs</span>(z_scores) <span class="op">&gt;</span> <span class="dv">3</span>).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -671,7 +671,7 @@ Z-score 이상치 제거 후: (344, 7)
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="그룹별-iqr-이상치-탐지"><span class="header-section-number">4.5.1</span> 그룹별 IQR 이상치 탐지</h3>
 <p>각 그룹 내에서 독립적으로 IQR 기반 이상치를 탐지하는 방법이다.</p>
 <p><strong>예제: 종별 IQR 이상치 탐지</strong></p>
-<div id="956b5e25" class="cell" data-execution_count="10">
+<div id="6a58ddbd" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iqr_outlier_by_group(group):</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""그룹별 IQR 기반 이상치 제거 함수"""</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 그룹 내 Q1, Q3, IQR 계산</span></span>
@@ -709,7 +709,7 @@ Z-score 이상치 제거 후: (344, 7)
 <h2 data-number="4.6" class="anchored" data-anchor-id="밀도-기반-이상치-탐지-lof"><span class="header-section-number">4.6</span> 밀도 기반 이상치 탐지 (LOF)</h2>
 <p>LOF(Local Outlier Factor)는 각 데이터 포인트의 주변 밀도를 계산하여 이상치를 탐지하는 방법이다. 주변 데이터와 비교하여 밀도가 현저히 낮은 점을 이상치로 판단한다. 이 방법은 비선형적인 데이터 분포나 군집 구조가 복잡한 경우에 효과적이다.</p>
 <p><strong>예제: LOF를 사용한 이상치 탐지</strong></p>
-<div id="a6255a17" class="cell" data-execution_count="11">
+<div id="057aa9af" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> LocalOutlierFactor</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치 제거 (LOF는 결측치를 처리하지 못함)</span></span>
@@ -739,7 +739,7 @@ LOF 이상치 제거 후: (337, 7)
 <h2 data-number="4.7" class="anchored" data-anchor-id="트리-기반-이상치-탐지-isolation-forest"><span class="header-section-number">4.7</span> 트리 기반 이상치 탐지 (Isolation Forest)</h2>
 <p>Isolation Forest는 이상치가 정상 데이터보다 쉽게 분리(isolate)된다는 아이디어에 기반한다. 랜덤하게 특성과 분할 값을 선택하여 트리를 구성할 때, 이상치는 적은 분할로 고립되는 반면 정상 데이터는 많은 분할이 필요하다. 이 방법은 고차원 데이터에 강건하며 실무에서 널리 사용된다.</p>
 <p><strong>예제: Isolation Forest를 사용한 이상치 탐지</strong></p>
-<div id="48b4691c" class="cell" data-execution_count="12">
+<div id="4d22b55f" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> IsolationForest</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Isolation Forest 모델 생성</span></span>

@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../part3/01. 데이터 분할 및 검정.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">데이터 분할 및 검정</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">데이터 분할 및 검증</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -431,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>비모수 검정(Non-parametric Tests)은 모집단의 분포에 대한 가정 없이 데이터를 분석하는 통계적 방법이다. 정규성이나 등분산성 같은 모수 검정의 엄격한 가정을 만족하지 못할 때, 또는 데이터가 순서형이거나 이상치가 많을 때 사용한다. 비모수 검정은 원 데이터 값 대신 순위(rank)를 사용하여 집단 간 차이를 검정하므로 분포에 덜 민감하고 강건하다. 이 장에서는 주요 비모수 검정 방법과 그 적용 상황을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="5013ef1b" class="cell" data-execution_count="1">
+<div id="cb9fe30b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -541,7 +541,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>예제: 정규성 확인</strong></p>
-<div id="ea1648b7" class="cell" data-execution_count="2">
+<div id="76838091" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 정규성 검정</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Adelie"</span>][<span class="st">"bill_length_mm"</span>].dropna()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> df[df[<span class="st">"species"</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>][<span class="st">"bill_length_mm"</span>].dropna()</span>
@@ -603,7 +603,7 @@ Gentoo: p = 0.0135 (비정규)</code></pre>
 <section id="예제-adelie-vs-gentoo-부리-길이-비교" class="level3" data-number="17.2.1">
 <h3 data-number="17.2.1" class="anchored" data-anchor-id="예제-adelie-vs-gentoo-부리-길이-비교"><span class="header-section-number">17.2.1</span> 예제: Adelie vs Gentoo 부리 길이 비교</h3>
 <p><strong>예제: 데이터 준비</strong></p>
-<div id="978c99bc" class="cell" data-execution_count="3">
+<div id="5a8ae7ea" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> mannwhitneyu</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 종 선택</span></span>
@@ -650,7 +650,7 @@ Name: bill_length_mm, dtype: float64</code></pre>
 </div>
 </div>
 <p><strong>예제: Mann-Whitney U 검정</strong></p>
-<div id="74c0c522" class="cell" data-execution_count="4">
+<div id="c94a18fa" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mann-Whitney U 검정</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>u_stat, p_value <span class="op">=</span> mannwhitneyu(g1, g2, alternative<span class="op">=</span><span class="st">"two-sided"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -677,7 +677,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>예제: 시각화</strong></p>
-<div id="1f121de6" class="cell" data-execution_count="5">
+<div id="e62ce9dc" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -711,7 +711,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>예제: t-검정과 비교</strong></p>
-<div id="5b074fbf" class="cell" data-execution_count="6">
+<div id="bdaf1eef" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립표본 t-검정과 비교</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -757,7 +757,7 @@ Mann-Whitney (비모수): U = 224.5000, p = 0.0000
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="예제-가상-전후-데이터"><span class="header-section-number">17.3.1</span> 예제: 가상 전후 데이터</h3>
 <p>penguins 데이터셋에는 자연스러운 전후 데이터가 없으므로, 예제를 위해 가상 데이터를 생성한다.</p>
 <p><strong>예제: 가상 데이터 생성</strong></p>
-<div id="a3d5d8e9" class="cell" data-execution_count="7">
+<div id="e793fd3f" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> wilcoxon</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 시드 설정</span></span>
@@ -779,7 +779,7 @@ Mann-Whitney (비모수): U = 224.5000, p = 0.0000
 </div>
 </div>
 <p><strong>예제: Wilcoxon Signed-Rank 검정</strong></p>
-<div id="3829dcb2" class="cell" data-execution_count="8">
+<div id="155205a7" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wilcoxon 부호순위 검정</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>w_stat, p_value <span class="op">=</span> wilcoxon(before, after)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -804,7 +804,7 @@ p-value: 0.0879
 </div>
 </div>
 <p><strong>예제: 시각화</strong></p>
-<div id="b3359923" class="cell" data-execution_count="9">
+<div id="c0e4b155" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -838,7 +838,7 @@ p-value: 0.0879
 </div>
 </div>
 <p><strong>예제: 대응표본 t-검정과 비교</strong></p>
-<div id="253a5c65" class="cell" data-execution_count="10">
+<div id="1109b2a8" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 대응표본 t-검정과 비교</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_rel</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -880,7 +880,7 @@ Wilcoxon (비모수):     W = 149.0000, p = 0.0879</code></pre>
 <section id="예제-세-종의-부리-길이-비교" class="level3" data-number="17.4.1">
 <h3 data-number="17.4.1" class="anchored" data-anchor-id="예제-세-종의-부리-길이-비교"><span class="header-section-number">17.4.1</span> 예제: 세 종의 부리 길이 비교</h3>
 <p><strong>예제: 데이터 준비</strong></p>
-<div id="9ace72db" class="cell" data-execution_count="11">
+<div id="3955a34d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> kruskal</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 세 종의 부리 길이</span></span>
@@ -900,7 +900,7 @@ Gentoo      : n = 123, 중앙값 = 47.30mm</code></pre>
 </div>
 </div>
 <p><strong>예제: Kruskal-Wallis 검정</strong></p>
-<div id="18d9ed06" class="cell" data-execution_count="12">
+<div id="bafd9485" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Kruskal-Wallis 검정</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>h_stat, p_value <span class="op">=</span> kruskal(<span class="op">*</span>groups)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -929,7 +929,7 @@ p-value: 0.0000
 </div>
 </div>
 <p><strong>예제: ANOVA와 비교</strong></p>
-<div id="21ea0894" class="cell" data-execution_count="13">
+<div id="3d44dd72" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 일원분산분석과 비교</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -949,7 +949,7 @@ Kruskal-Wallis (비모수): H = 244.1367, p = 0.0000
 </div>
 </div>
 <p><strong>예제: 시각화</strong></p>
-<div id="d5f0a9a8" class="cell" data-execution_count="14">
+<div id="c3fe1da2" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -979,7 +979,7 @@ Kruskal-Wallis (비모수): H = 244.1367, p = 0.0000
 <h3 data-number="17.4.2" class="anchored" data-anchor-id="사후검정-post-hoc-test"><span class="header-section-number">17.4.2</span> 사후검정 (Post-hoc Test)</h3>
 <p>Kruskal-Wallis 검정이 유의하면 쌍별 비교를 수행한다.</p>
 <p><strong>예제: Dunn’s Test (사후검정)</strong></p>
-<div id="bc985e24" class="cell" data-execution_count="15">
+<div id="3203d866" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dunn's test는 scikit-posthocs 패키지 사용</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import scikit_posthocs as sp</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># dunn_results = sp.posthoc_dunn(df_clean, val_col='bill_length_mm', group_col='species')</span></span>
@@ -1035,7 +1035,7 @@ Chinstrap    vs Gentoo      : U = 5323.5000, p = 0.0018 → 유의</code></pre>
 <section id="예제-가상-반복-측정-데이터" class="level3" data-number="17.5.1">
 <h3 data-number="17.5.1" class="anchored" data-anchor-id="예제-가상-반복-측정-데이터"><span class="header-section-number">17.5.1</span> 예제: 가상 반복 측정 데이터</h3>
 <p><strong>예제: 가상 데이터 생성</strong></p>
-<div id="6f699268" class="cell" data-execution_count="16">
+<div id="831743c3" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> friedmanchisquare</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 가상 반복 측정 데이터 (예: 3가지 처치 조건)</span></span>
@@ -1058,7 +1058,7 @@ Chinstrap    vs Gentoo      : U = 5323.5000, p = 0.0018 → 유의</code></pre>
 </div>
 </div>
 <p><strong>예제: Friedman 검정</strong></p>
-<div id="2f679d08" class="cell" data-execution_count="17">
+<div id="a3956010" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Friedman 검정</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>f_stat, p_value <span class="op">=</span> friedmanchisquare(cond1, cond2, cond3)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1085,7 +1085,7 @@ p-value: 0.0029
 </div>
 </div>
 <p><strong>예제: 시각화</strong></p>
-<div id="becaca05" class="cell" data-execution_count="18">
+<div id="14c47ade" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>data_repeated <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Value'</span>: np.concatenate([cond1, cond2, cond3]),</span>
