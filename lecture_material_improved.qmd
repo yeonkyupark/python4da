@@ -1,6 +1,8 @@
-# 비모수 검정
+# 상관 분석
 
-비모수 검정(Non-parametric Tests)은 모집단의 분포에 대한 가정 없이 데이터를 분석하는 통계적 방법이다. 정규성이나 등분산성 같은 모수 검정의 엄격한 가정을 만족하지 못할 때, 또는 데이터가 순서형이거나 이상치가 많을 때 사용한다. 비모수 검정은 원 데이터 값 대신 순위(rank)를 사용하여 집단 간 차이를 검정하므로 분포에 덜 민감하고 강건하다. 이 장에서는 주요 비모수 검정 방법과 그 적용 상황을 학습한다.
+상관 분석(Correlation Analysis)은 두 연속형 변수 간의 관계 방향과 강도를 수치로 표현하는 통계적 방법이다. 상관계수는 두 변수가 함께 변하는 패턴을 -1에서 +1 사이의 값으로 나타내며, 변수 간 관계를 탐색하고 이해하는 데 필수적인 도구이다. 이 장에서는 Pearson, Spearman, Kendall 상관계수의 개념과 차이, 그리고 실무 적용 방법을 학습한다.
+
+**중요**: 상관관계는 두 변수 간 연관성만을 나타내며, 인과관계를 의미하지 않는다.
 
 **예제: 데이터 로드**
 
@@ -15,535 +17,441 @@ from scipy import stats
 df = sns.load_dataset("penguins")
 
 print("데이터 크기:", df.shape)
-print("\n범주형 변수:", df.select_dtypes(include=['object', 'category']).columns.tolist())
-print("연속형 변수:", df.select_dtypes(include=[np.number]).columns.tolist())
+print("\n연속형 변수:")
+print(df.select_dtypes(include=[np.number]).columns.tolist())
 ```
 
-## 비모수 검정의 개념과 필요성
-
-비모수 검정은 모집단의 분포 형태를 가정하지 않고, 데이터의 순위 정보만을 사용하여 검정한다.
-
-**모수 검정 vs 비모수 검정**
-
-| 구분 | 모수 검정 | 비모수 검정 |
-|------|----------|-----------|
-| 가정 | 정규분포, 등분산성 | 가정 최소 (분포 자유) |
-| 사용 정보 | 원 데이터 값 | 순위(rank) |
-| 검정 대상 | 평균 | 중앙값 또는 분포 위치 |
-| 검정력 | 가정 만족 시 높음 | 가정 미만족 시 높음 |
-| 이상치 민감도 | 높음 | 낮음 (강건함) |
-| 해석 | 평균 차이 | 분포 위치 차이 |
-
-### 비모수 검정이 필요한 상황
-
-**비모수 검정 적용 시점**
-
-| 상황 | 설명 | 확인 방법 |
-|------|------|----------|
-| 정규성 위배 | 데이터가 정규분포를 따르지 않음 | Shapiro-Wilk 검정, Q-Q plot |
-| 소표본 | 표본 크기가 작아 중심극한정리 적용 불가 | n < 30 (특히 n < 15) |
-| 이상치 다수 | 극단값이 많아 평균이 왜곡됨 | 박스플롯, IQR 분석 |
-| 순서형 데이터 | 측정 단위가 순서 척도 | 설문 리커트 척도 등 |
-| 불균형 표본 | 집단 간 표본 크기 차이가 큼 | 표본 크기 비교 |
-
-**예제: 정규성 확인**
-
-```{python}
-# 정규성 검정
-adelie = df[df["species"] == "Adelie"]["bill_length_mm"].dropna()
-gentoo = df[df["species"] == "Gentoo"]["bill_length_mm"].dropna()
-
-print("=== 정규성 검정 (Shapiro-Wilk) ===")
-_, p_adelie = stats.shapiro(adelie)
-_, p_gentoo = stats.shapiro(gentoo)
-
-print(f"Adelie: p = {p_adelie:.4f} {'(정규)' if p_adelie > 0.05 else '(비정규)'}")
-print(f"Gentoo: p = {p_gentoo:.4f} {'(정규)' if p_gentoo > 0.05 else '(비정규)'}")
-
-# 시각화
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-stats.probplot(adelie, dist="norm", plot=axes[0])
-axes[0].set_title("Q-Q Plot: Adelie")
-
-stats.probplot(gentoo, dist="norm", plot=axes[1])
-axes[1].set_title("Q-Q Plot: Gentoo")
-
-plt.tight_layout()
-plt.show()
-```
-
-## Mann-Whitney U 검정 (Wilcoxon Rank-Sum Test)
-
-Mann-Whitney U 검정은 두 독립 집단의 분포 위치를 비교하는 비모수 검정으로, 독립표본 t-검정의 대안이다.
-
-**특징**
-
-- **대상**: 두 독립 집단
-- **대안 검정**: 독립표본 t-검정
-- **검정 대상**: 두 집단의 분포가 같은지 (중앙값 또는 순위 합)
-- **가정**: 두 집단의 분포 형태가 유사 (위치만 다를 수 있음)
-
-**가설 설정**
-
-- H₀ (귀무가설): 두 집단의 분포가 동일하다 (중앙값이 같다)
-- H₁ (대립가설): 두 집단의 분포가 다르다 (중앙값이 다르다)
-
-**검정 원리**
-
-1. 두 집단의 데이터를 합쳐서 순위 매김
-2. 각 집단의 순위 합 계산
-3. U 통계량 계산 (작은 집단의 순위 합이 작을수록 차이가 큼)
-
-### 예제: Adelie vs Gentoo 부리 길이 비교
-
-**예제: 데이터 준비**
-
-```{python}
-from scipy.stats import mannwhitneyu
-
-# 두 종 선택
-g1 = df[df["species"] == "Adelie"]["bill_length_mm"].dropna()
-g2 = df[df["species"] == "Gentoo"]["bill_length_mm"].dropna()
-
-print("=== 집단 정보 ===")
-print(f"Adelie: n = {len(g1)}, 중앙값 = {g1.median():.2f}mm")
-print(f"Gentoo: n = {len(g2)}, 중앙값 = {g2.median():.2f}mm")
-
-# 기술 통계량
-print("\n=== 기술 통계량 ===")
-print("Adelie:")
-print(g1.describe())
-print("\nGentoo:")
-print(g2.describe())
-```
-
-**예제: Mann-Whitney U 검정**
-
-```{python}
-# Mann-Whitney U 검정
-u_stat, p_value = mannwhitneyu(g1, g2, alternative="two-sided")
-
-print("\n=== Mann-Whitney U 검정 ===")
-print(f"U-통계량: {u_stat:.4f}")
-print(f"p-value: {p_value:.4f}")
-
-alpha = 0.05
-print(f"\n유의수준 {alpha} 기준:")
-if p_value < alpha:
-    print("✓ 귀무가설 기각: 두 종의 부리 길이 분포가 유의하게 다름")
-    print(f"  중앙값 차이: {g2.median() - g1.median():.2f}mm")
-else:
-    print("✗ 귀무가설 채택: 두 종의 부리 길이 분포가 유의하게 다르지 않음")
-```
-
-**예제: 시각화**
-
-```{python}
-# 시각화
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# 박스플롯
-data_combined = pd.DataFrame({
-    'Bill Length': pd.concat([g1, g2]),
-    'Species': ['Adelie']*len(g1) + ['Gentoo']*len(g2)
-})
-sns.boxplot(x='Species', y='Bill Length', data=data_combined, ax=axes[0])
-axes[0].set_title("Bill Length: Adelie vs Gentoo")
-axes[0].set_ylabel("Bill Length (mm)")
-
-# 히스토그램
-axes[1].hist(g1, alpha=0.5, label='Adelie', bins=15, edgecolor='black')
-axes[1].hist(g2, alpha=0.5, label='Gentoo', bins=15, edgecolor='black')
-axes[1].axvline(g1.median(), color='blue', linestyle='--', linewidth=2, label=f'Adelie median')
-axes[1].axvline(g2.median(), color='orange', linestyle='--', linewidth=2, label=f'Gentoo median')
-axes[1].set_title("Distribution of Bill Length")
-axes[1].set_xlabel("Bill Length (mm)")
-axes[1].set_ylabel("Frequency")
-axes[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-**예제: t-검정과 비교**
-
-```{python}
-# 독립표본 t-검정과 비교
-from scipy.stats import ttest_ind
-
-t_stat, p_t = ttest_ind(g1, g2)
-
-print("\n=== 모수 vs 비모수 비교 ===")
-print(f"t-검정 (모수):        t = {t_stat:.4f}, p = {p_t:.4f}")
-print(f"Mann-Whitney (비모수): U = {u_stat:.4f}, p = {p_value:.4f}")
-print("\n→ 두 검정 모두 유사한 결론")
-```
-
-## Wilcoxon Signed-Rank Test
-
-Wilcoxon 부호순위 검정은 동일 대상의 전후 변화를 비교하는 비모수 검정으로, 대응표본 t-검정의 대안이다.
-
-**특징**
-
-- **대상**: 동일 대상의 두 측정값 (대응 표본)
-- **대안 검정**: 대응표본 t-검정
-- **검정 대상**: 차이의 중앙값이 0인지
-- **가정**: 차이의 분포가 대칭
-
-**가설 설정**
-
-- H₀ (귀무가설): 차이의 중앙값이 0이다 (전후 차이 없음)
-- H₁ (대립가설): 차이의 중앙값이 0이 아니다 (전후 차이 있음)
-
-**검정 원리**
-
-1. 각 쌍의 차이 계산
-2. 차이의 절댓값에 순위 매김
-3. 양수 차이와 음수 차이의 순위 합 비교
-
-### 예제: 가상 전후 데이터
-
-penguins 데이터셋에는 자연스러운 전후 데이터가 없으므로, 예제를 위해 가상 데이터를 생성한다.
-
-**예제: 가상 데이터 생성**
-
-```{python}
-from scipy.stats import wilcoxon
-
-# 시드 설정
-np.random.seed(42)
-
-# 전후 데이터 생성 (예: 처치 전후 부리 길이)
-before = df[df["species"] == "Adelie"]["bill_length_mm"].dropna().sample(30, random_state=42)
-after = before + np.random.normal(0.5, 1.0, size=len(before))
-
-print("=== 전후 데이터 ===")
-print(f"처치 전 중앙값: {before.median():.2f}mm")
-print(f"처치 후 중앙값: {after.median():.2f}mm")
-print(f"차이 중앙값: {(after - before).median():.2f}mm")
-```
-
-**예제: Wilcoxon Signed-Rank 검정**
-
-```{python}
-# Wilcoxon 부호순위 검정
-w_stat, p_value = wilcoxon(before, after)
-
-print("\n=== Wilcoxon Signed-Rank 검정 ===")
-print(f"W-통계량: {w_stat:.4f}")
-print(f"p-value: {p_value:.4f}")
-
-alpha = 0.05
-print(f"\n유의수준 {alpha} 기준:")
-if p_value < alpha:
-    print("✓ 귀무가설 기각: 처치 전후 유의한 차이 있음")
-else:
-    print("✗ 귀무가설 채택: 처치 전후 유의한 차이 없음")
-```
-
-**예제: 시각화**
-
-```{python}
-# 시각화
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# 전후 비교 박스플롯
-data_paired = pd.DataFrame({
-    'Value': pd.concat([before, after]),
-    'Time': ['Before']*len(before) + ['After']*len(after)
-})
-sns.boxplot(x='Time', y='Value', data=data_paired, ax=axes[0])
-axes[0].set_title("Before vs After Treatment")
-axes[0].set_ylabel("Bill Length (mm)")
-
-# 차이 분포
-diff = after.values - before.values
-axes[1].hist(diff, bins=15, edgecolor='black', alpha=0.7)
-axes[1].axvline(0, color='red', linestyle='--', linewidth=2, label='No difference')
-axes[1].axvline(np.median(diff), color='green', linestyle='--', linewidth=2, label=f'Median diff = {np.median(diff):.2f}')
-axes[1].set_title("Distribution of Differences (After - Before)")
-axes[1].set_xlabel("Difference (mm)")
-axes[1].set_ylabel("Frequency")
-axes[1].legend()
-
-plt.tight_layout()
-plt.show()
-```
-
-**예제: 대응표본 t-검정과 비교**
-
-```{python}
-# 대응표본 t-검정과 비교
-from scipy.stats import ttest_rel
-
-t_stat, p_t = ttest_rel(before, after)
-
-print("\n=== 모수 vs 비모수 비교 ===")
-print(f"Paired t-test (모수):  t = {t_stat:.4f}, p = {p_t:.4f}")
-print(f"Wilcoxon (비모수):     W = {w_stat:.4f}, p = {p_value:.4f}")
-```
-
-## Kruskal-Wallis Test
-
-Kruskal-Wallis 검정은 세 개 이상 독립 집단의 분포를 비교하는 비모수 검정으로, 일원분산분석(ANOVA)의 대안이다.
-
-**특징**
-
-- **대상**: 세 개 이상 독립 집단
-- **대안 검정**: 일원분산분석 (One-way ANOVA)
-- **검정 대상**: 모든 집단의 분포가 같은지
-- **가정**: 독립성 (분포 형태 가정 불필요)
-
-**가설 설정**
-
-- H₀ (귀무가설): 모든 집단의 분포가 동일하다
-- H₁ (대립가설): 적어도 하나의 집단 분포가 다르다
-
-**검정 원리**
-
-1. 모든 데이터를 합쳐서 순위 매김
-2. 각 집단의 순위 평균 계산
-3. H 통계량 계산 (카이제곱 분포에 근사)
-
-### 예제: 세 종의 부리 길이 비교
-
-**예제: 데이터 준비**
-
-```{python}
-from scipy.stats import kruskal
-
-# 세 종의 부리 길이
-groups = [
-    df[df["species"] == sp]["bill_length_mm"].dropna()
-    for sp in df["species"].unique()
-]
-
-print("=== 집단 정보 ===")
-for species, group in zip(df["species"].unique(), groups):
-    print(f"{species:12s}: n = {len(group):3d}, 중앙값 = {group.median():.2f}mm")
-```
-
-**예제: Kruskal-Wallis 검정**
-
-```{python}
-# Kruskal-Wallis 검정
-h_stat, p_value = kruskal(*groups)
-
-print("\n=== Kruskal-Wallis 검정 ===")
-print(f"H-통계량: {h_stat:.4f}")
-print(f"자유도: {len(groups) - 1}")
-print(f"p-value: {p_value:.4f}")
-
-alpha = 0.05
-print(f"\n유의수준 {alpha} 기준:")
-if p_value < alpha:
-    print("✓ 귀무가설 기각: 종 간 부리 길이 분포가 유의하게 다름")
-    print("  → 어느 종 간 차이인지 확인하려면 사후검정 필요")
-else:
-    print("✗ 귀무가설 채택: 종 간 부리 길이 분포가 유의하게 다르지 않음")
-```
-
-**예제: ANOVA와 비교**
-
-```{python}
-# 일원분산분석과 비교
-from scipy.stats import f_oneway
-
-f_stat, p_anova = f_oneway(*groups)
-
-print("\n=== 모수 vs 비모수 비교 ===")
-print(f"ANOVA (모수):          F = {f_stat:.4f}, p = {p_anova:.4f}")
-print(f"Kruskal-Wallis (비모수): H = {h_stat:.4f}, p = {p_value:.4f}")
-print("\n→ 두 검정 모두 유사한 결론")
-```
-
-**예제: 시각화**
-
-```{python}
-# 시각화
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# 박스플롯
-df_clean = df[["species", "bill_length_mm"]].dropna()
-sns.boxplot(x="species", y="bill_length_mm", data=df_clean, ax=axes[0])
-axes[0].set_title("Bill Length by Species")
-axes[0].set_ylabel("Bill Length (mm)")
-
-# 바이올린 플롯
-sns.violinplot(x="species", y="bill_length_mm", data=df_clean, ax=axes[1])
-axes[1].set_title("Distribution of Bill Length")
-axes[1].set_ylabel("Bill Length (mm)")
-
-plt.tight_layout()
-plt.show()
-```
-
-### 사후검정 (Post-hoc Test)
-
-Kruskal-Wallis 검정이 유의하면 쌍별 비교를 수행한다.
-
-**예제: Dunn's Test (사후검정)**
-
-```{python}
-# Dunn's test는 scikit-posthocs 패키지 사용
-# import scikit_posthocs as sp
-# dunn_results = sp.posthoc_dunn(df_clean, val_col='bill_length_mm', group_col='species')
-# print(dunn_results)
-
-# 대안: 쌍별 Mann-Whitney U 검정 (Bonferroni 보정)
-from itertools import combinations
-
-species_list = df["species"].unique()
-n_comparisons = len(list(combinations(species_list, 2)))
-alpha_bonf = 0.05 / n_comparisons
-
-print(f"\n=== 쌍별 Mann-Whitney U (Bonferroni 보정) ===")
-print(f"비교 횟수: {n_comparisons}")
-print(f"보정된 유의수준: {alpha_bonf:.4f}\n")
-
-for sp1, sp2 in combinations(species_list, 2):
-    g1 = df[df["species"] == sp1]["bill_length_mm"].dropna()
-    g2 = df[df["species"] == sp2]["bill_length_mm"].dropna()
-    
-    u, p = mannwhitneyu(g1, g2)
-    
-    print(f"{sp1:12s} vs {sp2:12s}: U = {u:.4f}, p = {p:.4f} ", end="")
-    print("→ 유의" if p < alpha_bonf else "→ 비유의")
-```
-
-## Friedman Test
-
-Friedman 검정은 세 개 이상의 대응 집단(동일 대상의 반복 측정)을 비교하는 비모수 검정으로, 반복측정 ANOVA의 대안이다.
-
-**특징**
-
-- **대상**: 세 개 이상 대응 집단 (동일 대상의 반복 측정)
-- **대안 검정**: 반복측정 ANOVA
-- **검정 대상**: 모든 조건의 분포가 같은지
-- **가정**: 각 블록(대상) 내에서 순위 매김 가능
-
-**가설 설정**
-
-- H₀ (귀무가설): 모든 조건의 분포가 동일하다
-- H₁ (대립가설): 적어도 하나의 조건 분포가 다르다
-
-### 예제: 가상 반복 측정 데이터
-
-**예제: 가상 데이터 생성**
-
-```{python}
-from scipy.stats import friedmanchisquare
-
-# 가상 반복 측정 데이터 (예: 3가지 처치 조건)
-np.random.seed(123)
-
-n = 30
-cond1 = before.values
-cond2 = before.values + np.random.normal(0.3, 0.8, size=len(before))
-cond3 = before.values + np.random.normal(0.8, 0.8, size=len(before))
-
-print("=== 조건별 중앙값 ===")
-print(f"조건 1: {np.median(cond1):.2f}mm")
-print(f"조건 2: {np.median(cond2):.2f}mm")
-print(f"조건 3: {np.median(cond3):.2f}mm")
-```
-
-**예제: Friedman 검정**
-
-```{python}
-# Friedman 검정
-f_stat, p_value = friedmanchisquare(cond1, cond2, cond3)
-
-print("\n=== Friedman 검정 ===")
-print(f"χ²-통계량: {f_stat:.4f}")
-print(f"자유도: {3 - 1}")
-print(f"p-value: {p_value:.4f}")
-
-alpha = 0.05
-print(f"\n유의수준 {alpha} 기준:")
-if p_value < alpha:
-    print("✓ 귀무가설 기각: 조건 간 분포가 유의하게 다름")
-else:
-    print("✗ 귀무가설 채택: 조건 간 분포가 유의하게 다르지 않음")
-```
-
-**예제: 시각화**
-
-```{python}
-# 시각화
-data_repeated = pd.DataFrame({
-    'Value': np.concatenate([cond1, cond2, cond3]),
-    'Condition': ['Cond1']*len(cond1) + ['Cond2']*len(cond2) + ['Cond3']*len(cond3),
-    'Subject': list(range(len(cond1))) * 3
-})
-
-plt.figure(figsize=(10, 6))
-sns.boxplot(x='Condition', y='Value', data=data_repeated)
-plt.title("Repeated Measures: Three Conditions")
-plt.ylabel("Bill Length (mm)")
-plt.show()
-```
-
-## 모수 검정 vs 비모수 검정 종합
-
-**검정 방법 대응표**
-
-| 상황 | 모수 검정 | 비모수 검정 | 검정 대상 |
-|------|----------|-----------|----------|
-| 두 독립 집단 | 독립표본 t-검정 | Mann-Whitney U | 평균 vs 분포 위치 |
-| 두 대응 집단 | 대응표본 t-검정 | Wilcoxon Signed-Rank | 평균 차이 vs 중앙값 차이 |
-| 세 집단 이상 (독립) | 일원분산분석 (ANOVA) | Kruskal-Wallis | 평균 vs 분포 |
-| 세 집단 이상 (대응) | 반복측정 ANOVA | Friedman | 평균 vs 분포 |
-
-**선택 기준**
-
-| 조건 | 권장 검정 |
-|------|----------|
-| 정규성 만족 + 등분산 + n ≥ 30 | 모수 검정 (높은 검정력) |
-| 정규성 의심 또는 이상치 많음 | 비모수 검정 (강건함) |
-| 소표본 (n < 30) + 정규성 불확실 | 비모수 검정 (안전) |
-| 순서형 데이터 | 비모수 검정 (유일한 선택) |
-
-## 요약
-
-이 장에서는 분포 가정이 필요 없는 비모수 검정을 학습했다. 주요 내용은 다음과 같다.
-
-**비모수 검정 핵심 요약**
-
-| 검정 | 용도 | 장점 | 단점 |
-|------|------|------|------|
-| Mann-Whitney U | 두 독립 집단 | 정규성 불필요, 이상치 강건 | 검정력 약간 낮음 |
-| Wilcoxon Signed-Rank | 두 대응 집단 | 정규성 불필요, 대칭성만 가정 | 검정력 약간 낮음 |
-| Kruskal-Wallis | 다집단 독립 | 분포 가정 불필요 | 어느 집단이 다른지 모름 |
-| Friedman | 다집단 대응 | 반복측정 가능 | 사후검정 제한적 |
-
-**비모수 검정 사용 원칙**
-
-1. **가정 확인**: 정규성, 등분산성 검정으로 모수 검정 가능 여부 확인
-2. **표본 크기**: n < 30이고 정규성 불확실하면 비모수 선택
-3. **이상치**: 이상치가 많으면 비모수 검정이 더 안전
-4. **해석**: 비모수는 중앙값/분포 위치 비교, 모수는 평균 비교
-5. **검정력**: 가정 만족 시 모수 검정이 검정력 높음
-
-**실무 의사결정 흐름**
-
-```
-데이터 확보
-  ↓
-정규성 검정
-  ├─ 정규 → 등분산성 검정
-  │          ├─ 등분산 → 모수 검정 (t-test, ANOVA)
-  │          └─ 이분산 → Welch 검정 또는 비모수
-  └─ 비정규 → 비모수 검정 (Mann-Whitney, Kruskal-Wallis)
-```
+## 상관계수의 기본 개념
+
+상관계수는 두 변수 간 선형 또는 단조 관계의 방향과 강도를 나타낸다.
+
+**상관계수의 특성**
+
+| 항목 | 설명 |
+|------|------|
+| 범위 | -1 ≤ r ≤ +1 |
+| +1 | 완벽한 양의 상관 (한 변수 증가 시 다른 변수도 완벽히 증가) |
+| 0 | 선형 관계 없음 (독립적이거나 비선형 관계) |
+| -1 | 완벽한 음의 상관 (한 변수 증가 시 다른 변수는 완벽히 감소) |
+| \|r\| | 절댓값이 클수록 관계가 강함 |
+
+**상관계수 강도 해석 (경험적 기준)**
+
+| \|r\| 값 | 관계 강도 | 해석 |
+|---------|----------|------|
+| 0.0 ~ 0.1 | 매우 약함 | 거의 관계 없음 |
+| 0.1 ~ 0.3 | 약함 | 약한 관계 |
+| 0.3 ~ 0.5 | 중간 | 중간 정도 관계 |
+| 0.5 ~ 0.7 | 강함 | 강한 관계 |
+| 0.7 ~ 1.0 | 매우 강함 | 매우 강한 관계 |
 
 **주의사항**
 
-- 비모수 검정은 평균이 아닌 중앙값 또는 분포 위치 비교
-- 검정력이 모수 검정보다 약간 낮음 (가정 만족 시)
-- 사후검정이 모수 검정만큼 체계적이지 않음
-- 효과 크기 측정이 제한적
-- 해석 시 "분포의 위치 차이"로 표현
+| 주의점 | 설명 |
+|--------|------|
+| 인과관계 아님 | "A와 B가 상관있다" ≠ "A가 B를 야기한다" |
+| 이상치 민감 | 극단값이 상관계수를 크게 왜곡할 수 있음 |
+| 비선형 관계 | 비선형 관계는 상관계수가 낮게 나올 수 있음 |
+| 제3의 변수 | 두 변수의 상관이 다른 변수 때문일 수 있음 |
+| Simpson's Paradox | 전체 데이터와 그룹별 데이터의 상관이 반대일 수 있음 |
 
-비모수 검정은 가정을 만족하지 못할 때 안전하고 강건한 대안이다. 데이터의 특성과 분석 목적을 고려하여 모수 검정과 비모수 검정을 적절히 선택하는 것이 중요하다. 다음으로는 변수 간 관계를 분석하는 상관분석과 회귀분석을 학습할 수 있다.
+## Pearson 상관계수
+
+Pearson 상관계수는 두 변수 간 선형 관계의 강도와 방향을 측정하는 가장 널리 사용되는 방법이다.
+
+**개념**
+
+- **측정 대상**: 선형 관계
+- **계산 기반**: 공분산을 표준편차로 나눈 값
+- **가정**: 두 변수 모두 연속형, 선형 관계, 정규분포 (근사적)
+
+**Pearson 상관계수 공식**
+
+$$
+r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n}(y_i - \bar{y})^2}}
+$$
+
+**가설 설정**
+
+- H₀ (귀무가설): ρ = 0 (두 변수 간 선형 상관이 없다)
+- H₁ (대립가설): ρ ≠ 0 (두 변수 간 선형 상관이 있다)
+
+### 예제: 부리 길이와 깊이의 상관관계
+
+**예제: 데이터 준비**
+
+```{python}
+from scipy.stats import pearsonr
+
+# 결측치 제거
+df_corr = df[["bill_length_mm", "bill_depth_mm"]].dropna()
+
+print("=== 데이터 정보 ===")
+print(f"샘플 수: {len(df_corr)}")
+print("\n기술 통계량:")
+print(df_corr.describe())
+```
+
+**예제: Pearson 상관계수 계산**
+
+```{python}
+# Pearson 상관계수
+r, p_value = pearsonr(
+    df_corr["bill_length_mm"],
+    df_corr["bill_depth_mm"]
+)
+
+print("=== Pearson 상관 분석 ===")
+print(f"상관계수 (r): {r:.4f}")
+print(f"p-value: {p_value:.4f}")
+
+# 해석
+alpha = 0.05
+print(f"\n유의수준 {alpha} 기준:")
+if p_value < alpha:
+    print(f"✓ 상관관계가 통계적으로 유의함")
+    
+    if r > 0:
+        direction = "양의"
+    else:
+        direction = "음의"
+    
+    if abs(r) < 0.3:
+        strength = "약한"
+    elif abs(r) < 0.5:
+        strength = "중간"
+    else:
+        strength = "강한"
+    
+    print(f"  → {direction} {strength} 선형 관계")
+else:
+    print(f"✗ 상관관계가 통계적으로 유의하지 않음")
+```
+
+**예제: 산점도 시각화**
+
+```{python}
+# 산점도와 회귀선
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 전체 데이터 산점도
+axes[0].scatter(df_corr["bill_length_mm"], df_corr["bill_depth_mm"], alpha=0.5)
+axes[0].set_title(f"Bill Length vs Depth\n(Pearson r = {r:.3f})")
+axes[0].set_xlabel("Bill Length (mm)")
+axes[0].set_ylabel("Bill Depth (mm)")
+axes[0].grid(True, alpha=0.3)
+
+# 회귀선 추가
+z = np.polyfit(df_corr["bill_length_mm"], df_corr["bill_depth_mm"], 1)
+p = np.poly1d(z)
+axes[0].plot(df_corr["bill_length_mm"].sort_values(), 
+             p(df_corr["bill_length_mm"].sort_values()), 
+             "r--", linewidth=2, label='Linear fit')
+axes[0].legend()
+
+# 종별 산점도 (Simpson's Paradox 확인)
+for species in df["species"].unique():
+    species_data = df[df["species"] == species][["bill_length_mm", "bill_depth_mm"]].dropna()
+    axes[1].scatter(species_data["bill_length_mm"], 
+                   species_data["bill_depth_mm"], 
+                   alpha=0.6, label=species)
+
+axes[1].set_title("Bill Length vs Depth by Species")
+axes[1].set_xlabel("Bill Length (mm)")
+axes[1].set_ylabel("Bill Depth (mm)")
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+```
+
+**Simpson's Paradox 확인**
+
+```{python}
+# 종별 상관계수
+print("\n=== 종별 Pearson 상관계수 ===")
+for species in df["species"].unique():
+    species_data = df[df["species"] == species][["bill_length_mm", "bill_depth_mm"]].dropna()
+    r_species, p_species = pearsonr(species_data["bill_length_mm"], species_data["bill_depth_mm"])
+    print(f"{species:12s}: r = {r_species:6.3f}, p = {p_species:.4f}")
+
+print(f"\n전체 데이터:  r = {r:6.3f}, p = {p_value:.4f}")
+print("\n⚠️ 전체 데이터와 그룹별 상관의 방향이 다를 수 있음 (Simpson's Paradox)")
+```
+
+## Spearman 순위 상관계수
+
+Spearman 상관계수는 데이터의 순위를 사용하여 단조 관계를 측정하는 비모수적 방법이다.
+
+**개념**
+
+- **측정 대상**: 단조 관계 (monotonic relationship)
+- **계산 기반**: 순위 간 Pearson 상관계수
+- **가정**: 순서형 이상의 데이터, 정규성 불필요
+
+**언제 사용하는가?**
+
+| 상황 | 설명 |
+|------|------|
+| 정규성 위배 | 데이터가 정규분포를 따르지 않음 |
+| 이상치 많음 | 극단값이 결과를 왜곡할 수 있음 |
+| 비선형 단조 관계 | 직선은 아니지만 한 방향으로 증가/감소 |
+| 순서형 데이터 | 순위나 등급 데이터 |
+
+**가설 설정**
+
+- H₀ (귀무가설): ρₛ = 0 (두 변수 간 순위 상관이 없다)
+- H₁ (대립가설): ρₛ ≠ 0 (두 변수 간 순위 상관이 있다)
+
+### 예제: Spearman 상관계수
+
+**예제: Spearman 상관 분석**
+
+```{python}
+from scipy.stats import spearmanr
+
+# Spearman 순위 상관계수
+rho, p_value_spear = spearmanr(
+    df_corr["bill_length_mm"],
+    df_corr["bill_depth_mm"]
+)
+
+print("=== Spearman 순위 상관 분석 ===")
+print(f"순위 상관계수 (ρ): {rho:.4f}")
+print(f"p-value: {p_value_spear:.4f}")
+
+# Pearson과 비교
+print("\n=== Pearson vs Spearman 비교 ===")
+print(f"Pearson r:  {r:.4f} (p = {p_value:.4f})")
+print(f"Spearman ρ: {rho:.4f} (p = {p_value_spear:.4f})")
+print(f"차이: {abs(r - rho):.4f}")
+
+if abs(r - rho) > 0.1:
+    print("\n⚠️ Pearson과 Spearman 차이가 큼 → 비선형 관계 또는 이상치 의심")
+```
+
+**Pearson vs Spearman 비교**
+
+| 항목 | Pearson | Spearman |
+|------|---------|----------|
+| 기반 | 실제 값 | 순위 |
+| 측정 관계 | 선형 | 단조 |
+| 이상치 영향 | 크다 | 작다 |
+| 정규성 가정 | 중요 | 불필요 |
+| 계산 복잡도 | 낮음 | 중간 |
+| 적용 범위 | 선형 관계 | 단조 관계 |
+
+## Kendall 순위 상관계수
+
+Kendall τ는 순위 쌍의 일치도를 측정하는 또 다른 비모수적 상관계수이다.
+
+**개념**
+
+- **측정 대상**: 순위 쌍의 일치 정도
+- **계산 기반**: concordant pairs vs discordant pairs
+- **가정**: 순서형 이상의 데이터
+
+**직관적 설명**
+
+두 관측치 쌍 (xᵢ, yᵢ)와 (xⱼ, yⱼ)에 대해:
+- **Concordant**: x와 y가 같은 방향으로 증가/감소
+- **Discordant**: x와 y가 반대 방향
+
+$$
+\tau = \frac{\text{(일치 쌍 수)} - \text{(불일치 쌍 수)}}{\text{전체 쌍 수}}
+$$
+
+**언제 사용하는가?**
+
+| 상황 | 이유 |
+|------|------|
+| 소표본 | Spearman보다 안정적 |
+| 동순위 많음 | Ties 처리가 우수 |
+| 순서 중시 | 순위 정보가 핵심 |
+| 보수적 추정 | 절댓값이 작아 신중한 해석 |
+
+### 예제: Kendall 상관계수
+
+**예제: Kendall τ 계산**
+
+```{python}
+from scipy.stats import kendalltau
+
+# Kendall τ 계산
+tau, p_value_kendall = kendalltau(
+    df_corr["bill_length_mm"],
+    df_corr["bill_depth_mm"]
+)
+
+print("=== Kendall τ 순위 상관 분석 ===")
+print(f"Kendall τ: {tau:.4f}")
+print(f"p-value: {p_value_kendall:.4f}")
+
+# 세 가지 상관계수 비교
+print("\n=== 세 가지 상관계수 비교 ===")
+print(f"Pearson r:  {r:.4f} (p = {p_value:.4f})")
+print(f"Spearman ρ: {rho:.4f} (p = {p_value_spear:.4f})")
+print(f"Kendall τ:  {tau:.4f} (p = {p_value_kendall:.4f})")
+
+print("\n특징:")
+print("- Kendall τ가 가장 보수적 (절댓값 작음)")
+print("- 세 계수 모두 같은 방향 (부호 일치)")
+```
+
+**세 가지 상관계수 종합 비교**
+
+| 구분 | Pearson | Spearman | Kendall |
+|------|---------|----------|---------|
+| 기반 | 실제 값 | 순위 | 순위 쌍 |
+| 측정 관계 | 선형 | 단조 | 단조 |
+| 이상치 영향 | 큰 | 중간 | 작음 |
+| 정규성 필요 | 높음 | 낮음 | 낮음 |
+| 값 크기 경향 | 가장 큼 | 중간 | 가장 작음 |
+| 해석 안정성 | 낮음 | 중간 | 높음 |
+| 계산 속도 | 빠름 | 중간 | 느림 |
+| 동순위 처리 | 보통 | 보통 | 우수 |
+
+## 상관 행렬 (Correlation Matrix)
+
+여러 변수 간의 상관관계를 한눈에 파악할 수 있는 행렬이다.
+
+**예제: 상관 행렬 계산**
+
+```{python}
+# 수치형 변수 선택
+num_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+
+# Pearson 상관 행렬
+corr_matrix = df[num_cols].corr(method="pearson")
+
+print("=== Pearson 상관 행렬 ===")
+print(corr_matrix.round(3))
+```
+
+**예제: 상관 행렬 히트맵**
+
+```{python}
+# 히트맵 시각화
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# Pearson 상관 행렬
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", 
+            center=0, vmin=-1, vmax=1, ax=axes[0],
+            cbar_kws={'label': 'Correlation'})
+axes[0].set_title("Pearson Correlation Matrix")
+
+# Spearman 상관 행렬
+corr_matrix_spear = df[num_cols].corr(method="spearman")
+sns.heatmap(corr_matrix_spear, annot=True, cmap="coolwarm", fmt=".2f",
+            center=0, vmin=-1, vmax=1, ax=axes[1],
+            cbar_kws={'label': 'Correlation'})
+axes[1].set_title("Spearman Correlation Matrix")
+
+plt.tight_layout()
+plt.show()
+```
+
+**예제: 상관계수 p-value 확인**
+
+```{python}
+# 상관계수와 p-value를 함께 표시
+def correlation_with_pvalue(df, method='pearson'):
+    """상관계수와 p-value를 함께 계산"""
+    corr_matrix = df.corr(method=method)
+    n = len(df)
+    
+    # p-value 행렬 생성
+    p_matrix = pd.DataFrame(np.zeros_like(corr_matrix), 
+                            columns=corr_matrix.columns, 
+                            index=corr_matrix.index)
+    
+    for i, col1 in enumerate(corr_matrix.columns):
+        for j, col2 in enumerate(corr_matrix.columns):
+            if i != j:
+                if method == 'pearson':
+                    _, p = pearsonr(df[col1].dropna(), df[col2].dropna())
+                elif method == 'spearman':
+                    _, p = spearmanr(df[col1].dropna(), df[col2].dropna())
+                p_matrix.iloc[i, j] = p
+    
+    return corr_matrix, p_matrix
+
+corr, pval = correlation_with_pvalue(df[num_cols], method='pearson')
+
+print("=== 상관계수 (위) 및 p-value (아래) ===")
+for i, col1 in enumerate(num_cols):
+    for j, col2 in enumerate(num_cols):
+        if i < j:
+            print(f"{col1:20s} vs {col2:20s}: r = {corr.iloc[i,j]:6.3f}, p = {pval.iloc[i,j]:.4f}")
+```
+
+## 상관 분석 실무 가이드
+
+**상관 분석 활용 분야**
+
+| 분야 | 활용 |
+|------|------|
+| 탐색적 데이터 분석 (EDA) | 변수 간 관계 파악 |
+| 피처 선택 | 다중공선성 확인, 중복 변수 제거 |
+| 회귀 모델링 | 독립변수 선택, 다중공선성 진단 |
+| 이상치 탐지 | 예상 밖의 낮은/높은 상관 확인 |
+| 가설 생성 | 추가 연구 방향 설정 |
+
+**상관 분석 체크리스트**
+
+- [ ] 산점도로 관계 형태 확인 (선형/비선형)
+- [ ] 이상치 확인 및 처리
+- [ ] 적절한 상관계수 선택 (Pearson/Spearman/Kendall)
+- [ ] p-value 확인 (통계적 유의성)
+- [ ] 효과 크기 고려 (상관계수 절댓값)
+- [ ] 제3의 변수 가능성 검토
+- [ ] 인과관계로 오해하지 않기
+
+**주의사항**
+
+- **상관 ≠ 인과**: "A와 B가 상관있다"는 "A가 B를 야기한다"를 의미하지 않음
+- **비선형 관계**: 상관계수가 낮아도 강한 비선형 관계 가능
+- **제3의 변수**: 두 변수의 상관이 다른 변수 때문일 수 있음 (교란변수)
+- **Simpson's Paradox**: 전체와 부분에서 상관의 방향이 반대일 수 있음
+- **표본 크기**: n이 작으면 우연한 상관이 유의하게 나올 수 있음
+
+## 요약
+
+이 장에서는 두 변수 간 관계를 측정하는 상관 분석을 학습했다. 주요 내용은 다음과 같다.
+
+**상관계수 종합 정리**
+
+| 상황 | 권장 방법 | 이유 |
+|------|----------|------|
+| 선형 관계 + 정규성 | Pearson | 검정력 높음, 해석 명확 |
+| 단조 관계 + 비정규 | Spearman | 정규성 불필요, 이상치 강건 |
+| 소표본 + 동순위 많음 | Kendall | 안정적, 동순위 처리 우수 |
+| 이상치 많음 | Spearman 또는 Kendall | Pearson보다 강건 |
+| 순서형 데이터 | Spearman 또는 Kendall | 순위 기반 |
+
+**상관 분석 의사결정 흐름**
+
+```
+데이터 확인
+  ↓
+산점도 작성
+  ├─ 선형 관계?
+  │    ├─ Yes → 정규성 확인
+  │    │         ├─ Yes → Pearson
+  │    │         └─ No → Spearman
+  │    └─ No → 단조 관계?
+  │              ├─ Yes → Spearman 또는 Kendall
+  │              └─ No → 비선형 모델 고려
+  └─ 이상치 많음? → Spearman 또는 Kendall
+```
+
+**핵심 포인트**
+
+- **Pearson**: 선형 관계의 표준, 가장 널리 사용
+- **Spearman**: 단조 관계, 이상치에 강건
+- **Kendall**: 보수적, 소표본과 동순위에 강함
+- **상관 ≠ 인과**: 항상 주의
+- **시각화 필수**: 산점도로 관계 형태 확인
+
+상관 분석은 변수 간 관계를 탐색하고 이해하는 기본 도구이다. 적절한 상관계수를 선택하고, 결과를 올바르게 해석하며, 인과관계로 오해하지 않는 것이 중요하다. 다음으로는 상관 분석을 확장한 회귀 분석을 학습할 수 있다.
