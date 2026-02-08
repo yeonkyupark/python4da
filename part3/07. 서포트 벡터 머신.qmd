@@ -1,181 +1,544 @@
 # 서포트 벡터 머신
 
-## SVM 개요
+서포트 벡터 머신(Support Vector Machine, SVM)은 클래스를 가장 잘 구분하는 최적의 결정 경계(초평면)를 찾는 강력한 분류 모델이다. 핵심 아이디어는 클래스 간 마진(margin)을 최대화하는 것이며, 경계에 가장 가까운 일부 데이터(서포트 벡터)만 사용하여 모델을 결정한다. SVM은 특히 고차원 데이터와 비선형 분류에서 우수한 성능을 보인다. 이 장에서는 선형 SVM부터 커널 트릭을 사용한 비선형 SVM까지 원리와 실무 활용법을 학습한다.
 
-**서포트 벡터 머신(Support Vector Machine, SVM)** 은 클래스를 가장 잘 구분하는 **결정 경계(초평면)** 를 찾는 분류 모델이다.
+**예제: 데이터 로드**
 
-핵심 아이디어는 단순하다.
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-* 클래스 간 **마진(margin)** 을 최대화
-* 경계에 가장 가까운 데이터만 학습에 사용
+# 데이터 로드
+df = sns.load_dataset("penguins").dropna()
 
-이 “경계에 가장 가까운 데이터”를 **서포트 벡터**라고 부른다.
+# 특성과 타겟 준비
+X = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y = df["species"]
+
+# 데이터 분할
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+print("데이터 크기:", X.shape)
+print("클래스:", y.unique())
+print("\n클래스 분포:")
+print(y.value_counts())
+```
+
+## SVM의 핵심 개념
+
+SVM은 클래스 간의 마진을 최대화하는 최적의 결정 경계를 찾는다.
+
+**SVM의 핵심 아이디어**
+
+| 개념 | 설명 |
+|------|------|
+| 결정 경계 (Decision Boundary) | 클래스를 구분하는 초평면 |
+| 마진 (Margin) | 결정 경계와 가장 가까운 데이터 사이의 거리 |
+| 서포트 벡터 (Support Vectors) | 마진 경계에 위치한 핵심 데이터 |
+| 마진 최대화 | 일반화 성능 향상 목표 |
+
+**SVM의 장점**
+
+- 일반화 성능 우수 (마진 최대화)
+- 고차원 데이터에 효과적
+- 커널 트릭으로 비선형 문제 해결
+- 소수의 서포트 벡터만 사용 (메모리 효율적)
+- 이상치에 비교적 강건
+
+**SVM의 단점**
+
+- 대규모 데이터셋에서 학습 시간 오래 걸림 (O(n²~n³))
+- 하이퍼파라미터 튜닝 필요 (C, gamma)
+- 확률 출력 기본 제공 안 함
+- 모델 해석 어려움
+- 다중 클래스 분류는 내부적으로 여러 이진 분류기 조합
 
 ## 마진과 서포트 벡터
 
-### 마진(Margin)
+**마진(Margin)**
 
-* 결정 경계와 가장 가까운 데이터 사이의 거리
-* SVM은 **마진이 최대가 되도록** 경계를 찾는다
+- 결정 경계와 가장 가까운 데이터 사이의 거리
+- 마진이 클수록 일반화 성능 향상
+- SVM은 마진을 최대화하는 초평면 찾기
 
-노이즈에 강하고 일반화 성능이 좋음
+**서포트 벡터(Support Vectors)**
 
-### 서포트 벡터
+- 마진 경계에 위치한 핵심 데이터 포인트
+- 결정 경계를 실제로 결정하는 데이터
+- 전체 데이터의 일부만 사용 (효율적)
+- 나머지 데이터는 모델에 영향 없음
 
-* 결정 경계를 결정하는 핵심 데이터
-* 전체 데이터 중 **일부만 모델을 결정**
+**SVM vs 로지스틱 회귀**
 
-즉, SVM은
-
-> “모든 데이터를 쓰지 않는다”
+| 구분 | 로지스틱 회귀 | SVM |
+|------|-------------|-----|
+| 목적 함수 | 확률 최대화 (로그 우도) | 마진 최대화 |
+| 출력 | 확률 (0~1) | 클래스 (확률은 옵션) |
+| 결정 경계 | 확률 기반 | 마진 기반 |
+| 영향 데이터 | 모든 데이터 | 서포트 벡터만 |
+| 해석 | 쉬움 (계수) | 어려움 |
+| 비선형 | 다항식 특성 추가 | 커널 트릭 |
+| 대규모 데이터 | 적합 | 부적합 |
 
 ## 하드 마진 vs 소프트 마진
 
-### 하드 마진
+**하드 마진 SVM**
 
-* 모든 데이터를 완벽히 분리
-* 현실 데이터에서는 거의 불가능
+- 모든 데이터를 완벽히 분리
+- 오분류 허용 안 함
+- 현실 데이터에서는 거의 불가능
+- 노이즈나 이상치에 매우 민감
 
-### 소프트 마진
+**소프트 마진 SVM**
 
-* 일부 오분류 허용
-* **C 파라미터**로 허용 정도 조절
+- 일부 오분류 허용
+- C 파라미터로 허용 정도 조절
+- 실무에서 주로 사용
+- 과적합 방지
 
-### C 파라미터의 의미
+**C 파라미터의 의미**
 
-* C ↑
-
-  * 오분류 허용 ↓
-  * 과적합 위험 ↑
-* C ↓
-
-  * 마진 넓어짐
-  * 과소적합 가능성 ↑
+| C 값 | 효과 | 마진 | 과적합 위험 |
+|------|------|------|-----------|
+| C ↑ (큼) | 오분류 엄격히 금지 | 좁음 | 높음 |
+| C = 1 | 균형 (기본값) | 중간 | 중간 |
+| C ↓ (작음) | 오분류 허용 많음 | 넓음 | 낮음 (과소적합 가능) |
 
 ## 선형 SVM
 
-### 특징
+선형 SVM은 선형 결정 경계로 클래스를 구분한다.
 
-* 선형 결정 경계
-* 고차원 데이터에 강함
-* 로지스틱 회귀와 비교 대상
+**선형 SVM 특징**
 
-### 예제 
+- 선형 초평면으로 분리
+- 고차원 데이터에 효과적
+- 계산 효율적
+- 로지스틱 회귀의 강력한 대안
 
-```python
+### 선형 SVM 실습
+
+**예제: 선형 SVM 학습**
+
+```{python}
 from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
 
+# 선형 SVM 파이프라인 (스케일링 필수)
 pipe_svm_linear = Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", SVC(kernel="linear", C=1.0))
+    ('scaler', StandardScaler()),
+    ('model', SVC(kernel='linear', C=1.0, random_state=42))
 ])
 
+# 학습
 pipe_svm_linear.fit(X_train, y_train)
 
-pipe_svm_linear.score(X_test, y_test)
+# 예측
+y_pred_linear = pipe_svm_linear.predict(X_test)
+
+# 평가
+accuracy_linear = accuracy_score(y_test, y_pred_linear)
+print("=== 선형 SVM 성능 ===")
+print(f"정확도: {accuracy_linear:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_linear))
+
+# 서포트 벡터 개수
+svm_model = pipe_svm_linear.named_steps['model']
+print(f"\n서포트 벡터 개수: {svm_model.n_support_}")
+print(f"전체 학습 데이터 대비: {svm_model.n_support_.sum() / len(X_train) * 100:.1f}%")
 ```
 
-SVM은 **스케일링 필수**
+**예제: C 값에 따른 성능 변화**
+
+```{python}
+# 다양한 C 값으로 실험
+C_values = [0.01, 0.1, 1.0, 10.0, 100.0]
+accuracies = []
+n_support_vectors = []
+
+for C in C_values:
+    svm_temp = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', SVC(kernel='linear', C=C, random_state=42))
+    ])
+    svm_temp.fit(X_train, y_train)
+    acc = svm_temp.score(X_test, y_test)
+    n_sv = svm_temp.named_steps['model'].n_support_.sum()
+    
+    accuracies.append(acc)
+    n_support_vectors.append(n_sv)
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# 정확도
+axes[0].semilogx(C_values, accuracies, marker='o', linewidth=2)
+axes[0].set_xlabel('C (Regularization)')
+axes[0].set_ylabel('Accuracy')
+axes[0].set_title('Linear SVM: C vs Accuracy')
+axes[0].grid(True, alpha=0.3)
+
+# 서포트 벡터 수
+axes[1].semilogx(C_values, n_support_vectors, marker='o', linewidth=2, color='orange')
+axes[1].set_xlabel('C (Regularization)')
+axes[1].set_ylabel('Number of Support Vectors')
+axes[1].set_title('Linear SVM: C vs Support Vectors')
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+print("\n=== C 값별 결과 ===")
+for C, acc, n_sv in zip(C_values, accuracies, n_support_vectors):
+    print(f"C={C:6.2f}: Accuracy={acc:.4f}, Support Vectors={n_sv}")
+```
 
 ## 비선형 SVM과 커널 트릭
 
-현실 데이터는 선형으로 분리되지 않는 경우가 많다. 이때 사용하는 것이 **커널 함수(kernel)**이다.
+현실 데이터는 선형으로 분리되지 않는 경우가 많다. 커널 함수를 사용하면 비선형 경계를 만들 수 있다.
 
-### 커널 트릭 개념
+**커널 트릭의 개념**
 
-* 원래 공간에서는 비선형
-* 고차원 공간으로 변환하면 선형 분리 가능
-* 실제로 변환을 계산하지 않고 **내적만 계산**
+1. 원래 공간에서는 선형 분리 불가능
+2. 고차원 공간으로 매핑하면 선형 분리 가능
+3. 실제로 고차원 변환을 계산하지 않음
+4. 내적만 계산 (커널 함수) → 효율적
 
-### 대표적인 커널
+**주요 커널 함수**
 
-* Linear
-* Polynomial
-* RBF (Gaussian), 가장 많이 사용
-* Sigmoid
+| 커널 | 수식 | 특징 | 사용 상황 |
+|------|------|------|----------|
+| Linear | K(x, y) = x·y | 선형 경계 | 선형 분리 가능 |
+| Polynomial | K(x, y) = (γx·y + r)ᵈ | d차 다항식 경계 | 중간 복잡도 |
+| RBF (Gaussian) | K(x, y) = exp(-γ‖x-y‖²) | 무한 차원, 유연 | 일반적 상황 (가장 많이 사용) |
+| Sigmoid | K(x, y) = tanh(γx·y + r) | 신경망 유사 | 특수 상황 |
 
-##  RBF 커널과 γ (gamma)
+## RBF 커널과 하이퍼파라미터
 
-### gamma의 의미
+RBF(Radial Basis Function) 커널은 가장 널리 사용되는 비선형 커널이다.
 
-* 하나의 데이터가 미치는 영향 범위
+**RBF 커널 특징**
 
-### gamma 값의 영향
+- 가우시안 함수 기반
+- 무한 차원 특성 공간으로 매핑
+- 매우 유연한 결정 경계
+- 대부분의 비선형 문제에 효과적
 
-* gamma ↑
+**gamma (γ) 파라미터**
 
-  * 영향 범위 좁음
-  * 결정 경계 복잡
-  * 과적합 위험 ↑
-* gamma ↓
+| gamma 값 | 영향 범위 | 결정 경계 | 과적합 위험 |
+|---------|----------|----------|-----------|
+| gamma ↑ (큼) | 좁음 | 복잡, 구불구불 | 높음 |
+| gamma = 'scale' (기본) | 적절 | 균형 | 중간 |
+| gamma ↓ (작음) | 넓음 | 단순, 부드러움 | 낮음 (과소적합 가능) |
 
-  * 영향 범위 넓음
-  * 단순한 경계
-  * 과소적합 가능성 ↑
+**C와 gamma의 조합 효과**
 
-### 예제 (RBF SVM)
+| C \ gamma | gamma 큼 | gamma 작음 |
+|----------|---------|-----------|
+| C 큼 | 과적합 (복잡한 경계) | 적절 |
+| C 작음 | 적절 | 과소적합 (단순한 경계) |
 
-```python
+### RBF SVM 실습
+
+**예제: RBF SVM 학습**
+
+```{python}
+# RBF SVM 파이프라인
 pipe_svm_rbf = Pipeline([
-    ("scaler", StandardScaler()),
-    ("model", SVC(
-        kernel="rbf",
-        C=1.0,
-        gamma="scale"
-    ))
+    ('scaler', StandardScaler()),
+    ('model', SVC(kernel='rbf', C=1.0, gamma='scale', random_state=42))
 ])
 
+# 학습
 pipe_svm_rbf.fit(X_train, y_train)
 
-pipe_svm_rbf.score(X_test, y_test)
+# 예측
+y_pred_rbf = pipe_svm_rbf.predict(X_test)
+
+# 평가
+accuracy_rbf = accuracy_score(y_test, y_pred_rbf)
+print("=== RBF SVM 성능 ===")
+print(f"정확도: {accuracy_rbf:.4f}")
+print(f"\n분류 리포트:")
+print(classification_report(y_test, y_pred_rbf))
 ```
 
-## 다중 분류에서의 SVM
+**예제: gamma 값에 따른 성능 변화**
 
-SVM은 본래 **이진 분류 모델**이나 다중 클래스에서는 내부적으로 다음 방식을 사용한다.
+```{python}
+# 다양한 gamma 값으로 실험
+gamma_values = [0.001, 0.01, 0.1, 1.0, 10.0]
+accuracies_gamma = []
 
-* One-vs-Rest (OvR)
-* One-vs-One (OvO, 기본값)
+for gamma in gamma_values:
+    svm_temp = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', SVC(kernel='rbf', C=1.0, gamma=gamma, random_state=42))
+    ])
+    svm_temp.fit(X_train, y_train)
+    acc = svm_temp.score(X_test, y_test)
+    accuracies_gamma.append(acc)
 
-scikit-learn에서는 자동 처리된다.
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.semilogx(gamma_values, accuracies_gamma, marker='o', linewidth=2)
+plt.xlabel('gamma')
+plt.ylabel('Accuracy')
+plt.title('RBF SVM: gamma vs Accuracy (C=1.0)')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
 
-## SVM의 장단점
+print("\n=== gamma 값별 결과 ===")
+for gamma, acc in zip(gamma_values, accuracies_gamma):
+    print(f"gamma={gamma:6.3f}: Accuracy={acc:.4f}")
+```
 
-### 장점
+**예제: GridSearchCV로 최적 하이퍼파라미터 찾기**
 
-* 일반화 성능 우수
-* 고차원 데이터에 강함
-* 커널을 통한 강력한 비선형 표현
+```{python}
+from sklearn.model_selection import GridSearchCV
 
-### 단점
+# 파라미터 그리드
+param_grid = {
+    'model__C': [0.1, 1.0, 10.0, 100.0],
+    'model__gamma': [0.001, 0.01, 0.1, 1.0]
+}
 
-* 대규모 데이터에서 학습 비용 큼
-* 파라미터(C, gamma) 튜닝 필요
-* 모델 해석 어려움
+# GridSearchCV
+grid_search = GridSearchCV(
+    pipe_svm_rbf,
+    param_grid,
+    cv=5,
+    scoring='accuracy',
+    n_jobs=-1,
+    verbose=1
+)
 
-## 로지스틱 회귀 vs SVM
+grid_search.fit(X_train, y_train)
 
-| 구분    | 로지스틱 회귀 | SVM    |
-| ----- | ------- | ------ |
-| 결정 기준 | 확률 최대화  | 마진 최대화 |
-| 출력    | 확률      | 클래스    |
-| 해석    | 쉬움      | 어려움    |
-| 비선형   | 제한적     | 커널 사용  |
+print("=== GridSearchCV 결과 ===")
+print(f"최적 파라미터: {grid_search.best_params_}")
+print(f"최적 교차 검증 점수: {grid_search.best_score_:.4f}")
+print(f"테스트 점수: {grid_search.score(X_test, y_test):.4f}")
+
+# 최적 모델
+best_svm = grid_search.best_estimator_
+```
+
+**예제: C-gamma 히트맵**
+
+```{python}
+# C-gamma 조합별 성능
+results = pd.DataFrame(grid_search.cv_results_)
+pivot_table = results.pivot_table(
+    values='mean_test_score',
+    index='param_model__gamma',
+    columns='param_model__C'
+)
+
+# 히트맵
+plt.figure(figsize=(10, 8))
+sns.heatmap(pivot_table, annot=True, fmt='.3f', cmap='YlGnBu')
+plt.xlabel('C')
+plt.ylabel('gamma')
+plt.title('RBF SVM: C vs gamma (Cross-Validation Accuracy)')
+plt.tight_layout()
+plt.show()
+```
+
+## 다중 클래스 분류
+
+SVM은 본래 이진 분류 모델이지만, 다중 클래스에도 적용 가능하다.
+
+**다중 클래스 전략**
+
+| 전략 | 설명 | 분류기 수 | scikit-learn 기본값 |
+|------|------|----------|-------------------|
+| One-vs-Rest (OvR) | 각 클래스 vs 나머지 | k개 (k=클래스 수) | LinearSVC |
+| One-vs-One (OvO) | 모든 클래스 쌍 비교 | k(k-1)/2개 | SVC |
+
+**예제: 다중 클래스 확인**
+
+```{python}
+# 다중 클래스 SVM (자동 처리)
+svm_multiclass = SVC(kernel='rbf', C=1.0, gamma='scale', random_state=42)
+scaler = StandardScaler()
+
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+svm_multiclass.fit(X_train_scaled, y_train)
+
+print("=== 다중 클래스 SVM ===")
+print(f"클래스 수: {len(svm_multiclass.classes_)}")
+print(f"클래스: {svm_multiclass.classes_}")
+print(f"이진 분류기 수 (OvO): {len(svm_multiclass.classes_) * (len(svm_multiclass.classes_) - 1) // 2}")
+
+# 혼동 행렬
+y_pred = svm_multiclass.predict(X_test_scaled)
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+            xticklabels=svm_multiclass.classes_,
+            yticklabels=svm_multiclass.classes_)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('SVM Multiclass: Confusion Matrix')
+plt.tight_layout()
+plt.show()
+```
+
+## 커널 비교
+
+**예제: 다양한 커널 비교**
+
+```{python}
+# 다양한 커널로 학습
+kernels = ['linear', 'poly', 'rbf', 'sigmoid']
+results_kernel = []
+
+for kernel in kernels:
+    pipe_temp = Pipeline([
+        ('scaler', StandardScaler()),
+        ('model', SVC(kernel=kernel, random_state=42))
+    ])
+    pipe_temp.fit(X_train, y_train)
+    acc = pipe_temp.score(X_test, y_test)
+    n_sv = pipe_temp.named_steps['model'].n_support_.sum()
+    
+    results_kernel.append({
+        'Kernel': kernel,
+        'Accuracy': acc,
+        'Support Vectors': n_sv
+    })
+
+results_kernel_df = pd.DataFrame(results_kernel)
+print("=== 커널별 성능 비교 ===")
+print(results_kernel_df)
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+axes[0].bar(results_kernel_df['Kernel'], results_kernel_df['Accuracy'])
+axes[0].set_ylabel('Accuracy')
+axes[0].set_title('Kernel Comparison: Accuracy')
+axes[0].set_ylim([0.8, 1.0])
+
+axes[1].bar(results_kernel_df['Kernel'], results_kernel_df['Support Vectors'])
+axes[1].set_ylabel('Number of Support Vectors')
+axes[1].set_title('Kernel Comparison: Support Vectors')
+
+plt.tight_layout()
+plt.show()
+```
+
+## 모델 비교
+
+**예제: 로지스틱 회귀 vs SVM**
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+
+# 로지스틱 회귀
+pipe_lr = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', LogisticRegression(max_iter=1000, random_state=42))
+])
+pipe_lr.fit(X_train, y_train)
+
+# 성능 비교
+models = {
+    'Logistic Regression': pipe_lr,
+    'Linear SVM': pipe_svm_linear,
+    'RBF SVM': best_svm
+}
+
+comparison_results = []
+for name, model in models.items():
+    acc = model.score(X_test, y_test)
+    comparison_results.append({'Model': name, 'Accuracy': acc})
+
+comparison_df = pd.DataFrame(comparison_results)
+print("\n=== 모델 성능 비교 ===")
+print(comparison_df)
+
+# 시각화
+plt.figure(figsize=(10, 6))
+plt.bar(comparison_df['Model'], comparison_df['Accuracy'])
+plt.ylabel('Accuracy')
+plt.title('Model Comparison')
+plt.ylim([0.9, 1.0])
+plt.xticks(rotation=15, ha='right')
+plt.tight_layout()
+plt.show()
+```
 
 ## 활용 가이드
 
-* 데이터 수가 많지 않음
-* 특성 차원이 높음
-* 명확한 결정 경계 필요
+**SVM 사용이 적합한 경우**
 
-이런 경우 **SVM은 매우 강력한 선택**
+| 상황 | 이유 |
+|------|------|
+| 고차원 데이터 | 차원의 저주에 강함 |
+| 명확한 마진 | 클래스 간 분리가 뚜렷 |
+| 소~중규모 데이터 | 효율적 학습 가능 |
+| 비선형 경계 필요 | 커널 트릭 활용 |
+| 이상치 존재 | 서포트 벡터만 사용 |
 
-반면,
+**SVM 사용이 부적합한 경우**
 
-* 데이터가 매우 큼
-* 모델 해석이 중요
+| 상황 | 대안 |
+|------|------|
+| 대규모 데이터 (100만+ 샘플) | 로지스틱 회귀, SGDClassifier |
+| 확률 출력 필수 | 로지스틱 회귀, RandomForest |
+| 모델 해석 중요 | 로지스틱 회귀, 결정 트리 |
+| 실시간 예측 중요 | 경량 모델 (나이브 베이즈) |
 
-트리 계열 또는 로지스틱 회귀 고려
+**하이퍼파라미터 튜닝 가이드**
 
+1. **커널 선택**: linear → RBF 순서로 시도
+2. **C 튜닝**: 0.1, 1, 10, 100 범위에서 시작
+3. **gamma 튜닝** (RBF): 'scale', 'auto', 또는 0.001~10 범위
+4. **GridSearchCV**: 교차 검증으로 최적값 찾기
+5. **스케일링**: 항상 표준화 수행
+
+## 요약
+
+이 장에서는 강력한 분류 모델인 SVM을 학습했다. 주요 내용은 다음과 같다.
+
+**SVM 핵심 개념**
+
+- **마진 최대화**: 일반화 성능 향상
+- **서포트 벡터**: 일부 핵심 데이터만 사용
+- **소프트 마진**: C로 오분류 허용 조절
+- **커널 트릭**: 비선형 문제 해결
+
+**주요 하이퍼파라미터**
+
+| 파라미터 | 역할 | 조정 방향 |
+|---------|------|----------|
+| C | 오분류 허용 정도 | 큼 → 엄격, 작음 → 관대 |
+| gamma (RBF) | 영향 범위 | 큼 → 좁음, 작음 → 넓음 |
+| kernel | 결정 경계 형태 | linear, rbf, poly |
+
+**실무 체크리스트**
+
+- [ ] 데이터 스케일링 수행 (필수)
+- [ ] 적절한 커널 선택 (linear → rbf)
+- [ ] GridSearchCV로 C, gamma 튜닝
+- [ ] 교차 검증으로 성능 평가
+- [ ] 서포트 벡터 수 확인
+- [ ] 다른 모델과 비교
+- [ ] 계산 시간 고려 (대규모 데이터)
+
+SVM은 마진 최대화를 통해 우수한 일반화 성능을 달성하는 강력한 분류 모델이다. 특히 고차원 데이터와 비선형 문제에서 효과적이며, 적절한 하이퍼파라미터 튜닝을 통해 최적의 성능을 얻을 수 있다.
