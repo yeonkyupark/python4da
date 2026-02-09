@@ -109,6 +109,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759553852956796" crossorigin="anonymous"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -375,49 +404,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#모델-성능-평가" id="toc-모델-성능-평가" class="nav-link active" data-scroll-target="#모델-성능-평가"><span class="header-section-number">27</span> 모델 성능 평가</a>
+  <li><a href="#모델-성능-평가의-목적" id="toc-모델-성능-평가의-목적" class="nav-link active" data-scroll-target="#모델-성능-평가의-목적"><span class="header-section-number">26.1</span> 모델 성능 평가의 목적</a></li>
+  <li><a href="#회귀-성능-평가" id="toc-회귀-성능-평가" class="nav-link" data-scroll-target="#회귀-성능-평가"><span class="header-section-number">26.2</span> 회귀 성능 평가</a>
   <ul>
-  <li><a href="#모델-성능-평가의-목적" id="toc-모델-성능-평가의-목적" class="nav-link" data-scroll-target="#모델-성능-평가의-목적"><span class="header-section-number">27.1</span> 모델 성능 평가의 목적</a></li>
-  <li><a href="#회귀-성능-평가" id="toc-회귀-성능-평가" class="nav-link" data-scroll-target="#회귀-성능-평가"><span class="header-section-number">27.2</span> 회귀 성능 평가</a>
-  <ul class="collapse">
-  <li><a href="#주요-지표" id="toc-주요-지표" class="nav-link" data-scroll-target="#주요-지표"><span class="header-section-number">27.2.1</span> 주요 지표</a>
-  <ul class="collapse">
-  <li><a href="#mae-mean-absolute-error" id="toc-mae-mean-absolute-error" class="nav-link" data-scroll-target="#mae-mean-absolute-error"><span class="header-section-number">27.2.1.1</span> MAE (Mean Absolute Error)</a></li>
-  <li><a href="#mse-mean-squared-error" id="toc-mse-mean-squared-error" class="nav-link" data-scroll-target="#mse-mean-squared-error"><span class="header-section-number">27.2.1.2</span> MSE (Mean Squared Error)</a></li>
-  <li><a href="#rmse-root-mse" id="toc-rmse-root-mse" class="nav-link" data-scroll-target="#rmse-root-mse"><span class="header-section-number">27.2.1.3</span> RMSE (Root MSE)</a></li>
-  <li><a href="#r²-결정계수" id="toc-r²-결정계수" class="nav-link" data-scroll-target="#r²-결정계수"><span class="header-section-number">27.2.1.4</span> R² (결정계수)</a></li>
+  <li><a href="#회귀-실습" id="toc-회귀-실습" class="nav-link" data-scroll-target="#회귀-실습"><span class="header-section-number">26.2.1</span> 회귀 실습</a></li>
+  <li><a href="#회귀-지표-선택-가이드" id="toc-회귀-지표-선택-가이드" class="nav-link" data-scroll-target="#회귀-지표-선택-가이드"><span class="header-section-number">26.2.2</span> 회귀 지표 선택 가이드</a></li>
   </ul></li>
-  <li><a href="#회귀-지표-선택-가이드" id="toc-회귀-지표-선택-가이드" class="nav-link" data-scroll-target="#회귀-지표-선택-가이드"><span class="header-section-number">27.2.2</span> 회귀 지표 선택 가이드</a></li>
+  <li><a href="#분류-성능-평가" id="toc-분류-성능-평가" class="nav-link" data-scroll-target="#분류-성능-평가"><span class="header-section-number">26.3</span> 분류 성능 평가</a>
+  <ul>
+  <li><a href="#혼동-행렬-confusion-matrix" id="toc-혼동-행렬-confusion-matrix" class="nav-link" data-scroll-target="#혼동-행렬-confusion-matrix"><span class="header-section-number">26.3.1</span> 혼동 행렬 (Confusion Matrix)</a></li>
+  <li><a href="#분류-실습" id="toc-분류-실습" class="nav-link" data-scroll-target="#분류-실습"><span class="header-section-number">26.3.2</span> 분류 실습</a></li>
+  <li><a href="#주요-분류-지표" id="toc-주요-분류-지표" class="nav-link" data-scroll-target="#주요-분류-지표"><span class="header-section-number">26.3.3</span> 주요 분류 지표</a></li>
+  <li><a href="#roc-curve와-auc" id="toc-roc-curve와-auc" class="nav-link" data-scroll-target="#roc-curve와-auc"><span class="header-section-number">26.3.4</span> ROC Curve와 AUC</a></li>
+  <li><a href="#다중-클래스-평가" id="toc-다중-클래스-평가" class="nav-link" data-scroll-target="#다중-클래스-평가"><span class="header-section-number">26.3.5</span> 다중 클래스 평가</a></li>
   </ul></li>
-  <li><a href="#분류-성능-평가" id="toc-분류-성능-평가" class="nav-link" data-scroll-target="#분류-성능-평가"><span class="header-section-number">27.3</span> 분류 성능 평가</a>
-  <ul class="collapse">
-  <li><a href="#혼동-행렬-confusion-matrix" id="toc-혼동-행렬-confusion-matrix" class="nav-link" data-scroll-target="#혼동-행렬-confusion-matrix"><span class="header-section-number">27.3.1</span> 혼동 행렬 (Confusion Matrix)</a></li>
-  <li><a href="#주요-지표-1" id="toc-주요-지표-1" class="nav-link" data-scroll-target="#주요-지표-1"><span class="header-section-number">27.3.2</span> 주요 지표</a>
-  <ul class="collapse">
-  <li><a href="#accuracy" id="toc-accuracy" class="nav-link" data-scroll-target="#accuracy"><span class="header-section-number">27.3.2.1</span> Accuracy</a></li>
-  <li><a href="#precision" id="toc-precision" class="nav-link" data-scroll-target="#precision"><span class="header-section-number">27.3.2.2</span> Precision</a></li>
-  <li><a href="#recall" id="toc-recall" class="nav-link" data-scroll-target="#recall"><span class="header-section-number">27.3.2.3</span> Recall</a></li>
-  <li><a href="#f1-score" id="toc-f1-score" class="nav-link" data-scroll-target="#f1-score"><span class="header-section-number">27.3.2.4</span> F1-score</a></li>
+  <li><a href="#군집-성능-평가" id="toc-군집-성능-평가" class="nav-link" data-scroll-target="#군집-성능-평가"><span class="header-section-number">26.4</span> 군집 성능 평가</a>
+  <ul>
+  <li><a href="#내부-평가-지표" id="toc-내부-평가-지표" class="nav-link" data-scroll-target="#내부-평가-지표"><span class="header-section-number">26.4.1</span> 내부 평가 지표</a></li>
+  <li><a href="#외부-평가-지표" id="toc-외부-평가-지표" class="nav-link" data-scroll-target="#외부-평가-지표"><span class="header-section-number">26.4.2</span> 외부 평가 지표</a></li>
   </ul></li>
-  <li><a href="#roc-auc" id="toc-roc-auc" class="nav-link" data-scroll-target="#roc-auc"><span class="header-section-number">27.3.3</span> ROC-AUC</a></li>
-  <li><a href="#분류-예제" id="toc-분류-예제" class="nav-link" data-scroll-target="#분류-예제"><span class="header-section-number">27.3.4</span> 분류 예제</a></li>
-  </ul></li>
-  <li><a href="#다중-클래스-분류-평가" id="toc-다중-클래스-분류-평가" class="nav-link" data-scroll-target="#다중-클래스-분류-평가"><span class="header-section-number">27.4</span> 다중 클래스 분류 평가</a></li>
-  <li><a href="#군집-성능-평가" id="toc-군집-성능-평가" class="nav-link" data-scroll-target="#군집-성능-평가"><span class="header-section-number">27.5</span> 군집 성능 평가</a>
-  <ul class="collapse">
-  <li><a href="#내부-평가-지표-라벨-없음" id="toc-내부-평가-지표-라벨-없음" class="nav-link" data-scroll-target="#내부-평가-지표-라벨-없음"><span class="header-section-number">27.5.1</span> 내부 평가 지표 (라벨 없음)</a>
-  <ul class="collapse">
-  <li><a href="#silhouette-score" id="toc-silhouette-score" class="nav-link" data-scroll-target="#silhouette-score"><span class="header-section-number">27.5.1.1</span> Silhouette Score</a></li>
-  <li><a href="#daviesbouldin-index" id="toc-daviesbouldin-index" class="nav-link" data-scroll-target="#daviesbouldin-index"><span class="header-section-number">27.5.1.2</span> Davies–Bouldin Index</a></li>
-  </ul></li>
-  <li><a href="#외부-평가-지표-라벨-존재-시" id="toc-외부-평가-지표-라벨-존재-시" class="nav-link" data-scroll-target="#외부-평가-지표-라벨-존재-시"><span class="header-section-number">27.5.2</span> 외부 평가 지표 (라벨 존재 시)</a>
-  <ul class="collapse">
-  <li><a href="#adjusted-rand-index-ari" id="toc-adjusted-rand-index-ari" class="nav-link" data-scroll-target="#adjusted-rand-index-ari"><span class="header-section-number">27.5.2.1</span> Adjusted Rand Index (ARI)</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#평가-지표-선택-요약" id="toc-평가-지표-선택-요약" class="nav-link" data-scroll-target="#평가-지표-선택-요약"><span class="header-section-number">27.6</span> 평가 지표 선택 요약</a></li>
-  <li><a href="#평가-시-중요한-원칙" id="toc-평가-시-중요한-원칙" class="nav-link" data-scroll-target="#평가-시-중요한-원칙"><span class="header-section-number">27.7</span> 평가 시 중요한 원칙</a></li>
-  </ul></li>
+  <li><a href="#평가-지표-종합-비교" id="toc-평가-지표-종합-비교" class="nav-link" data-scroll-target="#평가-지표-종합-비교"><span class="header-section-number">26.5</span> 평가 지표 종합 비교</a></li>
+  <li><a href="#교차-검증" id="toc-교차-검증" class="nav-link" data-scroll-target="#교차-검증"><span class="header-section-number">26.6</span> 교차 검증</a></li>
+  <li><a href="#평가-체크리스트" id="toc-평가-체크리스트" class="nav-link" data-scroll-target="#평가-체크리스트"><span class="header-section-number">26.7</span> 평가 체크리스트</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">26.8</span> 요약</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/yeonkyupark/python4da/edit/main/part3/08. 모델 성능 평가.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -449,268 +458,906 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="모델-성능-평가" class="level1" data-number="27">
-<h1 data-number="27"><span class="header-section-number">27</span> 모델 성능 평가</h1>
-<section id="모델-성능-평가의-목적" class="level2" data-number="27.1">
-<h2 data-number="27.1" class="anchored" data-anchor-id="모델-성능-평가의-목적"><span class="header-section-number">27.1</span> 모델 성능 평가의 목적</h2>
-<p>모델 성능 평가(Model Evaluation)는 단순히 “정확한가?”를 묻는 과정이 아니다.</p>
-<p>핵심 질문은 다음과 같다.</p>
-<ul>
-<li>학습 데이터가 아닌 <strong>새 데이터에서도 잘 작동하는가?</strong></li>
-<li>어떤 오류를 더 중요하게 봐야 하는가?</li>
-<li>모델 간 <strong>공정한 비교</strong>가 가능한가?</li>
-</ul>
-<p>문제 유형에 따라 평가 지표는 달라져야 한다.</p>
+<p>모델 성능 평가(Model Evaluation)는 머신러닝 모델이 얼마나 잘 작동하는지 측정하고 판단하는 과정이다. 단순히 “정확한가?”를 묻는 것이 아니라, “새로운 데이터에서도 잘 작동하는가?”, “어떤 유형의 오류를 범하는가?”, “모델 간 공정한 비교가 가능한가?”를 파악하는 것이 목적이다. 문제 유형(회귀/분류/군집)과 비즈니스 맥락에 따라 적절한 평가 지표를 선택하는 것이 중요하다. 이 장에서는 회귀, 분류, 군집 문제별 주요 평가 지표의 의미와 활용법을 학습한다.</p>
+<p><strong>예제: 데이터 로드</strong></p>
+<div id="0d974492" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 로드</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> sns.load_dataset(<span class="st">"penguins"</span>).dropna()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 회귀용 데이터 (체중 예측)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>X_reg <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>]]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y_reg <span class="op">=</span> df[<span class="st">"body_mass_g"</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 분류용 데이터 (종 분류)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>X_clf <span class="op">=</span> df[[<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>, <span class="st">"body_mass_g"</span>]]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>y_clf <span class="op">=</span> df[<span class="st">"species"</span>]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"데이터 크기:"</span>, df.shape)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">회귀 타겟:"</span>, y_reg.name)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"분류 타겟:"</span>, y_clf.name)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>데이터 크기: (333, 7)
+
+회귀 타겟: body_mass_g
+분류 타겟: species</code></pre>
+</div>
+</div>
+<section id="모델-성능-평가의-목적" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="모델-성능-평가의-목적"><span class="header-section-number">26.1</span> 모델 성능 평가의 목적</h2>
+<p>모델 평가는 숫자를 계산하는 것이 아니라 올바른 판단을 내리기 위한 근거를 제공하는 과정이다.</p>
+<p><strong>핵심 질문</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>질문</th>
+<th>의미</th>
+<th>평가 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>일반화 성능</td>
+<td>새 데이터에서도 잘 작동하는가?</td>
+<td>테스트셋 평가, 교차 검증</td>
+</tr>
+<tr class="even">
+<td>오류 유형</td>
+<td>어떤 실수를 하는가?</td>
+<td>혼동 행렬, 잔차 분석</td>
+</tr>
+<tr class="odd">
+<td>비교 가능성</td>
+<td>모델 간 공정한 비교가 가능한가?</td>
+<td>동일한 데이터셋, 동일한 지표</td>
+</tr>
+<tr class="even">
+<td>실무 적합성</td>
+<td>비즈니스 목표에 부합하는가?</td>
+<td>맥락에 맞는 지표 선택</td>
+</tr>
+</tbody>
+</table>
+<p><strong>평가의 원칙</strong></p>
+<ol type="1">
+<li><strong>단일 지표 금지</strong>: 여러 지표를 종합적으로 고려</li>
+<li><strong>맥락 고려</strong>: 문제 상황에 맞는 지표 선택</li>
+<li><strong>테스트 기준</strong>: 항상 테스트 데이터로 평가</li>
+<li><strong>교차 검증</strong>: 안정적인 성능 추정</li>
+<li><strong>편향 방지</strong>: 데이터 누수 주의</li>
+</ol>
 </section>
-<section id="회귀-성능-평가" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="회귀-성능-평가"><span class="header-section-number">27.2</span> 회귀 성능 평가</h2>
-<p>회귀 문제에서는</p>
-<blockquote class="blockquote">
-<p>“예측값이 실제값과 얼마나 다른가?”</p>
-</blockquote>
-<p>를 측정한다.</p>
-<section id="주요-지표" class="level3" data-number="27.2.1">
-<h3 data-number="27.2.1" class="anchored" data-anchor-id="주요-지표"><span class="header-section-number">27.2.1</span> 주요 지표</h3>
-<section id="mae-mean-absolute-error" class="level4" data-number="27.2.1.1">
-<h4 data-number="27.2.1.1" class="anchored" data-anchor-id="mae-mean-absolute-error"><span class="header-section-number">27.2.1.1</span> MAE (Mean Absolute Error)</h4>
-<ul>
-<li>오차의 절댓값 평균</li>
-<li>직관적 해석 가능</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>mean_absolute_error(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="회귀-성능-평가" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="회귀-성능-평가"><span class="header-section-number">26.2</span> 회귀 성능 평가</h2>
+<p>회귀 문제는 예측값이 실제값과 얼마나 다른지를 측정한다.</p>
+<p><strong>회귀 평가 지표 종류</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>수식</th>
+<th>범위</th>
+<th>단위</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MAE</td>
+<td><span class="math inline">\(\frac{1}{n}\sum\|y_i - \hat{y}_i\|\)</span></td>
+<td>0 ~ ∞</td>
+<td>원본</td>
+<td>직관적, 이상치 영향 적음</td>
+</tr>
+<tr class="even">
+<td>MSE</td>
+<td><span class="math inline">\(\frac{1}{n}\sum(y_i - \hat{y}_i)^2\)</span></td>
+<td>0 ~ ∞</td>
+<td>제곱</td>
+<td>큰 오차 강조</td>
+</tr>
+<tr class="odd">
+<td>RMSE</td>
+<td><span class="math inline">\(\sqrt{\text{MSE}}\)</span></td>
+<td>0 ~ ∞</td>
+<td>원본</td>
+<td>MSE의 해석 가능 버전</td>
+</tr>
+<tr class="even">
+<td>R²</td>
+<td><span class="math inline">\(1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}\)</span></td>
+<td>-∞ ~ 1</td>
+<td>없음</td>
+<td>상대적 성능</td>
+</tr>
+</tbody>
+</table>
+<section id="회귀-실습" class="level3" data-number="26.2.1">
+<h3 data-number="26.2.1" class="anchored" data-anchor-id="회귀-실습"><span class="header-section-number">26.2.1</span> 회귀 실습</h3>
+<p><strong>예제: 데이터 준비 및 모델 학습</strong></p>
+<div id="300605b1" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X_train_reg, X_test_reg, y_train_reg, y_test_reg <span class="op">=</span> train_test_split(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    X_reg, y_reg, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 선형 회귀 모델</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>lr.fit(X_train_reg, y_train_reg)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>y_pred_lr <span class="op">=</span> lr.predict(X_test_reg)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 랜덤 포레스트 모델</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestRegressor(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>rf.fit(X_train_reg, y_train_reg)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>y_pred_rf <span class="op">=</span> rf.predict(X_test_reg)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"모델 학습 완료"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>모델 학습 완료</code></pre>
+</div>
+</div>
+<p><strong>예제: 회귀 평가 지표 계산</strong></p>
+<div id="258b63e9" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error, mean_squared_error, r2_score</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_regression(y_true, y_pred, model_name):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""회귀 모델 평가"""</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    mae <span class="op">=</span> mean_absolute_error(y_true, y_pred)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> mean_squared_error(y_true, y_pred)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> np.sqrt(mse)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    r2 <span class="op">=</span> r2_score(y_true, y_pred)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> 평가 ==="</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"MAE:  </span><span class="sc">{</span>mae<span class="sc">:.2f}</span><span class="ss">g"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"MSE:  </span><span class="sc">{</span>mse<span class="sc">:.2f}</span><span class="ss">g²"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">g"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"R²:   </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'Model'</span>: model_name, <span class="st">'MAE'</span>: mae, <span class="st">'RMSE'</span>: rmse, <span class="st">'R²'</span>: r2}</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>results_reg <span class="op">=</span> []</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>results_reg.append(evaluate_regression(y_test_reg, y_pred_lr, <span class="st">'Linear Regression'</span>))</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>results_reg.append(evaluate_regression(y_test_reg, y_pred_rf, <span class="st">'Random Forest'</span>))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>results_reg_df <span class="op">=</span> pd.DataFrame(results_reg)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 모델 비교 ==="</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_reg_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Linear Regression 평가 ===
+MAE:  289.69g
+MSE:  127200.47g²
+RMSE: 356.65g
+R²:   0.7981
+
+=== Random Forest 평가 ===
+MAE:  262.99g
+MSE:  106814.96g²
+RMSE: 326.83g
+R²:   0.8304
+
+=== 모델 비교 ===
+               Model         MAE        RMSE        R²
+0  Linear Regression  289.689016  356.651752  0.798076
+1      Random Forest  262.985075  326.825579  0.830437</code></pre>
+</div>
+</div>
+<p><strong>예제: 잔차 분석</strong></p>
+<div id="b3b8c0b0" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 계산</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>residuals_lr <span class="op">=</span> y_test_reg <span class="op">-</span> y_pred_lr</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>residuals_rf <span class="op">=</span> y_test_reg <span class="op">-</span> y_pred_rf</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Regression 잔차</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].scatter(y_pred_lr, residuals_lr, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">'Linear Regression: Residual Plot'</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Regression 예측 vs 실제</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].scatter(y_test_reg, y_pred_lr, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].plot([y_test_reg.<span class="bu">min</span>(), y_test_reg.<span class="bu">max</span>()], </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                [y_test_reg.<span class="bu">min</span>(), y_test_reg.<span class="bu">max</span>()], </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                <span class="st">'r--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Perfect Prediction'</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_xlabel(<span class="st">'Actual'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_ylabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_title(<span class="ss">f'Linear Regression: R²=</span><span class="sc">{</span>r2_score(y_test_reg, y_pred_lr)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].legend()</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest 잔차</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].scatter(y_pred_rf, residuals_rf, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">'Random Forest: Residual Plot'</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest 예측 vs 실제</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].scatter(y_test_reg, y_pred_rf, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].plot([y_test_reg.<span class="bu">min</span>(), y_test_reg.<span class="bu">max</span>()], </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                [y_test_reg.<span class="bu">min</span>(), y_test_reg.<span class="bu">max</span>()], </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                <span class="st">'r--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Perfect Prediction'</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_xlabel(<span class="st">'Actual'</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_ylabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_title(<span class="ss">f'Random Forest: R²=</span><span class="sc">{</span>r2_score(y_test_reg, y_pred_rf)<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].legend()</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08. 모델 성능 평가_files/figure-html/cell-5-output-1.png" width="1332" height="950" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="mse-mean-squared-error" class="level4" data-number="27.2.1.2">
-<h4 data-number="27.2.1.2" class="anchored" data-anchor-id="mse-mean-squared-error"><span class="header-section-number">27.2.1.2</span> MSE (Mean Squared Error)</h4>
-<ul>
-<li>오차 제곱 평균</li>
-<li>큰 오차에 더 큰 패널티</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_squared_error(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="rmse-root-mse" class="level4" data-number="27.2.1.3">
-<h4 data-number="27.2.1.3" class="anchored" data-anchor-id="rmse-root-mse"><span class="header-section-number">27.2.1.3</span> RMSE (Root MSE)</h4>
-<ul>
-<li>MSE의 제곱근</li>
-<li>원래 단위로 해석 가능</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mean_squared_error(y_test, y_pred, squared<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="r²-결정계수" class="level4" data-number="27.2.1.4">
-<h4 data-number="27.2.1.4" class="anchored" data-anchor-id="r²-결정계수"><span class="header-section-number">27.2.1.4</span> R² (결정계수)</h4>
-<ul>
-<li>모델이 분산을 얼마나 설명하는가</li>
-<li>상대적 지표</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>r2_score(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="회귀-지표-선택-가이드" class="level3" data-number="27.2.2">
-<h3 data-number="27.2.2" class="anchored" data-anchor-id="회귀-지표-선택-가이드"><span class="header-section-number">27.2.2</span> 회귀 지표 선택 가이드</h3>
+<section id="회귀-지표-선택-가이드" class="level3" data-number="26.2.2">
+<h3 data-number="26.2.2" class="anchored" data-anchor-id="회귀-지표-선택-가이드"><span class="header-section-number">26.2.2</span> 회귀 지표 선택 가이드</h3>
+<p><strong>상황별 지표 선택</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>상황</th>
-<th>추천 지표</th>
+<th>권장 지표</th>
+<th>이유</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>직관적 오차 크기</td>
 <td>MAE</td>
+<td>원본 단위, 이해 쉬움</td>
 </tr>
 <tr class="even">
 <td>큰 오차 중요</td>
 <td>RMSE</td>
+<td>큰 오차에 패널티</td>
 </tr>
 <tr class="odd">
 <td>모델 비교</td>
 <td>R²</td>
+<td>스케일 독립적</td>
+</tr>
+<tr class="even">
+<td>비율 오차</td>
+<td>MAPE</td>
+<td>상대적 오차</td>
 </tr>
 </tbody>
 </table>
+<p><strong>지표 해석</strong></p>
+<ul>
+<li><strong>MAE</strong>: 평균적으로 얼마나 틀리는가?</li>
+<li><strong>RMSE</strong>: 큰 오차를 고려하면 얼마나 틀리는가?</li>
+<li><strong>R²</strong>: 모델이 분산의 몇 %를 설명하는가?</li>
+</ul>
 </section>
 </section>
-<section id="분류-성능-평가" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="분류-성능-평가"><span class="header-section-number">27.3</span> 분류 성능 평가</h2>
-<p>분류 문제에서는</p>
-<blockquote class="blockquote">
-<p>“얼마나 정확히 구분했는가?” 보다 “어떤 실수를 했는가?”</p>
-</blockquote>
-<p>가 더 중요할 수 있다.</p>
-<section id="혼동-행렬-confusion-matrix" class="level3" data-number="27.3.1">
-<h3 data-number="27.3.1" class="anchored" data-anchor-id="혼동-행렬-confusion-matrix"><span class="header-section-number">27.3.1</span> 혼동 행렬 (Confusion Matrix)</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="분류-성능-평가" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="분류-성능-평가"><span class="header-section-number">26.3</span> 분류 성능 평가</h2>
+<p>분류 문제는 얼마나 정확히 구분했는지뿐만 아니라 어떤 실수를 했는지가 중요하다.</p>
+<section id="혼동-행렬-confusion-matrix" class="level3" data-number="26.3.1">
+<h3 data-number="26.3.1" class="anchored" data-anchor-id="혼동-행렬-confusion-matrix"><span class="header-section-number">26.3.1</span> 혼동 행렬 (Confusion Matrix)</h3>
+<p>혼동 행렬은 분류 결과를 한눈에 파악할 수 있는 기본 도구이다.</p>
+<p><strong>이진 분류 혼동 행렬</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>실제 &nbsp;예측</th>
-<th>Positive</th>
-<th>Negative</th>
+<th></th>
+<th>예측 Positive</th>
+<th>예측 Negative</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Positive</td>
-<td>TP</td>
-<td>FN</td>
+<td><strong>실제 Positive</strong></td>
+<td>TP (True Positive)</td>
+<td>FN (False Negative)</td>
 </tr>
 <tr class="even">
-<td>Negative</td>
-<td>FP</td>
-<td>TN</td>
+<td><strong>실제 Negative</strong></td>
+<td>FP (False Positive)</td>
+<td>TN (True Negative)</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="주요-지표-1" class="level3" data-number="27.3.2">
-<h3 data-number="27.3.2" class="anchored" data-anchor-id="주요-지표-1"><span class="header-section-number">27.3.2</span> 주요 지표</h3>
-<section id="accuracy" class="level4" data-number="27.3.2.1">
-<h4 data-number="27.3.2.1" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">27.3.2.1</span> Accuracy</h4>
+<p><strong>용어 설명</strong></p>
 <ul>
-<li>전체 중 맞춘 비율</li>
-<li>클래스 불균형에 취약</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>accuracy_score(y_test, y_pred)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="precision" class="level4" data-number="27.3.2.2">
-<h4 data-number="27.3.2.2" class="anchored" data-anchor-id="precision"><span class="header-section-number">27.3.2.2</span> Precision</h4>
-<ul>
-<li>Positive로 예측한 것 중 실제 Positive</li>
-<li>오탐(False Positive) 최소화</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> precision_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="recall" class="level4" data-number="27.3.2.3">
-<h4 data-number="27.3.2.3" class="anchored" data-anchor-id="recall"><span class="header-section-number">27.3.2.3</span> Recall</h4>
-<ul>
-<li>실제 Positive 중 맞춘 비율</li>
-<li>미탐(False Negative) 최소화</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> recall_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="f1-score" class="level4" data-number="27.3.2.4">
-<h4 data-number="27.3.2.4" class="anchored" data-anchor-id="f1-score"><span class="header-section-number">27.3.2.4</span> F1-score</h4>
-<ul>
-<li>Precision과 Recall의 조화 평균</li>
-<li>불균형 데이터에 적합</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> f1_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="roc-auc" class="level3" data-number="27.3.3">
-<h3 data-number="27.3.3" class="anchored" data-anchor-id="roc-auc"><span class="header-section-number">27.3.3</span> ROC-AUC</h3>
-<ul>
-<li>분류 임계값 변화에 따른 성능</li>
-<li>확률 기반 평가</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="분류-예제" class="level3" data-number="27.3.4">
-<h3 data-number="27.3.4" class="anchored" data-anchor-id="분류-예제"><span class="header-section-number">27.3.4</span> 분류 예제</h3>
-<ul>
-<li>species 분류 문제</li>
-<li>클래스 균형이 비교적 양호</li>
-<li>Accuracy + F1 병행 권장</li>
+<li><strong>TP</strong>: 양성을 양성으로 (정답)</li>
+<li><strong>TN</strong>: 음성을 음성으로 (정답)</li>
+<li><strong>FP</strong>: 음성을 양성으로 (오탐, Type I Error)</li>
+<li><strong>FN</strong>: 양성을 음성으로 (미탐, Type II Error)</li>
 </ul>
 </section>
+<section id="분류-실습" class="level3" data-number="26.3.2">
+<h3 data-number="26.3.2" class="anchored" data-anchor-id="분류-실습"><span class="header-section-number">26.3.2</span> 분류 실습</h3>
+<p><strong>예제: 데이터 준비 및 모델 학습</strong></p>
+<div id="f7cdee9c" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>X_train_clf, X_test_clf, y_train_clf, y_test_clf <span class="op">=</span> train_test_split(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    X_clf, y_clf, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y_clf</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 로지스틱 회귀</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pipe_lr_clf <span class="op">=</span> Pipeline([</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'model'</span>, LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>, random_state<span class="op">=</span><span class="dv">42</span>))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>pipe_lr_clf.fit(X_train_clf, y_train_clf)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>y_pred_lr_clf <span class="op">=</span> pipe_lr_clf.predict(X_test_clf)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>y_proba_lr_clf <span class="op">=</span> pipe_lr_clf.predict_proba(X_test_clf)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 랜덤 포레스트</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>rf_clf <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>rf_clf.fit(X_train_clf, y_train_clf)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>y_pred_rf_clf <span class="op">=</span> rf_clf.predict(X_test_clf)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>y_proba_rf_clf <span class="op">=</span> rf_clf.predict_proba(X_test_clf)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"모델 학습 완료"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>모델 학습 완료</code></pre>
+</div>
+</div>
+<p><strong>예제: 혼동 행렬 시각화</strong></p>
+<div id="717e3b0a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 혼동 행렬</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>cm_lr <span class="op">=</span> confusion_matrix(y_test_clf, y_pred_lr_clf)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>cm_rf <span class="op">=</span> confusion_matrix(y_test_clf, y_pred_rf_clf)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic Regression</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm_lr, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>],</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span>pipe_lr_clf.classes_, yticklabels<span class="op">=</span>pipe_lr_clf.classes_)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Actual'</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Logistic Regression: Confusion Matrix'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm_rf, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>],</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span>rf_clf.classes_, yticklabels<span class="op">=</span>rf_clf.classes_)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Actual'</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Random Forest: Confusion Matrix'</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08. 모델 성능 평가_files/figure-html/cell-7-output-1.png" width="1287" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="다중-클래스-분류-평가" class="level2" data-number="27.4">
-<h2 data-number="27.4" class="anchored" data-anchor-id="다중-클래스-분류-평가"><span class="header-section-number">27.4</span> 다중 클래스 분류 평가</h2>
-<ul>
-<li>macro 평균</li>
-<li>micro 평균</li>
-<li>weighted 평균</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>클래스 수가 늘어나면 <strong>accuracy 단독 사용 금지</strong></p>
+<section id="주요-분류-지표" class="level3" data-number="26.3.3">
+<h3 data-number="26.3.3" class="anchored" data-anchor-id="주요-분류-지표"><span class="header-section-number">26.3.3</span> 주요 분류 지표</h3>
+<p><strong>분류 평가 지표 정의</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>지표</th>
+<th>수식</th>
+<th>의미</th>
+<th>언제 중요한가?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Accuracy</td>
+<td><span class="math inline">\(\frac{TP+TN}{TP+TN+FP+FN}\)</span></td>
+<td>전체 정확도</td>
+<td>클래스 균형</td>
+</tr>
+<tr class="even">
+<td>Precision</td>
+<td><span class="math inline">\(\frac{TP}{TP+FP}\)</span></td>
+<td>양성 예측의 정확도</td>
+<td>오탐 비용 높음</td>
+</tr>
+<tr class="odd">
+<td>Recall (Sensitivity)</td>
+<td><span class="math inline">\(\frac{TP}{TP+FN}\)</span></td>
+<td>실제 양성 탐지율</td>
+<td>미탐 비용 높음</td>
+</tr>
+<tr class="even">
+<td>F1-Score</td>
+<td><span class="math inline">\(2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\)</span></td>
+<td>Precision과 Recall의 조화평균</td>
+<td>불균형 데이터</td>
+</tr>
+<tr class="odd">
+<td>Specificity</td>
+<td><span class="math inline">\(\frac{TN}{TN+FP}\)</span></td>
+<td>실제 음성 탐지율</td>
+<td>음성 클래스 중요</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 분류 평가 지표 계산</strong></p>
+<div id="7c1f6e63" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (accuracy_score, precision_score, recall_score, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                              f1_score, classification_report)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_classification(y_true, y_pred, model_name):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""분류 모델 평가"""</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> accuracy_score(y_true, y_pred)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    precision <span class="op">=</span> precision_score(y_true, y_pred, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    recall <span class="op">=</span> recall_score(y_true, y_pred, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    f1 <span class="op">=</span> f1_score(y_true, y_pred, average<span class="op">=</span><span class="st">'weighted'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> 평가 ==="</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Accuracy:  </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>precision<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Recall:    </span><span class="sc">{</span>recall<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"F1-Score:  </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'Model'</span>: model_name, <span class="st">'Accuracy'</span>: accuracy, </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">'Precision'</span>: precision, <span class="st">'Recall'</span>: recall, <span class="st">'F1'</span>: f1}</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 평가</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>results_clf <span class="op">=</span> []</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>results_clf.append(evaluate_classification(y_test_clf, y_pred_lr_clf, <span class="st">'Logistic Regression'</span>))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>results_clf.append(evaluate_classification(y_test_clf, y_pred_rf_clf, <span class="st">'Random Forest'</span>))</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>results_clf_df <span class="op">=</span> pd.DataFrame(results_clf)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 모델 비교 ==="</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_clf_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Logistic Regression 평가 ===
+Accuracy:  1.0000
+Precision: 1.0000
+Recall:    1.0000
+F1-Score:  1.0000
+
+=== Random Forest 평가 ===
+Accuracy:  0.9701
+Precision: 0.9739
+Recall:    0.9701
+F1-Score:  0.9709
+
+=== 모델 비교 ===
+                 Model  Accuracy  Precision    Recall        F1
+0  Logistic Regression  1.000000   1.000000  1.000000  1.000000
+1        Random Forest  0.970149   0.973881  0.970149  0.970855</code></pre>
+</div>
+</div>
+<p><strong>예제: 분류 리포트</strong></p>
+<div id="83dcf67a" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상세 분류 리포트</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Logistic Regression 상세 리포트 ==="</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_clf, y_pred_lr_clf))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Random Forest 상세 리포트 ==="</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_clf, y_pred_rf_clf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Logistic Regression 상세 리포트 ===
+              precision    recall  f1-score   support
+
+      Adelie       1.00      1.00      1.00        29
+   Chinstrap       1.00      1.00      1.00        14
+      Gentoo       1.00      1.00      1.00        24
+
+    accuracy                           1.00        67
+   macro avg       1.00      1.00      1.00        67
+weighted avg       1.00      1.00      1.00        67
+
+
+=== Random Forest 상세 리포트 ===
+              precision    recall  f1-score   support
+
+      Adelie       1.00      0.97      0.98        29
+   Chinstrap       0.88      1.00      0.93        14
+      Gentoo       1.00      0.96      0.98        24
+
+    accuracy                           0.97        67
+   macro avg       0.96      0.97      0.96        67
+weighted avg       0.97      0.97      0.97        67
+</code></pre>
+</div>
+</div>
 </section>
-<section id="군집-성능-평가" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="군집-성능-평가"><span class="header-section-number">27.5</span> 군집 성능 평가</h2>
-<p>군집은 <strong>정답 라벨이 없는 경우</strong>가 많다. 따라서 평가 방식도 다르다.</p>
-<section id="내부-평가-지표-라벨-없음" class="level3" data-number="27.5.1">
-<h3 data-number="27.5.1" class="anchored" data-anchor-id="내부-평가-지표-라벨-없음"><span class="header-section-number">27.5.1</span> 내부 평가 지표 (라벨 없음)</h3>
-<section id="silhouette-score" class="level4" data-number="27.5.1.1">
-<h4 data-number="27.5.1.1" class="anchored" data-anchor-id="silhouette-score"><span class="header-section-number">27.5.1.1</span> Silhouette Score</h4>
-<ul>
-<li>군집 내 응집도 vs 군집 간 분리도</li>
-<li>-1 ~ 1</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>silhouette_score(X_scaled, labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="roc-curve와-auc" class="level3" data-number="26.3.4">
+<h3 data-number="26.3.4" class="anchored" data-anchor-id="roc-curve와-auc"><span class="header-section-number">26.3.4</span> ROC Curve와 AUC</h3>
+<p>ROC(Receiver Operating Characteristic) 곡선은 분류 임계값 변화에 따른 성능을 시각화한다.</p>
+<p><strong>예제: ROC Curve (이진 분류)</strong></p>
+<div id="c73c7fab" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, roc_auc_score</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> label_binarize</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 다중 클래스를 One-vs-Rest로 변환</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>y_test_bin <span class="op">=</span> label_binarize(y_test_clf, classes<span class="op">=</span>pipe_lr_clf.classes_)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>n_classes <span class="op">=</span> y_test_bin.shape[<span class="dv">1</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 클래스별 ROC Curve</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, class_name <span class="kw">in</span> <span class="bu">enumerate</span>(pipe_lr_clf.classes_):</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Logistic Regression</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    fpr, tpr, _ <span class="op">=</span> roc_curve(y_test_bin[:, i], y_proba_lr_clf[:, i])</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    auc <span class="op">=</span> roc_auc_score(y_test_bin[:, i], y_proba_lr_clf[:, i])</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(fpr, tpr, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> (AUC=</span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Random'</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Logistic Regression: ROC Curves'</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, class_name <span class="kw">in</span> <span class="bu">enumerate</span>(rf_clf.classes_):</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Random Forest</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    fpr, tpr, _ <span class="op">=</span> roc_curve(y_test_bin[:, i], y_proba_rf_clf[:, i])</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    auc <span class="op">=</span> roc_auc_score(y_test_bin[:, i], y_proba_rf_clf[:, i])</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(fpr, tpr, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss"> (AUC=</span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">)'</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'k--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Random'</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Random Forest: ROC Curves'</span>)</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend()</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08. 모델 성능 평가_files/figure-html/cell-10-output-1.png" width="1334" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="daviesbouldin-index" class="level4" data-number="27.5.1.2">
-<h4 data-number="27.5.1.2" class="anchored" data-anchor-id="daviesbouldin-index"><span class="header-section-number">27.5.1.2</span> Davies–Bouldin Index</h4>
-<ul>
-<li>군집 간 유사도</li>
-<li>작을수록 좋음</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> davies_bouldin_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="다중-클래스-평가" class="level3" data-number="26.3.5">
+<h3 data-number="26.3.5" class="anchored" data-anchor-id="다중-클래스-평가"><span class="header-section-number">26.3.5</span> 다중 클래스 평가</h3>
+<p>다중 클래스 분류에서는 평균 방식이 중요하다.</p>
+<p><strong>평균 방식</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>방식</th>
+<th>설명</th>
+<th>사용 상황</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>macro</td>
+<td>각 클래스 평균 (동일 가중치)</td>
+<td>클래스 중요도 동일</td>
+</tr>
+<tr class="even">
+<td>weighted</td>
+<td>클래스 크기로 가중 평균</td>
+<td>불균형 데이터</td>
+</tr>
+<tr class="odd">
+<td>micro</td>
+<td>전체 TP, FP, FN 합산 후 계산</td>
+<td>샘플 중심 평가</td>
+</tr>
+</tbody>
+</table>
+<p><strong>예제: 평균 방식 비교</strong></p>
+<div id="eb24c374" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 평균 방식</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> avg <span class="kw">in</span> [<span class="st">'macro'</span>, <span class="st">'weighted'</span>, <span class="st">'micro'</span>]:</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    f1 <span class="op">=</span> f1_score(y_test_clf, y_pred_rf_clf, average<span class="op">=</span>avg)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"F1-Score (</span><span class="sc">{</span>avg<span class="sc">:8s}</span><span class="ss">): </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>F1-Score (macro   ): 0.9648
+F1-Score (weighted): 0.9709
+F1-Score (micro   ): 0.9701</code></pre>
+</div>
+</div>
 </section>
 </section>
-<section id="외부-평가-지표-라벨-존재-시" class="level3" data-number="27.5.2">
-<h3 data-number="27.5.2" class="anchored" data-anchor-id="외부-평가-지표-라벨-존재-시"><span class="header-section-number">27.5.2</span> 외부 평가 지표 (라벨 존재 시)</h3>
-<p>penguins처럼 실제 종을 알고 있는 경우</p>
-<section id="adjusted-rand-index-ari" class="level4" data-number="27.5.2.1">
-<h4 data-number="27.5.2.1" class="anchored" data-anchor-id="adjusted-rand-index-ari"><span class="header-section-number">27.5.2.1</span> Adjusted Rand Index (ARI)</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> adjusted_rand_score</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>adjusted_rand_score(true_labels, cluster_labels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="군집-성능-평가" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="군집-성능-평가"><span class="header-section-number">26.4</span> 군집 성능 평가</h2>
+<p>군집 분석은 정답 라벨이 없는 경우가 많아 평가 방식이 다르다.</p>
+<p><strong>군집 평가 유형</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>유형</th>
+<th>필요 정보</th>
+<th>지표</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>내부 평가</td>
+<td>데이터만</td>
+<td>Silhouette, Davies-Bouldin, Calinski-Harabasz</td>
+</tr>
+<tr class="even">
+<td>외부 평가</td>
+<td>정답 라벨</td>
+<td>ARI, NMI, Completeness, Homogeneity</td>
+</tr>
+</tbody>
+</table>
+<section id="내부-평가-지표" class="level3" data-number="26.4.1">
+<h3 data-number="26.4.1" class="anchored" data-anchor-id="내부-평가-지표"><span class="header-section-number">26.4.1</span> 내부 평가 지표</h3>
+<p><strong>예제: 군집 생성 및 내부 평가</strong></p>
+<div id="a87521a4" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (silhouette_score, davies_bouldin_score, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                              calinski_harabasz_score)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 표준화</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X_clf)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># K-Means 군집</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>labels_kmeans <span class="op">=</span> kmeans.fit_predict(X_scaled)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 내부 평가 지표</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>silhouette <span class="op">=</span> silhouette_score(X_scaled, labels_kmeans)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>davies_bouldin <span class="op">=</span> davies_bouldin_score(X_scaled, labels_kmeans)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>calinski <span class="op">=</span> calinski_harabasz_score(X_scaled, labels_kmeans)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 군집 내부 평가 ==="</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Silhouette Score:        </span><span class="sc">{</span>silhouette<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, -1~1)"</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Davies-Bouldin Index:    </span><span class="sc">{</span>davies_bouldin<span class="sc">:.4f}</span><span class="ss"> (낮을수록 좋음)"</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Calinski-Harabasz Score: </span><span class="sc">{</span>calinski<span class="sc">:.2f}</span><span class="ss"> (높을수록 좋음)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 군집 내부 평가 ===
+Silhouette Score:        0.4462 (높을수록 좋음, -1~1)
+Davies-Bouldin Index:    0.9420 (낮을수록 좋음)
+Calinski-Harabasz Score: 427.77 (높을수록 좋음)</code></pre>
+</div>
+</div>
+</section>
+<section id="외부-평가-지표" class="level3" data-number="26.4.2">
+<h3 data-number="26.4.2" class="anchored" data-anchor-id="외부-평가-지표"><span class="header-section-number">26.4.2</span> 외부 평가 지표</h3>
+<p>정답 라벨이 있는 경우(예: penguins의 실제 종)에만 사용 가능하다.</p>
+<p><strong>예제: 외부 평가</strong></p>
+<div id="46487078" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (adjusted_rand_score, normalized_mutual_info_score,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                              completeness_score, homogeneity_score, v_measure_score)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 외부 평가 지표 (실제 종과 비교)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ari <span class="op">=</span> adjusted_rand_score(y_clf, labels_kmeans)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>nmi <span class="op">=</span> normalized_mutual_info_score(y_clf, labels_kmeans)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>completeness <span class="op">=</span> completeness_score(y_clf, labels_kmeans)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>homogeneity <span class="op">=</span> homogeneity_score(y_clf, labels_kmeans)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>v_measure <span class="op">=</span> v_measure_score(y_clf, labels_kmeans)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 군집 외부 평가 (vs 실제 종) ==="</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Adjusted Rand Index (ARI): </span><span class="sc">{</span>ari<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, -1~1)"</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Normalized Mutual Info:    </span><span class="sc">{</span>nmi<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, 0~1)"</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Completeness:              </span><span class="sc">{</span>completeness<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, 0~1)"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Homogeneity:               </span><span class="sc">{</span>homogeneity<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, 0~1)"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"V-measure:                 </span><span class="sc">{</span>v_measure<span class="sc">:.4f}</span><span class="ss"> (높을수록 좋음, 0~1)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== 군집 외부 평가 (vs 실제 종) ===
+Adjusted Rand Index (ARI): 0.7994 (높을수록 좋음, -1~1)
+Normalized Mutual Info:    0.7899 (높을수록 좋음, 0~1)
+Completeness:              0.7790 (높을수록 좋음, 0~1)
+Homogeneity:               0.8012 (높을수록 좋음, 0~1)
+V-measure:                 0.7899 (높을수록 좋음, 0~1)</code></pre>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="평가-지표-선택-요약" class="level2" data-number="27.6">
-<h2 data-number="27.6" class="anchored" data-anchor-id="평가-지표-선택-요약"><span class="header-section-number">27.6</span> 평가 지표 선택 요약</h2>
+<section id="평가-지표-종합-비교" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="평가-지표-종합-비교"><span class="header-section-number">26.5</span> 평가 지표 종합 비교</h2>
+<p><strong>문제 유형별 평가 지표</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>문제 유형</th>
 <th>주요 지표</th>
+<th>보조 지표</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>회귀</td>
-<td>MAE, RMSE, R²</td>
+<td>RMSE, R²</td>
+<td>MAE, MAPE</td>
 </tr>
 <tr class="even">
-<td>이진 분류</td>
-<td>Precision, Recall, F1, ROC-AUC</td>
+<td>이진 분류 (균형)</td>
+<td>F1-Score, ROC-AUC</td>
+<td>Accuracy</td>
 </tr>
 <tr class="odd">
-<td>다중 분류</td>
-<td>F1 (macro/weighted)</td>
+<td>이진 분류 (불균형)</td>
+<td>Precision, Recall</td>
+<td>F1, ROC-AUC</td>
 </tr>
 <tr class="even">
-<td>군집</td>
-<td>Silhouette, ARI</td>
+<td>다중 분류</td>
+<td>F1 (macro/weighted)</td>
+<td>Accuracy, Confusion Matrix</td>
+</tr>
+<tr class="odd">
+<td>군집 (라벨 없음)</td>
+<td>Silhouette</td>
+<td>Davies-Bouldin</td>
+</tr>
+<tr class="even">
+<td>군집 (라벨 있음)</td>
+<td>ARI</td>
+<td>NMI, V-measure</td>
+</tr>
+</tbody>
+</table>
+<p><strong>상황별 중요 지표</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>중요 지표</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>오탐 비용 높음</td>
+<td>Precision</td>
+<td>스팸 필터 (정상 메일 차단 최소화)</td>
+</tr>
+<tr class="even">
+<td>미탐 비용 높음</td>
+<td>Recall</td>
+<td>질병 진단 (환자 놓치지 않기)</td>
+</tr>
+<tr class="odd">
+<td>클래스 불균형</td>
+<td>F1, ROC-AUC</td>
+<td>이상 거래 탐지</td>
+</tr>
+<tr class="even">
+<td>해석 중요</td>
+<td>R², Confusion Matrix</td>
+<td>비즈니스 보고</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="평가-시-중요한-원칙" class="level2" data-number="27.7">
-<h2 data-number="27.7" class="anchored" data-anchor-id="평가-시-중요한-원칙"><span class="header-section-number">27.7</span> 평가 시 중요한 원칙</h2>
-<ul>
-<li>하나의 지표로 결론 내리지 않는다</li>
-<li>문제 맥락에 맞는 지표 선택</li>
-<li>항상 <strong>테스트 데이터 기준 평가</strong></li>
-</ul>
-<p>모델 성능 평가는 숫자보다 <strong>판단의 근거</strong>다.</p>
-
-
+<section id="교차-검증" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="교차-검증"><span class="header-section-number">26.6</span> 교차 검증</h2>
+<p>단일 테스트셋 평가는 운에 좌우될 수 있으므로 교차 검증으로 안정적인 성능을 추정한다.</p>
+<p><strong>예제: 교차 검증</strong></p>
+<div id="fe4e02cf" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 5-Fold 교차 검증</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>cv_scores <span class="op">=</span> cross_val_score(pipe_lr_clf, X_clf, y_clf, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'accuracy'</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 교차 검증 결과 ==="</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"각 폴드 점수: </span><span class="sc">{</span>cv_scores<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"평균: </span><span class="sc">{</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"표준편차: </span><span class="sc">{</span>cv_scores<span class="sc">.</span>std()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% 신뢰구간: </span><span class="sc">{</span>cv_scores<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span><span class="fl">1.96</span> <span class="op">*</span> cv_scores<span class="sc">.</span>std()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>=== 교차 검증 결과 ===
+각 폴드 점수: [1.         0.98507463 0.97014925 1.         1.        ]
+평균: 0.9910
+표준편차: 0.0119
+95% 신뢰구간: 0.9910 ± 0.0234</code></pre>
+</div>
+</div>
 </section>
+<section id="평가-체크리스트" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="평가-체크리스트"><span class="header-section-number">26.7</span> 평가 체크리스트</h2>
+<p><strong>모델 평가 시 확인사항</strong></p>
+<ul class="task-list">
+<li><label><input type="checkbox">적절한 평가 지표 선택 (문제 유형에 맞게)</label></li>
+<li><label><input type="checkbox">테스트 데이터로 평가 (데이터 누수 방지)</label></li>
+<li><label><input type="checkbox">여러 지표 종합 검토 (단일 지표 금지)</label></li>
+<li><label><input type="checkbox">교차 검증으로 안정성 확인</label></li>
+<li><label><input type="checkbox">혼동 행렬로 오류 패턴 분석</label></li>
+<li><label><input type="checkbox">잔차 분석 (회귀)</label></li>
+<li><label><input type="checkbox">ROC Curve 확인 (분류)</label></li>
+<li><label><input type="checkbox">비즈니스 맥락 고려</label></li>
+</ul>
+</section>
+<section id="요약" class="level2" data-number="26.8">
+<h2 data-number="26.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">26.8</span> 요약</h2>
+<p>이 장에서는 머신러닝 모델의 성능을 평가하는 다양한 지표와 방법을 학습했다. 주요 내용은 다음과 같다.</p>
+<p><strong>핵심 원칙</strong></p>
+<ul>
+<li><strong>맥락 고려</strong>: 문제와 비즈니스 상황에 맞는 지표 선택</li>
+<li><strong>종합 평가</strong>: 단일 지표가 아닌 다각도 검토</li>
+<li><strong>테스트 기준</strong>: 항상 테스트 데이터로 평가</li>
+<li><strong>안정성</strong>: 교차 검증으로 신뢰도 확보</li>
+</ul>
+<p><strong>주요 지표 요약</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>문제</th>
+<th>균형 데이터</th>
+<th>불균형 데이터</th>
+<th>추가 고려</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>회귀</td>
+<td>RMSE, R²</td>
+<td>MAE</td>
+<td>잔차 분석</td>
+</tr>
+<tr class="even">
+<td>분류</td>
+<td>Accuracy, F1</td>
+<td>Precision/Recall, F1</td>
+<td>혼동 행렬, ROC</td>
+</tr>
+<tr class="odd">
+<td>군집</td>
+<td>Silhouette</td>
+<td>ARI (라벨 있는 경우)</td>
+<td>시각화</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실무 가이드</strong></p>
+<ol type="1">
+<li><strong>회귀</strong>: RMSE로 시작, R²로 비교, 잔차로 진단</li>
+<li><strong>분류</strong>: Confusion Matrix → F1 → ROC (순서대로)</li>
+<li><strong>군집</strong>: Silhouette → 시각화 → ARI (가능 시)</li>
+</ol>
+<p>모델 성능 평가는 숫자를 계산하는 것이 아니라, 올바른 판단을 내리기 위한 근거를 제공하는 과정이다. 문제의 맥락을 이해하고 적절한 지표를 선택하는 것이 성공적인 머신러닝 프로젝트의 핵심이다.</p>
+
+
 </section>
 
 </main> <!-- /main -->
