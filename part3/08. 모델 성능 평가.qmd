@@ -1,222 +1,541 @@
 # 모델 성능 평가
 
-# 모델 성능 평가 
+모델 성능 평가(Model Evaluation)는 머신러닝 모델이 얼마나 잘 작동하는지 측정하고 판단하는 과정이다. 단순히 "정확한가?"를 묻는 것이 아니라, "새로운 데이터에서도 잘 작동하는가?", "어떤 유형의 오류를 범하는가?", "모델 간 공정한 비교가 가능한가?"를 파악하는 것이 목적이다. 문제 유형(회귀/분류/군집)과 비즈니스 맥락에 따라 적절한 평가 지표를 선택하는 것이 중요하다. 이 장에서는 회귀, 분류, 군집 문제별 주요 평가 지표의 의미와 활용법을 학습한다.
+
+**예제: 데이터 로드**
+
+```{python}
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+# 데이터 로드
+df = sns.load_dataset("penguins").dropna()
+
+# 회귀용 데이터 (체중 예측)
+X_reg = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm"]]
+y_reg = df["body_mass_g"]
+
+# 분류용 데이터 (종 분류)
+X_clf = df[["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]]
+y_clf = df["species"]
+
+print("데이터 크기:", df.shape)
+print("\n회귀 타겟:", y_reg.name)
+print("분류 타겟:", y_clf.name)
+```
 
 ## 모델 성능 평가의 목적
 
-모델 성능 평가(Model Evaluation)는 단순히 “정확한가?”를 묻는 과정이 아니다.
+모델 평가는 숫자를 계산하는 것이 아니라 올바른 판단을 내리기 위한 근거를 제공하는 과정이다.
 
-핵심 질문은 다음과 같다.
+**핵심 질문**
 
-* 학습 데이터가 아닌 **새 데이터에서도 잘 작동하는가?**
-* 어떤 오류를 더 중요하게 봐야 하는가?
-* 모델 간 **공정한 비교**가 가능한가?
+| 질문 | 의미 | 평가 방법 |
+|------|------|----------|
+| 일반화 성능 | 새 데이터에서도 잘 작동하는가? | 테스트셋 평가, 교차 검증 |
+| 오류 유형 | 어떤 실수를 하는가? | 혼동 행렬, 잔차 분석 |
+| 비교 가능성 | 모델 간 공정한 비교가 가능한가? | 동일한 데이터셋, 동일한 지표 |
+| 실무 적합성 | 비즈니스 목표에 부합하는가? | 맥락에 맞는 지표 선택 |
 
-문제 유형에 따라 평가 지표는 달라져야 한다.
+**평가의 원칙**
+
+1. **단일 지표 금지**: 여러 지표를 종합적으로 고려
+2. **맥락 고려**: 문제 상황에 맞는 지표 선택
+3. **테스트 기준**: 항상 테스트 데이터로 평가
+4. **교차 검증**: 안정적인 성능 추정
+5. **편향 방지**: 데이터 누수 주의
 
 ## 회귀 성능 평가
 
-회귀 문제에서는
+회귀 문제는 예측값이 실제값과 얼마나 다른지를 측정한다.
 
-> “예측값이 실제값과 얼마나 다른가?”
+**회귀 평가 지표 종류**
 
-를 측정한다.
+| 지표 | 수식 | 범위 | 단위 | 특징 |
+|------|------|------|------|------|
+| MAE | $\frac{1}{n}\sum\|y_i - \hat{y}_i\|$ | 0 ~ ∞ | 원본 | 직관적, 이상치 영향 적음 |
+| MSE | $\frac{1}{n}\sum(y_i - \hat{y}_i)^2$ | 0 ~ ∞ | 제곱 | 큰 오차 강조 |
+| RMSE | $\sqrt{\text{MSE}}$ | 0 ~ ∞ | 원본 | MSE의 해석 가능 버전 |
+| R² | $1 - \frac{\text{SS}_{\text{res}}}{\text{SS}_{\text{tot}}}$ | -∞ ~ 1 | 없음 | 상대적 성능 |
 
-### 주요 지표
+### 회귀 실습
 
-#### MAE (Mean Absolute Error)
+**예제: 데이터 준비 및 모델 학습**
 
-* 오차의 절댓값 평균
-* 직관적 해석 가능
+```{python}
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 
-```python
-from sklearn.metrics import mean_absolute_error
+# 데이터 분할
+X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(
+    X_reg, y_reg, test_size=0.2, random_state=42
+)
 
-mean_absolute_error(y_test, y_pred)
+# 선형 회귀 모델
+lr = LinearRegression()
+lr.fit(X_train_reg, y_train_reg)
+y_pred_lr = lr.predict(X_test_reg)
+
+# 랜덤 포레스트 모델
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_train_reg, y_train_reg)
+y_pred_rf = rf.predict(X_test_reg)
+
+print("모델 학습 완료")
 ```
 
-#### MSE (Mean Squared Error)
+**예제: 회귀 평가 지표 계산**
 
-* 오차 제곱 평균
-* 큰 오차에 더 큰 패널티
+```{python}
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-```python
-from sklearn.metrics import mean_squared_error
+def evaluate_regression(y_true, y_pred, model_name):
+    """회귀 모델 평가"""
+    mae = mean_absolute_error(y_true, y_pred)
+    mse = mean_squared_error(y_true, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_true, y_pred)
+    
+    print(f"\n=== {model_name} 평가 ===")
+    print(f"MAE:  {mae:.2f}g")
+    print(f"MSE:  {mse:.2f}g²")
+    print(f"RMSE: {rmse:.2f}g")
+    print(f"R²:   {r2:.4f}")
+    
+    return {'Model': model_name, 'MAE': mae, 'RMSE': rmse, 'R²': r2}
 
-mean_squared_error(y_test, y_pred)
+# 평가
+results_reg = []
+results_reg.append(evaluate_regression(y_test_reg, y_pred_lr, 'Linear Regression'))
+results_reg.append(evaluate_regression(y_test_reg, y_pred_rf, 'Random Forest'))
+
+results_reg_df = pd.DataFrame(results_reg)
+print("\n=== 모델 비교 ===")
+print(results_reg_df)
 ```
 
-#### RMSE (Root MSE)
+**예제: 잔차 분석**
 
-* MSE의 제곱근
-* 원래 단위로 해석 가능
+```{python}
+# 잔차 계산
+residuals_lr = y_test_reg - y_pred_lr
+residuals_rf = y_test_reg - y_pred_rf
 
-```python
-mean_squared_error(y_test, y_pred, squared=False)
-```
-#### R² (결정계수)
+# 시각화
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
-* 모델이 분산을 얼마나 설명하는가
-* 상대적 지표
+# Linear Regression 잔차
+axes[0, 0].scatter(y_pred_lr, residuals_lr, alpha=0.6, edgecolors='k')
+axes[0, 0].axhline(y=0, color='r', linestyle='--', linewidth=2)
+axes[0, 0].set_xlabel('Predicted')
+axes[0, 0].set_ylabel('Residuals')
+axes[0, 0].set_title('Linear Regression: Residual Plot')
+axes[0, 0].grid(True, alpha=0.3)
 
-```python
-from sklearn.metrics import r2_score
+# Linear Regression 예측 vs 실제
+axes[0, 1].scatter(y_test_reg, y_pred_lr, alpha=0.6, edgecolors='k')
+axes[0, 1].plot([y_test_reg.min(), y_test_reg.max()], 
+                [y_test_reg.min(), y_test_reg.max()], 
+                'r--', linewidth=2, label='Perfect Prediction')
+axes[0, 1].set_xlabel('Actual')
+axes[0, 1].set_ylabel('Predicted')
+axes[0, 1].set_title(f'Linear Regression: R²={r2_score(y_test_reg, y_pred_lr):.3f}')
+axes[0, 1].legend()
+axes[0, 1].grid(True, alpha=0.3)
 
-r2_score(y_test, y_pred)
+# Random Forest 잔차
+axes[1, 0].scatter(y_pred_rf, residuals_rf, alpha=0.6, edgecolors='k')
+axes[1, 0].axhline(y=0, color='r', linestyle='--', linewidth=2)
+axes[1, 0].set_xlabel('Predicted')
+axes[1, 0].set_ylabel('Residuals')
+axes[1, 0].set_title('Random Forest: Residual Plot')
+axes[1, 0].grid(True, alpha=0.3)
+
+# Random Forest 예측 vs 실제
+axes[1, 1].scatter(y_test_reg, y_pred_rf, alpha=0.6, edgecolors='k')
+axes[1, 1].plot([y_test_reg.min(), y_test_reg.max()], 
+                [y_test_reg.min(), y_test_reg.max()], 
+                'r--', linewidth=2, label='Perfect Prediction')
+axes[1, 1].set_xlabel('Actual')
+axes[1, 1].set_ylabel('Predicted')
+axes[1, 1].set_title(f'Random Forest: R²={r2_score(y_test_reg, y_pred_rf):.3f}')
+axes[1, 1].legend()
+axes[1, 1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
 ```
 
 ### 회귀 지표 선택 가이드
 
-| 상황        | 추천 지표 |
-| --------- | ----- |
-| 직관적 오차 크기 | MAE   |
-| 큰 오차 중요   | RMSE  |
-| 모델 비교     | R²    |
+**상황별 지표 선택**
+
+| 상황 | 권장 지표 | 이유 |
+|------|----------|------|
+| 직관적 오차 크기 | MAE | 원본 단위, 이해 쉬움 |
+| 큰 오차 중요 | RMSE | 큰 오차에 패널티 |
+| 모델 비교 | R² | 스케일 독립적 |
+| 비율 오차 | MAPE | 상대적 오차 |
+
+**지표 해석**
+
+- **MAE**: 평균적으로 얼마나 틀리는가?
+- **RMSE**: 큰 오차를 고려하면 얼마나 틀리는가?
+- **R²**: 모델이 분산의 몇 %를 설명하는가?
 
 ## 분류 성능 평가
 
-분류 문제에서는
-
-> “얼마나 정확히 구분했는가?”
-> 보다
-> “어떤 실수를 했는가?”
-
-가 더 중요할 수 있다.
+분류 문제는 얼마나 정확히 구분했는지뿐만 아니라 어떤 실수를 했는지가 중요하다.
 
 ### 혼동 행렬 (Confusion Matrix)
 
-```python
+혼동 행렬은 분류 결과를 한눈에 파악할 수 있는 기본 도구이다.
+
+**이진 분류 혼동 행렬**
+
+|  | 예측 Positive | 예측 Negative |
+|--|--------------|--------------|
+| **실제 Positive** | TP (True Positive) | FN (False Negative) |
+| **실제 Negative** | FP (False Positive) | TN (True Negative) |
+
+**용어 설명**
+
+- **TP**: 양성을 양성으로 (정답)
+- **TN**: 음성을 음성으로 (정답)
+- **FP**: 음성을 양성으로 (오탐, Type I Error)
+- **FN**: 양성을 음성으로 (미탐, Type II Error)
+
+### 분류 실습
+
+**예제: 데이터 준비 및 모델 학습**
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+
+# 데이터 분할
+X_train_clf, X_test_clf, y_train_clf, y_test_clf = train_test_split(
+    X_clf, y_clf, test_size=0.2, random_state=42, stratify=y_clf
+)
+
+# 로지스틱 회귀
+pipe_lr_clf = Pipeline([
+    ('scaler', StandardScaler()),
+    ('model', LogisticRegression(max_iter=1000, random_state=42))
+])
+pipe_lr_clf.fit(X_train_clf, y_train_clf)
+y_pred_lr_clf = pipe_lr_clf.predict(X_test_clf)
+y_proba_lr_clf = pipe_lr_clf.predict_proba(X_test_clf)
+
+# 랜덤 포레스트
+rf_clf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf_clf.fit(X_train_clf, y_train_clf)
+y_pred_rf_clf = rf_clf.predict(X_test_clf)
+y_proba_rf_clf = rf_clf.predict_proba(X_test_clf)
+
+print("모델 학습 완료")
+```
+
+**예제: 혼동 행렬 시각화**
+
+```{python}
 from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
-confusion_matrix(y_test, y_pred)
+# 혼동 행렬
+cm_lr = confusion_matrix(y_test_clf, y_pred_lr_clf)
+cm_rf = confusion_matrix(y_test_clf, y_pred_rf_clf)
+
+# 시각화
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Logistic Regression
+sns.heatmap(cm_lr, annot=True, fmt='d', cmap='Blues', ax=axes[0],
+            xticklabels=pipe_lr_clf.classes_, yticklabels=pipe_lr_clf.classes_)
+axes[0].set_xlabel('Predicted')
+axes[0].set_ylabel('Actual')
+axes[0].set_title('Logistic Regression: Confusion Matrix')
+
+# Random Forest
+sns.heatmap(cm_rf, annot=True, fmt='d', cmap='Blues', ax=axes[1],
+            xticklabels=rf_clf.classes_, yticklabels=rf_clf.classes_)
+axes[1].set_xlabel('Predicted')
+axes[1].set_ylabel('Actual')
+axes[1].set_title('Random Forest: Confusion Matrix')
+
+plt.tight_layout()
+plt.show()
 ```
 
-| 실제 \ 예측  | Positive | Negative |
-| -------- | -------- | -------- |
-| Positive | TP       | FN       |
-| Negative | FP       | TN       |
+### 주요 분류 지표
 
-### 주요 지표
+**분류 평가 지표 정의**
 
-#### Accuracy
+| 지표 | 수식 | 의미 | 언제 중요한가? |
+|------|------|------|--------------|
+| Accuracy | $\frac{TP+TN}{TP+TN+FP+FN}$ | 전체 정확도 | 클래스 균형 |
+| Precision | $\frac{TP}{TP+FP}$ | 양성 예측의 정확도 | 오탐 비용 높음 |
+| Recall (Sensitivity) | $\frac{TP}{TP+FN}$ | 실제 양성 탐지율 | 미탐 비용 높음 |
+| F1-Score | $2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$ | Precision과 Recall의 조화평균 | 불균형 데이터 |
+| Specificity | $\frac{TN}{TN+FP}$ | 실제 음성 탐지율 | 음성 클래스 중요 |
 
-* 전체 중 맞춘 비율
-* 클래스 불균형에 취약
+**예제: 분류 평가 지표 계산**
 
-```python
-from sklearn.metrics import accuracy_score
+```{python}
+from sklearn.metrics import (accuracy_score, precision_score, recall_score, 
+                              f1_score, classification_report)
 
-accuracy_score(y_test, y_pred)
+def evaluate_classification(y_true, y_pred, model_name):
+    """분류 모델 평가"""
+    accuracy = accuracy_score(y_true, y_pred)
+    precision = precision_score(y_true, y_pred, average='weighted')
+    recall = recall_score(y_true, y_pred, average='weighted')
+    f1 = f1_score(y_true, y_pred, average='weighted')
+    
+    print(f"\n=== {model_name} 평가 ===")
+    print(f"Accuracy:  {accuracy:.4f}")
+    print(f"Precision: {precision:.4f}")
+    print(f"Recall:    {recall:.4f}")
+    print(f"F1-Score:  {f1:.4f}")
+    
+    return {'Model': model_name, 'Accuracy': accuracy, 
+            'Precision': precision, 'Recall': recall, 'F1': f1}
+
+# 평가
+results_clf = []
+results_clf.append(evaluate_classification(y_test_clf, y_pred_lr_clf, 'Logistic Regression'))
+results_clf.append(evaluate_classification(y_test_clf, y_pred_rf_clf, 'Random Forest'))
+
+results_clf_df = pd.DataFrame(results_clf)
+print("\n=== 모델 비교 ===")
+print(results_clf_df)
 ```
 
-#### Precision
+**예제: 분류 리포트**
 
-* Positive로 예측한 것 중 실제 Positive
-* 오탐(False Positive) 최소화
+```{python}
+# 상세 분류 리포트
+print("\n=== Logistic Regression 상세 리포트 ===")
+print(classification_report(y_test_clf, y_pred_lr_clf))
 
-```python
-from sklearn.metrics import precision_score
+print("\n=== Random Forest 상세 리포트 ===")
+print(classification_report(y_test_clf, y_pred_rf_clf))
 ```
 
-#### Recall
+### ROC Curve와 AUC
 
-* 실제 Positive 중 맞춘 비율
-* 미탐(False Negative) 최소화
+ROC(Receiver Operating Characteristic) 곡선은 분류 임계값 변화에 따른 성능을 시각화한다.
 
-```python
-from sklearn.metrics import recall_score
+**예제: ROC Curve (이진 분류)**
+
+```{python}
+from sklearn.metrics import roc_curve, roc_auc_score
+from sklearn.preprocessing import label_binarize
+
+# 다중 클래스를 One-vs-Rest로 변환
+y_test_bin = label_binarize(y_test_clf, classes=pipe_lr_clf.classes_)
+n_classes = y_test_bin.shape[1]
+
+# 각 클래스별 ROC Curve
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+for i, class_name in enumerate(pipe_lr_clf.classes_):
+    # Logistic Regression
+    fpr, tpr, _ = roc_curve(y_test_bin[:, i], y_proba_lr_clf[:, i])
+    auc = roc_auc_score(y_test_bin[:, i], y_proba_lr_clf[:, i])
+    axes[0].plot(fpr, tpr, linewidth=2, label=f'{class_name} (AUC={auc:.3f})')
+
+axes[0].plot([0, 1], [0, 1], 'k--', linewidth=2, label='Random')
+axes[0].set_xlabel('False Positive Rate')
+axes[0].set_ylabel('True Positive Rate')
+axes[0].set_title('Logistic Regression: ROC Curves')
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
+
+for i, class_name in enumerate(rf_clf.classes_):
+    # Random Forest
+    fpr, tpr, _ = roc_curve(y_test_bin[:, i], y_proba_rf_clf[:, i])
+    auc = roc_auc_score(y_test_bin[:, i], y_proba_rf_clf[:, i])
+    axes[1].plot(fpr, tpr, linewidth=2, label=f'{class_name} (AUC={auc:.3f})')
+
+axes[1].plot([0, 1], [0, 1], 'k--', linewidth=2, label='Random')
+axes[1].set_xlabel('False Positive Rate')
+axes[1].set_ylabel('True Positive Rate')
+axes[1].set_title('Random Forest: ROC Curves')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
 ```
 
-#### F1-score
+### 다중 클래스 평가
 
-* Precision과 Recall의 조화 평균
-* 불균형 데이터에 적합
+다중 클래스 분류에서는 평균 방식이 중요하다.
 
-```python
-from sklearn.metrics import f1_score
+**평균 방식**
+
+| 방식 | 설명 | 사용 상황 |
+|------|------|----------|
+| macro | 각 클래스 평균 (동일 가중치) | 클래스 중요도 동일 |
+| weighted | 클래스 크기로 가중 평균 | 불균형 데이터 |
+| micro | 전체 TP, FP, FN 합산 후 계산 | 샘플 중심 평가 |
+
+**예제: 평균 방식 비교**
+
+```{python}
+# 다양한 평균 방식
+for avg in ['macro', 'weighted', 'micro']:
+    f1 = f1_score(y_test_clf, y_pred_rf_clf, average=avg)
+    print(f"F1-Score ({avg:8s}): {f1:.4f}")
 ```
-
-### ROC-AUC
-
-* 분류 임계값 변화에 따른 성능
-* 확률 기반 평가
-
-```python
-from sklearn.metrics import roc_auc_score
-```
-
-### 분류 예제 
-
-* species 분류 문제
-* 클래스 균형이 비교적 양호
-* Accuracy + F1 병행 권장
-
-## 다중 클래스 분류 평가 
-
-* macro 평균
-* micro 평균
-* weighted 평균
-
-```python
-from sklearn.metrics import classification_report
-
-print(classification_report(y_test, y_pred))
-```
-
-클래스 수가 늘어나면 **accuracy 단독 사용 금지**
 
 ## 군집 성능 평가
 
-군집은 **정답 라벨이 없는 경우**가 많다. 따라서 평가 방식도 다르다.
+군집 분석은 정답 라벨이 없는 경우가 많아 평가 방식이 다르다.
 
-### 내부 평가 지표 (라벨 없음)
+**군집 평가 유형**
 
-#### Silhouette Score
+| 유형 | 필요 정보 | 지표 |
+|------|----------|------|
+| 내부 평가 | 데이터만 | Silhouette, Davies-Bouldin, Calinski-Harabasz |
+| 외부 평가 | 정답 라벨 | ARI, NMI, Completeness, Homogeneity |
 
-* 군집 내 응집도 vs 군집 간 분리도
-* -1 ~ 1
+### 내부 평가 지표
 
-```python
-from sklearn.metrics import silhouette_score
+**예제: 군집 생성 및 내부 평가**
 
-silhouette_score(X_scaled, labels)
+```{python}
+from sklearn.cluster import KMeans
+from sklearn.metrics import (silhouette_score, davies_bouldin_score, 
+                              calinski_harabasz_score)
+
+# 데이터 표준화
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_clf)
+
+# K-Means 군집
+kmeans = KMeans(n_clusters=3, random_state=42)
+labels_kmeans = kmeans.fit_predict(X_scaled)
+
+# 내부 평가 지표
+silhouette = silhouette_score(X_scaled, labels_kmeans)
+davies_bouldin = davies_bouldin_score(X_scaled, labels_kmeans)
+calinski = calinski_harabasz_score(X_scaled, labels_kmeans)
+
+print("=== 군집 내부 평가 ===")
+print(f"Silhouette Score:        {silhouette:.4f} (높을수록 좋음, -1~1)")
+print(f"Davies-Bouldin Index:    {davies_bouldin:.4f} (낮을수록 좋음)")
+print(f"Calinski-Harabasz Score: {calinski:.2f} (높을수록 좋음)")
 ```
 
-#### Davies–Bouldin Index
+### 외부 평가 지표
 
-* 군집 간 유사도
-* 작을수록 좋음
+정답 라벨이 있는 경우(예: penguins의 실제 종)에만 사용 가능하다.
 
-```python
-from sklearn.metrics import davies_bouldin_score
+**예제: 외부 평가**
+
+```{python}
+from sklearn.metrics import (adjusted_rand_score, normalized_mutual_info_score,
+                              completeness_score, homogeneity_score, v_measure_score)
+
+# 외부 평가 지표 (실제 종과 비교)
+ari = adjusted_rand_score(y_clf, labels_kmeans)
+nmi = normalized_mutual_info_score(y_clf, labels_kmeans)
+completeness = completeness_score(y_clf, labels_kmeans)
+homogeneity = homogeneity_score(y_clf, labels_kmeans)
+v_measure = v_measure_score(y_clf, labels_kmeans)
+
+print("\n=== 군집 외부 평가 (vs 실제 종) ===")
+print(f"Adjusted Rand Index (ARI): {ari:.4f} (높을수록 좋음, -1~1)")
+print(f"Normalized Mutual Info:    {nmi:.4f} (높을수록 좋음, 0~1)")
+print(f"Completeness:              {completeness:.4f} (높을수록 좋음, 0~1)")
+print(f"Homogeneity:               {homogeneity:.4f} (높을수록 좋음, 0~1)")
+print(f"V-measure:                 {v_measure:.4f} (높을수록 좋음, 0~1)")
 ```
 
-### 외부 평가 지표 (라벨 존재 시)
+## 평가 지표 종합 비교
 
-penguins처럼 실제 종을 알고 있는 경우
+**문제 유형별 평가 지표**
 
-#### Adjusted Rand Index (ARI)
+| 문제 유형 | 주요 지표 | 보조 지표 |
+|----------|----------|----------|
+| 회귀 | RMSE, R² | MAE, MAPE |
+| 이진 분류 (균형) | F1-Score, ROC-AUC | Accuracy |
+| 이진 분류 (불균형) | Precision, Recall | F1, ROC-AUC |
+| 다중 분류 | F1 (macro/weighted) | Accuracy, Confusion Matrix |
+| 군집 (라벨 없음) | Silhouette | Davies-Bouldin |
+| 군집 (라벨 있음) | ARI | NMI, V-measure |
 
-```python
-from sklearn.metrics import adjusted_rand_score
+**상황별 중요 지표**
 
-adjusted_rand_score(true_labels, cluster_labels)
+| 상황 | 중요 지표 | 예시 |
+|------|----------|------|
+| 오탐 비용 높음 | Precision | 스팸 필터 (정상 메일 차단 최소화) |
+| 미탐 비용 높음 | Recall | 질병 진단 (환자 놓치지 않기) |
+| 클래스 불균형 | F1, ROC-AUC | 이상 거래 탐지 |
+| 해석 중요 | R², Confusion Matrix | 비즈니스 보고 |
+
+## 교차 검증
+
+단일 테스트셋 평가는 운에 좌우될 수 있으므로 교차 검증으로 안정적인 성능을 추정한다.
+
+**예제: 교차 검증**
+
+```{python}
+from sklearn.model_selection import cross_val_score
+
+# 5-Fold 교차 검증
+cv_scores = cross_val_score(pipe_lr_clf, X_clf, y_clf, cv=5, scoring='accuracy')
+
+print("=== 교차 검증 결과 ===")
+print(f"각 폴드 점수: {cv_scores}")
+print(f"평균: {cv_scores.mean():.4f}")
+print(f"표준편차: {cv_scores.std():.4f}")
+print(f"95% 신뢰구간: {cv_scores.mean():.4f} ± {1.96 * cv_scores.std():.4f}")
 ```
 
-## 평가 지표 선택 요약
+## 평가 체크리스트
 
-| 문제 유형 | 주요 지표                          |
-| ----- | ------------------------------ |
-| 회귀    | MAE, RMSE, R²                  |
-| 이진 분류 | Precision, Recall, F1, ROC-AUC |
-| 다중 분류 | F1 (macro/weighted)            |
-| 군집    | Silhouette, ARI                |
+**모델 평가 시 확인사항**
 
-## 평가 시 중요한 원칙
+- [ ] 적절한 평가 지표 선택 (문제 유형에 맞게)
+- [ ] 테스트 데이터로 평가 (데이터 누수 방지)
+- [ ] 여러 지표 종합 검토 (단일 지표 금지)
+- [ ] 교차 검증으로 안정성 확인
+- [ ] 혼동 행렬로 오류 패턴 분석
+- [ ] 잔차 분석 (회귀)
+- [ ] ROC Curve 확인 (분류)
+- [ ] 비즈니스 맥락 고려
 
-* 하나의 지표로 결론 내리지 않는다
-* 문제 맥락에 맞는 지표 선택
-* 항상 **테스트 데이터 기준 평가**
+## 요약
 
-모델 성능 평가는 숫자보다 **판단의 근거**다.
+이 장에서는 머신러닝 모델의 성능을 평가하는 다양한 지표와 방법을 학습했다. 주요 내용은 다음과 같다.
 
+**핵심 원칙**
+
+- **맥락 고려**: 문제와 비즈니스 상황에 맞는 지표 선택
+- **종합 평가**: 단일 지표가 아닌 다각도 검토
+- **테스트 기준**: 항상 테스트 데이터로 평가
+- **안정성**: 교차 검증으로 신뢰도 확보
+
+**주요 지표 요약**
+
+| 문제 | 균형 데이터 | 불균형 데이터 | 추가 고려 |
+|------|-----------|-------------|----------|
+| 회귀 | RMSE, R² | MAE | 잔차 분석 |
+| 분류 | Accuracy, F1 | Precision/Recall, F1 | 혼동 행렬, ROC |
+| 군집 | Silhouette | ARI (라벨 있는 경우) | 시각화 |
+
+**실무 가이드**
+
+1. **회귀**: RMSE로 시작, R²로 비교, 잔차로 진단
+2. **분류**: Confusion Matrix → F1 → ROC (순서대로)
+3. **군집**: Silhouette → 시각화 → ARI (가능 시)
+
+모델 성능 평가는 숫자를 계산하는 것이 아니라, 올바른 판단을 내리기 위한 근거를 제공하는 과정이다. 문제의 맥락을 이해하고 적절한 지표를 선택하는 것이 성공적인 머신러닝 프로젝트의 핵심이다.
