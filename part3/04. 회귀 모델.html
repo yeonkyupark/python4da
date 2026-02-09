@@ -453,7 +453,7 @@ window.Quarto = {
 
 <p>회귀 모델(Regression Models)은 입력 변수(X)와 연속형 타겟 변수(y) 사이의 관계를 학습하여 새로운 입력에 대한 수치값을 예측하는 지도 학습 모델이다. 예측 대상이 범주가 아닌 수치이며, 관계를 수학적 함수 형태로 모델링한다. 이 장에서는 선형 회귀부터 정규화 회귀(Ridge, Lasso, ElasticNet)까지 주요 회귀 모델의 원리와 실무 활용법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="9ed0cdfe" class="cell" data-execution_count="1">
+<div id="047939dc" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -558,7 +558,7 @@ window.Quarto = {
 <section id="데이터-준비-및-분할" class="level2" data-number="22.2">
 <h2 data-number="22.2" class="anchored" data-anchor-id="데이터-준비-및-분할"><span class="header-section-number">22.2</span> 데이터 준비 및 분할</h2>
 <p><strong>예제: 학습/테스트 분할</strong></p>
-<div id="375dfe4c" class="cell" data-execution_count="2">
+<div id="9135d692" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
@@ -632,7 +632,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 <section id="선형-회귀-실습" class="level3" data-number="22.3.1">
 <h3 data-number="22.3.1" class="anchored" data-anchor-id="선형-회귀-실습"><span class="header-section-number">22.3.1</span> 선형 회귀 실습</h3>
 <p><strong>예제: 선형 회귀 학습</strong></p>
-<div id="3b700329" class="cell" data-execution_count="3">
+<div id="a8c1bbff" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 생성 및 학습</span></span>
@@ -675,7 +675,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </div>
 </div>
 <p><strong>예제: 회귀 계수 시각화</strong></p>
-<div id="fb952b76" class="cell" data-execution_count="4">
+<div id="88cfe9de" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계수 시각화</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.barh(coef_df[<span class="st">'Feature'</span>], coef_df[<span class="st">'Coefficient'</span>])</span>
@@ -693,7 +693,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </div>
 </div>
 <p><strong>예제: 예측 vs 실제값</strong></p>
-<div id="5ee55e90" class="cell" data-execution_count="5">
+<div id="b836e60e" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 예측 vs 실제값 플롯</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(y_test, y_pred_test, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'k'</span>)</span>
@@ -722,7 +722,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </div>
 </div>
 <p><strong>예제: 잔차 분석</strong></p>
-<div id="80bb57af" class="cell" data-execution_count="6">
+<div id="92828373" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 계산</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_test <span class="op">-</span> y_pred_test</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -879,7 +879,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </tbody>
 </table>
 <p><strong>예제: Ridge 회귀</strong></p>
-<div id="77fc04f5" class="cell" data-execution_count="7">
+<div id="874c5650" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 표준화 (Ridge는 스케일에 민감)</span></span>
@@ -918,7 +918,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </div>
 </div>
 <p><strong>예제: Alpha 값에 따른 계수 변화</strong></p>
-<div id="f30e843e" class="cell" data-execution_count="8">
+<div id="65e1faca" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 alpha 값으로 실험</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>alphas <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> []</span>
@@ -992,7 +992,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \varepsilon
 </tbody>
 </table>
 <p><strong>예제: Lasso 회귀</strong></p>
-<div id="5cf08aaa" class="cell" data-execution_count="9">
+<div id="d5245966" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Lasso 회귀</span></span>
@@ -1033,7 +1033,7 @@ Lasso가 선택한 변수 수: 3/3
 </div>
 </div>
 <p><strong>예제: Lasso 변수 선택 시각화</strong></p>
-<div id="ef767c41" class="cell" data-execution_count="10">
+<div id="1855df42" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 alpha 값에서 변수 선택</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>alphas_lasso <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">50.0</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>coefs_lasso <span class="op">=</span> []</span>
@@ -1118,7 +1118,7 @@ Lasso가 선택한 변수 수: 3/3
 <li>변수 수 &gt; 샘플 수인 경우 유용</li>
 </ul>
 <p><strong>예제: ElasticNet</strong></p>
-<div id="6147c065" class="cell" data-execution_count="11">
+<div id="97006ccf" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> ElasticNet</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ElasticNet</span></span>
@@ -1204,7 +1204,7 @@ Lasso가 선택한 변수 수: 3/3
 </tbody>
 </table>
 <p><strong>예제: 모든 모델 성능 비교</strong></p>
-<div id="ca01a813" class="cell" data-execution_count="12">
+<div id="a966927b" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 모델 평가</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Linear Regression'</span>: lr,</span>
@@ -1317,7 +1317,7 @@ Lasso가 선택한 변수 수: 3/3
 <section id="하이퍼파라미터-튜닝" class="level2" data-number="22.10">
 <h2 data-number="22.10" class="anchored" data-anchor-id="하이퍼파라미터-튜닝"><span class="header-section-number">22.10</span> 하이퍼파라미터 튜닝</h2>
 <p><strong>예제: GridSearchCV로 최적 Alpha 찾기</strong></p>
-<div id="131d9195" class="cell" data-execution_count="13">
+<div id="9efd36ff" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1383,7 +1383,7 @@ Lasso가 선택한 변수 수: 3/3
 <li>✓ <strong>교차 검증</strong>: 하이퍼파라미터 튜닝 시 필수</li>
 </ul>
 <p><strong>예제: 올바른 파이프라인</strong></p>
-<div id="564e40ef" class="cell" data-execution_count="14">
+<div id="928893f0" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 최종 파이프라인</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>final_pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
