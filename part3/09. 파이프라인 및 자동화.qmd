@@ -278,7 +278,7 @@ from sklearn.model_selection import GridSearchCV
 # 파라미터 그리드 정의
 param_grid = {
     'model__C': [0.01, 0.1, 1.0, 10.0],
-    'model__penalty': ['l1', 'l2'],
+    'model__penalty': ['l2'],
     'model__solver': ['lbfgs']  # l1은 liblinear만 지원
 }
 
