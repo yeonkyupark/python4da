@@ -512,7 +512,7 @@ print(f"{test_f1:.4f}")
 import joblib
 
 # 모델 저장
-model_filename = '/home/claude/best_pipeline.pkl'
+model_filename = 'best_pipeline.pkl'
 joblib.dump(grid_rf.best_estimator_, model_filename)
 print(f"\n모델 저장 완료: {model_filename}")
 
