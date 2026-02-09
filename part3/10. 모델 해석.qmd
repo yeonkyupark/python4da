@@ -355,7 +355,7 @@ top2_features = perm_importance.head(2)['Feature'].tolist()
 
 fig, ax = plt.subplots(figsize=(14, 5))
 PartialDependenceDisplay.from_estimator(
-    rf, X_train, target='Adelie', top2_features, ax=ax
+    rf, X_train, top2_features, target='Adelie', ax=ax
 )
 plt.suptitle('Top 2 Features: Partial Dependence')
 plt.tight_layout()
