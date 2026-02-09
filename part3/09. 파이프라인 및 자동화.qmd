@@ -61,7 +61,10 @@ from sklearn.linear_model import LogisticRegression
 # ❌ 잘못된 예: 파이프라인 없음
 # 전체 데이터 스케일링 (데이터 누수!)
 scaler_wrong = StandardScaler()
-X_scaled_wrong = scaler_wrong.fit_transform(X)  # 테스트 데이터 정보 유출!
+
+X_scaled_wrong = X.copy()
+nul_cols = ["bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g"]
+X_scaled_wrong[nul_cols] = scaler_wrong.fit_transform(X_scaled_wrong[nul_cols])  # 테스트 데이터 정보 유출!
 
 # 데이터 분할
 X_train_wrong, X_test_wrong, y_train, y_test = train_test_split(
