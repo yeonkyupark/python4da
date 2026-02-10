@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>분류 모델(Classification Models)은 입력 변수(X)를 기반으로 범주형 타겟 변수(y)를 예측하는 지도 학습 모델이다. 회귀와 달리 출력이 이산적인 클래스이며, 새로운 데이터가 어느 범주에 속하는지 판단한다. 이 장에서는 로지스틱 회귀, k-NN, 결정 트리, 랜덤 포레스트 등 주요 분류 모델의 원리와 실무 활용법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="fad0ff1d" class="cell" data-execution_count="1">
+<div id="9129cb56" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -571,7 +571,7 @@ Name: count, dtype: int64
 <section id="데이터-준비" class="level2" data-number="23.2">
 <h2 data-number="23.2" class="anchored" data-anchor-id="데이터-준비"><span class="header-section-number">23.2</span> 데이터 준비</h2>
 <p><strong>예제: 학습/테스트 분할</strong></p>
-<div id="37bd57eb" class="cell" data-execution_count="2">
+<div id="69a9fad3" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 분할 (stratify로 클래스 비율 유지)</span></span>
@@ -676,7 +676,7 @@ Name: count, dtype: float64</code></pre>
 <section id="로지스틱-회귀-실습" class="level3" data-number="23.3.1">
 <h3 data-number="23.3.1" class="anchored" data-anchor-id="로지스틱-회귀-실습"><span class="header-section-number">23.3.1</span> 로지스틱 회귀 실습</h3>
 <p><strong>예제: 로지스틱 회귀 학습</strong></p>
-<div id="7e250270" class="cell" data-execution_count="3">
+<div id="abdbdddb" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프라인 구성 (스케일링 + 모델)</span></span>
@@ -716,7 +716,7 @@ weighted avg       1.00      1.00      1.00        67
 </div>
 </div>
 <p><strong>예제: 혼동 행렬 시각화</strong></p>
-<div id="49e9ba8d" class="cell" data-execution_count="4">
+<div id="b0de6ca0" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 혼동 행렬</span></span>
@@ -740,7 +740,7 @@ weighted avg       1.00      1.00      1.00        67
 </div>
 </div>
 <p><strong>예제: 확률 출력 확인</strong></p>
-<div id="4459acf3" class="cell" data-execution_count="5">
+<div id="02749b8c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 확률 출력 (처음 5개 샘플)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== 예측 확률 (처음 5개) ==="</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>proba_df <span class="op">=</span> pd.DataFrame(</span>
@@ -836,7 +836,7 @@ weighted avg       1.00      1.00      1.00        67
 <section id="k-nn-실습" class="level3" data-number="23.4.1">
 <h3 data-number="23.4.1" class="anchored" data-anchor-id="k-nn-실습"><span class="header-section-number">23.4.1</span> k-NN 실습</h3>
 <p><strong>예제: k-NN 학습</strong></p>
-<div id="fad86d6b" class="cell" data-execution_count="6">
+<div id="7b2b3ac4" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 파이프라인 구성</span></span>
@@ -873,7 +873,7 @@ weighted avg       1.00      1.00      1.00        67
 </div>
 </div>
 <p><strong>예제: k 값 튜닝</strong></p>
-<div id="409c29f8" class="cell" data-execution_count="7">
+<div id="aa8d4f5c" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 k 값으로 실험</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>k_values <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">21</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>accuracies <span class="op">=</span> []</span>
@@ -989,7 +989,7 @@ weighted avg       1.00      1.00      1.00        67
 <section id="결정-트리-실습" class="level3" data-number="23.5.1">
 <h3 data-number="23.5.1" class="anchored" data-anchor-id="결정-트리-실습"><span class="header-section-number">23.5.1</span> 결정 트리 실습</h3>
 <p><strong>예제: 결정 트리 학습</strong></p>
-<div id="f8017940" class="cell" data-execution_count="8">
+<div id="7ae7933e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 결정 트리 (스케일링 불필요)</span></span>
@@ -1025,7 +1025,7 @@ weighted avg       0.95      0.94      0.94        67
 </div>
 </div>
 <p><strong>예제: 트리 시각화</strong></p>
-<div id="4d3a99b0" class="cell" data-execution_count="9">
+<div id="12b1f5b4" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 트리 구조 시각화</span></span>
@@ -1048,7 +1048,7 @@ weighted avg       0.95      0.94      0.94        67
 </div>
 </div>
 <p><strong>예제: 변수 중요도</strong></p>
-<div id="b73597df" class="cell" data-execution_count="10">
+<div id="3df013a6" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변수 중요도</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
@@ -1171,7 +1171,7 @@ weighted avg       0.95      0.94      0.94        67
 <section id="랜덤-포레스트-실습" class="level3" data-number="23.6.1">
 <h3 data-number="23.6.1" class="anchored" data-anchor-id="랜덤-포레스트-실습"><span class="header-section-number">23.6.1</span> 랜덤 포레스트 실습</h3>
 <p><strong>예제: 랜덤 포레스트 학습</strong></p>
-<div id="31d573b9" class="cell" data-execution_count="11">
+<div id="5276e73d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 랜덤 포레스트</span></span>
@@ -1209,7 +1209,7 @@ weighted avg       0.97      0.97      0.97        67
 </div>
 </div>
 <p><strong>예제: 변수 중요도</strong></p>
-<div id="2f9cc53c" class="cell" data-execution_count="12">
+<div id="67b719ff" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변수 중요도</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rf_importance <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
@@ -1244,7 +1244,7 @@ weighted avg       0.97      0.97      0.97        67
 </div>
 </div>
 <p><strong>예제: 트리 개수에 따른 성능</strong></p>
-<div id="67201571" class="cell" data-execution_count="13">
+<div id="2081d8b3" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n_estimators 영향 확인</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>n_trees <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">500</span>]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>accuracies_rf <span class="op">=</span> []</span>
@@ -1344,7 +1344,7 @@ weighted avg       0.97      0.97      0.97        67
 </tbody>
 </table>
 <p><strong>예제: 모든 모델 성능 비교</strong></p>
-<div id="8bc3c71e" class="cell" data-execution_count="14">
+<div id="258fc3be" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 모든 모델 성능 비교</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> {</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Logistic Regression'</span>: pipe_lr,</span>
