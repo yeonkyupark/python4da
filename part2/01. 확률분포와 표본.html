@@ -454,7 +454,7 @@ window.Quarto = {
 
 <p>통계적 추론의 출발점은 데이터가 어떤 확률분포에서 생성되었는지를 이해하는 것이다. 확률분포는 데이터의 불확실성을 수학적으로 모델링하며, 이를 통해 데이터의 패턴을 파악하고 미래를 예측할 수 있다. 또한 표본과 모집단의 관계를 이해하면, 제한된 데이터로부터 전체에 대한 결론을 도출할 수 있다. 이 장에서는 대표적인 확률분포와 표본 개념, 그리고 통계적 추론의 핵심인 중심극한정리를 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="fe115980" class="cell" data-execution_count="1">
+<div id="6c1d09cf" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -615,7 +615,7 @@ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\righ
 <li>중심극한정리의 핵심</li>
 </ul>
 <p><strong>예제: 연속형 변수의 분포 시각화</strong></p>
-<div id="d938f594" class="cell" data-execution_count="2">
+<div id="dc94fb14" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 체중 분포 확인</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -664,7 +664,7 @@ Name: body_mass_g, dtype: float64
 </div>
 <p>Q-Q 플롯이 직선에 가까우면 정규분포에 가깝다고 판단할 수 있다.</p>
 <p><strong>예제: 정규성 검정</strong></p>
-<div id="7c1fd417" class="cell" data-execution_count="3">
+<div id="032eeaff" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shapiro-Wilk 검정 (정규성 검정)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>statistic, p_value <span class="op">=</span> stats.shapiro(df[<span class="st">"body_mass_g"</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -687,7 +687,7 @@ p-value: 0.0000
 <section id="기타-연속형-분포" class="level3" data-number="11.2.3">
 <h3 data-number="11.2.3" class="anchored" data-anchor-id="기타-연속형-분포"><span class="header-section-number">11.2.3</span> 기타 연속형 분포</h3>
 <p><strong>예제: 다양한 연속형 분포 시각화</strong></p>
-<div id="46fb0a7f" class="cell" data-execution_count="4">
+<div id="ba7b642b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이론적 분포 시각화</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">1000</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -793,7 +793,7 @@ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
 \]</span></p>
 <p>여기서 n은 시행 횟수, k는 성공 횟수, p는 각 시행의 성공 확률이다.</p>
 <p><strong>예제: 이산형 변수의 분포</strong></p>
-<div id="6afc00d1" class="cell" data-execution_count="5">
+<div id="b540b3a0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종별 개체 수 확인</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>species_counts <span class="op">=</span> df[<span class="st">"species"</span>].value_counts()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -841,7 +841,7 @@ Name: count, dtype: float64</code></pre>
 </div>
 </div>
 <p><strong>예제: 이항분포 시뮬레이션</strong></p>
-<div id="943e2a75" class="cell" data-execution_count="6">
+<div id="698c65ad" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 동전 던지기 100번을 1000회 반복</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n_trials <span class="op">=</span> <span class="dv">100</span>  <span class="co"># 각 실험에서 동전을 던지는 횟수</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>p_success <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># 앞면이 나올 확률</span></span>
@@ -874,9 +874,9 @@ Name: count, dtype: float64</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>이론적 평균: 50.0
-시뮬레이션 평균: 49.81
+시뮬레이션 평균: 50.01
 이론적 표준편차: 5.00
-시뮬레이션 표준편차: 5.16</code></pre>
+시뮬레이션 표준편차: 5.10</code></pre>
 </div>
 </div>
 </section>
@@ -978,7 +978,7 @@ Name: count, dtype: float64</code></pre>
 <li><strong>표본 평균의 분포</strong>: 여러 표본에서 계산한 평균들의 분포</li>
 </ul>
 <p><strong>예제: 표본 평균 분포 시뮬레이션</strong></p>
-<div id="246f87a4" class="cell" data-execution_count="7">
+<div id="e39a34fb" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 원본 데이터 (모집단으로 가정)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>body_mass <span class="op">=</span> df[<span class="st">"body_mass_g"</span>].values</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1006,13 +1006,13 @@ Name: count, dtype: float64</code></pre>
 모집단 평균: 4207.06
 모집단 표준편차: 804.01
 
-표본 평균의 평균: 4210.16
-표본 평균의 표준편차(표준오차): 144.32
+표본 평균의 평균: 4202.84
+표본 평균의 표준편차(표준오차): 154.50
 이론적 표준오차: 146.79</code></pre>
 </div>
 </div>
 <p><strong>예제: 원본 데이터 vs 표본 평균 분포</strong></p>
-<div id="c36fc38c" class="cell" data-execution_count="8">
+<div id="95817969" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 시각화</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1067,7 +1067,7 @@ Name: count, dtype: float64</code></pre>
 <li><strong>동일 분포</strong>: 같은 모집단에서 추출 (i.i.d.: independent and identically distributed)</li>
 </ul>
 <p><strong>예제: 표본 크기에 따른 정규성 개선</strong></p>
-<div id="c348cb33" class="cell" data-execution_count="9">
+<div id="e30d9633" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 표본 크기로 실험</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
@@ -1099,7 +1099,7 @@ Name: count, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="01. 확률분포와 표본_files/figure-html/cell-10-output-1.png" width="1332" height="950" class="figure-img"></p>
+<p><img src="01. 확률분포와 표본_files/figure-html/cell-10-output-1.png" width="1334" height="950" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1154,7 +1154,7 @@ Name: count, dtype: float64</code></pre>
 <li><strong>예측 구간</strong>: 미래 값의 불확실성 정량화</li>
 </ul>
 <p><strong>예제: 비정규 분포에서의 중심극한정리</strong></p>
-<div id="8f66db4b" class="cell" data-execution_count="10">
+<div id="723c80d0" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 극단적으로 왜곡된 분포 (지수분포) 생성</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>exponential_data <span class="op">=</span> np.random.exponential(scale<span class="op">=</span><span class="dv">2</span>, size<span class="op">=</span><span class="dv">10000</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1194,8 +1194,8 @@ Name: count, dtype: float64</code></pre>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>원본 데이터 왜도: 1.961
-표본 평균 왜도: 0.389</code></pre>
+<pre><code>원본 데이터 왜도: 1.894
+표본 평균 왜도: 0.217</code></pre>
 </div>
 </div>
 <p>원본 데이터는 극도로 왜곡되어 있지만, 표본 평균의 분포는 정규분포에 매우 가깝다는 것을 확인할 수 있다.</p>

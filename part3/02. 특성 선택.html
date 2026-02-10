@@ -433,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>특성 선택(Feature Selection)은 모델 학습에 사용되는 입력 변수 중에서 중요한 특성만 선별하는 과정이다. 모든 변수를 사용하는 것이 항상 최선은 아니며, 불필요하거나 중복된 특성은 오히려 모델 성능을 저하시키고 과적합을 유발할 수 있다. 이 장에서는 필터(Filter), 래퍼(Wrapper), 임베디드(Embedded) 방법의 원리와 실무 적용 전략을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="ef75f714" class="cell" data-execution_count="1">
+<div id="41f7df02" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -590,7 +590,7 @@ Length: 3, dtype: str</code></pre>
 </tbody>
 </table>
 <p><strong>예제: 특성 선택 vs 특성 추출</strong></p>
-<div id="c03e404d" class="cell" data-execution_count="2">
+<div id="2c584b7a" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -697,7 +697,7 @@ Length: 3, dtype: str</code></pre>
 <h3 data-number="20.3.1" class="anchored" data-anchor-id="분산-기반-선택"><span class="header-section-number">20.3.1</span> 분산 기반 선택</h3>
 <p>분산이 거의 없는 변수는 정보량이 적으므로 제거한다.</p>
 <p><strong>예제: 분산 기반 선택</strong></p>
-<div id="efdc0b74" class="cell" data-execution_count="3">
+<div id="ec6efec9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> VarianceThreshold</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터에 분산이 낮은 변수 추가 (예시)</span></span>
@@ -718,7 +718,7 @@ Length: 3, dtype: str</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== 분산 확인 ===
 constant_feature             0.000000
-low_variance_feature         0.003495
+low_variance_feature         0.003277
 bill_depth_mm                3.877888
 bill_length_mm              29.906333
 flipper_length_mm          196.441677
@@ -735,7 +735,7 @@ dtype: float64
 <h3 data-number="20.3.2" class="anchored" data-anchor-id="상관계수-기반-선택"><span class="header-section-number">20.3.2</span> 상관계수 기반 선택</h3>
 <p>타겟 변수와의 상관관계를 측정하여 중요한 변수를 선택한다.</p>
 <p><strong>예제: 상관계수 기반 선택</strong></p>
-<div id="13a68995" class="cell" data-execution_count="4">
+<div id="6659a54d" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 분류 문제를 위해 타겟을 수치형으로 변환</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -785,7 +785,7 @@ dtype: float64
 <h3 data-number="20.3.3" class="anchored" data-anchor-id="통계적-검정-selectkbest"><span class="header-section-number">20.3.3</span> 통계적 검정 (SelectKBest)</h3>
 <p>통계적 유의성을 기반으로 상위 k개 변수를 선택한다.</p>
 <p><strong>예제: SelectKBest (ANOVA F-test)</strong></p>
-<div id="28eb9a45" class="cell" data-execution_count="5">
+<div id="cb0c179f" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif, chi2</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ANOVA F-test 기반 선택</span></span>
@@ -909,7 +909,7 @@ dtype: float64
 <li>원하는 특성 개수까지 반복</li>
 </ol>
 <p><strong>예제: RFE</strong></p>
-<div id="4ff20b7a" class="cell" data-execution_count="6">
+<div id="61d7a058" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -964,7 +964,7 @@ dtype: float64
 <h3 data-number="20.4.2" class="anchored" data-anchor-id="rfecv-교차-검증-포함"><span class="header-section-number">20.4.2</span> RFECV (교차 검증 포함)</h3>
 <p>RFECV는 교차 검증을 통해 최적의 특성 개수를 자동으로 찾는다.</p>
 <p><strong>예제: RFECV</strong></p>
-<div id="e427f9bd" class="cell" data-execution_count="7">
+<div id="87b081c3" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFECV</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># RFECV 수행</span></span>
@@ -1005,7 +1005,7 @@ dtype: float64
 <section id="순차-특성-선택" class="level3" data-number="20.4.3">
 <h3 data-number="20.4.3" class="anchored" data-anchor-id="순차-특성-선택"><span class="header-section-number">20.4.3</span> 순차 특성 선택</h3>
 <p><strong>예제: 전진 선택 (Sequential Feature Selector)</strong></p>
-<div id="d492f139" class="cell" data-execution_count="8">
+<div id="e1db494f" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 전진 선택</span></span>
@@ -1075,7 +1075,7 @@ dtype: float64
 <h3 data-number="20.5.1" class="anchored" data-anchor-id="l1-정규화-lasso"><span class="header-section-number">20.5.1</span> L1 정규화 (Lasso)</h3>
 <p>L1 정규화는 중요하지 않은 특성의 계수를 정확히 0으로 만들어 자동 선택한다.</p>
 <p><strong>예제: Lasso 기반 선택</strong></p>
-<div id="ae1be77a" class="cell" data-execution_count="9">
+<div id="274db31d" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LassoCV</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1110,8 +1110,8 @@ dtype: float64
 <div class="cell-output cell-output-stdout">
 <pre><code>=== Lasso (L1 정규화) ===
              Feature  Coefficient
-0     bill_length_mm     4.966741
-1      bill_depth_mm     1.977810
+0     bill_length_mm     4.989292
+1      bill_depth_mm     1.982914
 2  flipper_length_mm     0.000000
 3        body_mass_g     0.000000
 
@@ -1130,7 +1130,7 @@ dtype: float64
 <h3 data-number="20.5.2" class="anchored" data-anchor-id="트리-기반-특성-중요도"><span class="header-section-number">20.5.2</span> 트리 기반 특성 중요도</h3>
 <p>결정트리, 랜덤 포레스트, Gradient Boosting 등은 특성 중요도를 자동으로 제공한다.</p>
 <p><strong>예제: 랜덤 포레스트 특성 중요도</strong></p>
-<div id="6c7b5e5c" class="cell" data-execution_count="10">
+<div id="9142fe03" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 랜덤 포레스트 학습</span></span>
@@ -1170,7 +1170,7 @@ dtype: float64
 </div>
 </div>
 <p><strong>예제: SelectFromModel</strong></p>
-<div id="8a39e344" class="cell" data-execution_count="11">
+<div id="0eea48d8" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 중요도 기반 자동 선택</span></span>
@@ -1280,7 +1280,7 @@ dtype: float64
 </tbody>
 </table>
 <p><strong>예제: 종합 파이프라인</strong></p>
-<div id="818d4de1" class="cell" data-execution_count="12">
+<div id="fd5f4ffb" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 분산 제거</span></span>

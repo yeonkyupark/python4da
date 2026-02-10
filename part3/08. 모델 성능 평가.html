@@ -460,7 +460,7 @@ window.Quarto = {
 
 <p>모델 성능 평가(Model Evaluation)는 머신러닝 모델이 얼마나 잘 작동하는지 측정하고 판단하는 과정이다. 단순히 “정확한가?”를 묻는 것이 아니라, “새로운 데이터에서도 잘 작동하는가?”, “어떤 유형의 오류를 범하는가?”, “모델 간 공정한 비교가 가능한가?”를 파악하는 것이 목적이다. 문제 유형(회귀/분류/군집)과 비즈니스 맥락에 따라 적절한 평가 지표를 선택하는 것이 중요하다. 이 장에서는 회귀, 분류, 군집 문제별 주요 평가 지표의 의미와 활용법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="7424fd47" class="cell" data-execution_count="1">
+<div id="389d3dd8" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -593,7 +593,7 @@ window.Quarto = {
 <section id="회귀-실습" class="level3" data-number="26.2.1">
 <h3 data-number="26.2.1" class="anchored" data-anchor-id="회귀-실습"><span class="header-section-number">26.2.1</span> 회귀 실습</h3>
 <p><strong>예제: 데이터 준비 및 모델 학습</strong></p>
-<div id="f21f22ff" class="cell" data-execution_count="2">
+<div id="20f9ada1" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -618,7 +618,7 @@ window.Quarto = {
 </div>
 </div>
 <p><strong>예제: 회귀 평가 지표 계산</strong></p>
-<div id="a5948abd" class="cell" data-execution_count="3">
+<div id="f8e9a422" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_absolute_error, mean_squared_error, r2_score</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> evaluate_regression(y_true, y_pred, model_name):</span>
@@ -665,7 +665,7 @@ R²:   0.8304
 </div>
 </div>
 <p><strong>예제: 잔차 분석</strong></p>
-<div id="c013fecb" class="cell" data-execution_count="4">
+<div id="c3e16316" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 잔차 계산</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>residuals_lr <span class="op">=</span> y_test_reg <span class="op">-</span> y_pred_lr</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>residuals_rf <span class="op">=</span> y_test_reg <span class="op">-</span> y_pred_rf</span>
@@ -803,7 +803,7 @@ R²:   0.8304
 <section id="분류-실습" class="level3" data-number="26.3.2">
 <h3 data-number="26.3.2" class="anchored" data-anchor-id="분류-실습"><span class="header-section-number">26.3.2</span> 분류 실습</h3>
 <p><strong>예제: 데이터 준비 및 모델 학습</strong></p>
-<div id="054f405f" class="cell" data-execution_count="5">
+<div id="140deeaa" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
@@ -834,7 +834,7 @@ R²:   0.8304
 </div>
 </div>
 <p><strong>예제: 혼동 행렬 시각화</strong></p>
-<div id="c7f1e190" class="cell" data-execution_count="6">
+<div id="3e1e805d" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -922,7 +922,7 @@ R²:   0.8304
 </tbody>
 </table>
 <p><strong>예제: 분류 평가 지표 계산</strong></p>
-<div id="abb5496a" class="cell" data-execution_count="7">
+<div id="fa19cf3c" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (accuracy_score, precision_score, recall_score, </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                              f1_score, classification_report)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -971,7 +971,7 @@ F1-Score:  0.9709
 </div>
 </div>
 <p><strong>예제: 분류 리포트</strong></p>
-<div id="291bb83a" class="cell" data-execution_count="8">
+<div id="e280234e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상세 분류 리포트</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Logistic Regression 상세 리포트 ==="</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test_clf, y_pred_lr_clf))</span>
@@ -1010,7 +1010,7 @@ weighted avg       0.97      0.97      0.97        67
 <h3 data-number="26.3.4" class="anchored" data-anchor-id="roc-curve와-auc"><span class="header-section-number">26.3.4</span> ROC Curve와 AUC</h3>
 <p>ROC(Receiver Operating Characteristic) 곡선은 분류 임계값 변화에 따른 성능을 시각화한다.</p>
 <p><strong>예제: ROC Curve (이진 분류)</strong></p>
-<div id="c4b29ac4" class="cell" data-execution_count="9">
+<div id="3f0e5275" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, roc_auc_score</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> label_binarize</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1089,7 +1089,7 @@ weighted avg       0.97      0.97      0.97        67
 </tbody>
 </table>
 <p><strong>예제: 평균 방식 비교</strong></p>
-<div id="316a8b0d" class="cell" data-execution_count="10">
+<div id="ecf8d028" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 평균 방식</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> avg <span class="kw">in</span> [<span class="st">'macro'</span>, <span class="st">'weighted'</span>, <span class="st">'micro'</span>]:</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    f1 <span class="op">=</span> f1_score(y_test_clf, y_pred_rf_clf, average<span class="op">=</span>avg)</span>
@@ -1130,7 +1130,7 @@ F1-Score (micro   ): 0.9701</code></pre>
 <section id="내부-평가-지표" class="level3" data-number="26.4.1">
 <h3 data-number="26.4.1" class="anchored" data-anchor-id="내부-평가-지표"><span class="header-section-number">26.4.1</span> 내부 평가 지표</h3>
 <p><strong>예제: 군집 생성 및 내부 평가</strong></p>
-<div id="68c9e59f" class="cell" data-execution_count="11">
+<div id="01bace8a" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (silhouette_score, davies_bouldin_score, </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                              calinski_harabasz_score)</span>
@@ -1164,7 +1164,7 @@ Calinski-Harabasz Score: 427.77 (높을수록 좋음)</code></pre>
 <h3 data-number="26.4.2" class="anchored" data-anchor-id="외부-평가-지표"><span class="header-section-number">26.4.2</span> 외부 평가 지표</h3>
 <p>정답 라벨이 있는 경우(예: penguins의 실제 종)에만 사용 가능하다.</p>
 <p><strong>예제: 외부 평가</strong></p>
-<div id="07f4a32d" class="cell" data-execution_count="12">
+<div id="afb85ed6" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (adjusted_rand_score, normalized_mutual_info_score,</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                              completeness_score, homogeneity_score, v_measure_score)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1274,7 +1274,7 @@ V-measure:                 0.7899 (높을수록 좋음, 0~1)</code></pre>
 <h2 data-number="26.6" class="anchored" data-anchor-id="교차-검증"><span class="header-section-number">26.6</span> 교차 검증</h2>
 <p>단일 테스트셋 평가는 운에 좌우될 수 있으므로 교차 검증으로 안정적인 성능을 추정한다.</p>
 <p><strong>예제: 교차 검증</strong></p>
-<div id="e5ad96f3" class="cell" data-execution_count="13">
+<div id="bb071160" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 5-Fold 교차 검증</span></span>
