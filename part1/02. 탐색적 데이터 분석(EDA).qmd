@@ -84,7 +84,7 @@ df.describe()
 ```{python}
 #| warning: false
 # 범주형 컬럼의 기술 통계량
-df.describe(include="object")
+df.describe(include=["object", "str"])
 ```
 
 위 결과에서 확인할 수 있는 정보는 다음과 같다.
@@ -135,6 +135,7 @@ df["species"].value_counts()
 
 ```{python}
 # 종별 분포 막대 그래프
+plt.figure(figsize=(6,4))
 sns.countplot(data=df, x="species")
 plt.title("Distribution of Penguin Species")
 plt.xlabel("Species")
@@ -150,6 +151,7 @@ plt.show()
 
 ```{python}
 # 성별 분포 막대 그래프
+plt.figure(figsize=(6,4))
 sns.countplot(data=df, x="sex")
 plt.title("Distribution of Penguin Sex")
 plt.xlabel("Sex")
@@ -157,7 +159,7 @@ plt.ylabel("Count")
 plt.show()
 ```
 
-## 수치형 변수 분포 확인
+## 수치형 변수 탐색
 
 수치형 변수의 분포를 시각화하면 데이터의 중심, 퍼짐 정도, 왜도(skewness), 이상치 등을 직관적으로 파악할 수 있다.
 
@@ -169,7 +171,7 @@ plt.show()
 
 ```{python}
 # 모든 수치형 변수의 히스토그램
-df.hist(bins=20, figsize=(10, 8))
+df.hist(bins=20, figsize=(6,4))
 plt.tight_layout()
 plt.suptitle("Histograms of Numeric Variables", y=1.02)
 plt.show()
@@ -183,7 +185,7 @@ plt.show()
 
 ```{python}
 # 종별 체중 분포 박스플롯
-plt.figure(figsize=(8, 4))
+plt.figure(figsize=(6,4))
 sns.boxplot(data=df, x="species", y="body_mass_g")
 plt.title("Body Mass Distribution by Species")
 plt.xlabel("Species")
@@ -213,6 +215,7 @@ plt.show()
 
 ```{python}
 # 부리 길이와 깊이의 산점도 (종별 구분)
+plt.figure(figsize=(6,4))
 sns.scatterplot(
     data=df,
     x="bill_length_mm",
@@ -237,7 +240,8 @@ plt.show()
 sns.pairplot(
     df,
     hue="species",
-    diag_kind="hist"
+    diag_kind="hist",
+    height=2
 )
 plt.suptitle("Pairplot of Penguin Features", y=1.02)
 plt.show()
@@ -267,7 +271,10 @@ df.groupby("species")[["bill_length_mm", "body_mass_g"]].mean()
 
 ```{python}
 # 종별 다양한 통계량 확인
-df.groupby("species")[["bill_length_mm", "body_mass_g"]].agg(["mean", "std", "median"])
+df.groupby("species")[["bill_length_mm", "body_mass_g"]].agg(["mean",
+ "std",
+ "median",
+ lambda x : x.dropna().quantile(0.75)-x.dropna().quantile(0.25)])
 ```
 
 ## 요약
@@ -284,6 +291,7 @@ df.groupby("species")[["bill_length_mm", "body_mass_g"]].agg(["mean", "std", "me
 | 분포 확인 | 히스토그램, 박스플롯 | 데이터 분포와 이상치 탐색 |
 | 관계 탐색 | 산점도, 페어플롯 | 변수 간 상관성과 패턴 발견 |
 | 그룹 비교 | `groupby()` | 그룹별 통계적 차이 확인 |
+
 
 **주요 발견 사항 (펭귄 데이터 예시)**
 
