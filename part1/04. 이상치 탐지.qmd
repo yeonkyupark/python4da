@@ -154,6 +154,8 @@ Z-score는 각 값이 평균으로부터 표준편차의 몇 배만큼 떨어져
 ```{python}
 from scipy.stats import zscore
 
+df_num = df[num_cols].copy().dropna()
+
 # Z-score 계산
 z_scores = df_num.apply(zscore)
 
@@ -172,7 +174,7 @@ print(z_scores.head())
 outlier_z = (np.abs(z_scores) > 3).any(axis=1)
 
 # 이상치 제거
-df_z_clean = df[~outlier_z]
+df_z_clean = df_num[~outlier_z]
 
 print(f"원본 데이터: {df.shape}")
 print(f"Z-score 이상치 제거 후: {df_z_clean.shape}")
