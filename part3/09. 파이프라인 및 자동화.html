@@ -432,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>파이프라인(Pipeline)은 머신러닝 워크플로우의 전처리, 모델링, 평가 단계를 하나의 객체로 묶어 자동화하는 강력한 도구이다. 실무에서 가장 흔한 실수인 데이터 누수, 전처리 불일치, 재현 불가능한 실험을 구조적으로 방지한다. 파이프라인과 하이퍼파라미터 최적화(GridSearchCV, RandomizedSearchCV)를 결합하면 효율적이고 신뢰할 수 있는 머신러닝 워크플로우를 구축할 수 있다. 이 장에서는 파이프라인의 개념부터 실무 활용까지 체계적으로 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="39ab3ebb" class="cell" data-execution_count="1">
+<div id="79cbd094" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -533,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>예제: 파이프라인 없는 경우 vs 있는 경우</strong></p>
-<div id="37f03be1" class="cell" data-execution_count="2">
+<div id="8c9985f5" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -613,7 +613,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="기본-파이프라인-실습" class="level3" data-number="27.2.1">
 <h3 data-number="27.2.1" class="anchored" data-anchor-id="기본-파이프라인-실습"><span class="header-section-number">27.2.1</span> 기본 파이프라인 실습</h3>
 <p><strong>예제: 간단한 파이프라인</strong></p>
-<div id="889c3d72" class="cell" data-execution_count="3">
+<div id="afc624d5" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 수치형 변수만 사용</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X_num <span class="op">=</span> X.select_dtypes(include<span class="op">=</span>[np.number])</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_train_num, X_test_num, y_train, y_test <span class="op">=</span> train_test_split(</span>
@@ -652,7 +652,7 @@ model: LogisticRegression(max_iter=1000, random_state=42)</code></pre>
 </div>
 </div>
 <p><strong>예제: 파이프라인 내부 접근</strong></p>
-<div id="44c789e2" class="cell" data-execution_count="4">
+<div id="30e3b303" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 특정 단계 접근</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> pipe_basic.named_steps[<span class="st">'scaler'</span>]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> pipe_basic.named_steps[<span class="st">'model'</span>]</span>
@@ -690,7 +690,7 @@ model: LogisticRegression(max_iter=1000, random_state=42)</code></pre>
 <section id="columntransformer-실습" class="level3" data-number="27.3.1">
 <h3 data-number="27.3.1" class="anchored" data-anchor-id="columntransformer-실습"><span class="header-section-number">27.3.1</span> ColumnTransformer 실습</h3>
 <p><strong>예제: 수치형 + 범주형 전처리</strong></p>
-<div id="27c1836e" class="cell" data-execution_count="5">
+<div id="ede11deb" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -728,7 +728,7 @@ model: LogisticRegression(max_iter=1000, random_state=42)</code></pre>
 </div>
 </div>
 <p><strong>예제: 변환된 특성 이름 확인</strong></p>
-<div id="4481d287" class="cell" data-execution_count="6">
+<div id="32c7d389" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 변환 후 특성 이름</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>preprocessor_fitted <span class="op">=</span> pipe_full.named_steps[<span class="st">'preprocessor'</span>]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -821,7 +821,7 @@ model: LogisticRegression(max_iter=1000, random_state=42)</code></pre>
 <section id="gridsearchcv-실습" class="level3" data-number="27.5.1">
 <h3 data-number="27.5.1" class="anchored" data-anchor-id="gridsearchcv-실습"><span class="header-section-number">27.5.1</span> GridSearchCV 실습</h3>
 <p><strong>예제: GridSearchCV로 최적 파라미터 찾기</strong></p>
-<div id="d4d9d264" class="cell" data-execution_count="7">
+<div id="514fcabc" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 파라미터 그리드 정의</span></span>
@@ -869,7 +869,7 @@ Fitting 5 folds for each of 4 candidates, totalling 20 fits</code></pre>
 </div>
 </div>
 <p><strong>예제: GridSearchCV 결과 시각화</strong></p>
-<div id="520c29ce" class="cell" data-execution_count="8">
+<div id="40695578" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과를 DataFrame으로 변환</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>results_df <span class="op">=</span> pd.DataFrame(grid_search.cv_results_)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -904,7 +904,7 @@ Fitting 5 folds for each of 4 candidates, totalling 20 fits</code></pre>
 </div>
 </div>
 <p><strong>예제: 상위 5개 조합 확인</strong></p>
-<div id="e75ab255" class="cell" data-execution_count="9">
+<div id="9c79b1a4" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 성능 상위 5개 조합</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>top5 <span class="op">=</span> results_df.nsmallest(<span class="dv">5</span>, <span class="st">'rank_test_score'</span>)[</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'params'</span>, <span class="st">'mean_test_score'</span>, <span class="st">'std_test_score'</span>, <span class="st">'rank_test_score'</span>]</span>
@@ -946,7 +946,7 @@ Fitting 5 folds for each of 4 candidates, totalling 20 fits</code></pre>
 <section id="randomizedsearchcv-실습" class="level3" data-number="27.6.1">
 <h3 data-number="27.6.1" class="anchored" data-anchor-id="randomizedsearchcv-실습"><span class="header-section-number">27.6.1</span> RandomizedSearchCV 실습</h3>
 <p><strong>예제: RandomizedSearchCV</strong></p>
-<div id="c3dbb5fe" class="cell" data-execution_count="10">
+<div id="fd19fecc" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> uniform, loguniform</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1013,7 +1013,7 @@ Random - 탐색 조합: 20, 최고 점수: 0.9925</code></pre>
 4. 모델 학습
 5. 검증 데이터로 평가</code></pre>
 <p><strong>예제: 교차 검증 with Pipeline</strong></p>
-<div id="37d527c6" class="cell" data-execution_count="11">
+<div id="2cf572b9" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score, cross_validate</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차 검증</span></span>
@@ -1058,7 +1058,7 @@ f1_macro            : 0.9928 ± 0.0088</code></pre>
 <section id="완전한-머신러닝-워크플로우" class="level2" data-number="27.8">
 <h2 data-number="27.8" class="anchored" data-anchor-id="완전한-머신러닝-워크플로우"><span class="header-section-number">27.8</span> 완전한 머신러닝 워크플로우</h2>
 <p><strong>예제: 전체 워크플로우 통합</strong></p>
-<div id="ea30dbb5" class="cell" data-execution_count="12">
+<div id="661b9546" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 파이프라인 정의</span></span>
@@ -1116,7 +1116,7 @@ Fitting 5 folds for each of 18 candidates, totalling 90 fits
 <h2 data-number="27.9" class="anchored" data-anchor-id="모델-저장-및-로드"><span class="header-section-number">27.9</span> 모델 저장 및 로드</h2>
 <p>학습된 파이프라인은 저장하여 재사용할 수 있다.</p>
 <p><strong>예제: 모델 저장 및 로드</strong></p>
-<div id="072f3d54" class="cell" data-execution_count="13">
+<div id="da6ee248" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> joblib</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 모델 저장</span></span>

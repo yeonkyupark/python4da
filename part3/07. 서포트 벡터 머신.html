@@ -425,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>서포트 벡터 머신(Support Vector Machine, SVM)은 클래스를 가장 잘 구분하는 최적의 결정 경계(초평면)를 찾는 강력한 분류 모델이다. 핵심 아이디어는 클래스 간 마진(margin)을 최대화하는 것이며, 경계에 가장 가까운 일부 데이터(서포트 벡터)만 사용하여 모델을 결정한다. SVM은 특히 고차원 데이터와 비선형 분류에서 우수한 성능을 보인다. 이 장에서는 선형 SVM부터 커널 트릭을 사용한 비선형 SVM까지 원리와 실무 활용법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="b0120ebc" class="cell" data-execution_count="1">
+<div id="a46708f4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -635,7 +635,7 @@ Name: count, dtype: int64</code></pre>
 <section id="선형-svm-실습" class="level3" data-number="25.4.1">
 <h3 data-number="25.4.1" class="anchored" data-anchor-id="선형-svm-실습"><span class="header-section-number">25.4.1</span> 선형 SVM 실습</h3>
 <p><strong>예제: 선형 SVM 학습</strong></p>
-<div id="58f7b68c" class="cell" data-execution_count="2">
+<div id="b37ebf75" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,7 +683,7 @@ weighted avg       1.00      1.00      1.00        67
 </div>
 </div>
 <p><strong>예제: C 값에 따른 성능 변화</strong></p>
-<div id="23999b9d" class="cell" data-execution_count="3">
+<div id="bb54de61" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 C 값으로 실험</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>C_values <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>accuracies <span class="op">=</span> []</span>
@@ -863,7 +863,7 @@ C=100.00: Accuracy=1.0000, Support Vectors=12</code></pre>
 <section id="rbf-svm-실습" class="level3" data-number="25.6.1">
 <h3 data-number="25.6.1" class="anchored" data-anchor-id="rbf-svm-실습"><span class="header-section-number">25.6.1</span> RBF SVM 실습</h3>
 <p><strong>예제: RBF SVM 학습</strong></p>
-<div id="94a9a3a1" class="cell" data-execution_count="4">
+<div id="1bfc443b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RBF SVM 파이프라인</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pipe_svm_rbf <span class="op">=</span> Pipeline([</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
@@ -900,7 +900,7 @@ weighted avg       1.00      1.00      1.00        67
 </div>
 </div>
 <p><strong>예제: gamma 값에 따른 성능 변화</strong></p>
-<div id="405a06b1" class="cell" data-execution_count="5">
+<div id="e91750c0" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 gamma 값으로 실험</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gamma_values <span class="op">=</span> [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>accuracies_gamma <span class="op">=</span> []</span>
@@ -945,7 +945,7 @@ gamma=10.000: Accuracy=0.9104</code></pre>
 </div>
 </div>
 <p><strong>예제: GridSearchCV로 최적 하이퍼파라미터 찾기</strong></p>
-<div id="2f109bc8" class="cell" data-execution_count="6">
+<div id="2127ab8c" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 파라미터 그리드</span></span>
@@ -982,7 +982,7 @@ gamma=10.000: Accuracy=0.9104</code></pre>
 </div>
 </div>
 <p><strong>예제: C-gamma 히트맵</strong></p>
-<div id="1d8fe7aa" class="cell" data-execution_count="7">
+<div id="e6086c33" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C-gamma 조합별 성능</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pd.DataFrame(grid_search.cv_results_)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pivot_table <span class="op">=</span> results.pivot_table(</span>
@@ -1044,7 +1044,7 @@ gamma=10.000: Accuracy=0.9104</code></pre>
 </tbody>
 </table>
 <p><strong>예제: 다중 클래스 확인</strong></p>
-<div id="5ed09a33" class="cell" data-execution_count="8">
+<div id="e8c94d3a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다중 클래스 SVM (자동 처리)</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>svm_multiclass <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="fl">1.0</span>, gamma<span class="op">=</span><span class="st">'scale'</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
@@ -1090,7 +1090,7 @@ gamma=10.000: Accuracy=0.9104</code></pre>
 <section id="커널-비교" class="level2" data-number="25.8">
 <h2 data-number="25.8" class="anchored" data-anchor-id="커널-비교"><span class="header-section-number">25.8</span> 커널 비교</h2>
 <p><strong>예제: 다양한 커널 비교</strong></p>
-<div id="61a3aa7a" class="cell" data-execution_count="9">
+<div id="5bd0b198" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 다양한 커널로 학습</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>kernels <span class="op">=</span> [<span class="st">'linear'</span>, <span class="st">'poly'</span>, <span class="st">'rbf'</span>, <span class="st">'sigmoid'</span>]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>results_kernel <span class="op">=</span> []</span>
@@ -1148,7 +1148,7 @@ gamma=10.000: Accuracy=0.9104</code></pre>
 <section id="모델-비교" class="level2" data-number="25.9">
 <h2 data-number="25.9" class="anchored" data-anchor-id="모델-비교"><span class="header-section-number">25.9</span> 모델 비교</h2>
 <p><strong>예제: 로지스틱 회귀 vs SVM</strong></p>
-<div id="3b64da4e" class="cell" data-execution_count="10">
+<div id="023e2518" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 로지스틱 회귀</span></span>
