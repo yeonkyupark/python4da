@@ -452,7 +452,7 @@ window.Quarto = {
 
 <p>연속형 데이터 범주화(Discretization 또는 Binning)는 연속형 변수를 구간별로 나누어 범주형 변수로 변환하는 과정이다. 이 과정은 정보 손실을 수반하지만, 모델의 해석력을 높이고 비선형 관계를 단순화하며 노이즈를 감소시키는 효과가 있다. 특히 도메인 전문가와의 커뮤니케이션이나 규칙 기반 의사결정 시스템에서 유용하다. 이 장에서는 등간격 구간화, 등빈도 구간화, 사용자 정의 구간화, k-means 기반 구간화, Decision Tree 기반 구간화 등 다양한 범주화 기법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="5d4a7498" class="cell" data-execution_count="1">
+<div id="a0d8dc94" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -532,7 +532,7 @@ max         59.600000      21.500000         231.000000  6300.000000</code></pre
 \]</span></p>
 <p>여기서 k는 구간의 개수이다.</p>
 <p><strong>예제: 등간격 구간화</strong></p>
-<div id="88ad342f" class="cell" data-execution_count="2">
+<div id="e7891c24" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4개의 등간격 구간으로 분할</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_bin"</span>] <span class="op">=</span> pd.cut(df[<span class="st">"bill_length_mm"</span>], bins<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -558,7 +558,7 @@ Categories (4, interval[float64, right]): [(32.072, 38.975] &lt; (38.975, 45.85]
 <h3 data-number="8.2.1" class="anchored" data-anchor-id="범주-이름-지정"><span class="header-section-number">8.2.1</span> 범주 이름 지정</h3>
 <p>숫자 구간 대신 의미 있는 이름을 부여하면 해석력이 더욱 향상된다.</p>
 <p><strong>예제: 구간에 라벨 지정</strong></p>
-<div id="d1c69ce7" class="cell" data-execution_count="3">
+<div id="7f85df0e" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 구간에 의미 있는 이름 부여</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_bin"</span>] <span class="op">=</span> pd.cut(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
@@ -613,7 +613,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="8.3" class="anchored" data-anchor-id="등빈도-구간화-equal-frequency-binning-quantile-binning"><span class="header-section-number">8.3</span> 등빈도 구간화 (Equal-frequency Binning, Quantile Binning)</h2>
 <p>등빈도 구간화는 각 구간에 동일한 개수의 데이터가 포함되도록 분할하는 방법이다. 데이터의 분포를 고려하여 구간을 나누므로, 등간격 구간화의 불균형 문제를 해결할 수 있다.</p>
 <p><strong>예제: 등빈도 구간화</strong></p>
-<div id="bb47d2d0" class="cell" data-execution_count="4">
+<div id="6e9171d6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4개의 등빈도 구간으로 분할 (사분위수)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_qbin"</span>] <span class="op">=</span> pd.qcut(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
@@ -647,7 +647,7 @@ nan: 0개
 <h3 data-number="8.3.1" class="anchored" data-anchor-id="라벨-지정"><span class="header-section-number">8.3.1</span> 라벨 지정</h3>
 <p>사분위수 구간에 Q1, Q2, Q3, Q4와 같은 표준 라벨을 부여할 수 있다.</p>
 <p><strong>예제: 사분위수 라벨 지정</strong></p>
-<div id="90a1d15d" class="cell" data-execution_count="5">
+<div id="394788cd" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 사분위수 라벨 지정</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"bill_length_qbin"</span>] <span class="op">=</span> pd.qcut(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_mm"</span>],</span>
@@ -702,7 +702,7 @@ Name: count, dtype: int64</code></pre>
 </ul>
 <p><strong>주의사항</strong></p>
 <p>동일한 값이 많이 나타나면 <code>qcut</code>이 정확히 같은 개수로 나누지 못해 오류가 발생할 수 있다. 이 경우 <code>duplicates='drop'</code> 옵션을 사용하거나 구간 개수를 줄인다.</p>
-<div id="3e28adb9" class="cell" data-execution_count="6">
+<div id="5a58de2b" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 중복값이 많을 때 처리</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"bill_length_qbin_safe"</span>] <span class="op">=</span> pd.qcut(</span>
@@ -719,7 +719,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="8.4" class="anchored" data-anchor-id="사용자-정의-구간화"><span class="header-section-number">8.4</span> 사용자 정의 구간화</h2>
 <p>사용자 정의 구간화는 도메인 지식이나 비즈니스 규칙에 따라 직접 구간 경계를 설정하는 방법이다. 가장 해석력이 높지만, 주관이 개입되므로 기준에 대한 명확한 설명이 필요하다.</p>
 <p><strong>예제: 도메인 지식 기반 구간화</strong></p>
-<div id="75b72bd4" class="cell" data-execution_count="7">
+<div id="a3b5ea12" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 도메인 전문가가 정의한 구간 경계</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">60</span>]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">"매우 짧음"</span>, <span class="st">"짧음"</span>, <span class="st">"보통"</span>, <span class="st">"김"</span>]</span>
@@ -788,7 +788,7 @@ Name: body_mass_g, dtype: float64</code></pre>
 <h2 data-number="8.5" class="anchored" data-anchor-id="k-means-기반-구간화"><span class="header-section-number">8.5</span> k-means 기반 구간화</h2>
 <p>k-means 기반 구간화는 값의 분포를 고려하여 군집 중심을 기준으로 구간을 나누는 방법이다. 비선형적인 데이터 구조를 반영할 수 있어 복잡한 분포에서도 효과적이다.</p>
 <p><strong>예제: k-means 기반 구간화</strong></p>
-<div id="4178eaa6" class="cell" data-execution_count="8">
+<div id="2ffc1da4" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치 제거</span></span>
@@ -867,7 +867,7 @@ Name: count, dtype: int64
 <h2 data-number="8.6" class="anchored" data-anchor-id="decision-tree-기반-구간화"><span class="header-section-number">8.6</span> Decision Tree 기반 구간화</h2>
 <p>Decision Tree 기반 구간화는 타겟 변수를 기준으로 정보이득을 최대화하는 구간을 찾는 지도학습 방법이다. 타겟과의 관계를 직접 반영하므로 예측 모델에 효과적이지만, 데이터 누수에 주의해야 한다.</p>
 <p><strong>예제: 타겟 기반 구간화</strong></p>
-<div id="9ebdec13" class="cell" data-execution_count="9">
+<div id="e7139357" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측치 제거</span></span>
@@ -918,7 +918,7 @@ Name: body_mass_g, dtype: float64
 <p><strong>데이터 누수 주의</strong></p>
 <p>Decision Tree 기반 구간화는 타겟 정보를 사용하므로, 반드시 학습 데이터로만 구간을 결정하고 테스트 데이터에 적용해야 한다.</p>
 <p><strong>예제: 데이터 누수 방지</strong></p>
-<div id="9fd9a3e4" class="cell" data-execution_count="10">
+<div id="1d7de8c7" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습/테스트 분리</span></span>
@@ -992,7 +992,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="8.7" class="anchored" data-anchor-id="범주화-후-인코딩-연결"><span class="header-section-number">8.7</span> 범주화 후 인코딩 연결</h2>
 <p>범주화된 변수는 여전히 범주형이므로, 모델 학습을 위해 인코딩이 필요하다.</p>
 <p><strong>예제: 범주화 후 One-Hot Encoding</strong></p>
-<div id="96acefae" class="cell" data-execution_count="11">
+<div id="6ee303d7" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 범주화된 변수를 One-Hot Encoding</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df_bin_encoded <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    df,</span>

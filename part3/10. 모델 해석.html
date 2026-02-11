@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>모델 해석(Model Interpretation)은 머신러닝 모델이 어떻게 예측하는지 이해하고 설명하는 과정이다. 모델이 복잡해질수록 블랙박스처럼 작동하지만, 실무에서는 “어떤 변수가 중요한가?”, “왜 이런 예측이 나왔는가?”, “모델이 편향되지 않았는가?”를 반드시 답해야 한다. 모델 해석은 선택이 아닌 필수이며, 신뢰성 있는 의사결정을 위해 반드시 필요하다. 이 장에서는 특성 중요도, Permutation Importance, SHAP, PDP 등 주요 모델 해석 기법을 학습한다.</p>
 <p><strong>예제: 데이터 로드</strong></p>
-<div id="3d424350" class="cell" data-execution_count="1">
+<div id="22bcf053" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -596,7 +596,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="28.3.1" class="anchored" data-anchor-id="트리-기반-모델의-특성-중요도"><span class="header-section-number">28.3.1</span> 트리 기반 모델의 특성 중요도</h3>
 <p>트리 기반 모델(Decision Tree, Random Forest, XGBoost)은 내장 중요도를 제공한다.</p>
 <p><strong>예제: 모델 학습 및 특성 중요도</strong></p>
-<div id="223764f9" class="cell" data-execution_count="2">
+<div id="b573a285" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RandomForest 학습</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">200</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>rf.fit(X_train, y_train)</span>
@@ -688,7 +688,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="permutation-importance-실습" class="level3" data-number="28.4.1">
 <h3 data-number="28.4.1" class="anchored" data-anchor-id="permutation-importance-실습"><span class="header-section-number">28.4.1</span> Permutation Importance 실습</h3>
 <p><strong>예제: Permutation Importance 계산</strong></p>
-<div id="a350ef15" class="cell" data-execution_count="3">
+<div id="32ffe2d7" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> permutation_importance</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutation Importance (테스트 데이터 기준)</span></span>
@@ -735,7 +735,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>예제: Feature Importance vs Permutation Importance 비교</strong></p>
-<div id="0e52b034" class="cell" data-execution_count="4">
+<div id="ae08f2a2" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 두 방법 비교</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
@@ -795,7 +795,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="pdp-실습" class="level3" data-number="28.5.1">
 <h3 data-number="28.5.1" class="anchored" data-anchor-id="pdp-실습"><span class="header-section-number">28.5.1</span> PDP 실습</h3>
 <p><strong>예제: Partial Dependence Plot</strong></p>
-<div id="8dd1c4d5" class="cell" data-execution_count="5">
+<div id="c9131392" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> PartialDependenceDisplay</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># PDP 생성</span></span>
@@ -819,7 +819,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>예제: 2D PDP (변수 간 상호작용)</strong></p>
-<div id="49ead07b" class="cell" data-execution_count="6">
+<div id="fef2c569" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2D PDP로 상호작용 확인</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1022,7 +1022,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="실무-활용-예제" class="level2" data-number="28.8">
 <h2 data-number="28.8" class="anchored" data-anchor-id="실무-활용-예제"><span class="header-section-number">28.8</span> 실무 활용 예제</h2>
 <p><strong>예제: 종합 해석 리포트</strong></p>
-<div id="4cbb6b0c" class="cell" data-execution_count="7">
+<div id="8041cf7c" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Permutation Importance로 중요 변수 파악</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== 1. 중요 변수 파악 (Permutation Importance) ==="</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(perm_importance.head(<span class="dv">3</span>))</span>
